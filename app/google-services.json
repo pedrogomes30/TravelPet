@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "845807082620",
+    "firebase_url": "https://travelpet-783e8.firebaseio.com",
+    "project_id": "travelpet-783e8",
+    "storage_bucket": "travelpet-783e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845807082620:android:8979dfd619175b68dc7df9",
+        "android_client_info": {
+          "package_name": "com.example.travelpet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845807082620-ufavqg7r0hr9i164q0btpal6lmcjjsdt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelpet",
+            "certificate_hash": "83306753c694c4a6bc4b1a373d708a85c0f549d3"
+          }
+        },
+        {
+          "client_id": "845807082620-ejpfv432ll4o1cf378gehdamk95mqh5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYFGC1BGhcKUpvyQBtjV9GnxwTY6eyA8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845807082620-ejpfv432ll4o1cf378gehdamk95mqh5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
