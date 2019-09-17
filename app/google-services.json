@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "845807082620-407s88jl9cd615mvsqv1gpqltjqamjnp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelpet",
+            "certificate_hash": "41bcffd8bc46369a1b0105e04f4d9cc2d759a2d3"
+          }
+        },
+        {
           "client_id": "845807082620-ufavqg7r0hr9i164q0btpal6lmcjjsdt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

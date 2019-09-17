@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity;
+import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
@@ -24,11 +26,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
+
+
     FirebaseAuth fbAuth;
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
     Button BTSignOut;
 
+    String idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +103,27 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // O login foi feito com sucesso
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                 // ...
+                // Pega o id do Usuario atual e armazena na variável String idUsuario
+                idUsuario = user.getUid();
+
+                /* Método inicia Activity CadastroNome...
+                   Só coloquei para testes ainda será necessario avaliar se o usuario tem
+                   cadastro pronto no firebase para poder indicar a Activity adequada
+                   para a situação
+                 */
+                Intent intent = new Intent(getApplicationContext(),CadastroNomeUsuarioActivity.class);
+                intent.putExtra("idUsuario",idUsuario);
+                startActivity(intent);
+
+
                 ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
+
+
+
+
+
             } else {
 
                 ToastThis(response.getError().toString());
@@ -123,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
 
         ToastThis("Usuário deslogado");
         // [END auth_fui_signout]
+    }
+
+    public void abrirTelaCadastroTipoUsuario(View view){
+
+        startActivity(new Intent(this, CadastroTipoUsuarioActivity.class));
+
     }
 
 

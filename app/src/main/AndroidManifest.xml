@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.teste.TesteActivity"></activity>
+        <activity android:name=".activity.TesteFinalActivity" />
+        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroPorteAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
+        <activity android:name=".activity.cadastro.CadastroUsuarioActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
