@@ -8,6 +8,7 @@ public class ConfiguracaoFirebase {
 
     // Referenciando Banco de dados
     // database = é a referência
+    private static FirebaseDatabase fireDB;
     private static DatabaseReference database;
 
     // Autenticação do Firebase
@@ -17,17 +18,19 @@ public class ConfiguracaoFirebase {
     //private static  StorageReference storage;
 
     // Retorna a instância do FirebaseDatabase
-    public static DatabaseReference getFirebaseDatabase(){
+    //public static DatabaseReference getFirebaseDatabase(){
+        public static FirebaseDatabase getFirebaseDatabase(){
         // se for vazio, entra ponto inicial
-        if( database == null){
+       // if( database == null){
+        if (fireDB == null){
             // .getReference Retorna a referencia do DatabaseReference
             // .getInstance() = Recupera a instância do Firebase utilizada para salvar dados
             // .getReference() = Volta para o nó raiz do Firebase
             // .getReference("Motorista") = nesse caso iria colocar dados aparti do nó motorista
-            database = FirebaseDatabase.getInstance().getReference();
+            fireDB = FirebaseDatabase.getInstance();
         }
         // se já tiver esse objeto n precisa configurar novamente
-        return database;
+        return fireDB;
     }
 
     // retorna a instância do FirebaseAuth

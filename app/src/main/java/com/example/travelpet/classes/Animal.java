@@ -2,6 +2,7 @@ package com.example.travelpet.classes;
 
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Animal {
 
@@ -18,12 +19,11 @@ public class Animal {
     // Método para salvar os dados do usuário no firebase
     public void salvarAnimal(){
         // DatabaseReference = Referência do Firebase
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
-        // Referência DatabaseRefence para usuário
-        // firebaseRef.child("usuarios") = indica o nó filho chamado usuarios
-        // child(getId()) = recupera o id do nó  usuarios
-        // .push(); = pega o id criado pelo nó
-        DatabaseReference animais = firebaseRef.child("animais").push();//.child(getIdUsuario());
+        System.out.println("Veio até aqui");
+        FirebaseDatabase firedb = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference firebaseRef = firedb.getReference("animais");
+        DatabaseReference animais = firebaseRef.push();//.child(getIdUsuario());
+        System.out.println("Passou");
 
         // Configurando usuário no Firebase
         // this = pois salvara todos os dados (idUsuario, idAnimal, nomeAnimal...)

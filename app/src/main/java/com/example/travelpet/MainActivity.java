@@ -113,16 +113,12 @@ public class MainActivity extends AppCompatActivity {
                    cadastro pronto no firebase para poder indicar a Activity adequada
                    para a situação
                  */
+
                 Intent intent = new Intent(getApplicationContext(),CadastroNomeUsuarioActivity.class);
                 intent.putExtra("idUsuario",idUsuario);
                 startActivity(intent);
 
-
                 ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
-
-
-
-
 
             } else {
 
