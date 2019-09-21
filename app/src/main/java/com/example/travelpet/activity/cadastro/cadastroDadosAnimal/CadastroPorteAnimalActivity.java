@@ -2,6 +2,7 @@ package com.example.travelpet.activity.cadastro.cadastroDadosAnimal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -13,39 +14,42 @@ import com.example.travelpet.R;
 
 public class CadastroPorteAnimalActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroEspecieAnimal
-    String idUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-           nomeAnimal, tipoEspecieAnimal, racaAnimal;
+    // Variaveis usadas para armazenar dados da Activity CadastroEspecieAnimal
+    String idUsuario, emailUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+           nomeAnimal, especieAnimal, racaAnimal;
 
     private RadioGroup radioGroupPorteAnimal;
 
     String porteAnimal;
-
-    //UsuarioFirebase usuarioRef = new UsuarioFirebase();
-    //String idUsuario  = usuarioRef.getIdentificadorUsuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_porte_animal);
 
-        // Recuperando dados passados da Activity <CadastroEspecieAnimal
-        Bundle dados = getIntent().getExtras();
 
-        // recupera dados atrávez da key (chave) passada, e armazena em uma nova variável
-        idUsuario         =     dados.getString("idUsuario");
-        nomeUsuario       =     dados.getString("nomeUsuario");
-        sobrenomeUsuario  =     dados.getString("sobrenomeUsuario");
-        telefoneUsuario   =     dados.getString("telefoneUsuario");
-        tipoUsuario       =     dados.getString("tipoUsuario");
-        nomeAnimal        =     dados.getString("nomeAnimal");
-        tipoEspecieAnimal =     dados.getString("tipoEspecieAnimal");
-        racaAnimal        =     dados.getString("racaAnimal");
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
+        Animal animal = intent.getParcelableExtra("animal");
+
+        // Dados da classe Usuario
+        idUsuario           =   usuario.getId();
+        emailUsuario        =   usuario.getEmail();
+        nomeUsuario         =   usuario.getNome();
+        sobrenomeUsuario    =   usuario.getSobrenome();
+        telefoneUsuario     =   usuario.getTelefone();
+        tipoUsuario         =   usuario.getTipoUsuario();
+
+        // Dados da classe Animal
+        nomeAnimal          =   animal.getNomeAnimal();
+        especieAnimal       =   animal.getEspecieAnimal();
+        racaAnimal          =   animal.getRacaAnimal();
+
 
         // Referência o id do radioGroup do xml, com a variavel tipo radioGroup
         radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
 
-        // Chama o método verifica tipo especie
+        // Chama o método verifica tipo porte
         verificaTipoPorte(porteAnimal);
 
     }
@@ -56,23 +60,11 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
         if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
                 || porteAnimal == "Grande - Acima de 50cm") {
 
-            // Cria uma referência para a classe Animal e instância ela
-            Animal animal = new Animal();
-
-            // Envia a dados para classe Animal
-            animal.setIdUsuario(idUsuario);
-            animal.setNomeAnimal(nomeAnimal);
-            animal.setTipoEspecieAnimal(tipoEspecieAnimal);
-            animal.setRacaAnimal(racaAnimal);
-            animal.setPorte(porteAnimal);
-
-            // Chama método salvar da classe Animal, responsável por salvar no firebase
-            animal.salvarAnimal();
-
 
             Usuario usuario = new Usuario();
 
             usuario.setId(idUsuario);
+            usuario.setEmail(emailUsuario);
             usuario.setNome(nomeUsuario);
             usuario.setSobrenome(sobrenomeUsuario);
             usuario.setTelefone(telefoneUsuario);
@@ -80,24 +72,19 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
 
             usuario.salvar();
 
+            Animal animal = new Animal();
+
+            animal.setIdUsuario(idUsuario);
+            animal.setNomeAnimal(nomeAnimal);
+            animal.setEspecieAnimal(especieAnimal);
+            animal.setRacaAnimal(racaAnimal);
+            animal.setPorteAnimal(porteAnimal);
+
+            animal.salvarAnimal();
+
             Toast.makeText(CadastroPorteAnimalActivity.this,
                     "Sucesso ao cadastrar Usuário Passageiro !",
                     Toast.LENGTH_SHORT).show();
-
-            /*
-            Intent intent = new Intent(getApplicationContext(),TesteFinalActivity.class);
-
-            intent.putExtra("idUsuario",idUsuario);
-            intent.putExtra("nomeUsuario",nomeUsuario);
-            intent.putExtra("sobrenomeUsuario",sobrenomeUsuario);
-            intent.putExtra("telefoneUsuario",telefoneUsuario);
-            intent.putExtra("tipoUsuario",tipoUsuario);
-            intent.putExtra("nomeAnimal",nomeAnimal);
-            intent.putExtra("tipoEspecieAnimal",tipoEspecieAnimal);
-            intent.putExtra("racaAnimal",racaAnimal);
-            intent.putExtra("porteAnimal",porteAnimal);
-                startActivity(intent);
-             */
 
         }else{
             Toast.makeText(CadastroPorteAnimalActivity.this, //onde será exibido

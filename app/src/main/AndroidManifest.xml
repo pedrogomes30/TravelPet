@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.travelpet">
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <!--
+     android.permission.READ_EXTERNAL_STORAGE = Permissão para que o usuário vizualize a galeria
+     de fotos, ler o armazenamento externo
+    -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -9,17 +20,75 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.teste.TesteActivity"></activity>
-        <activity android:name=".activity.TesteFinalActivity" />
-        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroPorteAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
+        <activity android:name=".activity.teste.TestePassageiroActivity"></activity>
+        <activity android:name=".activity.teste.TesteMotoristaActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroCrlvMotoristaActivity"
+            android:label="@string/titulo_crlv_motorista"
+            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroFotoMotoristaActivity"
+            />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroFotoMotoristaActivity"
+            android:label="@string/titulo_foto_motorista"
+            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity"
+            />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity"
+            android:label="@string/titulo_termo_motorista"
+            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity"
+            />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity"
+            android:label="@string/titulo_cnh_motorista"
+            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity"
+            />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".activity.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroPorteAnimalActivity"
+            android:label="@string/titulo_porte_animal"
+            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity"
+            android:label="@string/titulo_raca_animal"
+            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity"
+            android:label="@string/titulo_especie_animal"
+            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity"
+            android:label="@string/titulo_nome_animal"
+            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity"
+            android:label="@string/titulo_telefone_usuario"
+            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
+        <activity
+            android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity"
+            android:label="@string/titulo_nome_usuario"
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.cadastro.CadastroUsuarioActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity"
+            android:label="@string/titulo_tipo_usuario"
+            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

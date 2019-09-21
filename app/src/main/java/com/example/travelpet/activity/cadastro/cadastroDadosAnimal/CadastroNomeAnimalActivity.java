@@ -8,56 +8,62 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelpet.R;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroNomeAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario
-     String idUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
+     String idUsuario, emailUsuario, nomeUsuario,
+            sobrenomeUsuario, telefoneUsuario,tipoUsuario;
 
     private TextInputEditText campoNomeANimal;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_nome_animal);
 
-        // Recuperando dados passados da Activity <CadastroTipoUsuario
-        Bundle dados = getIntent().getExtras();
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
 
+        idUsuario           =   usuario.getId();
+        emailUsuario        =   usuario.getEmail();
+        nomeUsuario         =   usuario.getNome();
+        sobrenomeUsuario    =   usuario.getSobrenome();
+        telefoneUsuario     =   usuario.getTelefone();
+        tipoUsuario         =   usuario.getTipoUsuario();
 
-        // recupera dados atrávez da key (chave) passada, e armazena em uma nova variável
-        idUsuario         =     dados.getString("idUsuario");
-        nomeUsuario       =     dados.getString("nomeUsuario");
-        sobrenomeUsuario  =     dados.getString("sobrenomeUsuario");
-        telefoneUsuario   =     dados.getString("telefoneUsuario");
-        tipoUsuario       =     dados.getString("tipoUsuario");
-
-        // Referenciando campoNomeAnimal com o do xml
         campoNomeANimal = findViewById(R.id.editNomeAnimal);
 
     }
-
+    
     public void abriTelaCadastroEspecieAnimal(View view){
 
-       String nomeAnimal = campoNomeANimal.getText().toString();
+       String nomeAnimal = campoNomeANimal.getText().toString().toUpperCase();;
 
         // Verifica se não esta vazia
         if(!nomeAnimal.isEmpty()) {
 
-            Intent intent = new Intent(getApplicationContext(), CadastroEspecieAnimalActivity.class);
+            Usuario usuario = new Usuario();
 
-            intent.putExtra ("idUsuario", idUsuario);
-            intent.putExtra ("nomeUsuario", nomeUsuario);
-            intent.putExtra ("sobrenomeUsuario", sobrenomeUsuario);
-            intent.putExtra ("telefoneUsuario", telefoneUsuario);
-            intent.putExtra ("tipoUsuario", tipoUsuario);
-            intent.putExtra ("nomeAnimal", nomeAnimal);
+            usuario.setId(idUsuario);
+            usuario.setEmail(emailUsuario);
+            usuario.setNome(nomeUsuario);
+            usuario.setSobrenome(sobrenomeUsuario);
+            usuario.setTelefone(telefoneUsuario);
+            usuario.setTipoUsuario(tipoUsuario);
+
+            Animal animal = new Animal();
+
+            animal.setNomeAnimal(nomeAnimal);
+
+            Intent intent = new Intent(getApplicationContext(), CadastroEspecieAnimalActivity.class);
+            intent.putExtra("usuario",usuario);
+            intent.putExtra ("animal", animal);
 
             startActivity(intent);
-            //finish();
 
         // Se estiver vazio então envia essa mensagem
         }else{

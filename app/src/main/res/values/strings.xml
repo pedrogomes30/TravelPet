@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TravelPet</string>
+    <string name="titulo_nome_usuario">NOME</string>
+    <string name="titulo_telefone_usuario">TELEFONE</string>
+    <string name="titulo_tipo_usuario">TIPO USUÁRIO</string>
+    <string name="titulo_nome_animal">NOME DO ANIMAL</string>
+    <string name="titulo_especie_animal">ESPÉCIE</string>
+    <string name="titulo_raca_animal">RAÇA</string>
+    <string name="titulo_porte_animal">PORTE DO ANIMAL</string>
+
+    <string name="titulo_termo_motorista">TERMOS MOTORISTA</string>
+    <string name="titulo_cnh_motorista">CNH MOTORISTA</string>
+    <string name="titulo_foto_motorista">FOTO MOTORISTA</string>
+    <string name="titulo_crlv_motorista">CRLV MOTORISTA</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

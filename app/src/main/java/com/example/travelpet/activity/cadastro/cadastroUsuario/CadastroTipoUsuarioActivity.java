@@ -8,11 +8,14 @@ import android.view.View;
 
 import com.example.travelpet.activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity;
 import com.example.travelpet.R;
+import com.example.travelpet.activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity;
+import com.example.travelpet.activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity;
+import com.example.travelpet.classes.Usuario;
 
 public class CadastroTipoUsuarioActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroTelefoneUsuario
-    String idUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario;
+    // Variaveis usadas para armazenar dados da Activity CadastroTelefoneUsuario
+    String idUsuario, emailUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario;
 
     String tipoUsuario;
 
@@ -21,44 +24,55 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_tipo_usuario);
 
-        // Recuperando dados passados da Activity <CadastroTelefoneUsuario
-        Bundle dados = getIntent().getExtras();
+        // Recuperando dados passados da Activity CadastroTelefoneUsuario
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
 
-        // recupera dados atrávez da key (chave) passada, e armazena em uma nova variável
-        idUsuario           =   dados.getString("idUsuario");
-        nomeUsuario         =   dados.getString("nomeUsuario");
-        sobrenomeUsuario    =   dados.getString("sobrenomeUsuario");
-        telefoneUsuario     =   dados.getString("telefoneUsuario");
+        idUsuario           =   usuario.getId();
+        emailUsuario        =   usuario.getEmail();
+        nomeUsuario         =   usuario.getNome();
+        sobrenomeUsuario    =   usuario.getSobrenome();
+        telefoneUsuario     =   usuario.getTelefone();
 
     }
 
     // Evento de onClick do botão "Passageiro"
-    public void passageiroAbrirTelaCadastroUsuario( View view ){
-
+    public void abrirTelaCadastroNomeAnimal( View view ){
 
         tipoUsuario = "passageiro";
 
+        Usuario usuario = new Usuario();
+
+        usuario.setId(idUsuario);
+        usuario.setEmail(emailUsuario);
+        usuario.setNome(nomeUsuario);
+        usuario.setSobrenome(sobrenomeUsuario);
+        usuario.setTelefone(telefoneUsuario);
+        usuario.setTipoUsuario(tipoUsuario);
+
         Intent intent = new Intent(getApplicationContext(), CadastroNomeAnimalActivity.class);
-
-        // Envia dados atravez de uma chave nomeada, que é passada no 1º parâmetro
-        // no 2º parâmetro e passado o dado
-        intent.putExtra ("idUsuario",idUsuario);
-        intent.putExtra ("nomeUsuario",nomeUsuario);
-        intent.putExtra ("sobrenomeUsuario",sobrenomeUsuario);
-        intent.putExtra ("telefoneUsuario",telefoneUsuario);
-        intent.putExtra ("tipoUsuario",tipoUsuario);
-
-
+        intent.putExtra("usuario",usuario);
         startActivity(intent);
-        //finish();
 
     }
 
-    /* Evento de onClick do botão "Motorista"
-   public void motoristaAbrirTelaCadastroMotorista( View view ){
+    // Evento de onClick do botão "Motorista"
+    public void abrirTelaCadastroTermoMotorista( View view ){
 
         tipoUsuario = "motorista";
 
-    }*/
+        Usuario usuario = new Usuario();
 
+        usuario.setId(idUsuario);
+        usuario.setEmail(emailUsuario);
+        usuario.setNome(nomeUsuario);
+        usuario.setSobrenome(sobrenomeUsuario);
+        usuario.setTelefone(telefoneUsuario);
+        usuario.setTipoUsuario(tipoUsuario);
+
+        Intent intent = new Intent(getApplicationContext(), CadastroTermoMotoristaActivity.class);
+        intent.putExtra("usuario",usuario);
+        startActivity(intent);
+
+    }
 }

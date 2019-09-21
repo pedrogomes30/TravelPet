@@ -8,13 +8,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelpet.R;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroRacaAnimalActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroEspecieAnimal
-    String idUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-            nomeAnimal, tipoEspecieAnimal;
+    // Variaveis usadas para armazenar dados da Activity CadastroEspecieAnimal
+    String idUsuario, emailUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+           nomeAnimal, especieAnimal;
 
     private TextInputEditText campoRacaAnimal;
 
@@ -25,17 +27,21 @@ public class CadastroRacaAnimalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_raca_animal);
 
-        // Recuperando dados passados da Activity <CadastroEspecieAnimal
-        Bundle dados = getIntent().getExtras();
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
+        Animal animal = intent.getParcelableExtra("animal");
 
-        // recupera dados atrávez da key (chave) passada, e armazena em uma nova variável
-        idUsuario         =     dados.getString("idUsuario");
-        nomeUsuario       =     dados.getString("nomeUsuario");
-        sobrenomeUsuario  =     dados.getString("sobrenomeUsuario");
-        telefoneUsuario   =     dados.getString("telefoneUsuario");
-        tipoUsuario       =     dados.getString("tipoUsuario");
-        nomeAnimal        =     dados.getString("nomeAnimal");
-        tipoEspecieAnimal =     dados.getString("tipoEspecieAnimal");
+        // Dados da Classe Usuario
+        idUsuario           =   usuario.getId();
+        emailUsuario        =   usuario.getEmail();
+        nomeUsuario         =   usuario.getNome();
+        sobrenomeUsuario    =   usuario.getSobrenome();
+        telefoneUsuario     =   usuario.getTelefone();
+        tipoUsuario         =   usuario.getTipoUsuario();
+
+        // Dados da Classe Animal
+        nomeAnimal          =   animal.getNomeAnimal();
+        especieAnimal       =   animal.getEspecieAnimal();
 
         // Referenciando campoNomeAnimal com o do xml
         campoRacaAnimal = findViewById(R.id.editRacaAnimal);
@@ -43,23 +49,32 @@ public class CadastroRacaAnimalActivity extends AppCompatActivity {
     }
 
     public void abrirTelaPorteEspecial(View view){
-        racaAnimal = campoRacaAnimal.getText().toString();
+
+        racaAnimal = campoRacaAnimal.getText().toString().toUpperCase();
 
         if(!racaAnimal.isEmpty()){
 
+            Usuario usuario = new Usuario();
+
+            usuario.setId(idUsuario);
+            usuario.setEmail(emailUsuario);
+            usuario.setNome(nomeUsuario);
+            usuario.setSobrenome(sobrenomeUsuario);
+            usuario.setTelefone(telefoneUsuario);
+            usuario.setTipoUsuario(tipoUsuario);
+
+            Animal animal = new Animal();
+
+            animal.setNomeAnimal(nomeAnimal);
+            animal.setEspecieAnimal(especieAnimal);
+            animal.setRacaAnimal(racaAnimal);
+
             Intent intent = new Intent(getApplicationContext(),CadastroPorteAnimalActivity.class);
 
-            intent.putExtra ("idUsuario",idUsuario);
-            intent.putExtra ("nomeUsuario",nomeUsuario);
-            intent.putExtra ("sobrenomeUsuario",sobrenomeUsuario);
-            intent.putExtra ("telefoneUsuario",telefoneUsuario);
-            intent.putExtra ("tipoUsuario",tipoUsuario);
-            intent.putExtra ("nomeAnimal",nomeAnimal);
-            intent.putExtra ("tipoEspecieAnimal",tipoEspecieAnimal);
-            intent.putExtra ("racaAnimal",racaAnimal);
+            intent.putExtra ("usuario",usuario);
+            intent.putExtra ("animal",animal);
 
             startActivity(intent);
-            //finish();
 
         }else{
             Toast.makeText(CadastroRacaAnimalActivity.this,
