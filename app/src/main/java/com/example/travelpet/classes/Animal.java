@@ -2,9 +2,11 @@ package com.example.travelpet.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Animal implements Parcelable {
 
@@ -61,12 +63,15 @@ public class Animal implements Parcelable {
 
     //      Método para salvar os dados do animal no firebase
     public void salvarAnimal(){
+
         // DatabaseReference = Referência do Firebase
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+
+         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+         DatabaseReference animaisRef = fireDB.getReference().child("animais");
         // Referência DatabaseRefence para animais
-        // firebaseRef.child("animais") = indica o nó filho chamado animais
+        // animaisRef.child("animais") = indica o nó filho chamado animais
         // .push(); = pega o id criado pelo nó
-        DatabaseReference animais = firebaseRef.child("animais").child(getIdUsuario()).push();
+        DatabaseReference animais = animaisRef.child(getIdUsuario()).push();
 
         // Configurando usuário no Firebase
         // this = pois salvara todos os dados de uma vez (idUsuario, idAnimal, nomeAnimal...)

@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.example.travelpet.R;
 import com.example.travelpet.classes.Usuario;
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroNomeUsuarioActivity extends AppCompatActivity {

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Usuario implements Parcelable {
 
@@ -73,11 +73,12 @@ public class Usuario implements Parcelable {
     // Método para salvar os dados do usuário no firebase
     public void salvar(){
         // DatabaseReference = Referência do Firebase
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference usuariosRef = fireDB.getReference().child("usuarios");
         // Referência DatabaseRefence para usuário
-        // firebaseRef.child("usuarios") = indica o nó filho chamado usuarios
+        // usuariosRef.child("usuarios") = indica o nó filho chamado usuarios
         // child(getId()) = recupera o id do nó  usuarios
-        DatabaseReference usuarios = firebaseRef.child("usuarios").child(getId());
+        DatabaseReference usuarios = usuariosRef.child(getId());
 
         // Configurando usuário no Firebase
         // this = pois salvara todos os dados (id,nome,email,telefone,tipo)
