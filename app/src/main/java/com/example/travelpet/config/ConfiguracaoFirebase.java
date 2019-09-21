@@ -3,6 +3,8 @@ package com.example.travelpet.config;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ConfiguracaoFirebase {
 
@@ -13,6 +15,9 @@ public class ConfiguracaoFirebase {
 
     // Autenticação do Firebase
     private static FirebaseAuth auth;
+
+    // Objeto de Autenticação do Storage Firebase
+    private static StorageReference storage;
 
     // Objeto de Autenticação do Storage Firebase
     //private static  StorageReference storage;
@@ -44,7 +49,6 @@ public class ConfiguracaoFirebase {
         return auth;
     }
     // Método para salvar no iamgem no Storage do FireBase
-    /*
     public static StorageReference getFirebaseStorage(){
         // verifica se o storage já esta configurado
         if(storage == null){
@@ -52,6 +56,6 @@ public class ConfiguracaoFirebase {
             storage = FirebaseStorage.getInstance().getReference();
         }
         return storage;
-    } */
+    }
 
 }

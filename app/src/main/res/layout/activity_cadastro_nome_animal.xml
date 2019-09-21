@@ -75,6 +75,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNomeAnimal"
+            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome do Animal" />

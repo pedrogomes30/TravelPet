@@ -9,16 +9,18 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.travelpet.R;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
 
 public class CadastroEspecieAnimalActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroNomeAnimal
-    String idUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-                   nomeAnimal;
+    // Variaveis usadas para armazenar dados da Activity CadastroNomeAnimal
+    String idUsuario, emailUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+            nomeAnimal;
 
     private RadioGroup radioGroupTipoEspecie;
 
-    String tipoEspecieAnimal;
+    String especieAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,42 +28,53 @@ public class CadastroEspecieAnimalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_especie_animal);
 
         // Recuperando dados passados da Activity <CadastroNomeAnimal
-        Bundle dados = getIntent().getExtras();
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
+        Animal animal = intent.getParcelableExtra("animal");
 
+        // Dados da Classe Usuario
+        idUsuario           =   usuario.getId();
+        emailUsuario        =   usuario.getEmail();
+        nomeUsuario         =   usuario.getNome();
+        sobrenomeUsuario    =   usuario.getSobrenome();
+        telefoneUsuario     =   usuario.getTelefone();
+        tipoUsuario         =   usuario.getTipoUsuario();
 
-        // recupera dados atrávez da key (chave) passada, e armazena em uma nova variável
-        idUsuario         =     dados.getString("idUsuario");
-        nomeUsuario       =     dados.getString("nomeUsuario");
-        sobrenomeUsuario  =     dados.getString("sobrenomeUsuario");
-        telefoneUsuario   =     dados.getString("telefoneUsuario");
-        tipoUsuario       =     dados.getString("tipoUsuario");
-        nomeAnimal        =     dados.getString("nomeAnimal");
+        // Dados da Classe Animal
+        nomeAnimal          =   animal.getNomeAnimal();
+
 
         // Referência o id do radioGroup do xml, com a variavel tipo radioGroup
         radioGroupTipoEspecie = findViewById(R.id.radioGroupTipoEspecie);
 
         // Chama o método verifica tipo especie
-        verificaTipoEspecie(tipoEspecieAnimal);
+        verificaTipoEspecie(especieAnimal);
 
     }
 
     public void abrirTelaCadastroRacaAnimal(View view){
 
-        if(tipoEspecieAnimal =="cachorro" || tipoEspecieAnimal == "gato" || tipoEspecieAnimal == "roedor"
-                || tipoEspecieAnimal == "ave" || tipoEspecieAnimal == "réptil"){
+        if(especieAnimal =="CACHORRO" || especieAnimal == "GATO" || especieAnimal == "ROEDOR"
+                || especieAnimal == "AVE" || especieAnimal == "REPTIL"){
 
-            //      Enviando dados para a Activity CadastroRacaAnimal
+            Usuario usuario = new Usuario();
+
+            usuario.setId(idUsuario);
+            usuario.setEmail(emailUsuario);
+            usuario.setNome(nomeUsuario);
+            usuario.setSobrenome(sobrenomeUsuario);
+            usuario.setTelefone(telefoneUsuario);
+            usuario.setTipoUsuario(tipoUsuario);
+
+            Animal animal = new Animal();
+
+            animal.setNomeAnimal(nomeAnimal);
+            animal.setEspecieAnimal(especieAnimal);
+
             Intent intent = new Intent(getApplicationContext(), CadastroRacaAnimalActivity.class);
 
-            // Envia dados atravez de uma chave nomeada, que é passada no 1º parâmetro
-            // no 2º parâmetro e passado o dado
-            intent.putExtra ("idUsuario",idUsuario);
-            intent.putExtra ("nomeUsuario",nomeUsuario);
-            intent.putExtra ("sobrenomeUsuario",sobrenomeUsuario);
-            intent.putExtra ("telefoneUsuario",telefoneUsuario);
-            intent.putExtra ("tipoUsuario",tipoUsuario);
-            intent.putExtra ("nomeAnimal",nomeAnimal);
-            intent.putExtra ("tipoEspecieAnimal",tipoEspecieAnimal);
+            intent.putExtra ("usuario",usuario);
+            intent.putExtra ("animal",animal);
 
             startActivity(intent);
             //finish();
@@ -86,17 +99,17 @@ public class CadastroEspecieAnimalActivity extends AppCompatActivity {
             // Em "int Checked" = fica armazenado o item que foi escolhido
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radioButtonCachorro) {
-                    tipoEspecieAnimal = "cachorro";
+                    especieAnimal = "CACHORRO";
                 } else if (checkedId == R.id.radioButtonGato) {
-                    tipoEspecieAnimal = "gato";
+                    especieAnimal = "GATO";
                 } else if (checkedId == R.id.radioButtonRoedor) {
-                    tipoEspecieAnimal = "roedor";
+                    especieAnimal = "ROEDOR";
                 }else if (checkedId == R.id.radioButtonAve) {
-                    tipoEspecieAnimal = "ave";
+                    especieAnimal = "AVE";
                 }else if (checkedId == R.id.radioButtonReptil) {
-                    tipoEspecieAnimal = "réptil";
+                    especieAnimal = "REPTIL";
                 }else {
-                    tipoEspecieAnimal = null;
+                    especieAnimal = null;
                 }
             }
         });

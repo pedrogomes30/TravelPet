@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorApp"
+    tools:context=".activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity">
+
+    <ImageView
+        android:id="@+id/painelBrancoTermo"
+        android:layout_width="339dp"
+        android:layout_height="430dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonProximoTermo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.23000002"
+        app:srcCompat="@drawable/login" />
+
+    <TextView
+        android:id="@+id/textViewTiruloTermo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Consentimento legal"
+        android:textColor="@android:color/black"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
+        app:layout_constraintTop_toTopOf="@+id/painelBrancoTermo" />
+
+    <TextView
+        android:id="@+id/textViewTextoTermo"
+        android:layout_width="0dp"
+        android:layout_height="301dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Declaração de checagem de antecedentes Ao clicar aqui e submeter o formulário de cadastro, eu concordo com a coleta e processamento dos meus dados pessoais pela Travel Pet ou por seus prestadores de serviço, incluindo dados sensíveis, com o objetivo de avaliar minha elegibilidade para usar ou continuar usando a plataforma da Travel Pet  e para outros fins descritos na Declaração de Privacidade do Motorista. Declaro, ainda, a veracidade e a autenticidade de todas as informações e documentos submetidos à Travel Pet  para fins de cadastro."
+        android:textColor="@android:color/black"
+        android:textSize="16.5sp"
+        app:layout_constraintEnd_toEndOf="@+id/painelBrancoTermo"
+        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTiruloTermo" />
+
+    <CheckBox
+        android:id="@+id/checkBoxTermos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="Eu aceito os termos"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/painelBrancoTermo"
+        app:layout_constraintEnd_toEndOf="@+id/painelBrancoTermo"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTextoTermo" />
+
+    <Button
+        android:id="@+id/buttonProximoTermo"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="50dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_cinza_seletor"
+        android:onClick="abrirTelaCadastroCnhMotorista"
+        android:text="Próximo"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

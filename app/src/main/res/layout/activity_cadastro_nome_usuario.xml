@@ -80,6 +80,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNomeUsuario"
+            android:digits="abcdefghijklmnopqrstuvxwyzABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome" />
@@ -102,9 +103,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editSobrenomeUsuario"
+            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sobrenome" />
     </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
