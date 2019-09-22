@@ -27,6 +27,7 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_nome_usuario);
 
+
         // Recuperando dados passados da MainActivity
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
@@ -90,5 +91,11 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }

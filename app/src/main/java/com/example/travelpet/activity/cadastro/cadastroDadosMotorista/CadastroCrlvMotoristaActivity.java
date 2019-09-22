@@ -19,6 +19,9 @@ import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -45,6 +48,8 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
 
     // Variável armazena a referência do Sotorage
     private StorageReference storageReference;
+    private FirebaseAuth fireAuth;
+    FirebaseUser fireUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
+         fireUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //      Armazena os dados recuperados em uma um variável String
         // dados classe Usuario
@@ -158,13 +164,25 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
     // Método de salvamento FotoCNG ( Activity EnviarCNH )
     public void salvarFotoCNH(){
 
-        // Salvar Imagem no FireBase cada child e uma pasta criada, no ultimo e nome da imagem
+       /* // Salvar Imagem no FireBase cada child e uma pasta criada, no ultimo e nome da imagem
         StorageReference imagemRef = storageReference
                 .child("motorista")
                 .child(idUsuario)
                 .child("documento de validacao")
                 .child("CNH")
                 .child(idUsuario+".CNH.JPEG");
+
+
+        */
+
+        // Salvar Imagem no FireBase cada child e uma pasta criada, no ultimo e nome da imagem
+        StorageReference imagemRef = storageReference
+                .child("motorista")
+                .child(fireUser.getEmail())
+                .child("documento de validacao")
+                .child("CNH")
+                .child(idUsuario+".CNH.JPEG");
+
 
         // Método para realmente salvar no Firebase
         // putBytes = para os dados da imagem em bytes

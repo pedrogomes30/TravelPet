@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 // Pega o id e o email do Usuario atual e armazena na variável String idUsuario
                 idUsuario = user.getUid();
                 emailUsuario = user.getEmail();
+                ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
 
                 /* Método inicia Activity CadastroNome...
                    Só coloquei para testes ainda será necessario avaliar se o usuario tem
@@ -134,11 +135,12 @@ public class MainActivity extends AppCompatActivity {
                 usuario.setId(idUsuario);
                 usuario.setEmail(emailUsuario);
 
+
                 Intent intent = new Intent(getApplicationContext(), CadastroNomeUsuarioActivity.class);
                 intent.putExtra("usuario",usuario);
                 startActivity(intent);
 
-                ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
+
 
                 // UsuarioFirebase.redirecionaUsuarioLogado(MainActivity.this);
 
