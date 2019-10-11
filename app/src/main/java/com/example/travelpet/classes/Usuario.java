@@ -71,7 +71,7 @@ public class Usuario implements Parcelable {
     }
 
     // Método para salvar os dados do usuário no firebase
-    public void salvar(){
+    public void salvar() {
         // DatabaseReference = Referência do Firebase
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference usuariosRef = fireDB.getReference().child("usuarios");

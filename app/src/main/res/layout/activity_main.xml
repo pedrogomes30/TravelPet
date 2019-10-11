@@ -14,10 +14,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bt_mapa"
         app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
         app:layout_constraintStart_toStartOf="@+id/sign_in_button"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+
+    <Button
+        android:id="@+id/bt_mapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MapaTeste"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sign_out_button"
+        app:layout_constraintStart_toStartOf="@+id/sign_out_button"
+        app:layout_constraintTop_toBottomOf="@+id/sign_out_button" />
 
     <TextView
         android:id="@+id/textView"
@@ -29,6 +39,7 @@
         app:layout_constraintEnd_toEndOf="@+id/gifview"
         app:layout_constraintStart_toStartOf="@+id/gifview"
         app:layout_constraintTop_toBottomOf="@+id/gifview" />
+
 
     <com.cunoraz.gifview.library.GifView
         android:id="@+id/gifview"

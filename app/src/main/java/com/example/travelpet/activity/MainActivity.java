@@ -2,9 +2,11 @@ package com.example.travelpet.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +39,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
-
-
     FirebaseAuth fbAuth;
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
-    Button BTSignOut;
+    Button BTSignOut,BTMapas;
 
     String idUsuario;
     String emailUsuario;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // Tira a ActionBar
         getSupportActionBar().hide();
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         fbDB = FirebaseDatabase.getInstance();
         BTSignIn = findViewById(R.id.sign_in_button);
         BTSignOut = findViewById(R.id.sign_out_button);
+        BTMapas = findViewById(R.id.bt_mapa);
         setButtons();
     }
 
@@ -75,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signOut();
+            }
+        });
+
+        BTMapas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(it);
             }
         });
 
