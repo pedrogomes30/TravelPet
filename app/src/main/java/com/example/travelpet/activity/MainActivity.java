@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                startActivity(new Intent(MainActivity.this, PerfilPassageiroActivity.class));
+                startActivity(new Intent(MainActivity.this, CadastroNomeUsuarioActivity.class));
 
                 ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
 
