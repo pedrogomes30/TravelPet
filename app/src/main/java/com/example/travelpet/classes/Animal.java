@@ -6,15 +6,17 @@ import android.os.Parcelable;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Exclude;
 
 public class Animal implements Parcelable {
 
     private String idUsuario;
+    private String idAnimal;
     private String nomeAnimal;
     private String especieAnimal;
     private String racaAnimal;
     private String porteAnimal;
+    private String fotoAnimal;
+
 
     // Construtor
     public Animal() {
@@ -22,13 +24,20 @@ public class Animal implements Parcelable {
 
 
     //      Métodos getter and setter
-
     public String getIdUsuario() {
         return idUsuario;
     }
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public String getIdAnimal() {
+        return idAnimal;
+    }
+
+    public void setIdAnimal(String idAnimal) {
+        this.idAnimal = idAnimal;
     }
 
     public String getNomeAnimal() {
@@ -63,37 +72,59 @@ public class Animal implements Parcelable {
         this.porteAnimal = porteAnimal;
     }
 
+    public String getFotoAnimal() {
+        return fotoAnimal;
+    }
+
+    public void setFotoAnimal(String fotoAnimal) {
+        this.fotoAnimal = fotoAnimal;
+    }
+
     //      Método para salvar os dados do animal no firebase
     public void salvarAnimal(){
+
+
         // DatabaseReference = Referência do Firebase
-        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+
+         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+         DatabaseReference animaisRef = fireDB.getReference().child("animais");
         // Referência DatabaseRefence para animais
-        // firebaseRef.child("animais") = indica o nó filho chamado animais
+        // animaisRef.child("animais") = indica o nó filho chamado animais
         // .push(); = pega o id criado pelo nó
-        DatabaseReference animais = firebaseRef.child("animais").child(getIdUsuario()).push();
+        DatabaseReference animais = animaisRef.child(getIdUsuario()).child(getIdAnimal());
 
         // Configurando usuário no Firebase
         // this = pois salvara todos os dados de uma vez (idUsuario, idAnimal, nomeAnimal...)
         animais.setValue(this);
 
     }
+    public static String gerarPushKeyIdAnimal(){
+        	    DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
+        	    String chave = referencia.push().getKey();
+        	    return chave;
+    }
+
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Animal(Parcel in) {
         idUsuario = in.readString();
+        idAnimal = in.readString();
         nomeAnimal = in.readString();
         especieAnimal = in.readString();
         racaAnimal = in.readString();
         porteAnimal = in.readString();
+        fotoAnimal = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(idUsuario);
+        dest.writeString(idAnimal);
         dest.writeString(nomeAnimal);
         dest.writeString(especieAnimal);
         dest.writeString(racaAnimal);
         dest.writeString(porteAnimal);
+        dest.writeString(fotoAnimal);
     }
 
     @Override

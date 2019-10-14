@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity">
+    tools:context=".activity.cadastro.cadastroAnimal.CadastroRacaAnimalActivity">
 
     <TextView
-        android:id="@+id/textViewRacaAnimal"
+        android:id="@+id/textViewEspecie"
         android:layout_width="359dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -36,11 +36,11 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonProximoRacaAnimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRacaAnimal">
+        app:layout_constraintTop_toBottomOf="@+id/textViewEspecie">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editRacaAnimal"
-            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
+            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ ÁáÂâÀàÃãÉéÊêÈèÍíÎîÌìÓóÔôÒòÕõÚúÛûÙùÇçÑñÝý"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Raça do Animal" />

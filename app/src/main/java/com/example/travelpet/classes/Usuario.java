@@ -4,11 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.travelpet.config.ConfiguracaoFirebase;
+import com.example.travelpet.config.UsuarioFirebase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
-import com.google.firebase.database.FirebaseDatabase;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Usuario implements Parcelable {
 
@@ -18,15 +20,14 @@ public class Usuario implements Parcelable {
     String telefone;
     String tipoUsuario;
     String email;
+    String fotoUsuarioUrl;
+    String fluxoDados;
 
     // Construtor
     public Usuario() {
     }
 
     // Métodos Getter and Setter
-
-    // Método para salvar os dados do usuário no firebase
-
     public String getId() {
         return id;
     }
@@ -76,6 +77,52 @@ public class Usuario implements Parcelable {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public String getFotoUsuarioUrl() {
+        return fotoUsuarioUrl;
+    }
+
+    public void setFotoUsuarioUrl(String fotoUsuarioUrl) {
+        this.fotoUsuarioUrl = fotoUsuarioUrl;
+    }
+
+
+
+    // O motivo deu fazer esse método e colocar a foto no database
+    public void atualizarUsuario(){
+        // pega id usuario atual
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        // referência do database
+        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
+
+        DatabaseReference usuariosRef = database.child("usuarios")
+                .child( identificadorUsuario );
+        // Criando método Map
+        Map<String, Object> valoresUsuario = converterParaMap();
+
+        usuariosRef.updateChildren ( valoresUsuario );
+    }
+    @Exclude
+    // Tranformando Classe Usuario no tipo HashMap, utilizado no salvamento da foto no database
+    public Map<String, Object> converterParaMap(){
+        HashMap<String, Object> usuarioMap = new HashMap<>();
+        // Configurando usuarioMap
+        usuarioMap.put("nome", getNome());
+        usuarioMap.put("sobrenome",getSobrenome());
+        usuarioMap.put("telefone",getTelefone());
+
+        return usuarioMap;
+    }
+
+    @Exclude // com isso não será salvo o fluxo dados no banco de dados
+    public String getFluxoDados() {
+        return fluxoDados;
+    }
+
+    public void setFluxoDados(String fluxoDados) {
+        this.fluxoDados = fluxoDados;
+    }
+
+
     // Método para salvar os dados do usuário no firebase
     public void salvar(){
         // DatabaseReference = Referência do Firebase
@@ -93,7 +140,6 @@ public class Usuario implements Parcelable {
         usuarios.setValue(this);
 
     }
-
     // Métodos Necessarios para usar a Interface Parcelable
     protected Usuario(Parcel in) {
         id = in.readString();
@@ -102,6 +148,8 @@ public class Usuario implements Parcelable {
         telefone = in.readString();
         tipoUsuario = in.readString();
         email = in.readString();
+        fotoUsuarioUrl = in.readString();
+        fluxoDados = in.readString();
     }
 
     @Override
@@ -112,6 +160,8 @@ public class Usuario implements Parcelable {
         dest.writeString(telefone);
         dest.writeString(tipoUsuario);
         dest.writeString(email);
+        dest.writeString(fotoUsuarioUrl);
+        dest.writeString(fluxoDados);
     }
 
     @Override

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_viagem">
+
+    <fragment
+        android:id="@+id/nav_viagem"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.viagem.ViagemFragment"
+        android:label="@string/menu_viagem"
+        tools:layout="@layout/fragment_viagem" />
+
+    <fragment
+        android:id="@+id/nav_pagamento"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.pagamento.PagamentoFragment"
+        android:label="@string/menu_pagamento"
+        tools:layout="@layout/fragment_pagamento" />
+
+    <fragment
+        android:id="@+id/nav_meus_animais"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.ListaAnimaisFragment"
+        android:label="@string/menu_meus_animais"
+        tools:layout="@layout/lista_animais_fragment" />
+
+    <fragment
+        android:id="@+id/nav_configuracao"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.configuracao.ConfiguracaoFragment"
+        android:label="@string/menu_configuracao"
+        tools:layout="@layout/fragment_configuracao" />
+
+
+    <fragment
+        android:id="@+id/nav_contato"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.contato.ContatoFragment"
+        android:label="@string/menu_contato"
+        tools:layout="@layout/fragment_contato" />
+
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.example.travelpet.telasPerfil.passageiro.ui.info.InfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_info" />
+
+
+
+</navigation>

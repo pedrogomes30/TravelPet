@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorApp">#FF6906</color>
-    <color name="colorApp2">#b3500d</color>
+    <color name="colorApp2">#D55805</color>
+    <color name="colorGradientePerfil">#FF6914</color>
+    <color name="colorGradientePerfil2">#AA3806</color>
+    <color name="white">#FFFFFF</color>
 </resources>

@@ -1,16 +1,30 @@
 <resources>
     <string name="app_name">TravelPet</string>
-    <string name="titulo_nome_usuario">NOME</string>
-    <string name="titulo_telefone_usuario">TELEFONE</string>
-    <string name="titulo_tipo_usuario">TIPO USUÁRIO</string>
-    <string name="titulo_nome_animal">NOME DO ANIMAL</string>
-    <string name="titulo_especie_animal">ESPÉCIE</string>
-    <string name="titulo_raca_animal">RAÇA</string>
-    <string name="titulo_porte_animal">PORTE DO ANIMAL</string>
-
-    <string name="titulo_termo_motorista">TERMOS MOTORISTA</string>
-    <string name="titulo_cnh_motorista">CNH MOTORISTA</string>
-    <string name="titulo_foto_motorista">FOTO MOTORISTA</string>
-    <string name="titulo_crlv_motorista">CRLV MOTORISTA</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_viagem">Viagem</string>
+    <string name="menu_pagamento">Pagamento</string>
+    <string name="menu_configuracao">Configuração</string>
+    <string name="menu_contato">Contato</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_meus_animais">Meus Animais</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>

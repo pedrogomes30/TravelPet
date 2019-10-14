@@ -31,23 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewDigiteNome"
-        android:layout_width="360dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:gravity="center"
-        android:text="Por favor digite seu nome e sobrenome :"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas" />
-
     <Button
         android:id="@+id/buttonProximoNomeUsuario"
         android:layout_width="300dp"
@@ -71,16 +54,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edit_text_branco_seletor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDigiteNome">
+        app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNomeUsuario"
-            android:digits="abcdefghijklmnopqrstuvxwyzABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome" />
@@ -91,22 +73,43 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="30dp"
         android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProximoNomeUsuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputNomeUsuario"
-        app:layout_constraintVertical_bias="0.110000014">
+        app:layout_constraintTop_toBottomOf="@+id/textInputNomeUsuario">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editSobrenomeUsuario"
-            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
             android:hint="Sobrenome" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/edit_text_branco_seletor"
+        app:layout_constraintBottom_toTopOf="@+id/buttonProximoNomeUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputSobrenome"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Telefone"
+            android:inputType="text|phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

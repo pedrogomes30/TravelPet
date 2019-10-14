@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.MainActivity;
 import com.example.travelpet.classes.Motorista;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
@@ -21,7 +20,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 

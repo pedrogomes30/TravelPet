@@ -2,15 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.travelpet">
     <!--
+    android:name="android.hardware.camera2"= Básicamente está dizendo que precisa
+        da camera do usuario que e um hardware necessario para que o app funcione
+        android:required="true" = E necessario ter o hardware, o app so aparace para
+        dispositivos que tenham camera
+        android:required="false" = Não e obrigatório, o usuário pode ter ou nao
+    -->
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
+    <!--
+     android.permission.READ_EXTERNAL_STORAGE = Leitura de arquivos, armazenamento onde guarda as fotos
+     Permissão para que o usuário vizualize a galeria, ler o armazenamento exe
+     de fotos, ler o armazenamento externo
+    -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
-    <!--
-     android.permission.READ_EXTERNAL_STORAGE = Permissão para que o usuário vizualize a galeria
-     de fotos, ler o armazenamento externo
-    -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -20,28 +32,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.teste.TestePassageiroActivity"></activity>
+        <activity android:name=".telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity"
+            android:parentActivityName=".telasPerfil.passageiro.PerfilPassageiroActivity"/>
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity" />
+        <activity
+            android:name=".telasPerfil.passageiro.PerfilPassageiroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.teste.TestePassageiroActivity" />
         <activity android:name=".activity.teste.TesteMotoristaActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroCrlvMotoristaActivity"
-            android:label="@string/titulo_crlv_motorista"
-            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroFotoMotoristaActivity"
-            />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroFotoMotoristaActivity"
-            android:label="@string/titulo_foto_motorista"
-            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity"
-            />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity"
-            android:label="@string/titulo_termo_motorista"
-            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity"
-            />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity"
-            android:label="@string/titulo_cnh_motorista"
-            android:parentActivityName=".activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity"
-            />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCrlvMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCnhMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -57,35 +59,12 @@
         <activity
             android:name=".activity.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroPorteAnimalActivity"
-            android:label="@string/titulo_porte_animal"
-            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroRacaAnimalActivity"
-            android:label="@string/titulo_raca_animal"
-            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroEspecieAnimalActivity"
-            android:label="@string/titulo_especie_animal"
-            android:parentActivityName=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity"
-            android:label="@string/titulo_nome_animal"
-            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity"
-            android:label="@string/titulo_telefone_usuario"
-            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity"
-            android:label="@string/titulo_nome_usuario"
-            android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.cadastro.CadastroUsuarioActivity" />
-        <activity
-            android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity"
-            android:label="@string/titulo_tipo_usuario"
-            android:parentActivityName=".activity.cadastro.cadastroUsuario.CadastroTelefoneUsuarioActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroPorteAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroRacaAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroEspecieAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name">

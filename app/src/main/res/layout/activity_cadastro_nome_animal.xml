@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity">
+    tools:context=".activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity">
 
     <Button
         android:id="@+id/buttonProximoNomeAnimal"
@@ -75,7 +75,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNomeAnimal"
-            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ"
+            android:digits="abcdefghijklmnopqrstuvxwyz ABCDEFGHIJKLMNOPQRSTUVXWYZ ÁáÂâÀàÃãÉéÊêÈèÍíÎîÌìÓóÔôÒòÕõÚúÛûÙùÇçÑñÝý"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome do Animal" />

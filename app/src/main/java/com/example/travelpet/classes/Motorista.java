@@ -2,17 +2,9 @@ package com.example.travelpet.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.example.travelpet.activity.cadastro.cadastroDadosMotorista.CadastroCrlvMotoristaActivity;
-import com.example.travelpet.config.ConfiguracaoFirebase;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+
 
 public class Motorista extends Usuario implements Parcelable {
     // Pega referência do Sotorage
@@ -21,6 +13,7 @@ public class Motorista extends Usuario implements Parcelable {
     private byte[] fotoCNH;
     private byte[] fotoPerfilMotorista;
     private byte[] fotoCrlvMotorista;
+
 
     // Construtor
     public Motorista() {
@@ -91,6 +84,4 @@ public class Motorista extends Usuario implements Parcelable {
             return new Motorista[size];
         }
     };
-
-
 }

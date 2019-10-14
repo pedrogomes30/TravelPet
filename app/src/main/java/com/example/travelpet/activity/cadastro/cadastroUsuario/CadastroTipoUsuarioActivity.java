@@ -1,22 +1,21 @@
 package com.example.travelpet.activity.cadastro.cadastroUsuario;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.travelpet.activity.cadastro.cadastroDadosAnimal.CadastroNomeAnimalActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroDadosMotorista.CadastroCnhMotoristaActivity;
-import com.example.travelpet.activity.cadastro.cadastroDadosMotorista.CadastroTermoMotoristaActivity;
+import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
+import com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity;
 import com.example.travelpet.classes.Usuario;
 
 public class CadastroTipoUsuarioActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroTelefoneUsuario
-    String idUsuario, emailUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario;
-
+    String nomeUsuario, sobrenomeUsuario, telefoneUsuario;
+    String fluxoDados = "cadastroUsuario";
     String tipoUsuario;
 
     @Override
@@ -28,8 +27,6 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
 
-        idUsuario           =   usuario.getId();
-        emailUsuario        =   usuario.getEmail();
         nomeUsuario         =   usuario.getNome();
         sobrenomeUsuario    =   usuario.getSobrenome();
         telefoneUsuario     =   usuario.getTelefone();
@@ -43,14 +40,13 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
 
         Usuario usuario = new Usuario();
 
-        usuario.setId(idUsuario);
-        usuario.setEmail(emailUsuario);
         usuario.setNome(nomeUsuario);
         usuario.setSobrenome(sobrenomeUsuario);
         usuario.setTelefone(telefoneUsuario);
         usuario.setTipoUsuario(tipoUsuario);
+        usuario.setFluxoDados(fluxoDados);
 
-        Intent intent = new Intent(getApplicationContext(), CadastroNomeAnimalActivity.class);
+        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroNomeAnimalActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
 
@@ -63,14 +59,12 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
 
         Usuario usuario = new Usuario();
 
-        usuario.setId(idUsuario);
-        usuario.setEmail(emailUsuario);
         usuario.setNome(nomeUsuario);
         usuario.setSobrenome(sobrenomeUsuario);
         usuario.setTelefone(telefoneUsuario);
         usuario.setTipoUsuario(tipoUsuario);
 
-        Intent intent = new Intent(getApplicationContext(), CadastroTermoMotoristaActivity.class);
+        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroTermoMotoristaActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
 

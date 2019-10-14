@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroDadosMotorista.CadastroFotoMotoristaActivity">
+    tools:context=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity">
 
     <TextView
         android:id="@+id/textViewFotoPefil"

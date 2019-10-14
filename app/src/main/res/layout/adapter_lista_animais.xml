@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="17dp"
+    android:paddingTop="10dp"
+    android:paddingRight="17dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageFotoAnimalLista"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/iconperfilanimal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textNomeAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome" />
+
+            <TextView
+                android:id="@+id/textEspecieAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Especie" />
+
+            <TextView
+                android:id="@+id/textRacaAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Raca" />
+
+            <TextView
+                android:id="@+id/textPorteAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Porte" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="70dp"
+        android:background="?android:attr/listDivider" />
+
+</LinearLayout>
