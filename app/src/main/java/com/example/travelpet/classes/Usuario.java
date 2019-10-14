@@ -7,6 +7,9 @@ import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.google.firebase.database.FirebaseDatabase;
+
+
 public class Usuario implements Parcelable {
 
     String id;
@@ -21,6 +24,9 @@ public class Usuario implements Parcelable {
     }
 
     // Métodos Getter and Setter
+
+    // Método para salvar os dados do usuário no firebase
+
     public String getId() {
         return id;
     }

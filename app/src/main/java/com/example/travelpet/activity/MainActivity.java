@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                    cadastro pronto no firebase para poder indicar a Activity adequada
                    para a situação
                  */
+
                 Usuario usuario = new Usuario();
                 // Envia o idUsuario para a classe Usuario
                 usuario.setId(idUsuario);
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                  */
+
 
             } else {
 
