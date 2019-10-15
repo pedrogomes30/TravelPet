@@ -366,14 +366,5 @@ public class EditarAnimalActivity extends AppCompatActivity {
          });
          msgBox.show();
      }
-
-     @Override
-     public void onBackPressed() {
-       startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-       finish();
-     }
-
-
-
 }
 

@@ -120,6 +120,11 @@ public class ListaAnimaisFragment extends Fragment {
         super.onStop();
         usuariosRef.removeEventListener( valueEventListenerListaAnimais );
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        listaAnimais.clear();
+    }
 
     public void recuperarAnimais(){
         valueEventListenerListaAnimais = usuariosRef.addValueEventListener(new ValueEventListener() {
