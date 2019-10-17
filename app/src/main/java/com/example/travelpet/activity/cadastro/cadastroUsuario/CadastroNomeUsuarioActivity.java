@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CadastroNomeUsuarioActivity extends AppCompatActivity {
 
     /// Váriaveis usadas para armazenar dados dos campos do nome e sobrenome do xml
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
     private TextInputEditText campoNome,campoSobrenome, campoTelefone;
@@ -39,7 +39,6 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
         // Criando marcara para o campo de telefone
         SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(campoTelefone, smf);
-        // Referenciando que esse campo tem mascara
         campoTelefone.addTextChangedListener(mtw);
     }
 

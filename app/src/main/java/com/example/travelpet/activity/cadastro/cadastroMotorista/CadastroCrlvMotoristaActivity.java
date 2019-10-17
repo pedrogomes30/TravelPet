@@ -30,22 +30,14 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
     // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario
     String nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
-    // Variavel armazena a foto da carteira de motorista
-    byte[] fotoCNH;
-
-    // Variavel armazena a foto da perfil do motorista
-    byte[] fotoMotorista;
-
-    // Variavel armazena a foto do documento do veículo do motorista
-    byte[] fotoCrlvMotorista;
+    // Variavel para armazenar a foto em um array de byte
+    private byte[] fotoCNH, fotoMotorista, fotoCrlvMotorista;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
 
     // Variável armazena a referência do Sotorage
     private StorageReference storageReference;
-
-    //FirebaseUser fireUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +84,6 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
         if ( resultCode == RESULT_OK){
 
             try {
-
                 // Recupera local da imagem selecionada
                 Uri localImagemSelecionada = data.getData();
 

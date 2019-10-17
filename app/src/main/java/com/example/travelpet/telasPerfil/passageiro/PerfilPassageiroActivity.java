@@ -1,5 +1,7 @@
 package com.example.travelpet.telasPerfil.passageiro;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +20,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
+import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.UsuarioFirebase;
+import com.example.travelpet.helper.Permissao;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +39,14 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
     private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
     // Variável usada no processo de trocar de Fragment
 
+    // Código para solicitar permissão ao usuário, array de Strings
+    public String [] permissoesNecessarias = new String []{
+            // Definindo Permiissões
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +56,12 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Solicitando (Validar) Permissões
+        Permissao.validarPermissoes(permissoesNecessarias, PerfilPassageiroActivity.this, 1);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
 
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
 
@@ -135,6 +151,16 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for ( int permissaoResultado : grantResults ){
+            if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
+
+                Permissao.alertaValidacaoPermissao(PerfilPassageiroActivity.this);
+            }
+        }
     }
 
     public void atualizaFotoUsuario(Uri url){

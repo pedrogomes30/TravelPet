@@ -6,7 +6,7 @@
         da camera do usuario que e um hardware necessario para que o app funcione
         android:required="true" = E necessario ter o hardware, o app so aparace para
         dispositivos que tenham camera
-        android:required="false" = Não e obrigatório, o usuário pode ter ou nao
+        android:required="false" = Não e obrigatório, o usuário pode ter ou não
     -->
     <uses-feature
         android:name="android.hardware.camera2"
@@ -38,8 +38,6 @@
         <activity
             android:name=".telasPerfil.passageiro.PerfilPassageiroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.teste.TestePassageiroActivity" />
-        <activity android:name=".activity.teste.TesteMotoristaActivity" />
         <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCrlvMotoristaActivity" />
         <activity android:name=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity" />
         <activity android:name=".activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity" />
