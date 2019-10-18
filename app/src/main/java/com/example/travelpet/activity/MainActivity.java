@@ -68,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        BTSignOut.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent it = new Intent(MainActivity.this,PerfilPassageiroActivity.class);
+                startActivity(it);
+                return true;
+            }
+        });
+
 
     }
 
