@@ -1,9 +1,5 @@
 package com.example.travelpet.activity.cadastro.cadastroMotorista;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,11 +8,15 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Motorista;
-import com.example.travelpet.classes.Usuario;
-import com.example.travelpet.config.ConfiguracaoFirebase;
-import com.example.travelpet.config.UsuarioFirebase;
+import com.example.travelpet.activity.classes.Motorista;
+import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.activity.config.ConfiguracaoFirebase;
+import com.example.travelpet.activity.config.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
@@ -30,14 +30,22 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
     // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario
     String nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
-    // Variavel para armazenar a foto em um array de byte
-    private byte[] fotoCNH, fotoMotorista, fotoCrlvMotorista;
+    // Variavel armazena a foto da carteira de motorista
+    byte[] fotoCNH;
+
+    // Variavel armazena a foto da perfil do motorista
+    byte[] fotoMotorista;
+
+    // Variavel armazena a foto do documento do veículo do motorista
+    byte[] fotoCrlvMotorista;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
 
     // Variável armazena a referência do Sotorage
     private StorageReference storageReference;
+
+    //FirebaseUser fireUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +92,7 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
         if ( resultCode == RESULT_OK){
 
             try {
+
                 // Recupera local da imagem selecionada
                 Uri localImagemSelecionada = data.getData();
 

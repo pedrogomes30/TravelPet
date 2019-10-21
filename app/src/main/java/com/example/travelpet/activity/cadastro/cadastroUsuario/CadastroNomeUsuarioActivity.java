@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.activity.classes.Usuario;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.textfield.TextInputEditText;
@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CadastroNomeUsuarioActivity extends AppCompatActivity {
 
     /// Váriaveis usadas para armazenar dados dos campos do nome e sobrenome do xml
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
+    String nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
     private TextInputEditText campoNome,campoSobrenome, campoTelefone;
@@ -39,6 +39,7 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
         // Criando marcara para o campo de telefone
         SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(campoTelefone, smf);
+        // Referenciando que esse campo tem mascara
         campoTelefone.addTextChangedListener(mtw);
     }
 

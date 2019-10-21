@@ -8,8 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Animal;
-import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.activity.classes.Animal;
+import com.example.travelpet.activity.classes.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroRacaAnimalActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.travelpet.config;
+package com.example.travelpet.activity.config;
 
 import android.net.Uri;
 import android.util.Log;

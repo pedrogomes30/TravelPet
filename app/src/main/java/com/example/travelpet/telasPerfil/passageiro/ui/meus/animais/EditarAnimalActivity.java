@@ -24,10 +24,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
+import com.example.travelpet.activity.classes.Animal;
+import com.example.travelpet.activity.config.ConfiguracaoFirebase;
+import com.example.travelpet.activity.config.UsuarioFirebase;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
-import com.example.travelpet.classes.Animal;
-import com.example.travelpet.config.ConfiguracaoFirebase;
-import com.example.travelpet.config.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -289,9 +289,9 @@ public class EditarAnimalActivity extends AppCompatActivity {
                     animal.salvarAnimal();
 
                     Toast.makeText(EditarAnimalActivity.this,
-                         "Alteração feitaa com sucesso!",
+                         "Alteração feita com sucesso!",
                          Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EditarAnimalActivity.this,PerfilPassageiroActivity.class));
+                    startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
                     finish();
 
                 }
@@ -312,7 +312,7 @@ public class EditarAnimalActivity extends AppCompatActivity {
                 Toast.makeText(EditarAnimalActivity.this,
                      "Alteração feita com sucesso!",
                      Toast.LENGTH_SHORT).show();
-             startActivity(new Intent(EditarAnimalActivity.this,PerfilPassageiroActivity.class));
+             startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
              finish();
 
              }
@@ -330,7 +330,7 @@ public class EditarAnimalActivity extends AppCompatActivity {
 
                  // Recuperando o caminho da foto no storage de acordo com animal escolhido
                  StorageReference imagemReferencia = storageReference.child(
-                         "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+"."+".FOTO.PERFIL.JPEG");
+                         "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+".FOTO.PERFIL.JPEG");
 
                  // Caso consiga exccluir, executa
                  imagemReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -344,7 +344,7 @@ public class EditarAnimalActivity extends AppCompatActivity {
                          Toast.makeText(EditarAnimalActivity.this,
                                  "Sucesso ao remover Animal!",
                                  Toast.LENGTH_SHORT).show();
-                         startActivity(new Intent(EditarAnimalActivity.this,PerfilPassageiroActivity.class));
+                         startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
 
                      }
                      // Caso de erro
@@ -366,5 +366,7 @@ public class EditarAnimalActivity extends AppCompatActivity {
          });
          msgBox.show();
      }
+
+
 }
 

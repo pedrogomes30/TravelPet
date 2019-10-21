@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelpet.R;
+import com.example.travelpet.activity.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
-import com.example.travelpet.adapter.ListaAnimaisAdapter;
-import com.example.travelpet.classes.Animal;
-import com.example.travelpet.classes.Usuario;
-import com.example.travelpet.config.ConfiguracaoFirebase;
-import com.example.travelpet.config.UsuarioFirebase;
-import com.example.travelpet.helper.RecyclerItemClickListener;
+import com.example.travelpet.activity.classes.Animal;
+import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.activity.config.ConfiguracaoFirebase;
+import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.activity.helper.RecyclerItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -120,6 +120,7 @@ public class ListaAnimaisFragment extends Fragment {
         super.onStop();
         usuariosRef.removeEventListener( valueEventListenerListaAnimais );
     }
+
     @Override
     public void onResume() {
         super.onResume();

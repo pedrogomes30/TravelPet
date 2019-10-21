@@ -1,4 +1,4 @@
-package com.example.travelpet.adapter;
+package com.example.travelpet.activity.adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Animal;
+import com.example.travelpet.activity.classes.Animal;
 
 import java.util.List;
 

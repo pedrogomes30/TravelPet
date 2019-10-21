@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.travelpet">
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!--
     android:name="android.hardware.camera2"= Básicamente está dizendo que precisa
         da camera do usuario que e um hardware necessario para que o app funcione
         android:required="true" = E necessario ter o hardware, o app so aparace para
         dispositivos que tenham camera
-        android:required="false" = Não e obrigatório, o usuário pode ter ou não
+        android:required="false" = Não e obrigatório, o usuário pode ter ou nao
     -->
     <uses-feature
         android:name="android.hardware.camera2"
@@ -18,12 +26,6 @@
     -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -32,16 +34,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity"
-            android:parentActivityName=".telasPerfil.passageiro.PerfilPassageiroActivity"/>
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity" />
-        <activity
-            android:name=".telasPerfil.passageiro.PerfilPassageiroActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCrlvMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCnhMotoristaActivity" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -55,8 +48,16 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activity.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:name=".telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity"
+            android:parentActivityName=".telasPerfil.passageiro.PerfilPassageiroActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity" />
+        <activity
+            android:name=".telasPerfil.passageiro.PerfilPassageiroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCrlvMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCnhMotoristaActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroPorteAnimalActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroRacaAnimalActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroEspecieAnimalActivity" />

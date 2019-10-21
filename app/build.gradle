@@ -27,7 +27,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:5.1.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
@@ -52,6 +52,9 @@ dependencies {
     // Dependeência para fazer dowload de imagem do usuario firebase
     // Como fazer download de imagens com a FirebaseUI
     implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
+
+    // Dependência utilizada para usar o mapa
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

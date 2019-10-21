@@ -1,13 +1,10 @@
 package com.example.travelpet.telasPerfil.passageiro.ui.configuracao;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +14,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
-import com.example.travelpet.classes.Usuario;
-import com.example.travelpet.config.ConfiguracaoFirebase;
-import com.example.travelpet.config.UsuarioFirebase;
-import com.example.travelpet.helper.Permissao;
+import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.activity.config.ConfiguracaoFirebase;
+import com.example.travelpet.activity.config.UsuarioFirebase;
 import com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.ListaAnimaisFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +41,6 @@ import java.io.ByteArrayOutputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
-
 
 
 public class ConfiguracaoFragment extends Fragment {
@@ -76,7 +70,13 @@ public class ConfiguracaoFragment extends Fragment {
     private ListaAnimaisFragment listaAnimaisFragment;
     private ConfiguracaoFragment configuracaoFragment;
 
-
+    //  Ainda precisa ser Trabalhado
+    /* Código para solicitar permissão ao usuário, array de Strings
+    public String [] permissoesNecessarias = new String []{
+            // Definindo Permiissões
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    }; */
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,11 +87,14 @@ public class ConfiguracaoFragment extends Fragment {
         storageReference    =   ConfiguracaoFirebase.getFirebaseStorage();
         emailUsuario        =   UsuarioFirebase.getEmailUsuario();
 
-        imageButtonCamera           =   root.findViewById(R.id.imageButtonCamera);
-        imageButtonGaleria          =   root.findViewById(R.id.imageButtonGaleria);
-        imageViewCircleFotoPerfil   =   root.findViewById(R.id.imageViewCircleFotoPerfil);
-        textViewAdicionarAnimal     =   root.findViewById(R.id.textViewAdicionarAnimal);
-        textViewEditarAnimais       =   root.findViewById(R.id.textViewEditarAnimais);
+        // Validar Permissões (Ainda precisa ser trabalhado)
+        // Permissao.validarPermissoes(permissoesNecessarias,this, 1);
+
+        imageButtonCamera   =   root.findViewById(R.id.imageButtonCamera);
+        imageButtonGaleria  =   root.findViewById(R.id.imageButtonGaleria);
+        imageViewCircleFotoPerfil = root.findViewById(R.id.imageViewCircleFotoPerfil);
+        textViewAdicionarAnimal = root.findViewById(R.id.textViewAdicionarAnimal);
+        textViewEditarAnimais = root.findViewById(R.id.textViewEditarAnimais);
 
         //imageViewPerfil = findViewById(R.id.imageViewPerfil);
         DatabaseReference usuarios = referencia.child( "usuarios" ).child(UsuarioFirebase.getIdentificadorUsuario());
@@ -201,10 +204,11 @@ public class ConfiguracaoFragment extends Fragment {
 
         return root;
     }
-        /* Capturando (Recuperando a imagem, sobre-escrevendo o método
-        // requestCode = saber se e SELECAO_GALERIA definido no começo
-        // resultCode = código de resultado para saber se deu certo ou não a execução do onActivityResult
-        // Intent data = dados retornados , no caso a imagem */
+
+    /* Capturando (Recuperando a imagem, sobre-escrevendo o método
+    // requestCode = saber se e SELECAO_GALERIA definido no começo
+    // resultCode = código de resultado para saber se deu certo ou não a execução do onActivityResult
+    // Intent data = dados retornados , no caso a imagem */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

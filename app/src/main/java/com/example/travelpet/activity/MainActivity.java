@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity;
 import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.firebase.ui.auth.AuthUI;
@@ -68,15 +67,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        BTSignOut.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent it = new Intent(MainActivity.this,PerfilPassageiroActivity.class);
-                startActivity(it);
-                return true;
-            }
-        });
-
 
     }
 
@@ -117,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                startActivity(new Intent(MainActivity.this, CadastroNomeUsuarioActivity.class));
+                startActivity(new Intent(MainActivity.this, PerfilPassageiroActivity.class));
 
                 ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
 

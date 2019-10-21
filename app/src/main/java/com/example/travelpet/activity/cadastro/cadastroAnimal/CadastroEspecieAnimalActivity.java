@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Animal;
-import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.activity.classes.Animal;
+import com.example.travelpet.activity.classes.Usuario;
 
 public class CadastroEspecieAnimalActivity extends AppCompatActivity {
 

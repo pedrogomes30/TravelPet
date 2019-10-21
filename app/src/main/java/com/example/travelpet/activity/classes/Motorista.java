@@ -1,4 +1,4 @@
-package com.example.travelpet.classes;
+package com.example.travelpet.activity.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;

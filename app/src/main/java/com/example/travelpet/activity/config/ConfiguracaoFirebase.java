@@ -1,4 +1,4 @@
-package com.example.travelpet.config;
+package com.example.travelpet.activity.config;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

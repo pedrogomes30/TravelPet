@@ -1,8 +1,5 @@
 package com.example.travelpet.activity.cadastro.cadastroMotorista;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,9 +8,12 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Motorista;
-import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.activity.classes.Motorista;
+import com.example.travelpet.activity.classes.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
