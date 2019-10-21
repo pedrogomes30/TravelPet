@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Motorista;
-import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.classes.Motorista;
+import com.example.travelpet.classes.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,10 +1,10 @@
-package com.example.travelpet.activity.classes;
+package com.example.travelpet.classes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.travelpet.activity.config.ConfiguracaoFirebase;
-import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.config.ConfiguracaoFirebase;
+import com.example.travelpet.config.UsuarioFirebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;

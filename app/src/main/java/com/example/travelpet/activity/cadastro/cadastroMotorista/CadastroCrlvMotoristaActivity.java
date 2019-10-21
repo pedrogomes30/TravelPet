@@ -13,10 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Motorista;
-import com.example.travelpet.activity.classes.Usuario;
-import com.example.travelpet.activity.config.ConfiguracaoFirebase;
-import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.classes.Motorista;
+import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.config.ConfiguracaoFirebase;
+import com.example.travelpet.config.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;

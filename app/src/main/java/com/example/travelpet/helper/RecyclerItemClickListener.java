@@ -1,4 +1,4 @@
-package com.example.travelpet.activity.helper;
+package com.example.travelpet.helper;
 
 import android.content.Context;
 import android.view.GestureDetector;

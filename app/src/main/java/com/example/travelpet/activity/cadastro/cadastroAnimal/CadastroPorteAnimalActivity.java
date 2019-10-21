@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Animal;
-import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
 
 public class CadastroPorteAnimalActivity extends AppCompatActivity {
 
@@ -21,8 +21,6 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
     private RadioGroup radioGroupPorteAnimal;
 
     String porteAnimal;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,40 +75,12 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
             animal.setRacaAnimal(racaAnimal);
             animal.setPorteAnimal(porteAnimal);
 
-            Intent intent = new Intent(CadastroPorteAnimalActivity.this,CadastroFotoAnimalActivity.class);
+            Intent intent = new Intent(CadastroPorteAnimalActivity.this, CadastroFotoAnimalActivity.class);
 
             intent.putExtra ("usuario",usuario);
             intent.putExtra ("animal",animal);
 
             startActivity(intent);
-
-            /*
-            Usuario usuario = new Usuario();
-
-            usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
-            usuario.setEmail(UsuarioFirebase.getEmailUsuario());
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
-
-            usuario.salvar();
-
-            Animal animal = new Animal();
-
-            animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-            animal.setNomeAnimal(nomeAnimal);
-            animal.setEspecieAnimal(especieAnimal);
-            animal.setRacaAnimal(racaAnimal);
-            animal.setPorteAnimal(porteAnimal);
-
-            animal.salvarAnimal();
-
-            Toast.makeText(CadastroPorteAnimalActivity.this,
-                    "Sucesso ao cadastrar Usuário Passageiro !",
-                    Toast.LENGTH_SHORT).show();
-
-             */
 
         }else{
             Toast.makeText(CadastroPorteAnimalActivity.this, //onde será exibido
@@ -125,9 +95,8 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
         //new RadioGroup.OnCheckedChangeListener = imstancia um objeto que dentro dele tem um metodo para recuperar o item selecionado
         radioGroupPorteAnimal.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
-            // Cria uma referência para a classe usuario e instância ela
             // Método para recuperar o item selecionado
-            // Em "int Checked" = fica armazenado o item que foi escolhido
+            // Em "int checkedId" = fica armazenado o item que foi escolhido
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (checkedId == R.id.radioButtonPequeno) {

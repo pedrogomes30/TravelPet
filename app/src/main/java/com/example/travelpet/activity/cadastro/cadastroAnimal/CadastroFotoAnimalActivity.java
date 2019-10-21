@@ -1,6 +1,8 @@
 package com.example.travelpet.activity.cadastro.cadastroAnimal;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,10 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Animal;
-import com.example.travelpet.activity.classes.Usuario;
-import com.example.travelpet.activity.config.ConfiguracaoFirebase;
-import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.config.ConfiguracaoFirebase;
+import com.example.travelpet.config.UsuarioFirebase;
+import com.example.travelpet.helper.Permissao;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,10 +50,20 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
 
     byte[] fotoAnimal;
 
+    // Array de String para solicitar permissões
+    public String [] permissoesNecessarias = new String []{
+            // Definindo Permiissões
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_foto_animal);
+
+        // Solicitando (Validar) Permissões
+        Permissao.validarPermissoes(permissoesNecessarias, CadastroFotoAnimalActivity.this, 1);
 
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
@@ -88,6 +101,16 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int permissaoResultado : grantResults) {
+            if (permissaoResultado == PackageManager.PERMISSION_DENIED) {
+                Permissao.alertaValidacaoPermissao(CadastroFotoAnimalActivity.this);
+            }
+        }
+    }
     public void buttonCamera(View view){
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
@@ -165,9 +188,7 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
     }
 
     public void buttonFinalizarFotoAnimal(View view) {
-    System.out.println("Passou button");
         if (fotoAnimal != null && fluxoDados.equals("cadastroUsuario")) {
-            System.out.println("1ª teste verificação p1");
             Usuario usuario = new Usuario();
 
             usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
@@ -181,19 +202,8 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
 
             salvarFotoAnimal();
 
-            System.out.println("1ª teste verificação p2");
-
-            System.out.println("1ª teste verificação p3");
-
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
-            //System.out.println("2ª teste verificação p1");
-
             salvarFotoAnimal();
-
-            //System.out.println("2ª teste verificação p2");
-
-            //System.out.println("2ª teste verificação p3");
-
         }
         else{
             Toast.makeText(CadastroFotoAnimalActivity.this,
@@ -208,7 +218,7 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                 .child("animais")
                 .child(emailUsuario)
                 .child(idAnimal)
-                .child(idAnimal+"."+".FOTO.PERFIL.JPEG");
+                .child(idAnimal+".FOTO.PERFIL.JPEG");
 
         // Salvando dados da imagem método UploadTask
         // .putBytes = passa os dados da imagem em Bytes

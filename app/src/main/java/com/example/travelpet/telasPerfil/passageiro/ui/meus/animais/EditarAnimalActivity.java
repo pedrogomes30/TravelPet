@@ -24,9 +24,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Animal;
-import com.example.travelpet.activity.config.ConfiguracaoFirebase;
-import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.config.ConfiguracaoFirebase;
+import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

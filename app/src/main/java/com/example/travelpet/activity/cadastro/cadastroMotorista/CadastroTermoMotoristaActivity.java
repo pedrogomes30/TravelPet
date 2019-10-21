@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Usuario;
+import com.example.travelpet.classes.Usuario;
 
 public class CadastroTermoMotoristaActivity extends AppCompatActivity {
 

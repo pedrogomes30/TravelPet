@@ -111,35 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
 
-
-                /* Método para redirecionar usuário logado, ainda precisa ser trabalhado
-                // UsuarioFirebase.redirecionaUsuarioLogado(MainActivity.this);
-                UsuarioFirebase usuarioFirebase = new UsuarioFirebase();
-
-                DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
-                    .child("usuarios")
-                    .child(usuarioFirebase.getIdentificadorUsuario());
-                    usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                            String tipoUsuario = usuario.getTipoUsuario();
-
-                            if(tipoUsuario.equals("motorista")){
-                                startActivity(new Intent(getApplicationContext(), TesteMotoristaActivity.class));
-                            }else if(tipoUsuario.equals("passageiro")){
-                                startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
-                            }
-                            }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    */
-
-            } else {
+            }else{
 
                 ToastThis(response.getError().toString());
                 // Login falhou. Se a resposta for null o usuário

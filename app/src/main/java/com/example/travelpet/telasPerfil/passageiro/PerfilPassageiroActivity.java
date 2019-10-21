@@ -1,5 +1,7 @@
 package com.example.travelpet.telasPerfil.passageiro;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +20,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Usuario;
-import com.example.travelpet.activity.config.UsuarioFirebase;
+import com.example.travelpet.classes.Usuario;
+import com.example.travelpet.config.UsuarioFirebase;
+import com.example.travelpet.helper.Permissao;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,13 +36,22 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     //private CircleImageView imageViewPerfil;
     private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
-    // Variável usada no processo de trocar de Fragment
 
+
+    // Array de String para solicitar permissões
+    public String [] permissoesNecessarias = new String []{
+            // Definindo Permiissões
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_passageiro);
+
+        // Solicitando (Validar) Permissões
+        Permissao.validarPermissoes(permissoesNecessarias, PerfilPassageiroActivity.this, 1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,30 +112,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
             }
         });
 
-
-
-        /* Recupera dados do usuário ( usado no processo de pegar foto de perfil do usuario)
-        FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
-        // Recupera a foto de perfil do usuario atual
-        Uri url = usuario.getPhotoUrl();
-        //UsuarioFirebase.atualizarFotoUsuario( url );
-        // Chama o método atualiza foto do usuário
-
-        if(url != null){
-            // Glide e uma biblioteca que foi inserida graças a dependencia "firebase-ui-storage"
-            Glide.with(PerfilPassageiroActivity.this)
-                    .load( url )
-                    // .into = define qual imageView irá utilizar
-                    .into( imageView );
-
-        }
-        else{// caso esteja vazio
-            // Envia imagem padrão para a foto de perfil em configurações
-            imageView.setImageResource(R.drawable.iconperfiloficial);
-        }
-         */
-
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -137,12 +125,16 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
     }
 
-    public void atualizaFotoUsuario(Uri url){
-        // Foi feito assim pois ainda penso em chamar direto do database
+    //Método para tratamento da validação da permissão, caso não aceite
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // Chama o método atualizaFotoUsuario da classe UsuarioFirebase
-        // esse metodo atualiza a foto de usuário do firebase
-        UsuarioFirebase.atualizarFotoUsuario( url );
+        for ( int permissaoResultado : grantResults ){
+            if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
+                Permissao.alertaValidacaoPermissao(PerfilPassageiroActivity.this);
+            }
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -8,9 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.classes.Animal;
-import com.example.travelpet.activity.classes.Usuario;
-import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
+import com.example.travelpet.classes.Animal;
+import com.example.travelpet.classes.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroNomeAnimalActivity extends AppCompatActivity {
@@ -36,7 +35,6 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
         fluxoDados          =   usuario.getFluxoDados();
 
         campoNomeANimal = findViewById(R.id.editNomeAnimal);
-
     }
     
     public void abriTelaCadastroEspecieAnimal(View view){
@@ -47,7 +45,6 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
         if(!nomeAnimal.isEmpty()) {
 
             Usuario usuario = new Usuario();
-
             usuario.setNome(nomeUsuario);
             usuario.setSobrenome(sobrenomeUsuario);
             usuario.setTelefone(telefoneUsuario);
@@ -55,7 +52,6 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
             usuario.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();
-
             animal.setNomeAnimal(nomeAnimal);
 
             Intent intent = new Intent(CadastroNomeAnimalActivity.this, CadastroEspecieAnimalActivity.class);
@@ -70,17 +66,6 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
             Toast.makeText(CadastroNomeAnimalActivity.this,
                     "Preencha o nome do animal",
                      Toast.LENGTH_SHORT).show();
-
         }
-
     }
-    // Evento de clique no botão voltar do aparelho
-    @Override
-    public void onBackPressed() {
-        if(fluxoDados.equals("perfilUsuario")) {
-            startActivity(new Intent(CadastroNomeAnimalActivity.this, PerfilPassageiroActivity.class));
-        }
-
-    }
-
 }
