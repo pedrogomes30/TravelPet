@@ -130,7 +130,7 @@ public class EditarAnimalActivity extends AppCompatActivity {
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     //executa uma determinada ação durante a modificação do editText
-                    nomeAnimalEdit = editTextNomeAnimal.getText().toString().toUpperCase();;
+                    nomeAnimalEdit = editTextNomeAnimal.getText().toString().toUpperCase();
                 }
 
                 @Override
@@ -185,7 +185,6 @@ public class EditarAnimalActivity extends AppCompatActivity {
             }
         };
         spinnerPorteAnimal.setOnItemSelectedListener(escolha);
-
 
     }
 
@@ -276,46 +275,33 @@ public class EditarAnimalActivity extends AppCompatActivity {
                     fotoAnimalUrl = url.toString();
 
                     // Método para salvar animal
-                    // foi feito aqui por causa do método que pega o caminho da url da foto
-                    Animal animal = new Animal();
-
-                    animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-                    animal.setIdAnimal(idAnimal);
-                    animal.setNomeAnimal(nomeAnimalEdit);
-                    animal.setEspecieAnimal(especieAnimal);
-                    animal.setRacaAnimal(racaAnimal);
-                    animal.setPorteAnimal(porteAnimalEdit);
-                    animal.setFotoAnimal(fotoAnimalUrl);
-                    animal.salvarAnimal();
-
-                    Toast.makeText(EditarAnimalActivity.this,
-                         "Alteração feita com sucesso!",
-                         Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-                    finish();
+                    enviarDadosAnimalDatabase();
 
                 }
             });
          }
-             else if((!porteAnimal.equals(porteAnimalEdit)) || (!nomeAnimal.equals(nomeAnimalEdit))){
-                Animal animal = new Animal();
+         else if((!porteAnimal.equals(porteAnimalEdit)) || (!nomeAnimal.equals(nomeAnimalEdit))){
+             enviarDadosAnimalDatabase();
 
-                animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-                animal.setIdAnimal(idAnimal);
-                animal.setNomeAnimal(nomeAnimalEdit);
-                animal.setEspecieAnimal(especieAnimal);
-                animal.setRacaAnimal(racaAnimal);
-                animal.setPorteAnimal(porteAnimalEdit);
-                animal.setFotoAnimal(fotoAnimalUrl);
-                animal.salvarAnimal();
+         }
+     }
+     public void enviarDadosAnimalDatabase (){
+         Animal animal = new Animal();
 
-                Toast.makeText(EditarAnimalActivity.this,
-                     "Alteração feita com sucesso!",
-                     Toast.LENGTH_SHORT).show();
-             startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-             finish();
+         animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+         animal.setIdAnimal(idAnimal);
+         animal.setNomeAnimal(nomeAnimalEdit);
+         animal.setEspecieAnimal(especieAnimal);
+         animal.setRacaAnimal(racaAnimal);
+         animal.setPorteAnimal(porteAnimalEdit);
+         animal.setFotoAnimal(fotoAnimalUrl);
+         animal.salvarAnimal();
 
-             }
+         Toast.makeText(EditarAnimalActivity.this,
+                 "Alteração feita com sucesso!",
+                 Toast.LENGTH_SHORT).show();
+         startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
+         finish();
      }
      public void excluirAnimal(View view){
         // Caixa de diálogo

@@ -1,6 +1,7 @@
 package com.example.travelpet.telasPerfil.passageiro;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +22,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
+import com.example.travelpet.activity.MainActivity;
+import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,21 +44,10 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
     //private CircleImageView imageViewPerfil;
     private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
 
-
-    // Array de String para solicitar permissões
-    public String [] permissoesNecessarias = new String []{
-            // Definindo Permiissões
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_passageiro);
-
-        // Solicitando (Validar) Permissões
-        Permissao.validarPermissoes(permissoesNecessarias, PerfilPassageiroActivity.this, 1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,14 +87,14 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                     // envia a imagem padrão para o perfil
                     imageView.setImageResource(R.drawable.iconperfiloficial);
 
-                }else if(!fotoUrl.equals("vazio")){ // Envia foto do gmail
+                }else if(!fotoUrl.equals("vazio")){ // Envia a a foto do database
                     Uri fotoUsuarioUrl = Uri.parse(fotoUrl);
                     Glide.with(PerfilPassageiroActivity.this)
                             .load( fotoUsuarioUrl )
                             // .into = define qual imageView irá utilizar
                             .into( imageView );
 
-                }else { // Se não Envia a imagem que está no database
+                }else { // Envia a a foto da conta do gmail
                         Glide.with(PerfilPassageiroActivity.this)
                                 .load( fotoUsuarioGmail )
                                 // .into = define qual imageView irá utilizar
@@ -108,7 +104,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //imageView.setImageResource(R.drawable.iconperfiloficial);
+
             }
         });
 
@@ -123,18 +119,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-    }
-
-    //Método para tratamento da validação da permissão, caso não aceite
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        for ( int permissaoResultado : grantResults ){
-            if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
-                Permissao.alertaValidacaoPermissao(PerfilPassageiroActivity.this);
-            }
-        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -151,9 +135,11 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-
-
-
+    }
+    // Método voltar com  o botão do próprio aparelho
+    @Override
+    public void onBackPressed() {
+        // como não tem nada ele não volta
     }
 
 }

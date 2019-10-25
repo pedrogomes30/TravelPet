@@ -140,6 +140,7 @@ public class Usuario implements Parcelable {
         usuarios.setValue(this);
 
     }
+
     // Métodos Necessarios para usar a Interface Parcelable
     protected Usuario(Parcel in) {
         id = in.readString();

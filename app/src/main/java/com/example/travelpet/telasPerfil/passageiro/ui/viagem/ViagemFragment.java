@@ -39,14 +39,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
 
-
-
-
         mapView.getMapAsync(this);
-
-
-
-
 
         return view;
 
@@ -60,6 +53,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         gMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         gMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 
 
 }

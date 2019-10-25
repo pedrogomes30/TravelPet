@@ -15,12 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.activity.MainActivity;
 import com.example.travelpet.classes.Animal;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -187,7 +190,7 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonFinalizarFotoAnimal(View view) {
+    public void buttonFinalizarCadastroPassageiro(View view) {
         if (fotoAnimal != null && fluxoDados.equals("cadastroUsuario")) {
             Usuario usuario = new Usuario();
 
@@ -202,10 +205,24 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
 
             salvarFotoAnimal();
 
+            Toast.makeText(CadastroFotoAnimalActivity.this,
+                    "Sucesso ao cadastrar Usuário Passageiro!!",
+                    Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
+
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
+
             salvarFotoAnimal();
+
+            Toast.makeText(CadastroFotoAnimalActivity.this,
+                    "Sucesso ao cadastrar Animal!",
+                    Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(CadastroFotoAnimalActivity.this, MainActivity.class));
         }
         else{
+
             Toast.makeText(CadastroFotoAnimalActivity.this,
                     "Envie a foto do seu Animal ",
                     Toast.LENGTH_SHORT).show();
@@ -259,17 +276,6 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                 animal.setFotoAnimal(fotoAnimalUrl);
                 animal.salvarAnimal();
 
-                if(fluxoDados.equals("cadastroUsuario")){
-                    Toast.makeText(CadastroFotoAnimalActivity.this,
-                            "Sucesso ao cadastrar Usuário Passageiro!!",
-                            Toast.LENGTH_SHORT).show();
-                   startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
-                }else {
-                    Toast.makeText(CadastroFotoAnimalActivity.this,
-                            "Sucesso ao cadastrar Animal!",
-                            Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
-                }
 
             }
         });

@@ -12,25 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewEditarLocais"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Editar locais"
-            android:textColor="@color/colorApp"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewAdicionarLocal"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAdicionarLocal" />
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewCircleFotoPerfil"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/iconperfiloficial"
             app:civ_border_color="@color/colorApp"
             app:civ_border_width="3dp"
@@ -64,75 +50,123 @@
             app:srcCompat="@drawable/ic_galeria_cinza_24dp" />
 
         <TextView
-            android:id="@+id/textViewMeusAnimais"
+            android:id="@+id/textViewNomeUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Meus Animais"
-            android:textColor="@color/colorApp"
+            android:text="Nome:"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewCircleFotoPerfil" />
 
-        <TextView
-            android:id="@+id/textViewAdicionarAnimal"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayoutNomeUsuario"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Adicionar animal"
-            android:textColor="@color/colorApp"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewMeusAnimais"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMeusAnimais" />
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewNomeUsuario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewNomeUsuario"
+            app:layout_constraintTop_toTopOf="@+id/textViewNomeUsuario">
+
+            <EditText
+                android:id="@+id/editTextNomeUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Nome do Usuário"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageViewAtualizarNomeUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_editar_branco_24dp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textViewEditarAnimais"
+            android:id="@+id/textViewSobrenomeUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Editar animais"
-            android:textColor="@color/colorApp"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewAdicionarAnimal"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAdicionarAnimal" />
-
-        <TextView
-            android:id="@+id/textViewMeusLocais"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Meus Locais"
-            android:textColor="@color/colorApp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="50dp"
+            android:text="Sobrenome:"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/textViewEditarAnimais"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSair"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEditarAnimais" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewNomeUsuario"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/textViewAdicionarLocal"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayoutSobrenomeUsuario"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Adicionar local"
-            android:textColor="@color/colorApp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewSobrenomeUsuario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewSobrenomeUsuario"
+            app:layout_constraintTop_toTopOf="@+id/textViewSobrenomeUsuario">
+
+            <EditText
+                android:id="@+id/editTextSobrenomeUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Sobrenome do Usuário"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageViewAtualizarSobrenomeUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_editar_branco_24dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonSair"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_laranja_seletor"
+            android:text="Sair"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewMeusLocais"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMeusLocais" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

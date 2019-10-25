@@ -8,7 +8,7 @@
     tools:context=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity">
 
     <Button
-        android:id="@+id/buttonFizalizarFotoAnimal"
+        android:id="@+id/buttonFinalizarCadastroPassageiro"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="50dp"
         android:layout_weight="1"
         android:background="@drawable/button_cinza_seletor"
-        android:onClick="buttonFinalizarFotoAnimal"
+        android:onClick="buttonFinalizarCadastroPassageiro"
         android:text="Finzalizar"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -37,7 +37,7 @@
         android:text="Câmera"
         android:textColor="@color/colorApp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonFizalizarFotoAnimal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonFinalizarCadastroPassageiro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewFotoAnimal" />
 
@@ -54,7 +54,7 @@
         android:text="Galeria"
         android:textColor="@color/colorApp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonFizalizarFotoAnimal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonFinalizarCadastroPassageiro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/buttonCameraAnimal"
