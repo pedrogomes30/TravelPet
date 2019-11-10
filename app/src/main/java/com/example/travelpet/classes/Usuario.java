@@ -23,6 +23,10 @@ public class Usuario implements Parcelable {
     String fotoUsuarioUrl;
     String fluxoDados;
 
+    // Variáveis usadas no processo de salvar Requisição "ViagemFragment.java" - Aula 496
+    private String latitude;
+    private String longitude;
+
     // Construtor
     public Usuario() {
     }
@@ -85,32 +89,20 @@ public class Usuario implements Parcelable {
         this.fotoUsuarioUrl = fotoUsuarioUrl;
     }
 
-
-
-    // O motivo deu fazer esse método e colocar a foto no database
-    public void atualizarUsuario(){
-        // pega id usuario atual
-        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        // referência do database
-        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
-
-        DatabaseReference usuariosRef = database.child("usuarios")
-                .child( identificadorUsuario );
-        // Criando método Map
-        Map<String, Object> valoresUsuario = converterParaMap();
-
-        usuariosRef.updateChildren ( valoresUsuario );
+    public String getLatitude() {
+        return latitude;
     }
-    @Exclude
-    // Tranformando Classe Usuario no tipo HashMap, utilizado no salvamento da foto no database
-    public Map<String, Object> converterParaMap(){
-        HashMap<String, Object> usuarioMap = new HashMap<>();
-        // Configurando usuarioMap
-        usuarioMap.put("nome", getNome());
-        usuarioMap.put("sobrenome",getSobrenome());
-        usuarioMap.put("telefone",getTelefone());
 
-        return usuarioMap;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     @Exclude // com isso não será salvo o fluxo dados no banco de dados
@@ -181,6 +173,32 @@ public class Usuario implements Parcelable {
             return new Usuario[size];
         }
     };
+
+    /* O motivo deu fazer esse método e colocar a foto no database
+    public void atualizarUsuario(){
+        // pega id usuario atual
+        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        // referência do database
+        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
+
+        DatabaseReference usuariosRef = database.child("usuarios")
+                .child( identificadorUsuario );
+        // Criando método Map
+        Map<String, Object> valoresUsuario = converterParaMap();
+
+        usuariosRef.updateChildren ( valoresUsuario );
+    }
+    @Exclude
+    // Tranformando Classe Usuario no tipo HashMap, utilizado no salvamento da foto no database
+    public Map<String, Object> converterParaMap(){
+        HashMap<String, Object> usuarioMap = new HashMap<>();
+        // Configurando usuarioMap
+        usuarioMap.put("nome", getNome());
+        usuarioMap.put("sobrenome",getSobrenome());
+        usuarioMap.put("telefone",getTelefone());
+
+        return usuarioMap;
+    }*/
 
 
 }

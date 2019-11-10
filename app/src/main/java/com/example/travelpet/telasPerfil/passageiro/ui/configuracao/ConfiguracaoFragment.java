@@ -30,6 +30,7 @@ import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.telasPerfil.motorista.TestePerfilMotoristaActivity;
+import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity;
 import com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.ListaAnimaisFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -122,13 +123,13 @@ public class ConfiguracaoFragment extends Fragment {
         // Recupera dados do usuário ( usado no processo de pegar foto de perfil do usuario)
         FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
         // Recupera a foto de perfil do usuario atual
-        Uri url = usuario.getPhotoUrl();
+        Uri fotoUsuarioEmail = usuario.getPhotoUrl();
 
         // Verifica a foto do usuario firebase não está vazia
-        if(url != null){
+        if(fotoUsuarioEmail != null){
             // Glide e uma biblioteca que foi inserida graças a dependencia "firebase-ui-storage"
             Glide.with(getActivity())
-                    .load( url )
+                    .load( fotoUsuarioEmail )
                     .into( imageViewCircleFotoPerfil );
 
         }else{// caso esteja vazio
@@ -221,9 +222,10 @@ public class ConfiguracaoFragment extends Fragment {
                                 .signOut(getContext())
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        startActivity(new Intent(getActivity(), MainActivity.class));
+
                                     }
                                 } );
+                        startActivity(new Intent(getActivity(), MainActivity.class));
 
                     }
                 });
@@ -318,7 +320,7 @@ public class ConfiguracaoFragment extends Fragment {
                             Uri url = uri.getResult();
 
                             // Chama o método atualizaFotoUsuario da classe UsuarioFirebase
-                            // esse metodo atualiza a foto de usuário do firebase
+                            // esse metodo atualiza a foto(Email) de usuário do firebase
                             UsuarioFirebase.atualizarFotoUsuario( url );
 
 

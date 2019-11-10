@@ -245,10 +245,10 @@ public class EditarAnimalActivity extends AppCompatActivity {
          if(imagem != null ){
 
             StorageReference imagemRef = storageReference
-                 .child("animais")
-                 .child(emailUsuario)
-                 .child(idAnimal)
-                 .child(emailUsuario +"."+idAnimal+"."+especieAnimal+"."+racaAnimal+".FOTO.PERFIL.JPEG");
+                     .child("animais")
+                     .child(emailUsuario)
+                     .child(idAnimal)
+                     .child(idAnimal+".FOTO.PERFIL.JPEG");
 
             UploadTask uploadTask = imagemRef.putBytes(fotoAnimal);
 

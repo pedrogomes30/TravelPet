@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.travelpet.classes.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,8 +22,20 @@ public class UsuarioFirebase {
         FirebaseAuth usuario = ConfiguracaoFirebase.getFirebaseAutenticacao();
         // retorna objeto inteiro
         return usuario.getCurrentUser();
-
     }
+    // Método para retorna usuario atual, com objeto do tipo Usuário - Aula 496
+    // Usado no processor de salvar Requisição (ViagemFragment
+    public static Usuario getDadosUsuarioLogado(){
+        FirebaseUser firebaseUser = getUsuarioAtual();
+
+        Usuario usuario = new Usuario();
+        usuario.setId(firebaseUser.getUid());
+        usuario.setEmail(firebaseUser.getEmail());
+        //usuario.setNome( firebaseUser.getDisplayName());
+
+        return  usuario;
+    }
+
 
     // Método recupera o id do usuário atual
     public static  String getIdentificadorUsuario(){

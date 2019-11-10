@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.activity.MainActivity;
+import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
 import com.example.travelpet.classes.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
@@ -20,8 +21,9 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroNomeUsuarioActivity extends AppCompatActivity {
 
-    /// Váriaveis usadas para armazenar dados dos campos do nome e sobrenome do xml
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
+
+    String tipoUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
+    String fluxoDados;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
     private TextInputEditText campoNome,campoSobrenome, campoTelefone;
@@ -30,6 +32,13 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_nome_usuario);
+        // Recuperando dados da Activity (CadastroTipoUsuario)
+        Intent intent = getIntent();
+        Usuario usuario = intent.getParcelableExtra("usuario");
+        tipoUsuario         =   usuario.getTipoUsuario();
+
+        // Variável para referênciar fluxo de dados
+        fluxoDados = "cadastroUsuario";
 
         campoNome       =   findViewById(R.id.editNomeUsuario);
         campoSobrenome  =   findViewById(R.id.editSobrenomeUsuario);
@@ -41,15 +50,14 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
         // Referenciando que esse campo tem mascara
         campoNome.addTextChangedListener(mtwNome);
 
-        // Criando marcara para o campo de telefone
+
         SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(campoTelefone, smf);
-        // Referenciando que esse campo tem mascara
         campoTelefone.addTextChangedListener(mtw);
     }
 
     // Evento de clique do botão PrcoximoNomeUsuario
-    public void abrirTelaTelefoneUsuario(View view){
+    public void buttonProximoNomeUsuario(View view){
 
         // Recuperando textos dos campos, transformando em String e salvando nas variaveis
         nomeUsuario         =   campoNome.getText().toString().toUpperCase();
@@ -68,9 +76,11 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
                 usuario.setNome(nomeUsuario);
                 usuario.setSobrenome(sobrenomeUsuario);
                 usuario.setTelefone(telefoneUsuario);
+                usuario.setTipoUsuario(tipoUsuario);
+                usuario.setFluxoDados(fluxoDados);
 
                 //      Enviando dados para a Activity CadastroTelefoneActivity
-                Intent intent = new Intent(CadastroNomeUsuarioActivity.this, CadastroTipoUsuarioActivity.class);
+                Intent intent = new Intent(CadastroNomeUsuarioActivity.this, CadastroNomeAnimalActivity.class);
 
                 // Cria uma chave para armazenar os arquivos que serão passados pela activity
                 intent.putExtra("usuario",usuario);
@@ -94,11 +104,4 @@ public class CadastroNomeUsuarioActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-    // Método para não voltar com o botão do próprio aparelho
-    @Override
-    public void onBackPressed() {
-
-    }
-
 }

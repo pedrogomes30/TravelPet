@@ -191,6 +191,7 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
     }
 
     public void buttonFinalizarCadastroPassageiro(View view) {
+
         if (fotoAnimal != null && fluxoDados.equals("cadastroUsuario")) {
             Usuario usuario = new Usuario();
 
@@ -210,6 +211,7 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
+            finish();
 
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
 
@@ -219,7 +221,8 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                     "Sucesso ao cadastrar Animal!",
                     Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(CadastroFotoAnimalActivity.this, MainActivity.class));
+            startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
+            finish();
         }
         else{
 

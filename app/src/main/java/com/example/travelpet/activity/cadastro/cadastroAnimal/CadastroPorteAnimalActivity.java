@@ -27,7 +27,6 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_porte_animal);
 
-
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
         Animal animal = intent.getParcelableExtra("animal");
@@ -54,7 +53,7 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
 
     }
 
-    public void abrirTelaPerfilApp(View view) {
+    public void buttonProximoPorteAnimal(View view) {
 
 
         if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"

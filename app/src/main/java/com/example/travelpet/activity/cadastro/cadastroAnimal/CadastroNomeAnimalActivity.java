@@ -16,7 +16,9 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario,
     // ou do Fragment do perfil do Passageiro
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fluxoDados;
+    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
+    // Variável para dizer de onde vem o fluxo de dado
+    String fluxoDados;
 
     private TextInputEditText campoNomeANimal;
 
@@ -37,7 +39,7 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
         campoNomeANimal = findViewById(R.id.editNomeAnimal);
     }
     
-    public void abriTelaCadastroEspecieAnimal(View view){
+    public void buttonProximoNomeAnimal(View view){
 
        String nomeAnimal = campoNomeANimal.getText().toString().toUpperCase();;
 
@@ -57,7 +59,6 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
             Intent intent = new Intent(CadastroNomeAnimalActivity.this, CadastroEspecieAnimalActivity.class);
             intent.putExtra("usuario",usuario);
             intent.putExtra ("animal", animal);
-
             startActivity(intent);
 
         // Se estiver vazio então envia essa mensagem

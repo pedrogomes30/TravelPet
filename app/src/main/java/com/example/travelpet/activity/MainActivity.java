@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
     Button BTSignOut;
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fotoUsuarioUrl,email;
+    String tipoUsuario;
 
     // Array de String para solicitar permissões
     public String [] permissoesNecessarias = new String []{
@@ -62,13 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Validar Permissões
         Permissao.validarPermissoes(permissoesNecessarias,MainActivity.this,1);
-
-        nomeUsuario = "nulo";
-        sobrenomeUsuario = "nulo";
-        telefoneUsuario = "nulo";
         tipoUsuario = "nulo";
-        fotoUsuarioUrl = "nulo";
-
         // Tira a ActionBar
         //getSupportActionBar().hide();
 
@@ -144,10 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //startActivity(new Intent(MainActivity.this, PerfilPassageiroActivity.class));
-                //ToastThis("Usuário" + user.getDisplayName() + "Logado com Sucesso");
-
                 FirebaseUserMetadata metadata = FirebaseAuth.getInstance().getCurrentUser().getMetadata();
                 // Verficiando se é a primeira vez que o o usuário entra
                 if (metadata.getCreationTimestamp() == metadata.getLastSignInTimestamp()) {
@@ -159,20 +149,15 @@ public class MainActivity extends AppCompatActivity {
                     assim se o usuario não termina o cadastro por algum motivo
                     fica um cadastro com valores nulos no database, e assim posso fazer a verificação
                     se o tipóUsuario e "motorista" , "passsageiro" ou "nulo", sem dar erro */
-                    nomeUsuario = "nulo";
-                    sobrenomeUsuario = "nulo";
-                    telefoneUsuario = "nulo";
-                    tipoUsuario = "nulo";
-                    fotoUsuarioUrl = "nulo";
-                    email = "nulo";
+
                     Usuario usuario = new Usuario();
 
                     usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
+                    usuario.setEmail(UsuarioFirebase.getEmailUsuario());
                     usuario.setTipoUsuario(tipoUsuario);
-
                     usuario.salvar();
 
-                    startActivity(new Intent(MainActivity.this, CadastroNomeUsuarioActivity.class));
+                    startActivity(new Intent(MainActivity.this, CadastroTipoUsuarioActivity.class));
                     finish();
 
                     } else {
@@ -200,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
                             }else if (tipoU.equals("nulo")){
 
-                                startActivity(new Intent(getApplicationContext(), CadastroNomeUsuarioActivity.class));
+                                startActivity(new Intent(getApplicationContext(), CadastroTipoUsuarioActivity.class));
                                 finish();
                             }
                         }
@@ -236,17 +221,15 @@ public class MainActivity extends AppCompatActivity {
         // [END auth_fui_signout]
     }
 
-    public void abrirTelaCadastroTipoUsuario(View view){
-
-        startActivity(new Intent(this, CadastroTipoUsuarioActivity.class));
-
-    }
     //Método para tratamento da validação da permissão, caso não aceite
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for ( int permissaoResultado : grantResults ){
+
+            // caso não aceite executa esse if
             if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
+                // chama o método exibe mensagem e fecha
                 Permissao.alertaValidacaoPermissao(MainActivity.this);
             }
         }

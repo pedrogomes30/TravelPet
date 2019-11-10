@@ -48,7 +48,7 @@ public class CadastroRacaAnimalActivity extends AppCompatActivity {
 
     }
 
-    public void abrirTelaPorteEspecial(View view){
+    public void buttonProximoRacaAnimal(View view){
 
         racaAnimal = campoRacaAnimal.getText().toString().toUpperCase();
 
@@ -69,10 +69,8 @@ public class CadastroRacaAnimalActivity extends AppCompatActivity {
             animal.setRacaAnimal(racaAnimal);
 
             Intent intent = new Intent(CadastroRacaAnimalActivity.this,CadastroPorteAnimalActivity.class);
-
             intent.putExtra ("usuario",usuario);
             intent.putExtra ("animal",animal);
-
             startActivity(intent);
 
         }else{

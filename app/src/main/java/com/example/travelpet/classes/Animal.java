@@ -83,7 +83,6 @@ public class Animal implements Parcelable {
     //      Método para salvar os dados do animal no firebase
     public void salvarAnimal(){
 
-
         // DatabaseReference = Referência do Firebase
 
          FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();

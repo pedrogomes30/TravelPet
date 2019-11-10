@@ -53,7 +53,7 @@ public class CadastroEspecieAnimalActivity extends AppCompatActivity {
 
     }
 
-    public void abrirTelaCadastroRacaAnimal(View view){
+    public void buttonProximoEspecieAnimal(View view){
 
         if(especieAnimal =="CACHORRO" || especieAnimal == "GATO" || especieAnimal == "ROEDOR"
                 || especieAnimal == "AVE" || especieAnimal == "REPTIL"){
