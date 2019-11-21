@@ -8,11 +8,11 @@
     android:layout_width="match_parent"
     android:fillViewport="true">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity">
-
+        tools:context=".telasPerfil.passageiro.ui.meusAnimais.EditarAnimalActivity">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -21,9 +21,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            tools:ignore="MissingConstraints" />
-
-
+            tools:ignore="MissingConstraints"
+            />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewFotoAnimal"

@@ -15,18 +15,21 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CadastroRacaAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroEspecieAnimal
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-           nomeAnimal, especieAnimal;
-    String fluxoDados;
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+            nomeAnimal, especieAnimal;
 
     private TextInputEditText campoRacaAnimal;
 
-    String racaAnimal;
+    private String racaAnimal;
+
+    private String fluxoDados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_raca_animal);
+
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
@@ -73,12 +76,16 @@ public class CadastroRacaAnimalActivity extends AppCompatActivity {
             intent.putExtra ("animal",animal);
             startActivity(intent);
 
+
         }else{
             Toast.makeText(CadastroRacaAnimalActivity.this,
                     "Preencha a Raça do animal",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }

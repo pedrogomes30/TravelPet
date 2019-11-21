@@ -32,6 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".telasPerfil.motorista.TestePerfilMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,7 +47,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity"
+            android:name=".telasPerfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
             android:parentActivityName=".telasPerfil.passageiro.PerfilPassageiroActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity" />
         <activity
@@ -60,11 +61,10 @@
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroRacaAnimalActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroEspecieAnimalActivity" />
         <activity android:name=".activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroDadosUsuarioActivity" />
         <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

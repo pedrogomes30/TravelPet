@@ -9,8 +9,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
-import android.content.Context;
-import android.location.LocationManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,11 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Usuario;
-import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.model.Destino;
-import com.example.travelpet.model.Requisicao;
-import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -53,8 +47,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     private EditText editDestido;
     private Button buttonChamarMotorista;
-
-    private LatLng localPassageiro;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -119,9 +111,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        //salvar requisição - Aula 496
-                                        salvarRequisicao(destino);
-
                                     }
                                 }).setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
                                     @Override
@@ -138,31 +127,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                             "Informe o endereço de destino!",
                             Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
         return view;
-
-    }
-    // Método salvar Requisição - Aula 496
-    private void salvarRequisicao(Destino destino){
-        // Criando objeto Requisição
-        Requisicao requisicao = new Requisicao();
-        requisicao.setDestino(destino);
-        // Recuperando Usuario passageiro
-        // Para configurar passageiro precisamos recuperar o Usuário logado
-        Usuario usuarioPassageiro = UsuarioFirebase.getDadosUsuarioLogado();
-
-        // Enviando Latitude e Longitude do Passageiro
-        // String.valueOf = transforma de double para String
-        usuarioPassageiro.setLatitude( String.valueOf(localPassageiro.latitude) );
-        usuarioPassageiro.setLongitude( String.valueOf(localPassageiro.longitude) );
-
-        requisicao.setPassageiro( usuarioPassageiro );
-        // Configurando Status da requisição
-        requisicao.setStatusRequisicao(Requisicao.STATUS_AGUARDANDO);
-        requisicao.salvarRquisicao();
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -172,7 +139,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         recuperarLocalizacaoUsuario();
 
     }
-
     public Address recuperarEndereco(String endereco){
 
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -208,7 +174,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 // definindo Local com LatLng, para colocar no position
-                localPassageiro = new LatLng(latitude, longitude);
+                LatLng localPassageiro = new LatLng(latitude, longitude);
 
                 // Método para limpar mapa, pois sempre que o usuário mudar o local ele
                 // exibe um marcador só
@@ -219,11 +185,11 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         new MarkerOptions()
                                 .position(localPassageiro) // posição
                                 .title("Meu Local") // Titulo
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario)) // Incone do Marcador
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)) // Incone do Marcador
                 );
                 // Definindo Zoom no mapa- Aula 494
                 gMap.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(localPassageiro, 17)
+                        CameraUpdateFactory.newLatLngZoom(localPassageiro, 15)
                 );
             }
 

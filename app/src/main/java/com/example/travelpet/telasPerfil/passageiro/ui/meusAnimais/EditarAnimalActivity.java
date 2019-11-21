@@ -1,4 +1,4 @@
-package com.example.travelpet.telasPerfil.passageiro.ui.meus.animais;
+package com.example.travelpet.telasPerfil.passageiro.ui.meusAnimais;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,16 +23,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
+import com.example.travelpet.activity.MainActivity;
 import com.example.travelpet.classes.Animal;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -76,6 +87,8 @@ public class EditarAnimalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_animal);
 
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
+
         // Recupera referência do database
         databaseReference = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
         // Recupera a referência do Storage
@@ -88,8 +101,9 @@ public class EditarAnimalActivity extends AppCompatActivity {
         toolbar.setTitle("Editar Animal");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
+
         // Configurando seta voltar do toolbar (ativando)
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Configurações iniciais
         imageViewFotoAnimal         =   findViewById(R.id.imageViewFotoAnimal);
@@ -352,7 +366,57 @@ public class EditarAnimalActivity extends AppCompatActivity {
          });
          msgBox.show();
      }
+    /*Menu dos 3 pontos direito da tela do toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.perfil_passageiro, menu);
+        //toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
+        return true;
 
+    }
+    // Ação ao clicar em algum item do Menu dos 3 pontos do Toolbar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menuSair:
+                // Caixa de diálogo
+                AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
+                msgBox.setTitle("Saindo...");
+                msgBox.setMessage("Tem certeza que deseja sair desta conta ?");
+                msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AuthUI.getInstance()
+                                .signOut(EditarAnimalActivity.this)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                    }
+                                } );
+                        startActivity(new Intent(EditarAnimalActivity.this, MainActivity.class));
+                        finish();
+                    }
+                });
+                msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                msgBox.show();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }*/
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }
 

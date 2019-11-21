@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".telasPerfil.passageiro.ui.viagem.ViagemFragment"
-    tools:showIn="@layout/fragment_viagem">
+    android:background="@color/colorApp"
+    tools:context=".activity.SplashActivity">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/MapView"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <ImageView
+        android:id="@+id/logoTravelPet"
+        android:layout_width="335dp"
+        android:layout_height="260dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002"
+        app:srcCompat="@drawable/logo_travel_pet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

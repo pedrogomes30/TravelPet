@@ -16,9 +16,9 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario,
     // ou do Fragment do perfil do Passageiro
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
     // Variável para dizer de onde vem o fluxo de dado
-    String fluxoDados;
+    private String fluxoDados;
 
     private TextInputEditText campoNomeANimal;
 
@@ -26,6 +26,8 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_nome_animal);
+
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
@@ -61,6 +63,7 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
             intent.putExtra ("animal", animal);
             startActivity(intent);
 
+
         // Se estiver vazio então envia essa mensagem
         }else{
 
@@ -68,5 +71,10 @@ public class CadastroNomeAnimalActivity extends AppCompatActivity {
                     "Preencha o nome do animal",
                      Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
 }

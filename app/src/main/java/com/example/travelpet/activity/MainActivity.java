@@ -1,20 +1,22 @@
 package com.example.travelpet.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
-import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity;
 import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity;
+import com.example.travelpet.classes.Motorista;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
@@ -26,8 +28,9 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
     Button BTSignOut;
-    String tipoUsuario;
 
     // Array de String para solicitar permissões
     public String [] permissoesNecessarias = new String []{
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Validar Permissões
         Permissao.validarPermissoes(permissoesNecessarias,MainActivity.this,1);
-        tipoUsuario = "nulo";
         // Tira a ActionBar
         //getSupportActionBar().hide();
 
@@ -72,14 +73,6 @@ public class MainActivity extends AppCompatActivity {
         BTSignIn = findViewById(R.id.sign_in_button);
         BTSignOut = findViewById(R.id.sign_out_button);
         setButtons();
-
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
-                } );
 
     }
 
@@ -110,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void createSignInIntent()
     {
-        // Escolhe os provedores de login
+        // Escolhe os provedores de tela_branca_login
         List<AuthUI.IdpConfig> providers = Arrays.asList
                 (
                     new AuthUI.IdpConfig.GoogleBuilder().build()
@@ -138,29 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                FirebaseUserMetadata metadata = FirebaseAuth.getInstance().getCurrentUser().getMetadata();
-                // Verficiando se é a primeira vez que o o usuário entra
-                if (metadata.getCreationTimestamp() == metadata.getLastSignInTimestamp()) {
-                    // Se for a primeira vez que o usuário entra, entao executa
-
-                    /* Como e preciso saber se  o tipoUsuario e nulo ou não, para saber em
-                    qual activity ele vai entrar, então mandei Strings com valor "nulo",
-                    e salvei no database do firebase antes mesmo de termina o cadastro ,
-                    assim se o usuario não termina o cadastro por algum motivo
-                    fica um cadastro com valores nulos no database, e assim posso fazer a verificação
-                    se o tipóUsuario e "motorista" , "passsageiro" ou "nulo", sem dar erro */
-
-                    Usuario usuario = new Usuario();
-
-                    usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
-                    usuario.setEmail(UsuarioFirebase.getEmailUsuario());
-                    usuario.setTipoUsuario(tipoUsuario);
-                    usuario.salvar();
-
-                    startActivity(new Intent(MainActivity.this, CadastroTipoUsuarioActivity.class));
-                    finish();
-
-                    } else {
                     UsuarioFirebase usuarioFirebase = new UsuarioFirebase();
                     // Método para Recuperar dados do usuario do database
                     DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
@@ -169,24 +139,66 @@ public class MainActivity extends AppCompatActivity {
                     usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            // dataSnapshot.exists()= verifica se existe o usuário no database
+                            if(dataSnapshot.exists()) {
 
-                            Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                            // Recuperando o tipo do usuário
-                            String tipoU = usuario.getTipoUsuario();
+                                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                                String tipoUsuario = usuario.getTipoUsuario();
 
-                            if(tipoU.equals("motorista")){
+                                if (tipoUsuario.equals("motorista")) {
 
-                                startActivity(new Intent(getApplicationContext(), TestePerfilMotoristaActivity.class));
+                                    Motorista motorista = dataSnapshot.getValue(Motorista.class);
+                                    String statusCadastroMotorista = motorista.getStatusCadastro();
+
+                                    if (statusCadastroMotorista.equals("Em análise")){
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder( MainActivity.this);
+                                        builder.setTitle("Em análise...");
+                                        builder.setMessage("Estamos avaliando seus dados, prazo máximo de 7 dias após o cadastro");
+                                        builder.setCancelable(false);
+                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    } else if(statusCadastroMotorista.equals("Reprovado")){
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder( MainActivity.this);
+                                        builder.setTitle("Dados reprovados");
+                                        builder.setMessage("Seus dados não estão de acordo com a exigência da Travel Pet");
+                                        builder.setCancelable(false);
+                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+
+                                    }else if(statusCadastroMotorista.equals("Aprovado")){
+
+                                        startActivity(new Intent(getApplicationContext(), TestePerfilMotoristaActivity.class));
+                                        finish();
+                                    }
+
+                                }else if (tipoUsuario.equals("passageiro")) {
+
+                                    startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
+                                    finish();
+
+                                }
+                            }else{
+
+                                startActivity(new Intent(MainActivity.this, CadastroTipoUsuarioActivity.class));
                                 finish();
-                            }else if(tipoU.equals("passageiro")){
 
-                                startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
-                                finish();
-
-                            }else if (tipoU.equals("nulo")){
-
-                                startActivity(new Intent(getApplicationContext(), CadastroTipoUsuarioActivity.class));
-                                finish();
                             }
                         }
                         @Override
@@ -194,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                    }
-
             }else{
 
                 ToastThis(response.getError().toString());
@@ -206,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     public void signOut() {
         // [START auth_fui_signout]
         AuthUI.getInstance()
@@ -238,6 +247,4 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         //super.onBackPressed();
     }
-
-
 }

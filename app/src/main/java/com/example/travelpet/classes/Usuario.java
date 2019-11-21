@@ -23,10 +23,6 @@ public class Usuario implements Parcelable {
     String fotoUsuarioUrl;
     String fluxoDados;
 
-    // Variáveis usadas no processo de salvar Requisição "ViagemFragment.java" - Aula 496
-    private String latitude;
-    private String longitude;
-
     // Construtor
     public Usuario() {
     }
@@ -72,7 +68,6 @@ public class Usuario implements Parcelable {
         this.telefone = telefone;
     }
 
-
     public String getTipoUsuario() {
         return tipoUsuario;
     }
@@ -87,22 +82,6 @@ public class Usuario implements Parcelable {
 
     public void setFotoUsuarioUrl(String fotoUsuarioUrl) {
         this.fotoUsuarioUrl = fotoUsuarioUrl;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
     }
 
     @Exclude // com isso não será salvo o fluxo dados no banco de dados

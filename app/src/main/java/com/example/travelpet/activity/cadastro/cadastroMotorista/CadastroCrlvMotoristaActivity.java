@@ -1,5 +1,6 @@
 package com.example.travelpet.activity.cadastro.cadastroMotorista;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,13 +11,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.activity.MainActivity;
+import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity;
 import com.example.travelpet.classes.Motorista;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
+import com.example.travelpet.telasPerfil.motorista.TestePerfilMotoristaActivity;
+import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
@@ -27,17 +33,17 @@ import java.io.IOException;
 
 public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    // Variaveis usadas para pegar dados da Activity CadastroFotoUsuario
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
     // Variavel armazena a foto da carteira de motorista
-    byte[] fotoCNH;
+    private byte[] fotoCNH;
 
     // Variavel armazena a foto da perfil do motorista
-    byte[] fotoMotorista;
+    private byte[] fotoMotorista;
 
-    // Variavel armazena a foto do documento do veículo do motorista
-    byte[] fotoCrlvMotorista;
+    // Variavel armazena a foto do documento do veículo
+    private byte[] fotoCrlv;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
@@ -45,35 +51,32 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
     // Variável armazena a referência do Sotorage
     private StorageReference storageReference;
 
-    //FirebaseUser fireUser;
+    private String statusCadastroMotorista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_crlv_motorista);
 
-        // Recuperando dados passados da Activity CadastroTipoUsuario
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
+
+        // Recuperando dados passados da Activity CadastroFotoUsuario
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
-        // fireUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //      Armazena os dados recuperados em uma um variável String
-        // dados classe Usuario
         nomeUsuario         =   usuario.getNome();
         sobrenomeUsuario    =   usuario.getSobrenome();
         telefoneUsuario     =   usuario.getTelefone();
         tipoUsuario         =   usuario.getTipoUsuario();
 
-        // Dados classe Motorista
         fotoCNH             =   motorista.getFotoCNH();
         fotoMotorista       =   motorista.getFotoPerfilMotorista();
+        statusCadastroMotorista = "Em análise";
 
         // Recuperando Referência do Storage do Firebase
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
-
     }
-
     // Evento executado pelo botão enviar
     public void enviarCrlvMotorista (View view) {
 
@@ -105,7 +108,7 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     // Tranforma a imagem em um array de Bytes e armazena na variável
-                    fotoCrlvMotorista = baos.toByteArray();
+                    fotoCrlv = baos.toByteArray();
 
                     Toast.makeText(CadastroCrlvMotoristaActivity.this,
                             "Sucesso ao selececionar a imagem",
@@ -118,33 +121,49 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
         }
     }
 
-    // Evento Botão buttonFinalizarCrlvMotorista
-    public void finalizarCadastroMotorista(View view){
+    // Evento Botão buttonFinalizarCadastroMotorista
+    public void buttonFinalizarCadastroMotorista(View view){
 
-        if ( fotoCrlvMotorista != null ) {
+        if ( fotoCrlv != null ) {
 
-            // Cria uma referência para a classe Usuário e instância ela
-            Usuario usuario = new Usuario();
+            Motorista motorista = new Motorista();
 
-            // Envia a dados para classe Usuário
-            usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
-            usuario.setEmail(UsuarioFirebase.getEmailUsuario());
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
+            motorista.setId(UsuarioFirebase.getIdentificadorUsuario());
+            motorista.setEmail(UsuarioFirebase.getEmailUsuario());
+            motorista.setNome(nomeUsuario);
+            motorista.setSobrenome(sobrenomeUsuario);
+            motorista.setTelefone(telefoneUsuario);
+            motorista.setTipoUsuario(tipoUsuario);
+            motorista.setStatusCadastro(statusCadastroMotorista);
 
-            // Chama método salvar da classe Usuário, responsável por salvar no firebase
-             usuario.salvar();
+            // Chama método salvar da classe Usuário, responsável por salvar no database do firebase
+            motorista.salvar();
 
+             // Chama método para salvar as fotos no storage do firebase
             salvarFotoCNH();
-            salvarFotoCrlvMotorista();
             salvarFotoPerfilMotorista();
+            salvarFotoCrlv();
 
-            //startActivity(new Intent(this, MainActivity.class));
+            AlertDialog.Builder builder = new AlertDialog.Builder( CadastroCrlvMotoristaActivity.this);
+            builder.setTitle("Cadastro realizado com sucesso");
+            builder.setMessage("Seu cadastro foi realizado com sucesso, agora iremos avaliar seus dados"+
+                               " a análise pode levar até 7 dias útéis");
+            builder.setCancelable(false);
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(CadastroCrlvMotoristaActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
 
             Toast.makeText(CadastroCrlvMotoristaActivity.this,
-                    "Sucesso ao cadastrar Usuário Motorista !",
+                    "Sucesso ao cadastrar Usuário Motorista!",
                     Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(CadastroCrlvMotoristaActivity.this,
@@ -217,7 +236,7 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
     }
 
     // Método de salvemento FotoDccumentoVeiculo
-    public void salvarFotoCrlvMotorista(){
+    public void salvarFotoCrlv(){
 
         StorageReference imagemRef = storageReference
                 .child("motorista")
@@ -225,7 +244,7 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
                 .child("documentos de validacao")
                 .child(UsuarioFirebase.getEmailUsuario()+".CRVL.JPEG");
 
-        UploadTask uploadTask = imagemRef.putBytes (fotoCrlvMotorista);
+        UploadTask uploadTask = imagemRef.putBytes (fotoCrlv);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -243,5 +262,11 @@ public class CadastroCrlvMotoristaActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        // Efeito de voltar para activity anterior
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
 }

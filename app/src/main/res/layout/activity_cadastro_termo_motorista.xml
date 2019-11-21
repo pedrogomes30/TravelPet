@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.23000002"
-        app:srcCompat="@drawable/login" />
+        app:srcCompat="@drawable/tela_branca_login" />
 
     <TextView
         android:id="@+id/textViewTiruloTermo"
@@ -80,7 +80,7 @@
         android:layout_marginBottom="50dp"
         android:layout_weight="1"
         android:background="@drawable/button_cinza_seletor"
-        android:onClick="abrirTelaCadastroCnhMotorista"
+        android:onClick="buttonProximoTermoMotorista"
         android:text="Próximo"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

@@ -9,23 +9,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity;
 import com.example.travelpet.classes.Animal;
 import com.example.travelpet.classes.Usuario;
+import com.google.firebase.internal.InternalTokenProvider;
 
 public class CadastroPorteAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroEspecieAnimal
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-           nomeAnimal, especieAnimal, racaAnimal;
-    String fluxoDados;
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+            nomeAnimal, especieAnimal, racaAnimal;
+    private String fluxoDados;
     private RadioGroup radioGroupPorteAnimal;
 
-    String porteAnimal;
+    private String porteAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_porte_animal);
+
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
@@ -75,11 +79,10 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
             animal.setPorteAnimal(porteAnimal);
 
             Intent intent = new Intent(CadastroPorteAnimalActivity.this, CadastroFotoAnimalActivity.class);
-
             intent.putExtra ("usuario",usuario);
             intent.putExtra ("animal",animal);
-
             startActivity(intent);
+
 
         }else{
             Toast.makeText(CadastroPorteAnimalActivity.this, //onde será exibido
@@ -111,5 +114,9 @@ public class CadastroPorteAnimalActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }

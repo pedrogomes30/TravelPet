@@ -21,13 +21,13 @@ import java.io.IOException;
 public class CadastroFotoMotoristaActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroCnhMotorista
-    String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
     // Variavel armazena a foto da carteira de motorista
-    byte[] fotoCNH;
+    private byte[] fotoCNH;
 
     // Variavel armazena a foto da perfil do motorista
-    byte[] fotoMotorista;
+    private byte[] fotoMotorista;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
@@ -38,19 +38,18 @@ public class CadastroFotoMotoristaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_foto_motorista);
 
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
+
         // Recuperando dados passados da Activity CadastroCnhMototorista
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
 
-        //      Armazena os dados recuperados em uma um variável String
-        // Dados classe Usuario
         nomeUsuario         =   usuario.getNome();
         sobrenomeUsuario    =   usuario.getSobrenome();
         telefoneUsuario     =   usuario.getTelefone();
         tipoUsuario         =   usuario.getTipoUsuario();
 
-        // Dados classe Motorista
         fotoCNH             =   motorista.getFotoCNH();
 
     }
@@ -99,8 +98,8 @@ public class CadastroFotoMotoristaActivity extends AppCompatActivity {
         }
     }
 
-    // Evento onClick ( Botão buttonProximoCNH )
-    public void abrirTelaFotoCrlv(View view){
+    // Evento onClick ( Botão buttonProximoFotoMotorista)
+    public void buttonProximoFotoMotorista(View view){
 
         if(fotoMotorista != null) {
 
@@ -116,7 +115,6 @@ public class CadastroFotoMotoristaActivity extends AppCompatActivity {
             motorista.setFotoCNH(fotoCNH);
             motorista.setFotoPerfilMotorista(fotoMotorista);
 
-
             Intent intent = new Intent(CadastroFotoMotoristaActivity.this, CadastroCrlvMotoristaActivity.class);
             intent.putExtra("usuario", usuario);
             intent.putExtra("motorista", motorista);
@@ -130,6 +128,10 @@ public class CadastroFotoMotoristaActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-
+    @Override
+    public void finish() {
+        super.finish();
+        // Efeito de voltar para activity anterior
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }

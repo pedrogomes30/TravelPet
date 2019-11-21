@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -21,18 +22,22 @@ import java.io.IOException;
 public class CadastroCnhMotoristaActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroTermoMotorista
-    String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
     // Variavel armazena a foto da carteira de motorista CNH
-    byte[] fotoCNH;
+    private byte[] fotoCNH;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
+
+    TextView textNome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cnh_motorista);
+
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         // Recuperando dados passados da Activity CadastroTermoMotorista
         Intent intent = getIntent();
@@ -42,6 +47,10 @@ public class CadastroCnhMotoristaActivity extends AppCompatActivity {
         sobrenomeUsuario    =   usuario.getSobrenome();
         telefoneUsuario     =   usuario.getTelefone();
         tipoUsuario         =   usuario.getTipoUsuario();
+
+        textNome = findViewById(R.id.textNome);
+
+        textNome.setText(nomeUsuario);
 
     }
 
@@ -97,19 +106,17 @@ public class CadastroCnhMotoristaActivity extends AppCompatActivity {
     }
 
     // Evento onClick ( Botão buttonProximoCNH )
-    public void abrirTelaFotoMotorista(View view){
+    public void buttonProximoCnhMotorista(View view){
 
         if(fotoCNH != null) {
 
             Usuario usuario = new Usuario();
-
             usuario.setNome(nomeUsuario);
             usuario.setSobrenome(sobrenomeUsuario);
             usuario.setTelefone(telefoneUsuario);
             usuario.setTipoUsuario(tipoUsuario);
 
             Motorista motorista = new Motorista();
-
             motorista.setFotoCNH(fotoCNH);
 
             Intent intent = new Intent(CadastroCnhMotoristaActivity.this, CadastroFotoMotoristaActivity.class);
@@ -123,6 +130,10 @@ public class CadastroCnhMotoristaActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-
+    @Override
+    public void finish() {
+        super.finish();
+        // Efeito de voltar para activity anterior
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }

@@ -1,9 +1,7 @@
 package com.example.travelpet.telasPerfil.passageiro;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,11 +23,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.activity.MainActivity;
-import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroNomeUsuarioActivity;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
-import com.example.travelpet.helper.Permissao;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,12 +51,23 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_viagem, R.id.nav_pagamento, R.id.nav_configuracao,
+                R.id.nav_contato, R.id.nav_meus_animais, R.id.nav_info)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
         // Configurações iniciais
         referencia = FirebaseDatabase.getInstance().getReference();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
 
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
 
@@ -115,18 +121,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
             }
         });
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_viagem, R.id.nav_pagamento, R.id.nav_configuracao,
-                R.id.nav_contato, R.id.nav_meus_animais, R.id.nav_info)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
     }
     //Menu dos 3 pontos direito da tela do toolbar
     @Override
@@ -182,10 +176,4 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-    // Método voltar com  o botão do próprio aparelho
-    @Override
-    public void onBackPressed() {
-        // como não tem nada ele não volta
-    }
-
 }

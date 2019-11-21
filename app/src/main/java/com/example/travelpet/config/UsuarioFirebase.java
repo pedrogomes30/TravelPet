@@ -23,19 +23,6 @@ public class UsuarioFirebase {
         // retorna objeto inteiro
         return usuario.getCurrentUser();
     }
-    // Método para retorna usuario atual, com objeto do tipo Usuário - Aula 496
-    // Usado no processor de salvar Requisição (ViagemFragment
-    public static Usuario getDadosUsuarioLogado(){
-        FirebaseUser firebaseUser = getUsuarioAtual();
-
-        Usuario usuario = new Usuario();
-        usuario.setId(firebaseUser.getUid());
-        usuario.setEmail(firebaseUser.getEmail());
-        //usuario.setNome( firebaseUser.getDisplayName());
-
-        return  usuario;
-    }
-
 
     // Método recupera o id do usuário atual
     public static  String getIdentificadorUsuario(){

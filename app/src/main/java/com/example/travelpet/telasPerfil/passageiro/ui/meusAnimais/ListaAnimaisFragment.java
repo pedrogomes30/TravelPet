@@ -1,4 +1,4 @@
-package com.example.travelpet.telasPerfil.passageiro.ui.meus.animais;
+package com.example.travelpet.telasPerfil.passageiro.ui.meusAnimais;
 
 import android.content.Intent;
 import android.os.Bundle;

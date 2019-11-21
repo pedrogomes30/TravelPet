@@ -15,19 +15,21 @@ import com.example.travelpet.classes.Usuario;
 public class CadastroEspecieAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroNomeAnimal
-    String  nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-            nomeAnimal;
+    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+                    nomeAnimal;
 
-    String fluxoDados;
+    private String fluxoDados;
 
     private RadioGroup radioGroupTipoEspecie;
 
-    String especieAnimal;
+    private String especieAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_especie_animal);
+
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         // Recuperando dados passados da Activity <CadastroNomeAnimal
         Intent intent = getIntent();
@@ -77,7 +79,7 @@ public class CadastroEspecieAnimalActivity extends AppCompatActivity {
             intent.putExtra ("animal",animal);
 
             startActivity(intent);
-            //finish();
+
 
         }else{ // Se o tipoEspecie estiver vazio então exibe está mensagem
             Toast.makeText(CadastroEspecieAnimalActivity.this, //onde será exibido
@@ -113,5 +115,10 @@ public class CadastroEspecieAnimalActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
 }

@@ -9,12 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.classes.Motorista;
 import com.example.travelpet.classes.Usuario;
 
 public class CadastroTermoMotoristaActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroTipoUsuario
-    String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    // Variaveis usadas para pegar dados da Activity CadastroDadosUsuario
+    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
 
     private CheckBox checkBoxTermos;
 
@@ -22,6 +23,12 @@ public class CadastroTermoMotoristaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_termo_motorista);
+
+        // Efeito de Transição
+        // 1ª (R.anim.activity_filho_entrando)= animação que vai executar pra activity que ta estrando
+        // 2ª = Animação que vai executar pra activity que tiver saindo
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
+
 
         // Recuperando dados passados da Activity CadastroTipoUsuario
         Intent intent = getIntent();
@@ -38,7 +45,7 @@ public class CadastroTermoMotoristaActivity extends AppCompatActivity {
     }
 
     // Evento onClick ( Botão ProximoTermo )
-    public void abrirTelaCadastroCnhMotorista(View view){
+    public void buttonProximoTermoMotorista(View view){
 
         // isChecked(); = verifica se o check box esta marcado, enviando true ou false , se ele esta marcado ou não
         if ( checkBoxTermos.isChecked()){
@@ -61,9 +68,13 @@ public class CadastroTermoMotoristaActivity extends AppCompatActivity {
                     "Aceite os termos para prosseguir", // o que será exibido
                     Toast.LENGTH_SHORT).show(); // quanto tempo. show = monstrar executa
         }
-
-
-
+    }
+    // Chamado quando clica no botão voltar do aparelho
+    @Override
+    public void finish() {
+        super.finish();
+        // Efeito de voltar para activity anterior
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
 
 }

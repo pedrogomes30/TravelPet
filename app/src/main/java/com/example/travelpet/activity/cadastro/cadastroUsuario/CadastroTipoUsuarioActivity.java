@@ -7,13 +7,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
-import com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity;
 import com.example.travelpet.classes.Usuario;
 
 public class CadastroTipoUsuarioActivity extends AppCompatActivity {
 
-    String tipoUsuario;
+    private String tipoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
 
-        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroNomeUsuarioActivity.class);
+        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroDadosUsuarioActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
 
@@ -44,9 +42,10 @@ public class CadastroTipoUsuarioActivity extends AppCompatActivity {
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
 
-        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroNomeUsuarioActivity.class);
+        Intent intent = new Intent(CadastroTipoUsuarioActivity.this, CadastroDadosUsuarioActivity.class);
         intent.putExtra("usuario",usuario);
         startActivity(intent);
+
     }
     // Método para voltar com o botão do próprio aparelho
     @Override

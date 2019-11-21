@@ -1,6 +1,5 @@
 package com.example.travelpet.activity.cadastro.cadastroAnimal;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,15 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.MainActivity;
 import com.example.travelpet.classes.Animal;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
 import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,11 +34,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CadastroFotoAnimalActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroPorteAnimal
-    String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fotoUsuarioUrl,
-           nomeAnimal, especieAnimal, racaAnimal, porteAnimal,fotoAnimalUrl,idAnimal;
-    String fluxoDados;
+    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fotoUsuarioUrl,
+            nomeAnimal, especieAnimal, racaAnimal, porteAnimal,fotoAnimalUrl,idAnimal;
 
-    CircleImageView imageViewFotoAnimal;
+    private String fluxoDados;
+
+    private CircleImageView imageViewFotoAnimal;
 
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
@@ -51,27 +48,18 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private String emailUsuario;
 
-    byte[] fotoAnimal;
-
-    // Array de String para solicitar permissões
-    public String [] permissoesNecessarias = new String []{
-            // Definindo Permiissões
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    };
+    private byte[] fotoAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_foto_animal);
 
-        // Solicitando (Validar) Permissões
-        Permissao.validarPermissoes(permissoesNecessarias, CadastroFotoAnimalActivity.this, 1);
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
         Usuario usuario = intent.getParcelableExtra("usuario");
         Animal animal = intent.getParcelableExtra("animal");
-
 
         // Dados da classe Usuario
         nomeUsuario         =   usuario.getNome();
@@ -210,8 +198,11 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                     "Sucesso ao cadastrar Usuário Passageiro!!",
                     Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
-            finish();
+            Intent intent = new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class);
+            // intent.setFlags = Limpa as activitys acumuladas
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
 
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
 
@@ -221,8 +212,10 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                     "Sucesso ao cadastrar Animal!",
                     Toast.LENGTH_SHORT).show();
 
-            startActivity(new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class));
-            finish();
+            Intent intent = new Intent(CadastroFotoAnimalActivity.this, PerfilPassageiroActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
         }
         else{
 
@@ -279,13 +272,14 @@ public class CadastroFotoAnimalActivity extends AppCompatActivity {
                 animal.setFotoAnimal(fotoAnimalUrl);
                 animal.salvarAnimal();
 
-
             }
         });
     }
-
-
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+    }
 }
 
 

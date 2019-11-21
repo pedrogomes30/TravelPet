@@ -13,26 +13,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.activity.MainActivity;
-import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
 import com.example.travelpet.config.UsuarioFirebase;
-import com.example.travelpet.telasPerfil.motorista.TestePerfilMotoristaActivity;
-import com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity;
-import com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.EditarAnimalActivity;
-import com.example.travelpet.telasPerfil.passageiro.ui.meus.animais.ListaAnimaisFragment;
+import com.example.travelpet.telasPerfil.passageiro.ui.meusAnimais.ListaAnimaisFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

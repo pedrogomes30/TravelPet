@@ -3,6 +3,7 @@
 
     <item
         android:drawable="@drawable/button_cinza_escuro_pressionado"
+
         android:state_pressed="true"/>
 
     <item
