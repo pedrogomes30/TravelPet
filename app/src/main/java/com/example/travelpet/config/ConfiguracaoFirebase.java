@@ -55,7 +55,7 @@ public class ConfiguracaoFirebase {
         }
         return auth;
     }
-    // Método para salvar no iamgem no Storage do FireBase
+    // Método para salvar a imagem no Storage do FireBase
     public static StorageReference getFirebaseStorage(){
         // verifica se o storage já esta configurado
         if(storage == null){

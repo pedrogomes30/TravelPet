@@ -1,7 +1,7 @@
 package com.example.travelpet.model;
 
 // Classe usada no processo do buttonChamarMotorista = aula 495
-// Fragment (ViagemFragment.java
+// Fragment ViagemFragment
 public class Destino {
 
     private String rua;

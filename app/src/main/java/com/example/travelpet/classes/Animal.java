@@ -16,6 +16,7 @@ public class Animal implements Parcelable {
     private String racaAnimal;
     private String porteAnimal;
     private String fotoAnimal;
+    private String observacaoAnimal;
 
 
     // Construtor
@@ -80,6 +81,14 @@ public class Animal implements Parcelable {
         this.fotoAnimal = fotoAnimal;
     }
 
+    public String getObservacaoAnimal() {
+        return observacaoAnimal;
+    }
+
+    public void setObservacaoAnimal(String observacaoAnimal) {
+        this.observacaoAnimal = observacaoAnimal;
+    }
+
     //      Método para salvar os dados do animal no firebase
     public void salvarAnimal(){
 
@@ -113,6 +122,7 @@ public class Animal implements Parcelable {
         racaAnimal = in.readString();
         porteAnimal = in.readString();
         fotoAnimal = in.readString();
+        observacaoAnimal = in.readString();
     }
 
     @Override
@@ -124,6 +134,7 @@ public class Animal implements Parcelable {
         dest.writeString(racaAnimal);
         dest.writeString(porteAnimal);
         dest.writeString(fotoAnimal);
+        dest.writeString(observacaoAnimal);
     }
 
     @Override

@@ -32,7 +32,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".telasPerfil.motorista.TestePerfilMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -49,22 +50,20 @@
         <activity
             android:name=".telasPerfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
             android:parentActivityName=".telasPerfil.passageiro.PerfilPassageiroActivity" />
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroFotoAnimalActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroAnimalFotoActivity" />
         <activity
             android:name=".telasPerfil.passageiro.PerfilPassageiroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCrlvMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroFotoMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroTermoMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroCnhMotoristaActivity" />
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroPorteAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroRacaAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroEspecieAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroDadosUsuarioActivity" />
-        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity" />
-        <activity
-            android:name=".activity.SplashActivity">
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroMotoristaCrlvActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity" />
+        <activity android:name=".activity.cadastro.cadastroMotorista.CadastroMotoristaCnhActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroAnimalPorteActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroAnimalEspecieRacaActivity" />
+        <activity android:name=".activity.cadastro.cadastroAnimal.CadastroAnimalNomeActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
+        <activity android:name=".activity.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroNomeAnimalActivity;
+import com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.classes.Animal;
 import com.example.travelpet.classes.Usuario;
@@ -50,7 +50,7 @@ public class ListaAnimaisFragment extends Fragment {
                               Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.lista_animais_fragment, container, false);
 
-        // Configurando Evento de clique do FloatingActionButton
+        //Configurando Evento de clique do FloatingActionButton
         FloatingActionButton adicionarAnimal = view.findViewById(R.id.adicionarAnimal);
         adicionarAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class ListaAnimaisFragment extends Fragment {
                 usuario.setTipoUsuario(tipoUsuario);
                 usuario.setFluxoDados(fluxoDados);
 
-                Intent intent = new Intent(getActivity(), CadastroNomeAnimalActivity.class);
+                Intent intent = new Intent(getActivity(), CadastroAnimalNomeActivity.class);
                 intent.putExtra("usuario",usuario);
                 startActivity(intent);
             }

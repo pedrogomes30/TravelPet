@@ -150,7 +150,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_forward_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_drop_down_circle_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -160,9 +160,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_seta_branca_proximo_24dp" />
-                            <entry key="sourceFile" value="C:\Users\fox" />
+                            <entry key="outputName" value="ic_logo_travel_pet_azul" />
+                            <entry key="sourceFile" value="C:\Users\fox\Documents\TCC\Logo\layout\vetores\logos\logo_travel_pet_azul.svg" />
                           </map>
                         </option>
                       </PersistentState>

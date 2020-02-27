@@ -56,7 +56,7 @@ public class Permissao {
 
         }
 
-        // POr padrão coloca "return true;" para parar de dar mensagem de erro
+        // Por padrão coloca "return true;" para parar de dar mensagem de erro
         return true;
     }
     public static void alertaValidacaoPermissao(final Activity activity){

@@ -96,7 +96,7 @@ public class ConfiguracaoFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Usuario dadosUsuario = dataSnapshot.getValue(Usuario.class);
-                // Necessario pegar os dados de novo para salvar junto com a foto alterada de novo
+                // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
                 nomeUsuario       =   dadosUsuario.getNome();
                 sobrenomeUsuario  =   dadosUsuario.getSobrenome();
                 telefoneUsuario   =   dadosUsuario.getTelefone();

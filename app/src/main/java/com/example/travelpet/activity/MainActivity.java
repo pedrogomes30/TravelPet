@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroTipoUsuarioActivity;
+import com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity;
 import com.example.travelpet.classes.Motorista;
 import com.example.travelpet.classes.Usuario;
 import com.example.travelpet.config.ConfiguracaoFirebase;
@@ -28,10 +27,7 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -196,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }else{
 
-                                startActivity(new Intent(MainActivity.this, CadastroTipoUsuarioActivity.class));
+                                startActivity(new Intent(MainActivity.this, CadastroUsuarioTipoActivity.class));
                                 finish();
 
                             }
@@ -236,9 +232,9 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for ( int permissaoResultado : grantResults ){
 
-            // caso não aceite executa esse if
+
             if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
-                // chama o método exibe mensagem e fecha
+
                 Permissao.alertaValidacaoPermissao(MainActivity.this);
             }
         }

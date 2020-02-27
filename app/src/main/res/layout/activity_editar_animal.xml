@@ -21,8 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            tools:ignore="MissingConstraints"
-            />
+            tools:ignore="MissingConstraints" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewFotoAnimal"
@@ -80,7 +79,7 @@
             android:id="@+id/linearLayoutNomeAnimal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="7dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="10dp"
             android:orientation="horizontal"
@@ -90,8 +89,7 @@
             android:paddingBottom="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewNome"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewNome"
+            app:layout_constraintStart_toEndOf="@+id/textViewEspecie"
             app:layout_constraintTop_toTopOf="@+id/textViewNome"
             app:layout_constraintVertical_bias="0.45">
 
@@ -103,11 +101,11 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Nome do Animal"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorText"
                 android:textSize="14sp" />
 
             <ImageView
-                android:id="@+id/imageViewSalvarEspecie"
+                android:id="@+id/imageViewLapisNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -120,62 +118,80 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Espécie:"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
-        <TextView
-            android:id="@+id/textViewEspecieEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:text="Espécie"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
+        <Spinner
+            android:id="@+id/spinnerEspecieAnimal"
+            android:layout_width="0dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="35dp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewEspecie"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textViewEspecie"
-            app:layout_constraintTop_toTopOf="@+id/textViewEspecie"
-            app:layout_constraintVertical_bias="0.57" />
+            app:layout_constraintTop_toTopOf="@+id/textViewEspecie" />
 
         <TextView
             android:id="@+id/textViewRaca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="Raça:"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEspecie" />
 
-        <TextView
-            android:id="@+id/textViewRacaEdit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayoutRacaAnimal"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Raça"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewRaca"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewRaca"
-            app:layout_constraintTop_toTopOf="@+id/textViewRaca"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintStart_toEndOf="@+id/textViewEspecie"
+            app:layout_constraintTop_toTopOf="@+id/textViewRaca">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteRacaAnimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Raça"
+                android:textColor="@color/colorText"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageViewLapisRacaAnimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_editar_branco_24dp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textViewPorte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="50dp"
             android:text="Porte:"
             android:textSize="24sp"
@@ -189,15 +205,41 @@
             android:id="@+id/spinnerPorteAnimal"
             android:layout_width="0dp"
             android:layout_height="47dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="85dp"
+            android:layout_marginEnd="35dp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewPorte"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewPorte"
+            app:layout_constraintStart_toEndOf="@+id/textViewEspecie"
             app:layout_constraintTop_toTopOf="@+id/textViewPorte"
             app:layout_constraintVertical_bias="0.51" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputObservacaoAnimal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSalvarEditAnimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerPorteAnimal">
+
+            <EditText
+                android:id="@+id/editTextObservacaoAnimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/transparent"
+                android:hint="Observações..."
+                android:maxLength="450" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonSalvarEditAnimal"
@@ -225,7 +267,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:layout_weight="1"
-            android:background="@drawable/button_cinza_seletor"
+            android:background="@drawable/button_azul_seletor"
             android:onClick="excluirAnimal"
             android:text="Excluir"
             android:textColor="#FFFFFF"
