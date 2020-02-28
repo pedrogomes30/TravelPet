@@ -106,7 +106,9 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
     // Variáveis para recolher dados editados
 
     // Variável utilizada no processo de excluir Animal
-    private DatabaseReference databaseReference;
+    // Variável utilizada no processo de excluir Animal
+    DatabaseReference databaseReference;
+    private DatabaseReference  databaseReferenceListaAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,13 +151,13 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
 
             // Colocando dados na variaveis para poder salvar no firebase as alterações
             idAnimal = animalDestinatario.getIdAnimal();
-            fotoAnimalUri = animalDestinatario.getFotoAnimal();
+            fotoAnimalUrl = animalDestinatario.getFotoAnimal();
             nomeAnimal = animalDestinatario.getNomeAnimal();
             especieAnimal = animalDestinatario.getEspecieAnimal();
             racaAnimal = animalDestinatario.getRacaAnimal();
             porteAnimal = animalDestinatario.getPorteAnimal();
             observacaoAnimal = animalDestinatario.getObservacaoAnimal();
-            fotoAnimalUrl = animalDestinatario.getFotoAnimal();
+
 
             // Para comparação na hora de salvar
             nomeAnimalEdit = nomeAnimal;
@@ -166,8 +168,8 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
             //              Enviando os dados recebidos para o XML
 
             // Pegando Foto do Animal do BD e colocando no xml
-            if(fotoAnimalUri != null){
-                Uri url = Uri.parse(fotoAnimalUri);
+            if(fotoAnimalUrl != null){
+                Uri url = Uri.parse(fotoAnimalUrl);
                 Glide.with(EditarAnimalActivity.this)
                         .load(url)
                         .into(imageViewFotoAnimal);
@@ -297,23 +299,23 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
     // Evento de clique do botão camera
     public void buttonCameraAnimal(View view){
 
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
-            if (i.resolveActivity(getPackageManager()) != null) {
-                // Captura a foto que foi tirada
-                // startActivityForResult = Inicia a activity, e recupera um resultado de retorno que e a foto
-                startActivityForResult(i,SELECAO_CAMERA);
-            }
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
+        if (i.resolveActivity(getPackageManager()) != null) {
+            // Captura a foto que foi tirada
+            // startActivityForResult = Inicia a activity, e recupera um resultado de retorno que e a foto
+            startActivityForResult(i,SELECAO_CAMERA);
         }
-        // Evento do clique do botão galeria
-        public void buttonGaleriaAnimal(View view) {
+    }
+    // Evento do clique do botão galeria
+    public void buttonGaleriaAnimal(View view) {
 
-            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-            if (i.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(i,SELECAO_GALERIA);
-            }
+        if (i.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(i,SELECAO_GALERIA);
         }
+    }
     // Método para pegar a foto da Câmera ou Galeria
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -423,8 +425,8 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
         listaRacaAnimal.clear();
 
         //              Colocando os nomes das raças do banco de dados em uma lista
-        databaseReference = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimalEdit);
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReferenceListaAnimal = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimalEdit);
+        databaseReferenceListaAnimal.addChildEventListener(new ChildEventListener() {
 
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Pegando os dados do BD através da classe RacaAnimal
@@ -457,27 +459,27 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
     }
 
     // Método onClick do botão Salvar
-     public void salvarDadosAnimal(View view){
-         // Salvar imagem no firebase
-         if(imagem != null ){
+    public void salvarDadosAnimal(View view){
+        // Salvar imagem no firebase
+        if(imagem != null ){
 
             StorageReference imagemRef = storageReference
-                     .child("animais")
-                     .child(emailUsuario)
-                     .child(idAnimal)
-                     .child(idAnimal+".FOTO.PERFIL.JPEG");
+                    .child("animais")
+                    .child(emailUsuario)
+                    .child(idAnimal)
+                    .child(idAnimal+".FOTO.PERFIL.JPEG");
 
             UploadTask uploadTask = imagemRef.putBytes(fotoAnimal);
 
-             // Método para saber se o salvamento deu certo
-             // caso de erro
+            // Método para saber se o salvamento deu certo
+            // caso de erro
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
 
-                 Toast.makeText(EditarAnimalActivity.this,
-                         "Erro ao fazer upload da imagem",
-                         Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditarAnimalActivity.this,
+                            "Erro ao fazer upload da imagem",
+                            Toast.LENGTH_SHORT).show();
 
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -496,90 +498,92 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
 
                 }
             });
-         }
-         else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
-                 (!racaAnimal.equals(racaAnimalEdit)) || (!porteAnimal.equals(porteAnimalEdit)) ||
-                 (!observacaoAnimal.equals(observacaoAnimalEdit))){
+        }
+        else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
+                (!racaAnimal.equals(racaAnimalEdit)) || (!porteAnimal.equals(porteAnimalEdit)) ||
+                (!observacaoAnimal.equals(observacaoAnimalEdit))){
 
-             enviarDadosAnimalDatabase();
-         }
-     }
-     // Método para auxiliar no botão Salvar
-     public void enviarDadosAnimalDatabase (){
-         Animal animal = new Animal();
+            enviarDadosAnimalDatabase();
+        }
+    }
+    // Método para auxiliar no botão Salvar
+    public void enviarDadosAnimalDatabase (){
+        Animal animal = new Animal();
 
-         animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-         animal.setIdAnimal(idAnimal);
-         animal.setNomeAnimal(nomeAnimalEdit);
-         animal.setEspecieAnimal(especieAnimalEdit);
-         animal.setRacaAnimal(racaAnimalEdit);
-         animal.setPorteAnimal(porteAnimalEdit);
-         animal.setFotoAnimal(fotoAnimalUrl);
-         animal.setObservacaoAnimal(observacaoAnimalEdit);
-         animal.salvarAnimal();
+        animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+        animal.setIdAnimal(idAnimal);
+        animal.setNomeAnimal(nomeAnimalEdit);
+        animal.setEspecieAnimal(especieAnimalEdit);
+        animal.setRacaAnimal(racaAnimalEdit);
+        animal.setPorteAnimal(porteAnimalEdit);
+        animal.setFotoAnimal(fotoAnimalUrl);
+        animal.setObservacaoAnimal(observacaoAnimalEdit);
+        animal.salvarAnimal();
 
-         Toast.makeText(EditarAnimalActivity.this,
-                 "Alteração feita com sucesso!",
-                 Toast.LENGTH_SHORT).show();
-         startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-         finish();
-     }
+        Toast.makeText(EditarAnimalActivity.this,
+                "Alteração feita com sucesso!",
+                Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
+        finish();
+    }
 
-     // Método onClick do botão Excluir
-     public void excluirAnimal(View view){
+    // Método onClick do botão Excluir
+    public void excluirAnimal(View view){
         // Caixa de diálogo
-         AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
-         msgBox.setTitle("Excluindo...");
-         msgBox.setIcon(R.drawable.ic_lixeira_24dp);
-         msgBox.setMessage("Tem certeza que deseja excluir este animal?");
-         msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-             @Override
-             public void onClick(DialogInterface dialogInterface, int i) {
+        AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
+        msgBox.setTitle("Excluindo...");
+        msgBox.setIcon(R.drawable.ic_lixeira_24dp);
+        msgBox.setMessage("Tem certeza que deseja excluir este animal?");
+        // Evento de clique do botão sim
+        msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-                 // Recuperando o caminho da foto no storage de acordo com animal escolhido
-                 StorageReference imagemReferencia = storageReference.child(
-                         "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+".FOTO.PERFIL.JPEG");
+                // Recuperando o caminho da foto no storage de acordo com animal escolhido
+                StorageReference imagemReferencia = storageReference.child(
+                        "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+".FOTO.PERFIL.JPEG");
 
-                 // Caso consiga exccluir, executa
-                 imagemReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                     @Override
-                     public void onSuccess(Void aVoid) {
-                         // Exclui o nó do animal do database também
-                         databaseReference.child("animais")
-                                 .child(UsuarioFirebase.getIdentificadorUsuario())
-                                 .child(idAnimal).removeValue();
+                // Caso consiga exccluir, executa
+                imagemReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Exclui o nó do animal do database também
+                        databaseReference.child("animais")
+                                .child(UsuarioFirebase.getIdentificadorUsuario())
+                                .child(idAnimal).removeValue();
 
-                         Toast.makeText(EditarAnimalActivity.this,
-                                 "Sucesso ao remover Animal!",
-                                 Toast.LENGTH_SHORT).show();
-                         startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
+                        Toast.makeText(EditarAnimalActivity.this,
+                                "Sucesso ao remover Animal!",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
 
-                     }
-                     // Caso de erro
-                 }).addOnFailureListener(new OnFailureListener() {
-                     @Override
-                     public void onFailure(@NonNull Exception e) {
-                         Toast.makeText(EditarAnimalActivity.this,
-                                 "Erro ao remover Animal!",
-                                 Toast.LENGTH_SHORT).show();
-                     }
-                 });
-             }
-         });
-         msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-             @Override
-             public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                    // Caso de erro
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditarAnimalActivity.this,
+                                "Erro ao remover Animal!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-             }
-         });
-         msgBox.show();
-     }
+            }
+        });
+        msgBox.show();
+    }
 
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
+
 
 
 }
