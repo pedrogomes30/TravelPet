@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroAnimal.CadastroAnimalPorteActivity">
+    tools:context=".controlller.cadastro.cadastroAnimal.CadastroAnimalPorteActivity">
 
     <Button
         android:id="@+id/buttonProximoPorteAnimal"
@@ -13,14 +13,13 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="buttonProximoPorteAnimal"
         android:text="Próximo"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -45,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#FFFFFF"
+            android:fontFamily="@font/comfortaa_regular"
             android:text="Pequeno - Até 35cm"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
@@ -56,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#FFFFFF"
+            android:fontFamily="@font/comfortaa_bold"
             android:text="Médio - De 36 a 49cm"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
@@ -67,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#FFFFFF"
+            android:fontFamily="@font/comfortaa_bold"
             android:text="Grande - Acima de 50cm"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
@@ -80,6 +82,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/fredoka_one_regular"
         android:gravity="center"
         android:text="Por favor selecione a porte do seu animal:"
         android:textColor="#FFFFFF"

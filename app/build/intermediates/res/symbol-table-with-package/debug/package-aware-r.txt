@@ -717,12 +717,12 @@ color cardview_shadow_end_color
 color cardview_shadow_start_color
 color colorAccent
 color colorApp
-color colorApp2
+color colorAppDark
 color colorButoonAzulPadrao
 color colorButoonAzulPressionado
 color colorButoonBrancoPressionado
 color colorGradientePerfil
-color colorGradientePerfil2
+color colorGradientePerfilDark
 color colorPrimary
 color colorPrimaryDark
 color colorText
@@ -1180,7 +1180,7 @@ drawable button_branco_seletor
 drawable button_laranja_escuro_pressionado
 drawable button_laranja_padrao
 drawable button_laranja_seletor
-drawable circulo_verde
+drawable circulo_verde_local_viagem
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -1280,6 +1280,9 @@ drawable spinner_background
 drawable tela_branca_login
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+font comfortaa_bold
+font comfortaa_regular
+font fredoka_one_regular
 id ALT
 id CTRL
 id FUNCTION
@@ -1382,6 +1385,7 @@ id buttonProximoObservacaoAnimal
 id buttonProximoPorteAnimal
 id buttonProximoTermo
 id buttonSair
+id buttonSalvarConfiguracao
 id buttonSalvarEditAnimal
 id button_continue
 id button_create
@@ -1662,6 +1666,9 @@ id textViewEspecie
 id textViewFotoPefil
 id textViewLogin
 id textViewNome
+id textViewNomeArquivoMotoristaCnh
+id textViewNomeArquivoMotoristaCrvl
+id textViewNomeArquivoMotoristaFoto
 id textViewNomeUsuario
 id textViewObervacao
 id textViewPorte

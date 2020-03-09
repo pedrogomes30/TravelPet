@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".telasPerfil.passageiro.ui.viagem.ViagemFragment">
+    tools:context=".controlller.perfil.passageiro.ui.viagem.ViagemFragment">
 
     <include layout="@layout/content_viagem" />
 
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
-            android:drawableLeft="@drawable/circulo_verde"
+            android:drawableLeft="@drawable/circulo_verde_local_viagem"
             android:drawablePadding="6dp"
             android:ems="10"
             android:enabled="false"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
-            android:drawableLeft="@drawable/circulo_verde"
+            android:drawableLeft="@drawable/circulo_verde_local_viagem"
             android:drawablePadding="6dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"

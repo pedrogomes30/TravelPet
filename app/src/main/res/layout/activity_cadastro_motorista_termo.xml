@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity">
+    tools:context=".controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity">
 
     <ImageView
         android:id="@+id/painelBrancoTermo"
@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/fredoka_one_regular"
         android:text="Consentimento legal"
         android:textColor="@android:color/black"
         android:textSize="27sp"
@@ -49,9 +50,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/comfortaa_regular"
         android:text="Declaração de checagem de antecedentes Ao clicar aqui e submeter o formulário de cadastro, eu concordo com a coleta e processamento dos meus dados pessoais pela Travel Pet ou por seus prestadores de serviço, incluindo dados sensíveis, com o objetivo de avaliar minha elegibilidade para usar ou continuar usando a plataforma da Travel Pet  e para outros fins descritos na Declaração de Privacidade do Motorista. Declaro, ainda, a veracidade e a autenticidade de todas as informações e documentos submetidos à Travel Pet  para fins de cadastro."
         android:textColor="@android:color/black"
-        android:textSize="16.5sp"
+        android:textSize="15.4sp"
         app:layout_constraintEnd_toEndOf="@+id/painelBrancoTermo"
         app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
         app:layout_constraintTop_toBottomOf="@+id/textViewTiruloTermo" />
@@ -62,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/comfortaa_regular"
         android:text="Eu aceito os termos"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -77,7 +80,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="buttonProximoTermoMotorista"

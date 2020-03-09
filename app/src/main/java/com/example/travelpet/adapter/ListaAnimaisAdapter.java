@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.classes.Animal;
+import com.example.travelpet.model.Animal;
 
 import java.util.List;
 

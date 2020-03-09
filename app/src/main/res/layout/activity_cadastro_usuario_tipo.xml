@@ -5,55 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity">
+    tools:context=".controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity">
 
     <TextView
         android:id="@+id/textViewBoasVindas"
         android:layout_width="366dp"
         android:layout_height="171dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/fredoka_one_regular"
         android:gravity="center"
         android:text="Qual tipo de usuario você pretende ser ?"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonPassageiro"
-        android:layout_width="140dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_branco_seletor"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_azul_seletor"
         android:onClick="buttonPassageiro"
         android:text="Passageiro"
-        android:textColor="@color/colorApp"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/buttonMotorista"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas" />
 
     <Button
         android:id="@+id/buttonMotorista"
-        android:layout_width="140dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_branco_seletor"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_azul_seletor"
         android:onClick="buttonMotorista"
         android:text="Motorista"
-        android:textColor="@color/colorApp"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonPassageiro"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPassageiro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

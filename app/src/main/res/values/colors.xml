@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
     <color name="colorApp">#FF6600</color>
-    <color name="colorApp2">#D55805</color>
+    <color name="colorAppDark">#E45904</color>
     <color name="colorGradientePerfil">#FF6914</color>
-    <color name="colorGradientePerfil2">#AA3806</color>
-    <color name="white">#FFFFFF</color>
+    <color name="colorGradientePerfilDark">#AA3806</color>
     <color name="colorText">#212121</color>
+    <color name="white">#FFFFFF</color>
 
     
     <color name="colorButoonBrancoPressionado">#dedfe3</color>

@@ -51,9 +51,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
-        <activity android:name="com.example.travelpet.activity.MainActivity" />
-        <activity android:name="com.example.travelpet.telasPerfil.motorista.TestePerfilMotoristaActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
+        <activity android:name="com.example.travelpet.controlller.MainActivity" />
+        <activity android:name="com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -67,22 +67,22 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.travelpet.telasPerfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
-            android:parentActivityName="com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalFotoActivity" />
+            android:name="com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
+            android:parentActivityName="com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity" />
         <activity
-            android:name="com.example.travelpet.telasPerfil.passageiro.PerfilPassageiroActivity"
+            android:name="com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroMotoristaCrlvActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroMotorista.CadastroMotoristaCnhActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalPorteActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalEspecieRacaActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroAnimal.CadastroAnimalNomeActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
-        <activity android:name="com.example.travelpet.activity.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
-        <activity android:name="com.example.travelpet.activity.SplashActivity" >
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaCrlvActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaCnhActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalPorteActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalEspecieRacaActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
+        <activity android:name="com.example.travelpet.controlller.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorApp</item>
-        <item name="colorPrimaryDark">@color/colorApp2</item>
+        <item name="colorPrimaryDark">@color/colorAppDark</item>
         <item name="colorAccent">@color/colorApp</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_seta_branca_voltar_24dp</item>
     </style>

@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".telasPerfil.passageiro.ui.meusAnimais.EditarAnimalActivity">
+        tools:context=".controlller.perfil.passageiro.ui.meusAnimais.EditarAnimalActivity">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -69,9 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/fredoka_one_regular"
             android:text="Nome:"
             android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewFotoAnimal" />
 
@@ -119,9 +119,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/fredoka_one_regular"
             android:text="Espécie:"
             android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
@@ -143,9 +143,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/fredoka_one_regular"
             android:text="Raça:"
             android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEspecie" />
 
@@ -193,9 +193,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="50dp"
+            android:fontFamily="@font/fredoka_one_regular"
             android:text="Porte:"
             android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/buttonSalvarEditAnimal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRaca"
@@ -254,7 +254,6 @@
             android:text="Salvar"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/buttonExcluirEditAnimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -272,7 +271,6 @@
             android:text="Excluir"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

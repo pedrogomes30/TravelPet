@@ -19,12 +19,12 @@ public final class R {
     public static final class string {
         private string() {}
 
-        public static final int app_name = 0x7f10001b;
+        public static final int app_name = 0x7f11001b;
     }
     public static final class style {
         private style() {}
 
-        public static final int Widget_GifView = 0x7f110204;
+        public static final int Widget_GifView = 0x7f120204;
     }
     public static final class styleable {
         private styleable() {}

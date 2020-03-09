@@ -12,20 +12,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".activity.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity">
+    tools:context=".controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity">
 
     <TextView
         android:id="@+id/textViewBoasVindas"
         android:layout_width="359dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/fredoka_one_regular"
         android:gravity="center"
-        android:text="Nós precisamos \n recolher algumas informações sua para concluir o cadastro :)"
+        android:text="Por favor preencha os campos com seus dados"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +34,13 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputNomeUsuario"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edit_text_branco_seletor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas">
 
@@ -47,20 +48,21 @@
             android:id="@+id/editNomeUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvxwyzç ABCDEFGHIJKLMNOPQRSTUVXWYZÇ ÁáÃãÉéÊêÈèÍíÎîÌìÓóÔôÒòÕõÚúÛûÙùÇçÑñÝý"
+            android:hint="Nome"
             android:maxLength="100"
-            android:hint="Nome" />
+            tools:text="@tools:sample/first_names" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputSobrenome"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edit_text_branco_seletor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputNomeUsuario">
 
@@ -68,9 +70,9 @@
             android:id="@+id/editSobrenomeUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvxwyzç ABCDEFGHIJKLMNOPQRSTUVXWYZÇ ÁáÃãÉéÊêÈèÍíÎîÌìÓóÔôÒòÕõÚúÛûÙùÇçÑñÝý"
+            android:hint="Sobrenome"
             android:maxLength="100"
-            android:hint="Sobrenome" />
+            tools:text="@tools:sample/full_names" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -78,14 +80,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/edit_text_branco_seletor"
         app:layout_constraintBottom_toTopOf="@+id/buttonProximoNomeUsuario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
         app:layout_constraintTop_toBottomOf="@+id/textInputSobrenome"
         app:layout_constraintVertical_bias="0.0">
 
@@ -103,7 +105,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="buttonProximoDadosUsuario"
