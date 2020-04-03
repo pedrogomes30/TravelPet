@@ -117,17 +117,17 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
         if(fotoCNH != null) {
 
-            Usuario usuario = new Usuario();
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
-
             Motorista motorista = new Motorista();
+            motorista.setNome(nomeUsuario);
+            motorista.setSobrenome(sobrenomeUsuario);
+            motorista.setTelefone(telefoneUsuario);
+            motorista.setTipoUsuario(tipoUsuario);
+
+            //Motorista motorista = new Motorista();
             motorista.setFotoCNH(fotoCNH);
 
             Intent intent = new Intent(CadastroMotoristaCnhActivity.this, CadastroMotoristaFotoActivity.class);
-            intent.putExtra("usuario", usuario);
+            //intent.putExtra("usuario", motorista);
             intent.putExtra("motorista", motorista);
             startActivity(intent);
 

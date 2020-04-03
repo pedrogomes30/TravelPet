@@ -1663,6 +1663,7 @@ id textViewBoasVindas3
 id textViewCNH
 id textViewDigiteNomeAnimal
 id textViewEspecie
+id textViewFluxo
 id textViewFotoPefil
 id textViewLogin
 id textViewNome
@@ -1674,9 +1675,11 @@ id textViewObervacao
 id textViewPorte
 id textViewRaca
 id textViewSobrenomeUsuario
+id textViewTeste
 id textViewTextoCNH
 id textViewTextoCrlvMotorista
 id textViewTextoTermo
+id textViewTipo
 id textViewTiruloTermo
 id textViewTituloCrlvMotorista
 id textViewTituloFotoAnimal

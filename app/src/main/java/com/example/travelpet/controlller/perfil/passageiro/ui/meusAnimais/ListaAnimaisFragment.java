@@ -16,6 +16,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -55,17 +56,17 @@ public class ListaAnimaisFragment extends Fragment {
         adicionarAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Usuario usuario = new Usuario();
+                DonoAnimal donoAnimal = new DonoAnimal();
                 // Passando dados nulo para Activity CadastroNomeAnimal
                 // Para poder enganar e passa o FluxoDados junto
-                usuario.setNome(nomeUsuario);
-                usuario.setSobrenome(sobrenomeUsuario);
-                usuario.setTelefone(telefoneUsuario);
-                usuario.setTipoUsuario(tipoUsuario);
-                usuario.setFluxoDados(fluxoDados);
+                donoAnimal.setNome(nomeUsuario);
+                donoAnimal.setSobrenome(sobrenomeUsuario);
+                donoAnimal.setTelefone(telefoneUsuario);
+                donoAnimal.setTipoUsuario(tipoUsuario);
+                donoAnimal.setFluxoDados(fluxoDados);
 
                 Intent intent = new Intent(getActivity(), CadastroAnimalNomeActivity.class);
-                intent.putExtra("usuario",usuario);
+                intent.putExtra("donoAnimal", donoAnimal);
                 startActivity(intent);
             }
         });

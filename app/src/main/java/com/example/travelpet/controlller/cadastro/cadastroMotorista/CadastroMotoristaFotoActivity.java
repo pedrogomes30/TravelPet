@@ -47,13 +47,13 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroCnhMototorista
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        //Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
 
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
+        nomeUsuario         =   motorista.getNome();
+        sobrenomeUsuario    =   motorista.getSobrenome();
+        telefoneUsuario     =   motorista.getTelefone();
+        tipoUsuario         =   motorista.getTipoUsuario();
 
         fotoCNH             =   motorista.getFotoCNH();
 
@@ -131,7 +131,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
             motorista.setFotoPerfilMotorista(fotoMotorista);
 
             Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaCrlvActivity.class);
-            intent.putExtra("usuario", usuario);
+            //intent.putExtra("usuario", usuario);
             intent.putExtra("motorista", motorista);
             startActivity(intent);
 

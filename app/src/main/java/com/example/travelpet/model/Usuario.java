@@ -14,16 +14,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Usuario implements Parcelable {
+public class Usuario implements Parcelable{
 
-    String id;
-    String nome;
-    String sobrenome;
-    String telefone;
-    String tipoUsuario;
-    String email;
-    String fotoUsuarioUrl;
-    String fluxoDados;
+    protected String id;
+    protected String nome;
+    protected String sobrenome;
+    protected String telefone;
+    protected String tipoUsuario;
+    protected String email;
+    protected String fotoUsuarioUrl;
+
 
     // Construtor
     public Usuario() {
@@ -86,18 +86,9 @@ public class Usuario implements Parcelable {
         this.fotoUsuarioUrl = fotoUsuarioUrl;
     }
 
-    @Exclude // com isso não será salvo o fluxo dados no banco de dados
-    public String getFluxoDados() {
-        return fluxoDados;
-    }
-
-    public void setFluxoDados(String fluxoDados) {
-        this.fluxoDados = fluxoDados;
-    }
-
-
     // Método para salvar os dados do usuário no firebase
-    public void salvar(final Activity activity, final String localSalvamento){
+    public void salvar(final Activity activity, final String localSalvamentoUsuario){
+    //public void salvar(){
         // DatabaseReference = Referência do Firebase
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference usuariosRef = fireDB.getReference().child("usuarios");
@@ -114,33 +105,32 @@ public class Usuario implements Parcelable {
         usuarios.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                if(localSalvamento.equals("CadastroAnimalFotoActivity")){
+                if(localSalvamentoUsuario.equals("CadastroAnimalFotoActivity")){
 
                     Toast.makeText(activity,
-                            "Sucesso ao cadastrar Usuário!",
+                            "Sucesso ao cadastrar usuário",
                             Toast.LENGTH_SHORT).show();
 
-                }else if(localSalvamento.equals("ConfiguracaoFragmet")){
+                }else if(localSalvamentoUsuario.equals("ConfiguracaoFragmet")){
 
                     Toast.makeText(activity,
-                            "Alteração feita com Sucesso!",
+                            "Alteração feita com sucesso",
                             Toast.LENGTH_SHORT).show();
                 }
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                if(localSalvamento.equals("CadastroAnimalFotoActivity")){
+                if(localSalvamentoUsuario.equals("CadastroAnimalFotoActivity")){
 
                     Toast.makeText(activity,
-                            "Erro ao cadastrar Usuário!",
+                            "Erro ao cadastrar usuário",
                             Toast.LENGTH_SHORT).show();
 
-                }else if(localSalvamento.equals("ConfiguracaoFragmet")){
+                }else if(localSalvamentoUsuario.equals("ConfiguracaoFragmet")){
                     Toast.makeText(activity,
-                            "Erro ao atualizar",
+                            "Erro ao atualizar dados usuário",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -150,26 +140,12 @@ public class Usuario implements Parcelable {
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Usuario(Parcel in) {
-        id = in.readString();
-        nome = in.readString();
-        sobrenome = in.readString();
-        telefone = in.readString();
         tipoUsuario = in.readString();
-        email = in.readString();
-        fotoUsuarioUrl = in.readString();
-        fluxoDados = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(nome);
-        dest.writeString(sobrenome);
-        dest.writeString(telefone);
         dest.writeString(tipoUsuario);
-        dest.writeString(email);
-        dest.writeString(fotoUsuarioUrl);
-        dest.writeString(fluxoDados);
     }
 
     @Override
@@ -179,7 +155,7 @@ public class Usuario implements Parcelable {
 
     public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
         @Override
-        public Usuario createFromParcel(Parcel in) {
+        public  Usuario createFromParcel(Parcel in) {
             return new Usuario(in);
         }
 
@@ -188,32 +164,5 @@ public class Usuario implements Parcelable {
             return new Usuario[size];
         }
     };
-
-    /* O motivo deu fazer esse método e colocar a foto no database
-    public void atualizarUsuario(){
-        // pega id usuario atual
-        String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-        // referência do database
-        DatabaseReference database = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
-
-        DatabaseReference usuariosRef = database.child("usuarios")
-                .child( identificadorUsuario );
-        // Criando método Map
-        Map<String, Object> valoresUsuario = converterParaMap();
-
-        usuariosRef.updateChildren ( valoresUsuario );
-    }
-    @Exclude
-    // Tranformando Classe Usuario no tipo HashMap, utilizado no salvamento da foto no database
-    public Map<String, Object> converterParaMap(){
-        HashMap<String, Object> usuarioMap = new HashMap<>();
-        // Configurando usuarioMap
-        usuarioMap.put("nome", getNome());
-        usuarioMap.put("sobrenome",getSobrenome());
-        usuarioMap.put("telefone",getTelefone());
-
-        return usuarioMap;
-    }*/
-
 
 }

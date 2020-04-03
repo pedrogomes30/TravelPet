@@ -29,7 +29,7 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
         usuario.setTipoUsuario(tipoUsuario);
 
         Intent intent = new Intent(CadastroUsuarioTipoActivity.this, CadastroUsuarioDadosActivity.class);
-        intent.putExtra("usuario",usuario);
+        intent.putExtra("usuario", usuario);
         startActivity(intent);
 
     }
@@ -43,7 +43,7 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
         usuario.setTipoUsuario(tipoUsuario);
 
         Intent intent = new Intent(CadastroUsuarioTipoActivity.this, CadastroUsuarioDadosActivity.class);
-        intent.putExtra("usuario",usuario);
+        intent.putExtra("usuario", usuario);
         startActivity(intent);
 
     }

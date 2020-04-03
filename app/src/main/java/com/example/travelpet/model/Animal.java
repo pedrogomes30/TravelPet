@@ -1,17 +1,26 @@
 package com.example.travelpet.model;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.travelpet.R;
+import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity;
+import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class Animal implements Parcelable {
 
@@ -28,6 +37,8 @@ public class Animal implements Parcelable {
     // Construtor
     public Animal() {
     }
+
+
 
 
     //      Métodos getter and setter
@@ -95,61 +106,6 @@ public class Animal implements Parcelable {
         this.observacaoAnimal = observacaoAnimal;
     }
 
-    //      Método para salvar os dados do animal no firebase
-    public void salvarAnimal(final Activity activity, final String localSalvamento){
-
-        // DatabaseReference = Referência do Firebase
-
-         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-         DatabaseReference animaisRef = fireDB.getReference().child("animais");
-        // Referência DatabaseRefence para animais
-        // animaisRef.child("animais") = indica o nó filho chamado animais
-        // .push(); = pega o id criado pelo nó
-        DatabaseReference animais = animaisRef.child(getIdUsuario()).child(getIdAnimal());
-
-        // Configurando usuário no Firebase
-        // this = pois salvara todos os dados de uma vez (idUsuario, idAnimal, nomeAnimal...)
-        animais.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-
-                if(localSalvamento.equals("EditarAnimalActivity")){
-                    Toast.makeText(activity,
-                            "Atualização feita com sucesso!",
-                            Toast.LENGTH_SHORT).show();
-                }else if (localSalvamento.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
-                    Toast.makeText(activity,
-                            "Sucesso ao cadastrar Animal",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                if(localSalvamento.equals("EditarAnimalActivity")) {
-
-                    Toast.makeText(activity,
-                            "Erro na atualização",
-                            Toast.LENGTH_SHORT).show();
-
-                }else if(localSalvamento.equals("CadastroAnimalFotoActivity_cadastroUsuario") ||
-                         localSalvamento.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
-
-                    Toast.makeText(activity,
-                            "Erro ao salvar dados do Animal",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-    public static String gerarPushKeyIdAnimal(){
-        	    DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
-        	    String chave = referencia.push().getKey();
-        	    return chave;
-    }
-
-
     // Métodos Necessarios para usar a Interface Parcelable
     protected Animal(Parcel in) {
         idUsuario = in.readString();
@@ -190,5 +146,181 @@ public class Animal implements Parcelable {
             return new Animal[size];
         }
     };
+
+    public static String gerarPushKeyIdAnimal(){
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
+        String chave = referencia.push().getKey();
+        return chave;
+    }
+
+    //      Método para salvar os dados do animal no firebase
+    public void salvarAnimal(final Activity activity, final String localSalvamentoAnimal){
+
+        // DatabaseReference = Referência do Firebase
+
+         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+         DatabaseReference animaisRef = fireDB.getReference().child("animais");
+        // Referência DatabaseRefence para animais
+        // animaisRef.child("animais") = indica o nó filho chamado animais
+        // .push(); = pega o id criado pelo nó
+        DatabaseReference animais = animaisRef.child(getIdUsuario()).child(getIdAnimal());
+
+        // Configurando usuário no Firebase
+        // this = pois salvara todos os dados de uma vez (idUsuario, idAnimal, nomeAnimal...)
+        animais.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                if(localSalvamentoAnimal.equals("EditarAnimalActivity")){
+                    Toast.makeText(activity,
+                            "Atualização feita com sucesso!",
+                            Toast.LENGTH_SHORT).show();
+                }else if (localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
+                    Toast.makeText(activity,
+                            "Sucesso ao cadastrar Animal",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if(localSalvamentoAnimal.equals("EditarAnimalActivity")) {
+
+                    Toast.makeText(activity,
+                            "Erro na atualização",
+                            Toast.LENGTH_SHORT).show();
+
+                }else if(localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_cadastroUsuario") ||
+                         localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
+
+                    Toast.makeText(activity,
+                            "Erro ao salvar dados do Animal",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    // Método salvar a foto e os dados do animal / função salvar e atualizar
+    public static void salvarFotoAnimal(String emailUsuario, final String idAnimal, final String nomeAnimal,
+                                        final String especieAnimal, final String racaAnimal, final String porteAnimal,
+                                        final String observacaoAnimal, byte[] fotoAnimal,
+                                        final Activity activityAtual,
+                                        final Class<PerfilPassageiroActivity> activitySeguinte,
+                                        final String localSalvamentoAnimal){
+
+        // Salvar imagem no firebase
+        StorageReference imagemRef = ConfiguracaoFirebase.getFirebaseStorage()
+                .child("animais")
+                .child(emailUsuario)
+                .child(idAnimal)
+                .child(idAnimal+".FOTO.PERFIL.JPEG");
+
+        // Salvando dados da imagem método UploadTask
+        // .putBytes = passa os dados da imagem em Bytes
+        UploadTask uploadTask = imagemRef.putBytes(fotoAnimal);
+
+        // Método para saber se o salvamento deu certo no Storage
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(activityAtual,
+                        "Erro ao fazer upload da imagem",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Método para pegar o caminho(url) da foto, quando salvar ela no storage
+                Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                while(!uri.isComplete());
+                // url = pega o caminho da imagem
+                Uri url = uri.getResult();
+                // transforma a url para String, e armazena na variável
+                String fotoAnimalUrl = url.toString();
+
+                //String localSalvamentoAnimal = localSalvamentoAnimal;
+                // Método para salvar animal
+                // foi feito aqui por causa do método que pega o caminho da url da foto
+                Animal animal = new Animal();
+                animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+                animal.setIdAnimal(idAnimal);
+                animal.setNomeAnimal(nomeAnimal);
+                animal.setEspecieAnimal(especieAnimal);
+                animal.setRacaAnimal(racaAnimal);
+                animal.setPorteAnimal(porteAnimal);
+                animal.setObservacaoAnimal(observacaoAnimal);
+                animal.setFotoAnimal(fotoAnimalUrl);
+                animal.salvarAnimal(activityAtual, localSalvamentoAnimal);
+
+
+                if( localSalvamentoAnimal.equals("EditarAnimalActivity")){
+
+                    activityAtual.finish();
+                    activityAtual.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+
+                }else if(localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_cadastroUsuario") ||
+                        localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
+
+                    Intent intent = new Intent(activityAtual, activitySeguinte);
+                    // intent.setFlags = Limpa as activitys acumuladas
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    activityAtual.startActivity( intent);
+
+                }
+            }
+        });
+    }
+    // Método Excluir animal
+    public static void excluirAnimal(String emailUsuario, final String idAnimal, final Activity activity){
+        //Recuperando o caminho da foto no storage de acordo com animal escolhido
+        StorageReference imagemReferencia = ConfiguracaoFirebase.getFirebaseStorage().child(
+                "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+".FOTO.PERFIL.JPEG");
+
+        // Caso consiga exccluir, executa
+        imagemReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Exclui o nó do animal do database também
+                ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("animais")
+                        .child(UsuarioFirebase.getIdentificadorUsuario())
+                        .child(idAnimal).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        Toast.makeText(activity,
+                                "Sucesso ao remover Animal",
+                                Toast.LENGTH_SHORT).show();
+
+                        activity.finish();
+                        activity.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        Toast.makeText(activity,
+                                "Erro ao remover dados do Animal!",
+                                Toast.LENGTH_SHORT).show();
+
+                        activity.finish();
+                        activity.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+                    }
+                });
+            }
+            // Caso de erro
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(activity,
+                        "Erro ao remover foto do animal do Storage!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 }

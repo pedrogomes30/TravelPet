@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -60,17 +61,16 @@ public class ConfiguracaoFragment extends Fragment {
     private static final int SELECAO_CAMERA = 100;
     private static final int SELECAO_GALERIA = 200;
     private Bitmap imagem = null;
-    private byte[] dadosImagemUsuario;
+    private byte[] fotoUsuario;
 
 
     private StorageReference storageReference;
-    private String emailUsuario;
+    private String email;
 
     // Variável usada no processo de pegar os dados do database
     private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
-    private String nomeUsuario,sobrenomeUsuario,telefoneUsuario,tipoUsuario, fotoUsuarioUrl;
-
-    private String nomeEdit, sobrenomeEdit;
+    private String nome,sobrenome,telefone,tipoUsuario, fotoUsuarioUrl;
+    private String nomeEdit, sobrenomeEdit, localSalvamentoUsuario;
 
     // Variável usada no processo de trocar de Fragment
     private ListaAnimaisFragment listaAnimaisFragment;
@@ -83,7 +83,7 @@ public class ConfiguracaoFragment extends Fragment {
 
         // Recupera a referência do Storage
         storageReference    =   ConfiguracaoFirebase.getFirebaseStorage();
-        emailUsuario        =   UsuarioFirebase.getEmailUsuario();
+        email               =   UsuarioFirebase.getEmailUsuario();
 
         imageViewCircleFotoPerfil = root.findViewById(R.id.imageViewCircleFotoPerfil);
         imageButtonCamera   =   root.findViewById(R.id.imageButtonCamera);
@@ -102,15 +102,15 @@ public class ConfiguracaoFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Usuario dadosUsuario = dataSnapshot.getValue(Usuario.class);
                 // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
-                nomeUsuario       =   dadosUsuario.getNome();
-                sobrenomeUsuario  =   dadosUsuario.getSobrenome();
-                telefoneUsuario   =   dadosUsuario.getTelefone();
+                nome              =   dadosUsuario.getNome();
+                sobrenome         =   dadosUsuario.getSobrenome();
+                telefone          =   dadosUsuario.getTelefone();
                 tipoUsuario       =   dadosUsuario.getTipoUsuario();
-                fotoUsuarioUrl       =   dadosUsuario.getFotoUsuarioUrl();
+                fotoUsuarioUrl    =   dadosUsuario.getFotoUsuarioUrl();
 
                 // Enviando o nome e sobrenome do Usuário para o xml da fragment
-                editTextNomeUsuario.setText(nomeUsuario);
-                editTextSobrenomeUsuario.setText(sobrenomeUsuario);
+                editTextNomeUsuario.setText(nome);
+                editTextSobrenomeUsuario.setText(sobrenome);
             }
 
             @Override
@@ -162,54 +162,27 @@ public class ConfiguracaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-            nomeEdit = editTextNomeUsuario.getText().toString().toUpperCase();
-            sobrenomeEdit = editTextSobrenomeUsuario.getText().toString().toUpperCase();
-
+                nomeEdit = editTextNomeUsuario.getText().toString().toUpperCase();
+                sobrenomeEdit = editTextSobrenomeUsuario.getText().toString().toUpperCase();
+                localSalvamentoUsuario = "ConfiguracaoFragmet";
                 // Verificando se a imagem não está vazia
                 if(imagem != null){
-                    // Salvar imagem no firebase
-                    StorageReference imagemRef = storageReference
-                            .child("passageiro")
-                            .child(emailUsuario)
-                            .child("foto de perfil")
-                            .child(emailUsuario+".PERFIL.JPEG");
 
-                    // Salvando dados da imagem método UploadTask
-                    // .putBytes = passa os dados da imagem em Bytes
-                    UploadTask uploadTask = imagemRef.putBytes(dadosImagemUsuario);
+                    DonoAnimal.atualizarDonoAnimal(email,nomeEdit, sobrenomeEdit, telefone,
+                                                   tipoUsuario, fotoUsuario, getActivity(), localSalvamentoUsuario);
 
-                    // Método para saber se o salvamento deu certo
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getActivity(),
-                                    "Erro ao fazer upload da imagem",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                }else if(!nome.equals(nomeEdit) || !sobrenome.equals(sobrenomeEdit)){
 
-                            // Configurando (atualizando) foto para pegar ela nas configurações do usuário
-                            Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                            while(!uri.isComplete());
-                            // url = pega o caminho da imagem
-                            Uri url = uri.getResult();
-
-                            // Chama o método atualizaFotoUsuario da classe UsuarioFirebase
-                            // esse metodo atualiza a foto(Email) de usuário do firebase
-                            UsuarioFirebase.atualizarFotoUsuario( url );
-
-                            fotoUsuarioUrl = url.toString();
-
-                            salvarDadosUsuario();
-
-                        }
-                    });
-                }else if(!nomeUsuario.equals(nomeEdit) || !sobrenomeUsuario.equals(sobrenomeEdit)){
-                   salvarDadosUsuario();
+                    DonoAnimal donoAnimal = new DonoAnimal();
+                    donoAnimal.setId(UsuarioFirebase.getIdentificadorUsuario());
+                    donoAnimal.setEmail(email);
+                    donoAnimal.setNome(nomeEdit);
+                    donoAnimal.setSobrenome(sobrenomeEdit);
+                    donoAnimal.setTelefone(telefone);
+                    donoAnimal.setTipoUsuario(tipoUsuario);
+                    donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
+                    donoAnimal.salvar(getActivity(), localSalvamentoUsuario);
                }
-
             }
         });
 
@@ -246,8 +219,7 @@ public class ConfiguracaoFragment extends Fragment {
 
         return root;
     }
-
-
+    //          Método para verificar de onde será pego a foto, da camera ou galeria
     /* Capturando (Recuperando a imagem, sobre-escrevendo o método
     // requestCode = saber se e SELECAO_GALERIA definido no começo
     // resultCode = código de resultado para saber se deu certo ou não a execução do onActivityResult
@@ -290,7 +262,7 @@ public class ConfiguracaoFragment extends Fragment {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     // Converte a imagem para um array de byts
-                    dadosImagemUsuario = baos.toByteArray();
+                    fotoUsuario = baos.toByteArray();
                 }
 
                 }catch (Exception e){
@@ -298,22 +270,4 @@ public class ConfiguracaoFragment extends Fragment {
             }
         }
     }
-    // Método salvar dados utilizado no botão salvar
-    public void salvarDadosUsuario (){
-        String localSalvamento = "ConfiguracaoFragmet";
-        Usuario usuario = new Usuario();
-        usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
-        usuario.setEmail(UsuarioFirebase.getEmailUsuario());
-        usuario.setNome(nomeEdit);
-        usuario.setSobrenome(sobrenomeEdit);
-        usuario.setTelefone(telefoneUsuario);
-        usuario.setTipoUsuario(tipoUsuario);
-        usuario.setFotoUsuarioUrl(fotoUsuarioUrl);
-        usuario.salvar(getActivity(), localSalvamento);
-        /*
-        Toast.makeText(getActivity(),
-                "Alteração feita com sucesso!",
-                Toast.LENGTH_SHORT).show();*/
-    }
-
 }

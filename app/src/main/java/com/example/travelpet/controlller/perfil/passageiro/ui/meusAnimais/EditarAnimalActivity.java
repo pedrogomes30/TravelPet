@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.CustomAdapterEditarAnimal;
 import com.example.travelpet.adapter.CustomItem;
+import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.RacaAnimal;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
@@ -447,76 +448,37 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
     }
 
     // Método onClick do botão Salvar
-    public void salvarDadosAnimal(View view){
+    public void buttonSalvarAnimal(View view){
         // Salvar imagem no firebase
         if(imagem != null ){
+            String localSalvamentoAnimal = "EditarAnimalActivity";
 
-            StorageReference imagemRef = storageReference
-                    .child("animais")
-                    .child(emailUsuario)
-                    .child(idAnimal)
-                    .child(idAnimal+".FOTO.PERFIL.JPEG");
+            Animal.salvarFotoAnimal(emailUsuario,idAnimal,nomeAnimalEdit,especieAnimalEdit,racaAnimalEdit,
+                    porteAnimalEdit, observacaoAnimalEdit,fotoAnimal,
+         EditarAnimalActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
 
-            UploadTask uploadTask = imagemRef.putBytes(fotoAnimal);
-
-            // Método para saber se o salvamento deu certo
-            // caso de erro
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                    Toast.makeText(EditarAnimalActivity.this,
-                            "Erro ao fazer upload da imagem",
-                            Toast.LENGTH_SHORT).show();
-
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // Método para recupera o caminho(url) da foto, quando salvar ela no storage
-                    Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                    while(!uri.isComplete());
-                    // url = recupera o caminho da imagem
-                    Uri url = uri.getResult();
-                    // transforma a url para String, e armazena na variável
-                    fotoAnimalUrl = url.toString();
-
-                    // Método para salvar animal
-                    salvarDadosAnimal();
-
-                }
-            });
-        }
-        else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
+        }else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
                 (!racaAnimal.equals(racaAnimalEdit)) || (!porteAnimal.equals(porteAnimalEdit)) ||
                 (!observacaoAnimal.equals(observacaoAnimalEdit))){
 
-            salvarDadosAnimal();
+            String localSalvamentoAnimal = "EditarAnimalActivity";
+            Animal animal = new Animal();
+            animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+            animal.setIdAnimal(idAnimal);
+            animal.setNomeAnimal(nomeAnimalEdit);
+            animal.setEspecieAnimal(especieAnimalEdit);
+            animal.setRacaAnimal(racaAnimalEdit);
+            animal.setPorteAnimal(porteAnimalEdit);
+            animal.setObservacaoAnimal(observacaoAnimalEdit);
+            animal.setFotoAnimal(fotoAnimalUrl);
+            animal.salvarAnimal(EditarAnimalActivity.this, localSalvamentoAnimal);
+
+            super.finish();
+            overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
         }
     }
-    // Método para auxiliar no botão Salvar
-    public void salvarDadosAnimal (){
-
-        String localSalvamento = "EditarAnimalActivity";
-        Animal animal = new Animal();
-        animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-        animal.setIdAnimal(idAnimal);
-        animal.setNomeAnimal(nomeAnimalEdit);
-        animal.setEspecieAnimal(especieAnimalEdit);
-        animal.setRacaAnimal(racaAnimalEdit);
-        animal.setPorteAnimal(porteAnimalEdit);
-        animal.setFotoAnimal(fotoAnimalUrl);
-        animal.setObservacaoAnimal(observacaoAnimalEdit);
-        animal.salvarAnimal(EditarAnimalActivity.this, localSalvamento);
-
-        //startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-        //finish();
-        super.finish();
-        overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
-    }
-
     // Método onClick do botão Excluir
-    public void excluirAnimal(View view){
+    public void buttonExcluirAnimal(View view){
         // Caixa de diálogo
         AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
         msgBox.setTitle("Excluindo...");
@@ -527,34 +489,9 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                // Recuperando o caminho da foto no storage de acordo com animal escolhido
-                StorageReference imagemReferencia = storageReference.child(
-                        "animais/"+emailUsuario+"/"+idAnimal+"/"+idAnimal+".FOTO.PERFIL.JPEG");
+                // Chama Método excluirAnimal da classe Animal
+                Animal.excluirAnimal(emailUsuario, idAnimal, EditarAnimalActivity.this);
 
-                // Caso consiga exccluir, executa
-                imagemReferencia.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Exclui o nó do animal do database também
-                        databaseReference.child("animais")
-                                .child(UsuarioFirebase.getIdentificadorUsuario())
-                                .child(idAnimal).removeValue();
-
-                        Toast.makeText(EditarAnimalActivity.this,
-                                "Sucesso ao remover Animal!",
-                                Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EditarAnimalActivity.this, PerfilPassageiroActivity.class));
-
-                    }
-                    // Caso de erro
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(EditarAnimalActivity.this,
-                                "Erro ao remover Animal!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
         });
         msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {

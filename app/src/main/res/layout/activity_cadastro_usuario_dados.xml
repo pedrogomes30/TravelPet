@@ -116,6 +116,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TipoUsuario"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonProximoNomeUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputTelefone" />
     <!--android:drawableLeft="@drawable/ic_seta_laranja_proximo_24dp"
     android:padding="10dp"-->
 

@@ -1,5 +1,6 @@
 package com.example.travelpet.controlller.cadastro.cadastroAnimal;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -28,14 +31,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-
+import java.lang.Object;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalPorte
     private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fotoUsuarioUrl,
-            nomeAnimal, especieAnimal, racaAnimal, porteAnimal, observacaoAnimal, fotoAnimalUrl,idAnimal;
+            nomeAnimal, especieAnimal, racaAnimal, porteAnimal, observacaoAnimal,idAnimal;
 
     private String fluxoDados;
     private String localSalvamentoAnimal;
@@ -51,6 +54,8 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
     private byte[] fotoAnimal;
 
+    private TextView textViewFluxo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,15 +64,16 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
         // Dados da classe Usuario
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
-        fluxoDados          =   usuario.getFluxoDados();
+        nomeUsuario         =   donoAnimal.getNome();
+        sobrenomeUsuario    =   donoAnimal.getSobrenome();
+        telefoneUsuario     =   donoAnimal.getTelefone();
+        tipoUsuario         =   donoAnimal.getTipoUsuario();
+        fluxoDados          =   donoAnimal.getFluxoDados();
+        emailUsuario        =   UsuarioFirebase.getEmailUsuario();
 
         // Dados da classe Animal
         idAnimal            =   Animal.gerarPushKeyIdAnimal();
@@ -91,6 +97,10 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         emailUsuario        =   UsuarioFirebase.getEmailUsuario();
 
         imageViewFotoAnimal = findViewById(R.id.imageViewFotoAnimal);
+        textViewFluxo = findViewById(R.id.textViewFluxo);
+
+        textViewFluxo.setText(nomeUsuario);
+
 
     }
 
@@ -105,6 +115,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         }
     }
     public void buttonCamera(View view){
+
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
         // getActivity(). = foi necessário colocar pois estamos dentro de um Fragment
@@ -149,14 +160,14 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
                         // (Bitmap) = e um cash para Bitmap, referenciando que e o tipo da variável
                         imagem = (Bitmap) data.getExtras().get("data");
 
-                        break;
+                    break;
                     case SELECAO_GALERIA:
                         // Recupera o local da imagem selecionada
                         // data.getData(); = local da imagem
                         Uri localImagemSelecionada = data.getData();
                         // getContentResolver() = responsável por recupera conteúdo dentro do app android
                         imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada);
-                        break;
+                    break;
                 }
                 // Verificando se a imagem não está vazia
                 if(imagem != null){
@@ -171,7 +182,6 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
                     Toast.makeText(CadastroAnimalFotoActivity.this,
                             "Sucesso ao selececionar a imagem",
                             Toast.LENGTH_SHORT).show();
-
                 }
             }catch (Exception e){
                 // Caso de algum erro, e possivvel visualizar no "e.printStackTrace();"
@@ -183,93 +193,59 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
     public void buttonFinalizarCadastroPassageiro(View view) {
 
         if (fotoAnimal != null && fluxoDados.equals("cadastroUsuario")) {
+
             String localSalvamentoUsuario = "CadastroAnimalFotoActivity";
-            Usuario usuario = new Usuario();
 
-            usuario.setId(UsuarioFirebase.getIdentificadorUsuario());
-            usuario.setEmail(UsuarioFirebase.getEmailUsuario());
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
-            usuario.setFotoUsuarioUrl(fotoUsuarioUrl);
-            usuario.salvar(CadastroAnimalFotoActivity.this, localSalvamentoUsuario);
+            DonoAnimal donoAnimal = new DonoAnimal();
+            donoAnimal.setId(UsuarioFirebase.getIdentificadorUsuario());
+            donoAnimal.setEmail(emailUsuario);
+            donoAnimal.setNome(nomeUsuario);
+            donoAnimal.setSobrenome(sobrenomeUsuario);
+            donoAnimal.setTelefone(telefoneUsuario);
+            donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
+            donoAnimal.salvar(CadastroAnimalFotoActivity.this, localSalvamentoUsuario);
+
             localSalvamentoAnimal = "CadastroAnimalFotoActivity_cadastroUsuario";
-            salvarFotoAnimal(localSalvamentoAnimal);
 
+            // Método salvar, ele salva primeiro a foto e depois os dados do animal
+            Animal.salvarFotoAnimal(emailUsuario,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
+                    porteAnimal, observacaoAnimal,fotoAnimal,
+                    CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
+            /*
             Intent intent = new Intent(CadastroAnimalFotoActivity.this, PerfilPassageiroActivity.class);
             // intent.setFlags = Limpa as activitys acumuladas
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-
+            startActivity( intent);*/
 
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
-            localSalvamentoAnimal = "CadastroAnimalFotoActivity_adicionarAnimal";
-            salvarFotoAnimal(localSalvamentoAnimal);
 
-            Intent intent = new Intent(CadastroAnimalFotoActivity.this, PerfilPassageiroActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            localSalvamentoAnimal = "CadastroAnimalFotoActivity_adicionarAnimal";
+
+            Animal.salvarFotoAnimal(emailUsuario,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
+                    porteAnimal, observacaoAnimal,fotoAnimal,
+                    CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
+
+            /*
+            Animal animal = new Animal();
+            animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+            animal.setIdAnimal(idAnimal);
+            animal.setNomeAnimal(nomeAnimal);
+            animal.setEspecieAnimal(especieAnimal);
+            animal.setRacaAnimal(racaAnimal);
+            animal.setPorteAnimal(porteAnimal);
+            animal.setObservacaoAnimal(observacaoAnimal);
+
+            // Método salvar, ele salva primeiro a foto e depois os dados do animal
+            Animal.salvarFotoAnimal(emailUsuario,idAnimal,fotoAnimal,
+                        CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);*/
 
         }
         else{
-
             Toast.makeText(CadastroAnimalFotoActivity.this,
                     "Envie a foto do seu Animal ",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void salvarFotoAnimal(final String localSalvamentoAnimal){
-        // Salvar imagem no firebase
-        StorageReference imagemRef = storageReference
-                .child("animais")
-                .child(emailUsuario)
-                .child(idAnimal)
-                .child(idAnimal+".FOTO.PERFIL.JPEG");
-
-        // Salvando dados da imagem método UploadTask
-        // .putBytes = passa os dados da imagem em Bytes
-        UploadTask uploadTask = imagemRef.putBytes(fotoAnimal);
-
-        // Método para saber se o salvamento deu certo no Storage
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-                Toast.makeText(CadastroAnimalFotoActivity.this,
-                        "Erro ao fazer upload da imagem",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // Método para pegar o caminho(url) da foto, quando salvar ela no storage
-                Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                while(!uri.isComplete());
-                // url = pega o caminho da imagem
-                Uri url = uri.getResult();
-                // transforma a url para String, e armazena na variável
-                fotoAnimalUrl = url.toString();
-
-                //String localSalvamentoAnimal = localSalvamentoAnimal;
-                // Método para salvar animal
-                // foi feito aqui por causa do método que pega o caminho da url da foto
-                Animal animal = new Animal();
-
-                animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-                animal.setIdAnimal(idAnimal);
-                animal.setNomeAnimal(nomeAnimal);
-                animal.setEspecieAnimal(especieAnimal);
-                animal.setRacaAnimal(racaAnimal);
-                animal.setPorteAnimal(porteAnimal);
-                animal.setObservacaoAnimal(observacaoAnimal);
-                animal.setFotoAnimal(fotoAnimalUrl);
-                animal.salvarAnimal(CadastroAnimalFotoActivity.this, localSalvamentoAnimal);
-
-            }
-        });
     }
     @Override
     public void finish() {

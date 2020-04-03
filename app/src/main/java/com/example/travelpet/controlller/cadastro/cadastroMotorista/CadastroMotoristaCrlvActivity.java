@@ -64,13 +64,13 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroFotoUsuario
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        //Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
 
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
+        nomeUsuario         =   motorista.getNome();
+        sobrenomeUsuario    =   motorista.getSobrenome();
+        telefoneUsuario     =   motorista.getTelefone();
+        tipoUsuario         =   motorista.getTipoUsuario();
 
         fotoCNH             =   motorista.getFotoCNH();
         fotoMotorista       =   motorista.getFotoPerfilMotorista();
@@ -150,6 +150,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
             // Chama método salvar da classe Usuário, responsável por salvar no database do firebase
             motorista.salvar(this, localSalvamento);
+            //motorista.salvar();
 
              // Chama método para salvar as fotos no storage do firebase
             salvarFotoCNH();

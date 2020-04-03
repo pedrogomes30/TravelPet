@@ -62,6 +62,15 @@ public class Motorista extends Usuario implements Parcelable {
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Motorista(Parcel in) {
+
+        id = in.readString();
+        nome = in.readString();
+        sobrenome = in.readString();
+        telefone = in.readString();
+        tipoUsuario = in.readString();
+        email = in.readString();
+        fotoUsuarioUrl = in.readString();
+
         //idUsuario = in.readString();
         fotoCNH = in.createByteArray();
         fotoPerfilMotorista = in.createByteArray();
@@ -72,6 +81,14 @@ public class Motorista extends Usuario implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         //dest.writeString(idUsuario);
+        dest.writeString(id);
+        dest.writeString(nome);
+        dest.writeString(sobrenome);
+        dest.writeString(telefone);
+        dest.writeString(tipoUsuario);
+        dest.writeString(email);
+        dest.writeString(fotoUsuarioUrl);
+
         dest.writeByteArray(fotoCNH);
         dest.writeByteArray(fotoPerfilMotorista);
         dest.writeByteArray(fotoCrlv);

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -30,15 +31,15 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
         // Dados da classe Usuario
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
-        fluxoDados          =   usuario.getFluxoDados();
+        nomeUsuario         =   donoAnimal.getNome();
+        sobrenomeUsuario    =   donoAnimal.getSobrenome();
+        telefoneUsuario     =   donoAnimal.getTelefone();
+        tipoUsuario         =   donoAnimal.getTipoUsuario();
+        fluxoDados          =   donoAnimal.getFluxoDados();
 
         // Dados da classe Animal
         nomeAnimal          =   animal.getNomeAnimal();
@@ -57,12 +58,12 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         // Verifica se não esta vazia
         if(!observacaoAnimal.isEmpty()) {
 
-            Usuario usuario = new Usuario();
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
-            usuario.setFluxoDados(fluxoDados);
+            DonoAnimal donoAnimal = new DonoAnimal();
+            donoAnimal.setNome(nomeUsuario);
+            donoAnimal.setSobrenome(sobrenomeUsuario);
+            donoAnimal.setTelefone(telefoneUsuario);
+            donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();
             animal.setNomeAnimal(nomeAnimal);
@@ -72,7 +73,7 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
             animal.setObservacaoAnimal(observacaoAnimal);
 
             Intent intent = new Intent(CadastroAnimalObservacaoActivity.this, CadastroAnimalFotoActivity.class);
-            intent.putExtra("usuario",usuario);
+            intent.putExtra("donoAnimal",donoAnimal);
             intent.putExtra ("animal", animal);
             startActivity(intent);
 

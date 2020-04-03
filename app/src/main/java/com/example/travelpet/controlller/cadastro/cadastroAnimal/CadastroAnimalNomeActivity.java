@@ -3,12 +3,14 @@ package com.example.travelpet.controlller.cadastro.cadastroAnimal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,6 +24,8 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
 
     private TextInputEditText campoNomeANimal;
 
+    private TextView textViewTeste;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +34,19 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
 
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
-        fluxoDados          =   usuario.getFluxoDados();
+        nomeUsuario         =   donoAnimal.getNome();
+        sobrenomeUsuario    =   donoAnimal.getSobrenome();
+        telefoneUsuario     =   donoAnimal.getTelefone();
+        tipoUsuario         =   donoAnimal.getTipoUsuario();
+        fluxoDados          =   donoAnimal.getFluxoDados();
 
         campoNomeANimal = findViewById(R.id.editNomeAnimal);
+
+        textViewTeste = findViewById(R.id.textViewTeste);
+        textViewTeste.setText(fluxoDados);
+
     }
     
     public void buttonProximoNomeAnimal(View view){
@@ -48,18 +56,18 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
         // Verifica se não esta vazia
         if(!nomeAnimal.isEmpty()) {
 
-            Usuario usuario = new Usuario();
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
-            usuario.setFluxoDados(fluxoDados);
+            DonoAnimal donoAnimal = new DonoAnimal();
+            donoAnimal.setNome(nomeUsuario);
+            donoAnimal.setSobrenome(sobrenomeUsuario);
+            donoAnimal.setTelefone(telefoneUsuario);
+            donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();
             animal.setNomeAnimal(nomeAnimal);
 
             Intent intent = new Intent(CadastroAnimalNomeActivity.this, CadastroAnimalEspecieRacaActivity.class);
-            intent.putExtra("usuario",usuario);
+            intent.putExtra("donoAnimal",donoAnimal);
             intent.putExtra ("animal", animal);
             startActivity(intent);
 

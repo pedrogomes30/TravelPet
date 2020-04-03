@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Usuario;
 
 public class CadastroMotoristaTermoActivity extends AppCompatActivity {
@@ -31,13 +32,13 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroTipoUsuario
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        Motorista motorista = intent.getParcelableExtra("motorista");
 
         // Armazena os dados recuperados em uma variável String
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
+        nomeUsuario         =   motorista.getNome();
+        sobrenomeUsuario    =   motorista.getSobrenome();
+        telefoneUsuario     =   motorista.getTelefone();
+        tipoUsuario         =   motorista.getTipoUsuario();
 
         checkBoxTermos = findViewById(R.id.checkBoxTermos);
 
@@ -49,16 +50,16 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
         // isChecked(); = verifica se o check box esta marcado, enviando true ou false , se ele esta marcado ou não
         if ( checkBoxTermos.isChecked()){
 
-            Usuario usuario = new Usuario();
+            Motorista motorista = new Motorista();
 
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
+            motorista.setNome(nomeUsuario);
+            motorista.setSobrenome(sobrenomeUsuario);
+            motorista.setTelefone(telefoneUsuario);
+            motorista.setTipoUsuario(tipoUsuario);
 
             //      Enviando dados para a Activity CadastroEspecie
             Intent intent = new Intent(CadastroMotoristaTermoActivity.this, CadastroMotoristaCnhActivity.class);
-            intent.putExtra("usuario", usuario);
+            intent.putExtra("motorista", motorista);
             startActivity(intent);
 
 

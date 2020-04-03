@@ -16,6 +16,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.adapter.CustomAdapter;
 import com.example.travelpet.adapter.CustomItem;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.RacaAnimal;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
@@ -56,15 +57,15 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
 
         // Recuperando dados passados da Activity <CadastroNomeAnimal
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
         // Dados da Classe Usuario
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
-        fluxoDados          =   usuario.getFluxoDados();
+        nomeUsuario         =   donoAnimal.getNome();
+        sobrenomeUsuario    =   donoAnimal.getSobrenome();
+        telefoneUsuario     =   donoAnimal.getTelefone();
+        tipoUsuario         =   donoAnimal.getTipoUsuario();
+        fluxoDados          =   donoAnimal.getFluxoDados();
 
         // Dados da Classe Animal
         nomeAnimal = animal.getNomeAnimal();
@@ -174,13 +175,13 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
                 if(especieAnimal.equals("reptil")){
                     especieAnimal = "réptil";
                 }
-                Usuario usuario = new Usuario();
+                DonoAnimal donoAnimal = new DonoAnimal();
 
-                usuario.setNome(nomeUsuario);
-                usuario.setSobrenome(sobrenomeUsuario);
-                usuario.setTelefone(telefoneUsuario);
-                usuario.setTipoUsuario(tipoUsuario);
-                usuario.setFluxoDados(fluxoDados);
+                donoAnimal.setNome(nomeUsuario);
+                donoAnimal.setSobrenome(sobrenomeUsuario);
+                donoAnimal.setTelefone(telefoneUsuario);
+                donoAnimal.setTipoUsuario(tipoUsuario);
+                donoAnimal.setFluxoDados(fluxoDados);
 
                 Animal animal = new Animal();
 
@@ -190,7 +191,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
 
                 Intent intent = new Intent(CadastroAnimalEspecieRacaActivity.this, CadastroAnimalPorteActivity.class);
 
-                intent.putExtra ("usuario",usuario);
+                intent.putExtra ("donoAnimal",donoAnimal);
                 intent.putExtra ("animal",animal);
 
                 startActivity(intent);
