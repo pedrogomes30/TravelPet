@@ -24,13 +24,10 @@ import java.io.IOException;
 public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroCnhMotorista
-    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    private String  tipoUsuario, nome, sobrenome, telefone;
 
-    // Variavel armazena a foto da carteira de motorista
-    private byte[] fotoCNH;
-
-    // Variavel armazena a foto da perfil do motorista
-    private byte[] fotoMotorista;
+    // Variaveis usadas para armazenar fotos decocumentos do motorista
+    private byte[] fotoCNH, fotoPerfil;
 
     private TextView textViewNomeArquivo;
 
@@ -47,29 +44,16 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroCnhMototorista
         Intent intent = getIntent();
-        //Usuario usuario = intent.getParcelableExtra("usuario");
         Motorista motorista = intent.getParcelableExtra("motorista");
 
-        nomeUsuario         =   motorista.getNome();
-        sobrenomeUsuario    =   motorista.getSobrenome();
-        telefoneUsuario     =   motorista.getTelefone();
-        tipoUsuario         =   motorista.getTipoUsuario();
-
-        fotoCNH             =   motorista.getFotoCNH();
+        tipoUsuario  =   motorista.getTipoUsuario();
+        nome         =   motorista.getNome();
+        sobrenome    =   motorista.getSobrenome();
+        telefone     =   motorista.getTelefone();
+        fotoCNH      =   motorista.getFotoCNH();
 
         textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaFoto);
 
-    }
-
-    // Evento executado pelo botão enviar
-    public void enviarFotoMotorista (View view) {
-
-        // Seleciona a foto da galeria
-        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if(i.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(i, SELECAO_GALERIA);
-        }
     }
 
     @Override
@@ -97,7 +81,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     // Tranforma a imagem em um array de Bytes e armazena na variável
-                    fotoMotorista = baos.toByteArray();
+                    fotoPerfil = baos.toByteArray();
 
                     // Envia o nome da imagem para o XML
                     textViewNomeArquivo.setText(returnCursor.getString(nameIndex));
@@ -113,29 +97,32 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
         }
     }
 
-    // Evento onClick ( Botão buttonProximoFotoMotorista)
-    public void buttonProximoFotoMotorista(View view){
+    public void botaoEnviarFotoPerfil (View view) {
 
-        if(fotoMotorista != null) {
+        // Seleciona a foto da galeria
+        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-            Usuario usuario = new Usuario();
+        if(i.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(i, SELECAO_GALERIA);
+        }
+    }
 
-            usuario.setNome(nomeUsuario);
-            usuario.setSobrenome(sobrenomeUsuario);
-            usuario.setTelefone(telefoneUsuario);
-            usuario.setTipoUsuario(tipoUsuario);
+    public void botaoProximoMotoristaFoto(View view){
+
+        if(fotoPerfil != null) {
 
             Motorista motorista = new Motorista();
 
+            motorista.setTipoUsuario(tipoUsuario);
+            motorista.setNome(nome);
+            motorista.setSobrenome(sobrenome);
+            motorista.setTelefone(telefone);
             motorista.setFotoCNH(fotoCNH);
-            motorista.setFotoPerfilMotorista(fotoMotorista);
+            motorista.setFotoPerfil(fotoPerfil);
 
             Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaCrlvActivity.class);
-            //intent.putExtra("usuario", usuario);
             intent.putExtra("motorista", motorista);
             startActivity(intent);
-
-
 
         }else{
             Toast.makeText(CadastroMotoristaFotoActivity.this,

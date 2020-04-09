@@ -24,14 +24,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonPassageiro"
+        android:id="@+id/botaoPassageiro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="buttonPassageiro"
+        android:onClick="botaoPassageiro"
         android:text="Passageiro"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -40,18 +40,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas" />
 
     <Button
-        android:id="@+id/buttonMotorista"
+        android:id="@+id/botaoMotorista"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="buttonMotorista"
+        android:onClick="botaoMotorista"
         android:text="Motorista"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPassageiro" />
+        app:layout_constraintTop_toBottomOf="@+id/botaoPassageiro" />
 </androidx.constraintlayout.widget.ConstraintLayout>

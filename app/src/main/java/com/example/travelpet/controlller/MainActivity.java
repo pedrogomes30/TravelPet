@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     UsuarioFirebase usuarioFirebase = new UsuarioFirebase();
                     // Método para Recuperar dados do usuario do database
                     DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
-                            .child("usuarios")
+                            .child("motorista")
                             .child(usuarioFirebase.getIdentificadorUsuario());
                     usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -184,16 +184,37 @@ public class MainActivity extends AppCompatActivity {
                                         finish();
                                     }
 
-                                }else if (tipoUsuario.equals("passageiro")) {
+                                }/*else if (tipoUsuario.equals("passageiro")) {
 
                                     startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
                                     finish();
 
-                                }
+                                }*/
                             }else{
+                                UsuarioFirebase usuarioFirebaseDonoAnimal = new UsuarioFirebase();
+                                // Método para Recuperar dados do usuario do database
+                                DatabaseReference usuariosRefDonoAnimal = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
+                                        .child("donoAnimal")
+                                        .child(usuarioFirebaseDonoAnimal.getIdentificadorUsuario());
+                                usuariosRefDonoAnimal.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists()) {
 
-                                startActivity(new Intent(MainActivity.this, CadastroUsuarioTipoActivity.class));
-                                finish();
+                                            startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
+                                            finish();
+
+                                        }else{
+                                            startActivity(new Intent(MainActivity.this, CadastroUsuarioTipoActivity.class));
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
 
                             }
                         }

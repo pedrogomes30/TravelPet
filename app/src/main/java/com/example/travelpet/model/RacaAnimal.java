@@ -5,22 +5,11 @@ import android.os.Parcelable;
 
 public class RacaAnimal implements Parcelable{
 
-    //private String idRacaAnimal;
+
     private String nomeRacaAnimal;
 
     public RacaAnimal() {
     }
-
-    /*
-    public String getIdRacaAnimal() {
-        return idRacaAnimal;
-    }
-
-    public void setIdRacaAnimal(String idRacaAnimal) {
-        this.idRacaAnimal = idRacaAnimal;
-    }
-
-     */
 
     public String getNomeRacaAnimal() {
         return nomeRacaAnimal;

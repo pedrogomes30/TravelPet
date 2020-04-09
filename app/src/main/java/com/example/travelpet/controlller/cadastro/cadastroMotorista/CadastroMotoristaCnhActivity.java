@@ -24,7 +24,7 @@ import java.io.IOException;
 public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroTermoMotorista
-    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    private String  tipoUsuario, nome, sobrenome, telefone;
 
     // Variavel armazena a foto da carteira de motorista CNH
     private byte[] fotoCNH;
@@ -44,28 +44,16 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroTermoMotorista
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        Motorista motorista = intent.getParcelableExtra("motorista");
 
-        nomeUsuario         =   usuario.getNome();
-        sobrenomeUsuario    =   usuario.getSobrenome();
-        telefoneUsuario     =   usuario.getTelefone();
-        tipoUsuario         =   usuario.getTipoUsuario();
+        tipoUsuario  =   motorista.getTipoUsuario();
+        nome         =   motorista.getNome();
+        sobrenome    =   motorista.getSobrenome();
+        telefone     =   motorista.getTelefone();
+
 
         textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaCnh);
 
-    }
-
-    // Evento executado pelo botão enviar foto
-    public void enviarFotoCnh (View view) {
-
-        // ACTION_PICK = Permite que escolha uma foto em um local especifico
-        // MediaStore.Images.Media.EXTERNAL_CONTENT_URI = caminho padrão onde fica armazenado as fotos no celular
-        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        // resolveActivity = Verifica se existe a galeria de fotos ( o software de galeria)
-        if(i.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(i, SELECAO_GALERIA);
-        }
     }
 
     // Capturando imagem de retorno
@@ -112,22 +100,30 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
         }
     }
 
-    // Evento onClick ( Botão buttonProximoCNH )
-    public void buttonProximoCnhMotorista(View view){
+    public void botaoEnviarFotoCnh (View view) {
+
+        // ACTION_PICK = Permite que escolha uma foto em um local especifico
+        // MediaStore.Images.Media.EXTERNAL_CONTENT_URI = caminho padrão onde fica armazenado as fotos no celular
+        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // resolveActivity = Verifica se existe a galeria de fotos ( o software de galeria)
+        if(i.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(i, SELECAO_GALERIA);
+        }
+    }
+
+    public void botaoProximoMotoristaCnh(View view){
 
         if(fotoCNH != null) {
 
             Motorista motorista = new Motorista();
-            motorista.setNome(nomeUsuario);
-            motorista.setSobrenome(sobrenomeUsuario);
-            motorista.setTelefone(telefoneUsuario);
             motorista.setTipoUsuario(tipoUsuario);
-
-            //Motorista motorista = new Motorista();
+            motorista.setNome(nome);
+            motorista.setSobrenome(sobrenome);
+            motorista.setTelefone(telefone);
             motorista.setFotoCNH(fotoCNH);
 
             Intent intent = new Intent(CadastroMotoristaCnhActivity.this, CadastroMotoristaFotoActivity.class);
-            //intent.putExtra("usuario", motorista);
             intent.putExtra("motorista", motorista);
             startActivity(intent);
 

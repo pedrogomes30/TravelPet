@@ -88,14 +88,17 @@ public class ConfiguracaoFragment extends Fragment {
         imageViewCircleFotoPerfil = root.findViewById(R.id.imageViewCircleFotoPerfil);
         imageButtonCamera   =   root.findViewById(R.id.imageButtonCamera);
         imageButtonGaleria  =   root.findViewById(R.id.imageButtonGaleria);
+
         editTextNomeUsuario = root.findViewById(R.id.editTextNomeUsuario);
         editTextSobrenomeUsuario = root.findViewById(R.id.editTextSobrenomeUsuario);
+
         imageViewAtualizarNomeUsuario = root.findViewById(R.id.imageViewAtualizarNomeUsuario);
         imageViewAtualizarSobrenomeUsuario = root.findViewById(R.id.imageViewAtualizarSobrenomeUsuario);
+
         buttonSalvarConfiguracao = root.findViewById(R.id.buttonSalvarConfiguracao);
         buttonSair = root.findViewById(R.id.buttonSair);
 
-        DatabaseReference usuarios = referencia.child( "usuarios" ).child(UsuarioFirebase.getIdentificadorUsuario());
+        DatabaseReference usuarios = referencia.child( "donoAnimal" ).child(UsuarioFirebase.getIdentificadorUsuario());
 
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
@@ -181,7 +184,7 @@ public class ConfiguracaoFragment extends Fragment {
                     donoAnimal.setTelefone(telefone);
                     donoAnimal.setTipoUsuario(tipoUsuario);
                     donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
-                    donoAnimal.salvar(getActivity(), localSalvamentoUsuario);
+                    donoAnimal.salvarUsuarioDatabase(getActivity(), localSalvamentoUsuario);
                }
             }
         });

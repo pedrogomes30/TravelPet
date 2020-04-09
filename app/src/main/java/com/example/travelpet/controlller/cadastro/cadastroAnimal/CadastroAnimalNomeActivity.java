@@ -16,15 +16,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroAnimalNomeActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroUsuarioTipo,
-    // ou do Fragment do perfil do Passageiro
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
-    // Variável para dizer de onde vem o fluxo de dado
+    // Variaveis usadas para pegar dados da Activity CadastroUsuarioDados,
+    // ou do Fragment ListaAnimaisFragment
+    private String tipoUsuario, nome, sobrenome, telefone;
+    // Variável receber de onde vem o fluxo dos dados
     private String fluxoDados;
 
     private TextInputEditText campoNomeANimal;
-
-    private TextView textViewTeste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,31 +34,28 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
 
-        nomeUsuario         =   donoAnimal.getNome();
-        sobrenomeUsuario    =   donoAnimal.getSobrenome();
-        telefoneUsuario     =   donoAnimal.getTelefone();
-        tipoUsuario         =   donoAnimal.getTipoUsuario();
-        fluxoDados          =   donoAnimal.getFluxoDados();
+        tipoUsuario  =   donoAnimal.getTipoUsuario();
+        nome         =   donoAnimal.getNome();
+        sobrenome    =   donoAnimal.getSobrenome();
+        telefone     =   donoAnimal.getTelefone();
+        fluxoDados   =   donoAnimal.getFluxoDados();
 
         campoNomeANimal = findViewById(R.id.editNomeAnimal);
 
-        textViewTeste = findViewById(R.id.textViewTeste);
-        textViewTeste.setText(fluxoDados);
-
     }
     
-    public void buttonProximoNomeAnimal(View view){
+    public void botaoProximoAnimalNome(View view){
 
-       String nomeAnimal = campoNomeANimal.getText().toString().toUpperCase();;
+       String nomeAnimal = campoNomeANimal.getText().toString();
 
         // Verifica se não esta vazia
         if(!nomeAnimal.isEmpty()) {
 
             DonoAnimal donoAnimal = new DonoAnimal();
-            donoAnimal.setNome(nomeUsuario);
-            donoAnimal.setSobrenome(sobrenomeUsuario);
-            donoAnimal.setTelefone(telefoneUsuario);
             donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setNome(nome);
+            donoAnimal.setSobrenome(sobrenome);
+            donoAnimal.setTelefone(telefone);
             donoAnimal.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();

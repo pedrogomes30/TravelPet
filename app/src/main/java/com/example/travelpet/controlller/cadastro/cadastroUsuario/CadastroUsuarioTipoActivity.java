@@ -20,10 +20,9 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
 
     }
 
-    // Evento de onClick do botão "Passageiro"
-    public void buttonPassageiro( View view ){
+    public void botaoPassageiro( View view ){
 
-        tipoUsuario = "passageiro";
+        tipoUsuario = "donoAnimal";
 
         Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
@@ -34,8 +33,7 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
 
     }
 
-    // Evento de onClick do botão "Motorista"
-    public void buttonMotorista( View view ){
+    public void botaoMotorista( View view ){
 
         tipoUsuario = "motorista";
 

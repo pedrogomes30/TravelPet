@@ -16,8 +16,9 @@ import com.example.travelpet.model.Usuario;
 public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalEspecieRaca
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-            nomeAnimal, especieAnimal, racaAnimal;
+    private String tipoUsuario, nome, sobrenome, telefone,
+                   nomeAnimal, especieAnimal, racaAnimal;
+
     private String fluxoDados;
 
     private RadioGroup radioGroupPorteAnimal;
@@ -35,19 +36,17 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
-        // Dados da classe Usuario
-        nomeUsuario         =   donoAnimal.getNome();
-        sobrenomeUsuario    =   donoAnimal.getSobrenome();
-        telefoneUsuario     =   donoAnimal.getTelefone();
-        tipoUsuario         =   donoAnimal.getTipoUsuario();
-        fluxoDados          =   donoAnimal.getFluxoDados();
+        // Dados DonoAnimal
+        tipoUsuario  =   donoAnimal.getTipoUsuario();
+        nome         =   donoAnimal.getNome();
+        sobrenome    =   donoAnimal.getSobrenome();
+        telefone     =   donoAnimal.getTelefone();
+        fluxoDados   =   donoAnimal.getFluxoDados();
 
-        // Dados da classe Animal
+        // Dados Animal
         nomeAnimal          =   animal.getNomeAnimal();
         especieAnimal       =   animal.getEspecieAnimal();
         racaAnimal          =   animal.getRacaAnimal();
-
-
 
         // Referência o id do radioGroup do xml, com a variavel tipo radioGroup
         radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
@@ -57,22 +56,19 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
     }
 
-    public void buttonProximoPorteAnimal(View view) {
-
+    public void botaoProximoAnimalPorte(View view) {
 
         if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
                 || porteAnimal == "Grande - Acima de 50cm") {
 
             DonoAnimal donoAnimal = new DonoAnimal();
-
-            donoAnimal.setNome(nomeUsuario);
-            donoAnimal.setSobrenome(sobrenomeUsuario);
-            donoAnimal.setTelefone(telefoneUsuario);
             donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setNome(nome);
+            donoAnimal.setSobrenome(sobrenome);
+            donoAnimal.setTelefone(telefone);
             donoAnimal.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();
-
             animal.setNomeAnimal(nomeAnimal);
             animal.setEspecieAnimal(especieAnimal);
             animal.setRacaAnimal(racaAnimal);
@@ -83,15 +79,14 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
             intent.putExtra ("animal",animal);
             startActivity(intent);
 
-
         }else{
-            Toast.makeText(CadastroAnimalPorteActivity.this, //onde será exibido
-                    "Selecione o porte do seu Animal", // o que será exibido
+            Toast.makeText(CadastroAnimalPorteActivity.this,
+                    "Selecione o porte do seu Animal",
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-    public  void verificaTipoPorte(String vtp) {
+    public void verificaTipoPorte(String vtp) {
 
         // .setOnCheckedChangeListener(); = Verifica qual item foi selecionado dentro do RadioGroup
         //new RadioGroup.OnCheckedChangeListener = imstancia um objeto que dentro dele tem um metodo para recuperar o item selecionado

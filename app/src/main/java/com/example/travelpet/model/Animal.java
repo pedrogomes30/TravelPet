@@ -37,10 +37,6 @@ public class Animal implements Parcelable {
     // Construtor
     public Animal() {
     }
-
-
-
-
     //      Métodos getter and setter
     public String getIdUsuario() {
         return idUsuario;
@@ -154,7 +150,7 @@ public class Animal implements Parcelable {
     }
 
     //      Método para salvar os dados do animal no firebase
-    public void salvarAnimal(final Activity activity, final String localSalvamentoAnimal){
+    public void salvarAnimalDatabase(final Activity activity, final String localSalvamentoAnimal){
 
         // DatabaseReference = Referência do Firebase
 
@@ -173,11 +169,11 @@ public class Animal implements Parcelable {
 
                 if(localSalvamentoAnimal.equals("EditarAnimalActivity")){
                     Toast.makeText(activity,
-                            "Atualização feita com sucesso!",
+                            "Atualização feita com sucesso",
                             Toast.LENGTH_SHORT).show();
                 }else if (localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
                     Toast.makeText(activity,
-                            "Sucesso ao cadastrar Animal",
+                            "Sucesso ao cadastrar animal",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -187,14 +183,14 @@ public class Animal implements Parcelable {
                 if(localSalvamentoAnimal.equals("EditarAnimalActivity")) {
 
                     Toast.makeText(activity,
-                            "Erro na atualização",
+                            "Erro ao atualizar dados do animal",
                             Toast.LENGTH_SHORT).show();
 
                 }else if(localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_cadastroUsuario") ||
                          localSalvamentoAnimal.equals("CadastroAnimalFotoActivity_adicionarAnimal")){
 
                     Toast.makeText(activity,
-                            "Erro ao salvar dados do Animal",
+                            "Erro ao salvar dados do animal",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -203,7 +199,7 @@ public class Animal implements Parcelable {
     }
 
     // Método salvar a foto e os dados do animal / função salvar e atualizar
-    public static void salvarFotoAnimal(String emailUsuario, final String idAnimal, final String nomeAnimal,
+    public static void salvarAnimalStorage(String emailUsuario, final String idAnimal, final String nomeAnimal,
                                         final String especieAnimal, final String racaAnimal, final String porteAnimal,
                                         final String observacaoAnimal, byte[] fotoAnimal,
                                         final Activity activityAtual,
@@ -242,8 +238,7 @@ public class Animal implements Parcelable {
                 // transforma a url para String, e armazena na variável
                 String fotoAnimalUrl = url.toString();
 
-                //String localSalvamentoAnimal = localSalvamentoAnimal;
-                // Método para salvar animal
+                // Métodos para enviar dados para a classe Animal
                 // foi feito aqui por causa do método que pega o caminho da url da foto
                 Animal animal = new Animal();
                 animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
@@ -254,8 +249,9 @@ public class Animal implements Parcelable {
                 animal.setPorteAnimal(porteAnimal);
                 animal.setObservacaoAnimal(observacaoAnimal);
                 animal.setFotoAnimal(fotoAnimalUrl);
-                animal.salvarAnimal(activityAtual, localSalvamentoAnimal);
 
+                // Chama método Salvar dados do Animal no Database
+                animal.salvarAnimalDatabase(activityAtual, localSalvamentoAnimal);
 
                 if( localSalvamentoAnimal.equals("EditarAnimalActivity")){
 

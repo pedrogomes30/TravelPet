@@ -7,23 +7,6 @@
     android:background="@color/colorApp"
     tools:context=".controlller.cadastro.cadastroAnimal.CadastroAnimalPorteActivity">
 
-    <Button
-        android:id="@+id/buttonProximoPorteAnimal"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_azul_seletor"
-        android:onClick="buttonProximoPorteAnimal"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <RadioGroup
         android:id="@+id/radioGroupPorteAnimal"
         android:layout_width="354dp"
@@ -32,7 +15,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProximoPorteAnimal"
+        app:layout_constraintBottom_toTopOf="@+id/botaoProximoAnimalPorte"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,4 +75,21 @@
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botaoProximoAnimalPorte"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_azul_seletor"
+        android:onClick="botaoProximoAnimalPorte"
+        android:text="Próximo"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

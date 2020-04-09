@@ -15,9 +15,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
 
-    // Variaveis usadas para armazenar dados da Activity CadastroAnimalEspecieRaca
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
-            nomeAnimal, especieAnimal, racaAnimal, porteAnimal;
+    // Variaveis usadas para armazenar dados da Activity CadastroAnimalPorte
+    private String tipoUsuario,nome, sobrenome, telefone,
+                   nomeAnimal, especieAnimal, racaAnimal, porteAnimal;
+
     private String fluxoDados;
 
     private TextInputEditText campoObservacaoAnimal;
@@ -34,14 +35,14 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
-        // Dados da classe Usuario
-        nomeUsuario         =   donoAnimal.getNome();
-        sobrenomeUsuario    =   donoAnimal.getSobrenome();
-        telefoneUsuario     =   donoAnimal.getTelefone();
-        tipoUsuario         =   donoAnimal.getTipoUsuario();
-        fluxoDados          =   donoAnimal.getFluxoDados();
+        // Dados DonoAnimal
+        tipoUsuario  =   donoAnimal.getTipoUsuario();
+        nome         =   donoAnimal.getNome();
+        sobrenome    =   donoAnimal.getSobrenome();
+        telefone     =   donoAnimal.getTelefone();
+        fluxoDados   =   donoAnimal.getFluxoDados();
 
-        // Dados da classe Animal
+        // Dados Animal
         nomeAnimal          =   animal.getNomeAnimal();
         especieAnimal       =   animal.getEspecieAnimal();
         racaAnimal          =   animal.getRacaAnimal();
@@ -51,7 +52,7 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
 
     }
 
-    public void buttonProximoObservacaoAnimal(View view) {
+    public void botaoProximoAnimalObservacao(View view) {
 
         observacaoAnimal = campoObservacaoAnimal.getText().toString();
 
@@ -59,10 +60,10 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         if(!observacaoAnimal.isEmpty()) {
 
             DonoAnimal donoAnimal = new DonoAnimal();
-            donoAnimal.setNome(nomeUsuario);
-            donoAnimal.setSobrenome(sobrenomeUsuario);
-            donoAnimal.setTelefone(telefoneUsuario);
             donoAnimal.setTipoUsuario(tipoUsuario);
+            donoAnimal.setNome(nome);
+            donoAnimal.setSobrenome(sobrenome);
+            donoAnimal.setTelefone(telefone);
             donoAnimal.setFluxoDados(fluxoDados);
 
             Animal animal = new Animal();

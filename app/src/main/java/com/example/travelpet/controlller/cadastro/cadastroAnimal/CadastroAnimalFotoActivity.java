@@ -37,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalPorte
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,fotoUsuarioUrl,
+    private String tipoUsuario, nome, sobrenome, telefone,fotoUsuarioUrl,
             nomeAnimal, especieAnimal, racaAnimal, porteAnimal, observacaoAnimal,idAnimal;
 
     private String fluxoDados;
@@ -50,11 +50,9 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
     private static final int SELECAO_GALERIA = 200;
 
     private StorageReference storageReference;
-    private String emailUsuario;
+    private String email;
 
     private byte[] fotoAnimal;
-
-    private TextView textViewFluxo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +65,14 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
-        // Dados da classe Usuario
-        nomeUsuario         =   donoAnimal.getNome();
-        sobrenomeUsuario    =   donoAnimal.getSobrenome();
-        telefoneUsuario     =   donoAnimal.getTelefone();
-        tipoUsuario         =   donoAnimal.getTipoUsuario();
-        fluxoDados          =   donoAnimal.getFluxoDados();
-        emailUsuario        =   UsuarioFirebase.getEmailUsuario();
+        // Dados DonoAnimal
+        tipoUsuario   =   donoAnimal.getTipoUsuario();
+        nome          =   donoAnimal.getNome();
+        sobrenome     =   donoAnimal.getSobrenome();
+        telefone      =   donoAnimal.getTelefone();
+        fluxoDados    =   donoAnimal.getFluxoDados();
 
-        // Dados da classe Animal
+        // Dados Animal
         idAnimal            =   Animal.gerarPushKeyIdAnimal();
         nomeAnimal          =   animal.getNomeAnimal();
         especieAnimal       =   animal.getEspecieAnimal();
@@ -94,13 +91,9 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         }
         // Recupera a referência do Storage
         storageReference    =   ConfiguracaoFirebase.getFirebaseStorage();
-        emailUsuario        =   UsuarioFirebase.getEmailUsuario();
+        email               =   UsuarioFirebase.getEmailUsuario();
 
         imageViewFotoAnimal = findViewById(R.id.imageViewFotoAnimal);
-        textViewFluxo = findViewById(R.id.textViewFluxo);
-
-        textViewFluxo.setText(nomeUsuario);
-
 
     }
 
@@ -114,7 +107,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
             }
         }
     }
-    public void buttonCamera(View view){
+    public void botaoCamera(View view){
 
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
@@ -131,7 +124,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonGaleria(View view){
+    public void botaoGaleria(View view){
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -190,7 +183,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonFinalizarCadastroPassageiro(View view) {
+    public void botaoFinalizarCadastroPassageiro(View view) {
 
         if (fotoAnimal != null && fluxoDados.equals("cadastroUsuario")) {
 
@@ -198,48 +191,29 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
             DonoAnimal donoAnimal = new DonoAnimal();
             donoAnimal.setId(UsuarioFirebase.getIdentificadorUsuario());
-            donoAnimal.setEmail(emailUsuario);
-            donoAnimal.setNome(nomeUsuario);
-            donoAnimal.setSobrenome(sobrenomeUsuario);
-            donoAnimal.setTelefone(telefoneUsuario);
+            donoAnimal.setEmail(email);
+            donoAnimal.setNome(nome);
+            donoAnimal.setSobrenome(sobrenome);
+            donoAnimal.setTelefone(telefone);
             donoAnimal.setTipoUsuario(tipoUsuario);
             donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
-            donoAnimal.salvar(CadastroAnimalFotoActivity.this, localSalvamentoUsuario);
+            donoAnimal.salvarUsuarioDatabase(CadastroAnimalFotoActivity.this, localSalvamentoUsuario);
 
             localSalvamentoAnimal = "CadastroAnimalFotoActivity_cadastroUsuario";
 
             // Método salvar, ele salva primeiro a foto e depois os dados do animal
-            Animal.salvarFotoAnimal(emailUsuario,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
+            Animal.salvarAnimalStorage(email,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
                     porteAnimal, observacaoAnimal,fotoAnimal,
                     CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
-            /*
-            Intent intent = new Intent(CadastroAnimalFotoActivity.this, PerfilPassageiroActivity.class);
-            // intent.setFlags = Limpa as activitys acumuladas
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity( intent);*/
+
 
         }else if(fotoAnimal != null && fluxoDados.equals("perfilUsuario")){
 
             localSalvamentoAnimal = "CadastroAnimalFotoActivity_adicionarAnimal";
 
-            Animal.salvarFotoAnimal(emailUsuario,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
+            Animal.salvarAnimalStorage(email,idAnimal,nomeAnimal,especieAnimal,racaAnimal,
                     porteAnimal, observacaoAnimal,fotoAnimal,
                     CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
-
-            /*
-            Animal animal = new Animal();
-            animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-            animal.setIdAnimal(idAnimal);
-            animal.setNomeAnimal(nomeAnimal);
-            animal.setEspecieAnimal(especieAnimal);
-            animal.setRacaAnimal(racaAnimal);
-            animal.setPorteAnimal(porteAnimal);
-            animal.setObservacaoAnimal(observacaoAnimal);
-
-            // Método salvar, ele salva primeiro a foto e depois os dados do animal
-            Animal.salvarFotoAnimal(emailUsuario,idAnimal,fotoAnimal,
-                        CadastroAnimalFotoActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);*/
-
         }
         else{
             Toast.makeText(CadastroAnimalFotoActivity.this,

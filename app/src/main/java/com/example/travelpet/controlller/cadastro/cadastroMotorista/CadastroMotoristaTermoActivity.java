@@ -14,8 +14,8 @@ import com.example.travelpet.model.Usuario;
 
 public class CadastroMotoristaTermoActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroDadosUsuario
-    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario, tipoUsuario;
+    // Variaveis usadas para recuperar dados da Activity CadastroDadosUsuario
+    private String  tipoUsuario, nome, sobrenome, telefone;
 
     private CheckBox checkBoxTermos;
 
@@ -34,28 +34,28 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Motorista motorista = intent.getParcelableExtra("motorista");
 
-        // Armazena os dados recuperados em uma variável String
-        nomeUsuario         =   motorista.getNome();
-        sobrenomeUsuario    =   motorista.getSobrenome();
-        telefoneUsuario     =   motorista.getTelefone();
-        tipoUsuario         =   motorista.getTipoUsuario();
+        tipoUsuario  =   motorista.getTipoUsuario();
+        nome         =   motorista.getNome();
+        sobrenome    =   motorista.getSobrenome();
+        telefone     =   motorista.getTelefone();
+
 
         checkBoxTermos = findViewById(R.id.checkBoxTermos);
 
     }
 
-    // Evento onClick ( Botão ProximoTermo )
-    public void buttonProximoTermoMotorista(View view){
+    public void botaoProximoMotoristaTermo(View view){
 
         // isChecked(); = verifica se o check box esta marcado, enviando true ou false , se ele esta marcado ou não
         if ( checkBoxTermos.isChecked()){
 
             Motorista motorista = new Motorista();
 
-            motorista.setNome(nomeUsuario);
-            motorista.setSobrenome(sobrenomeUsuario);
-            motorista.setTelefone(telefoneUsuario);
             motorista.setTipoUsuario(tipoUsuario);
+            motorista.setNome(nome);
+            motorista.setSobrenome(sobrenome);
+            motorista.setTelefone(telefone);
+
 
             //      Enviando dados para a Activity CadastroEspecie
             Intent intent = new Intent(CadastroMotoristaTermoActivity.this, CadastroMotoristaCnhActivity.class);
@@ -63,10 +63,10 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
             startActivity(intent);
 
 
-        }else{ // Se não tiver marcado o checkBoxTermos, exibe essa mensagem
-            Toast.makeText(CadastroMotoristaTermoActivity.this, //onde será exibido
-                    "Aceite os termos para prosseguir", // o que será exibido
-                    Toast.LENGTH_SHORT).show(); // quanto tempo. show = monstrar executa
+        }else{
+            Toast.makeText(CadastroMotoristaTermoActivity.this,
+                    "Aceite os termos para prosseguir",
+                    Toast.LENGTH_SHORT).show();
         }
     }
     // Chamado quando clica no botão voltar do aparelho

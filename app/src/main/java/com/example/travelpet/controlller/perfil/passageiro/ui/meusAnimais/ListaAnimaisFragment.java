@@ -38,9 +38,7 @@ public class ListaAnimaisFragment extends Fragment {
 
     private ValueEventListener valueEventListenerListaAnimais;
 
-    // Variaveis usadas para pegar dados nulos para activity "CadastroNomeAnimalActivity"
-    private String nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario;
-    // Variável usada para o fluxo de adicionar animais
+    // Variavel para passar o fluxo de dados para "CadastroAnimalNomeActivity"
     private String fluxoDados = "perfilUsuario";
 
     public static ListaAnimaisFragment newInstance() {
@@ -56,13 +54,8 @@ public class ListaAnimaisFragment extends Fragment {
         adicionarAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DonoAnimal donoAnimal = new DonoAnimal();
-                // Passando dados nulo para Activity CadastroNomeAnimal
-                // Para poder enganar e passa o FluxoDados junto
-                donoAnimal.setNome(nomeUsuario);
-                donoAnimal.setSobrenome(sobrenomeUsuario);
-                donoAnimal.setTelefone(telefoneUsuario);
-                donoAnimal.setTipoUsuario(tipoUsuario);
                 donoAnimal.setFluxoDados(fluxoDados);
 
                 Intent intent = new Intent(getActivity(), CadastroAnimalNomeActivity.class);

@@ -75,7 +75,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         final TextView  textNomeUsuario = view.findViewById(R.id.textNomeUsuario);
         final TextView textEmail = view.findViewById(R.id.textEmail);
 
-        DatabaseReference usuarios = referencia.child( "usuarios" ).child(UsuarioFirebase.getIdentificadorUsuario());
+        DatabaseReference usuarios = referencia.child( "donoAnimal" ).child(UsuarioFirebase.getIdentificadorUsuario());
 
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override

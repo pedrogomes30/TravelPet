@@ -21,13 +21,11 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CadastroUsuarioDadosActivity extends AppCompatActivity {
 
 
-    private String tipoUsuario, nomeUsuario, sobrenomeUsuario, telefoneUsuario ;
+    private String tipoUsuario, nome, sobrenome, telefone;
     private String fluxoDados;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
     private TextInputEditText campoNome,campoSobrenome, campoTelefone;
-
-    private TextView textViewTipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,54 +49,51 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
         campoSobrenome  =   findViewById(R.id.editSobrenomeUsuario);
         campoTelefone   =   findViewById(R.id.editTelefone);
 
-        textViewTipo    =   findViewById(R.id.textViewTipo);
-        textViewTipo.setText(tipoUsuario);
-
+        // Mascara para o usuario so digitar nímero, e só 11 numeros
         SimpleMaskFormatter smf = new SimpleMaskFormatter("(NN) NNNNN-NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(campoTelefone, smf);
         campoTelefone.addTextChangedListener(mtw);
     }
 
     // Evento de clique do botão PrcoximoNomeUsuario
-    public void buttonProximoDadosUsuario(View view){
+    public void botaoProximoUsuarioDados(View view){
 
         // Recuperando textos dos campos, transformando em String e salvando nas variaveis
-        nomeUsuario         =   campoNome.getText().toString().toUpperCase();
-        sobrenomeUsuario    =   campoSobrenome.getText().toString().toUpperCase();
-        telefoneUsuario     =   campoTelefone.getText().toString();
+        nome        =   campoNome.getText().toString().toUpperCase();
+        sobrenome   =   campoSobrenome.getText().toString().toUpperCase();
+        telefone    =   campoTelefone.getText().toString();
 
         //Verificando se não estiver vazio
-        if(!nomeUsuario.isEmpty()){
-            if(!sobrenomeUsuario.isEmpty()){
-                if(!telefoneUsuario.isEmpty() && telefoneUsuario.length() == 15){
+        if(!nome.isEmpty()){
+            if(!sobrenome.isEmpty()){
+                if(!telefone.isEmpty() && telefone.length() == 15){
 
-                    if(tipoUsuario.equals("passageiro")) {
+                    if(tipoUsuario.equals("donoAnimal")) {
 
-                        // Cria referência a classe Usuario
+                        // Cria referência a classe DonoAnimal
                         DonoAnimal donoAnimal = new DonoAnimal();
 
-                        //Envia dados para a classe Usuario
-                        donoAnimal.setNome(nomeUsuario);
-                        donoAnimal.setSobrenome(sobrenomeUsuario);
-                        donoAnimal.setTelefone(telefoneUsuario);
+                        //Envia dados para a classe DonoAnimal
                         donoAnimal.setTipoUsuario(tipoUsuario);
+                        donoAnimal.setNome(nome);
+                        donoAnimal.setSobrenome(sobrenome);
+                        donoAnimal.setTelefone(telefone);
                         donoAnimal.setFluxoDados(fluxoDados);
 
                         Intent intent = new Intent(this, CadastroAnimalNomeActivity.class);
                         // Cria uma chave para armazenar os arquivos que serão passados pela activity
                         intent.putExtra("donoAnimal", donoAnimal);
-                        // Inicia Acitivity indica acima referênciado na intent
+                        // Inicia Acitivity indicada acima referênciado na intent
                         startActivity(intent);
 
                     }else if(tipoUsuario.equals("motorista")){
-                        // Cria referência a classe Usuario
+                        // Cria referência a classe Motorista
                         Motorista  motorista = new Motorista();
-
-                        //Envia dados para a classe Usuario
-                        motorista.setNome(nomeUsuario);
-                        motorista.setSobrenome(sobrenomeUsuario);
-                        motorista.setTelefone(telefoneUsuario);
+                        // Envia dados para a classe Motorista
                         motorista.setTipoUsuario(tipoUsuario);
+                        motorista.setNome(nome);
+                        motorista.setSobrenome(sobrenome);
+                        motorista.setTelefone(telefone);
 
 
                         Intent intent = new Intent(this, CadastroMotoristaTermoActivity.class);
@@ -123,7 +118,7 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-    // Chamado quando clica no botão voltar do aparelho
+    // Metodo chamado quando clica no botão voltar do aparelho
     @Override
     public void finish() {
         super.finish();

@@ -39,7 +39,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
                                            final String localSalvamentoUsuario){
         // Salvar imagem no firebase
         StorageReference imagemRef = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("passageiro")
+                .child("donoAnimal")
                 .child(email)
                 .child("foto de perfil")
                 .child(email+".PERFIL.JPEG");
@@ -80,7 +80,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
                 donoAnimal.setTelefone(telefone);
                 donoAnimal.setTipoUsuario(tipoUsuario);
                 donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
-                donoAnimal.salvar(activity, localSalvamentoUsuario);
+                donoAnimal.salvarUsuarioDatabase(activity, localSalvamentoUsuario);
 
             }
         });

@@ -30,11 +30,10 @@ import java.util.ArrayList;
 public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalNome
-    private String  nomeUsuario, sobrenomeUsuario, telefoneUsuario,tipoUsuario,
+    private String  tipoUsuario, nome, sobrenome, telefone,
                     nomeAnimal;
     // armazena de onde ta vindo o fluxo de dados
     private String fluxoDados;
-
 
     // Spinner
     private Spinner spinnerEspecieAnimal;
@@ -60,16 +59,15 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
         Animal animal = intent.getParcelableExtra("animal");
 
-        // Dados da Classe Usuario
-        nomeUsuario         =   donoAnimal.getNome();
-        sobrenomeUsuario    =   donoAnimal.getSobrenome();
-        telefoneUsuario     =   donoAnimal.getTelefone();
-        tipoUsuario         =   donoAnimal.getTipoUsuario();
-        fluxoDados          =   donoAnimal.getFluxoDados();
+        // Dados DonoAnimal
+        tipoUsuario  =   donoAnimal.getTipoUsuario();
+        nome         =   donoAnimal.getNome();
+        sobrenome    =   donoAnimal.getSobrenome();
+        telefone     =   donoAnimal.getTelefone();
+        fluxoDados   =   donoAnimal.getFluxoDados();
 
-        // Dados da Classe Animal
+        // Dados Animal
         nomeAnimal = animal.getNomeAnimal();
-
 
         // referenciando spinner, do xml
         spinnerEspecieAnimal = findViewById(R.id.spinnerEspecieAnimal);
@@ -99,7 +97,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         customList.add(new CustomItem("Roedor", R.drawable.ic_roedor_spinner));
         return customList;
     }
-
+    // Método para receber o item escolhido no Spinner
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         try {
@@ -107,7 +105,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
             width = linearLayout.getWidth();
         } catch (Exception e) {
         }
-        //customSpinner.setDropDownWidth(width);
+
         CustomItem item = (CustomItem) adapterView.getSelectedItem();
         especieAnimal = item.getSpinnerItemName().toLowerCase();
 
@@ -122,13 +120,12 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
 
     }
 
-    // Método verificar tipo da espécie
     public  void listarRacas(String lr) {
 
         // Limpa a lista
         listaRacaAnimal.clear();
 
-        //              Colocando os nomes das raças do banco de dados em uma lista
+        //              Colocando os nomes das raças do banco de dados em uma lista de acordo com a especia escolhida
         usuariosRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimal);
         usuariosRef.addChildEventListener(new ChildEventListener() {
 
@@ -165,7 +162,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         campoRacaAnimal.setAdapter(adapterRaca);
     }
 
-    public void buttonProximoEspecieAnimal(View view){
+    public void botaoProximoAnimalEspecieRaca(View view){
 
         racaAnimal = campoRacaAnimal.getText().toString();
 
@@ -177,10 +174,10 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
                 }
                 DonoAnimal donoAnimal = new DonoAnimal();
 
-                donoAnimal.setNome(nomeUsuario);
-                donoAnimal.setSobrenome(sobrenomeUsuario);
-                donoAnimal.setTelefone(telefoneUsuario);
                 donoAnimal.setTipoUsuario(tipoUsuario);
+                donoAnimal.setNome(nome);
+                donoAnimal.setSobrenome(sobrenome);
+                donoAnimal.setTelefone(telefone);
                 donoAnimal.setFluxoDados(fluxoDados);
 
                 Animal animal = new Animal();

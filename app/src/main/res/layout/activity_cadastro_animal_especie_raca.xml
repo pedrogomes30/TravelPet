@@ -63,7 +63,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProximoEspecieAnimal"
+        app:layout_constraintBottom_toTopOf="@+id/botaoProximoAnimalEspecieRaca"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewRaca"
@@ -79,7 +79,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonProximoEspecieAnimal"
+        android:id="@+id/botaoProximoAnimalEspecieRaca"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -87,7 +87,7 @@
         android:layout_marginBottom="24dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="buttonProximoEspecieAnimal"
+        android:onClick="botaoProximoAnimalEspecieRaca"
         android:text="Próximo"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
