@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\fox\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "outputFile": "C:\\Users\\rodri\\Documents\\TravelPet\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\fox\\.gradle\\caches\\transforms-2\\files-2.1\\7c8ea6c4de944f07ff3eb0b1fd3ea09e\\appcompat-1.1.0\\res\\values-land\\values-land.xml",
+                    "source": "C:\\Users\\rodri\\.gradle\\caches\\transforms-2\\files-2.1\\7c8ea6c4de944f07ff3eb0b1fd3ea09e\\appcompat-1.1.0\\res\\values-land\\values-land.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\fox\\.gradle\\caches\\transforms-2\\files-2.1\\2fb0ed00c3dfc4b66416cc8717ff5a07\\material-1.0.0\\res\\values-land\\values-land.xml",
+                    "source": "C:\\Users\\rodri\\.gradle\\caches\\transforms-2\\files-2.1\\2fb0ed00c3dfc4b66416cc8717ff5a07\\material-1.0.0\\res\\values-land\\values-land.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\fox\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-xlarge-v4\\values-xlarge-v4.xml",
+            "outputFile": "C:\\Users\\rodri\\Documents\\TravelPet\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-xlarge-v4\\values-xlarge-v4.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\fox\\.gradle\\caches\\transforms-2\\files-2.1\\7c8ea6c4de944f07ff3eb0b1fd3ea09e\\appcompat-1.1.0\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
+                    "source": "C:\\Users\\rodri\\.gradle\\caches\\transforms-2\\files-2.1\\7c8ea6c4de944f07ff3eb0b1fd3ea09e\\appcompat-1.1.0\\res\\values-xlarge-v4\\values-xlarge-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",

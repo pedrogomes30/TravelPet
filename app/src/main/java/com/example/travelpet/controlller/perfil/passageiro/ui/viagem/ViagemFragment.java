@@ -45,7 +45,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    private EditText editDestido;
+    private EditText editDestino;
     private Button buttonChamarMotorista;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,7 +55,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         //return inflater.inflate(R.layout.fragment_viagem,container, false);
         buttonChamarMotorista = view.findViewById(R.id.buttonChamarMotorista);
         // Destino para onde vai
-        editDestido = view.findViewById(R.id.editDestino);
+        editDestino = view.findViewById(R.id.editDestino);
 
         // Criando mapa
         mapView = (MapView) view.findViewById(R.id.MapView);
@@ -75,7 +75,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
                 // Pega o endereço digitado pelo usuário
-                String enderecoDestino = editDestido.getText().toString();
+                String enderecoDestino = editDestino.getText().toString();
 
                 // Verifica se está vazio
                 if( !enderecoDestino.equals("") || enderecoDestino != null ){
