@@ -23,7 +23,7 @@ public class InfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+//AAAA
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
