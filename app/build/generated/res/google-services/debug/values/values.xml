@@ -3,9 +3,9 @@
     <string name="default_web_client_id" translatable="false">845807082620-ejpfv432ll4o1cf378gehdamk95mqh5c.apps.googleusercontent.com</string>
     <string name="firebase_database_url" translatable="false">https://travelpet-783e8.firebaseio.com</string>
     <string name="gcm_defaultSenderId" translatable="false">845807082620</string>
-    <string name="google_api_key" translatable="false">AIzaSyDYFGC1BGhcKUpvyQBtjV9GnxwTY6eyA8M</string>
+    <string name="google_api_key" translatable="false">AIzaSyBUjAiJRPJ6CcPKWskn2CQcyigqMpg0u6Y</string>
     <string name="google_app_id" translatable="false">1:845807082620:android:8979dfd619175b68dc7df9</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDYFGC1BGhcKUpvyQBtjV9GnxwTY6eyA8M</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBUjAiJRPJ6CcPKWskn2CQcyigqMpg0u6Y</string>
     <string name="google_storage_bucket" translatable="false">travelpet-783e8.appspot.com</string>
     <string name="project_id" translatable="false">travelpet-783e8</string>
 </resources>

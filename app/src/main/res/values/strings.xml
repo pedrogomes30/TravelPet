@@ -15,8 +15,12 @@
     <string name="menu_contato">Contato</string>
     <string name="menu_info">Info</string>
     <string name="menu_meus_animais">Meus Animais</string>
+    <string name="descricao">Os donos de animais têm por muitas vezes transportar seu animal para
+        diferentes locais ou comércios especializados. Com o crescente aumento do mercado pet, seu
+        transporte se torna escasso por falta de motoristas que permitam este transporte e veículos
+        despreparados para o mesmo. A ideia e propor um aplicativo que gerencie uma viagem de um
+        animal e forneça segurança e agilidade neste tipo de transporte.</string>
 
-    <string name=""></string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

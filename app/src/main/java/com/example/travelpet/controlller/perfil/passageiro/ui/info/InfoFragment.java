@@ -1,6 +1,7 @@
 package com.example.travelpet.controlller.perfil.passageiro.ui.info;
 
 import android.os.Bundle;
+import android.renderscript.Element;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +15,43 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.travelpet.R;
 
+import mehdi.sakout.aboutpage.AboutPage;
+
 public class InfoFragment extends Fragment {
 
-    private InfoViewModel infoViewModel;
+    public  InfoFragment() {
+        // Required empty public constructor
+    }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        infoViewModel =
-                ViewModelProviders.of(this).get(InfoViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_info, container, false);
-        final TextView textView = root.findViewById(R.id.text_send);
-        infoViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        //metodo para inflar o fragment
+        //return inflater.inflate(R.layout.fragment_about, container, false);
+
+        /*esta classe utiliza uma biblioteca AboutPage, no qual não é necessário implementar o XML,
+        todo layout é realizado dentro da classe controll e gerado automaticamente.*/
+
+        mehdi.sakout.aboutpage.Element versaoPrincipal = new mehdi.sakout.aboutpage.Element();
+        mehdi.sakout.aboutpage.Element versaoAdm =new mehdi.sakout.aboutpage.Element();
+
+        versaoPrincipal.setTitle("aplicação principal versao 41.0");
+        versaoAdm.setTitle("aplicação administrativa versao 1.0");
+
+        return new AboutPage(getActivity())
+                .setImage(R.drawable.logo_travel_pet_laranja)
+                .setDescription(getString(R.string.descricao))
+                .addGroup("Entre em contato")
+                .addEmail("travelpetapp@gmail.com.br","Envie um e-mail")
+                .addFacebook("TravelPet-102032251464773","Facebook")
+                .addGroup("paginas do projeto")
+                .addGitHub("pedrogomes30/TravelPet","Aplicativo Principal")
+                .addGitHub("pedrogomes30/TravelPetADM","Aplicativo ADM")
+                .addItem(versaoPrincipal)
+                .addItem(versaoAdm)
+                .create();
+
+
     }
 }

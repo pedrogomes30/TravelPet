@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "845807082620-oois02m4lo9t9hdtbldfbv1djg3nnmdo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelpet",
+            "certificate_hash": "f4060d2e407021f43ccc8fe7a9ae17fbe8d8c3a6"
+          }
+        },
+        {
+          "client_id": "845807082620-0mssuh5fiiearscj0v849m9hfvjv5c10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.travelpet",
+            "certificate_hash": "b6ce489b77ce578515ff7bec9a372686cd6ee40c"
+          }
+        },
+        {
           "client_id": "845807082620-055mkj2ujqsdthleidgj0eu28lleudhn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -45,7 +61,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDYFGC1BGhcKUpvyQBtjV9GnxwTY6eyA8M"
+          "current_key": "AIzaSyBUjAiJRPJ6CcPKWskn2CQcyigqMpg0u6Y"
         }
       ],
       "services": {
