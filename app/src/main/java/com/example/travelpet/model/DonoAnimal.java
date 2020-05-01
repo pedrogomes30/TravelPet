@@ -93,6 +93,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
         nome = in.readString();
         sobrenome = in.readString();
         telefone = in.readString();
+        cpf=in.readString();
         tipoUsuario = in.readString();
         email = in.readString();
         fotoUsuarioUrl = in.readString();
@@ -107,6 +108,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
         dest.writeString(nome);
         dest.writeString(sobrenome);
         dest.writeString(telefone);
+        dest.writeString(cpf);
         dest.writeString(tipoUsuario);
         dest.writeString(email);
         dest.writeString(fotoUsuarioUrl);

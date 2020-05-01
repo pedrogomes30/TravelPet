@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.adapter.ListaAnimaisAdapter;
-import com.example.travelpet.model.Animal;
-import com.example.travelpet.model.DonoAnimal;
-import com.example.travelpet.model.Usuario;
+import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.RecyclerItemClickListener;
+import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

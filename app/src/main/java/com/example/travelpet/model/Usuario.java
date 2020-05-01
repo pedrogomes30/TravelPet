@@ -11,7 +11,6 @@ import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Usuario implements Parcelable{
@@ -20,6 +19,7 @@ public class Usuario implements Parcelable{
     protected String nome;
     protected String sobrenome;
     protected String telefone;
+    protected String cpf;
     protected String tipoUsuario;
     protected String email;
     protected String fotoUsuarioUrl;
@@ -70,6 +70,14 @@ public class Usuario implements Parcelable{
         this.telefone = telefone;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getTipoUsuario() {
         return tipoUsuario;
     }
@@ -91,11 +99,11 @@ public class Usuario implements Parcelable{
     //public void salvar(){
         // DatabaseReference = Referência do Firebase
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-        DatabaseReference usuariosRef = fireDB.getReference().child(tipoUsuario);
+        // DatabaseReference usuariosRef = fireDB.getReference().child(tipoUsuario);
         // Referência DatabaseRefence para usuário
         // usuariosRef.child("usuarios") = indica o nó filho chamado usuarios
         // child(getId()) = recupera o id do nó  usuarios
-        DatabaseReference usuarios = usuariosRef.child(getId());
+        DatabaseReference usuarios = fireDB.getReference().child(tipoUsuario).child(getId());
 
 
         // Configurando usuário no Firebase
@@ -135,7 +143,6 @@ public class Usuario implements Parcelable{
                 }
             }
         });
-
     }
 
     // Métodos Necessarios para usar a Interface Parcelable
@@ -155,7 +162,7 @@ public class Usuario implements Parcelable{
 
     public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
         @Override
-        public  Usuario createFromParcel(Parcel in) {
+        public Usuario createFromParcel(Parcel in) {
             return new Usuario(in);
         }
 

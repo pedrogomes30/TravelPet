@@ -15,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.CustomAdapter;
 import com.example.travelpet.adapter.CustomItem;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.RacaAnimal;
-import com.example.travelpet.model.Usuario;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +30,8 @@ import java.util.ArrayList;
 public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalNome
-    private String  tipoUsuario, nome, sobrenome, telefone,
+    private String  tipoUsuario, nome, sobrenome, telefone,cpf,
+                    cep, logradouro, bairro, localidade,uf,
                     nomeAnimal;
     // armazena de onde ta vindo o fluxo de dados
     private String fluxoDados;
@@ -57,6 +58,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         // Recuperando dados passados da Activity <CadastroNomeAnimal
         Intent intent = getIntent();
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
+        Endereco endereco = intent.getParcelableExtra("endereco");
         Animal animal = intent.getParcelableExtra("animal");
 
         // Dados DonoAnimal
@@ -64,7 +66,15 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         nome         =   donoAnimal.getNome();
         sobrenome    =   donoAnimal.getSobrenome();
         telefone     =   donoAnimal.getTelefone();
+        cpf          =   donoAnimal.getCpf();
         fluxoDados   =   donoAnimal.getFluxoDados();
+
+        // Dados Adress
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
         // Dados Animal
         nomeAnimal = animal.getNomeAnimal();
@@ -129,7 +139,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         usuariosRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimal);
         usuariosRef.addChildEventListener(new ChildEventListener() {
 
-            public void onChildAdded( DataSnapshot dataSnapshot,  String s) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 // Pegando os dados do BD através da classe RacaAnimal
                 RacaAnimal racasAnimais = dataSnapshot.getValue(RacaAnimal.class);
                 // Add cada nome das raças na lista (listaRacaAnimal
@@ -138,7 +148,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
             }
 
 
-            public void onChildChanged( DataSnapshot dataSnapshot,  String s) {
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
 
@@ -148,7 +158,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
             }
 
 
-            public void onChildMoved(DataSnapshot dataSnapshot,  String s) {
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
@@ -172,25 +182,31 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
                 if(especieAnimal.equals("reptil")){
                     especieAnimal = "réptil";
                 }
-                DonoAnimal donoAnimal = new DonoAnimal();
 
+                DonoAnimal donoAnimal = new DonoAnimal();
                 donoAnimal.setTipoUsuario(tipoUsuario);
                 donoAnimal.setNome(nome);
                 donoAnimal.setSobrenome(sobrenome);
                 donoAnimal.setTelefone(telefone);
+                donoAnimal.setCpf(cpf);
                 donoAnimal.setFluxoDados(fluxoDados);
 
-                Animal animal = new Animal();
+                Endereco endereco = new Endereco();
+                endereco.setCep(cep);
+                endereco.setLogradouro(logradouro);
+                endereco.setBairro(bairro);
+                endereco.setLocalidade(localidade);
+                endereco.setUf(uf);
 
+                Animal animal = new Animal();
                 animal.setNomeAnimal(nomeAnimal);
                 animal.setEspecieAnimal(especieAnimal);
                 animal.setRacaAnimal(racaAnimal);
 
                 Intent intent = new Intent(CadastroAnimalEspecieRacaActivity.this, CadastroAnimalPorteActivity.class);
-
                 intent.putExtra ("donoAnimal",donoAnimal);
+                intent.putExtra ("endereco",endereco);
                 intent.putExtra ("animal",animal);
-
                 startActivity(intent);
             }else{
                 Toast.makeText(CadastroAnimalEspecieRacaActivity.this,

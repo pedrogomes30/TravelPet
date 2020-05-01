@@ -15,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity;
-import com.example.travelpet.model.Motorista;
-import com.example.travelpet.model.Usuario;
+import com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity;
+import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
-import com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity;
-import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
+import com.example.travelpet.model.Motorista;
+import com.example.travelpet.model.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Validar Permissões
-        Permissao.validarPermissoes(permissoesNecessarias,MainActivity.this,1);
+        Permissao.validarPermissoes(permissoesNecessarias, MainActivity.this,1);
         // Tira a ActionBar
         //getSupportActionBar().hide();
 

@@ -1,6 +1,5 @@
 package com.example.travelpet.controlller.cadastro.cadastroMotorista;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,22 +11,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Motorista;
-import com.example.travelpet.model.Usuario;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,7 +25,8 @@ import java.io.IOException;
 public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroFotoUsuario
-    private String tipoUsuario, nome, sobrenome, telefone;
+    private String tipoUsuario, nome, sobrenome, telefone,
+                   cep, logradouro, bairro, localidade, uf;
 
     // Variaveis usadas para armazenar fotos decocumentos do motorista
     private byte[] fotoCNH, fotoPerfil, fotoCrlv;
@@ -57,6 +48,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         // Recuperando dados passados da Activity CadastroMotoristaFotoActivity
         Intent intent = getIntent();
         Motorista motorista = intent.getParcelableExtra("motorista");
+        Endereco endereco = intent.getParcelableExtra("endereco");
 
         tipoUsuario     =   motorista.getTipoUsuario();
         nome            =   motorista.getNome();
@@ -64,6 +56,12 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         telefone        =   motorista.getTelefone();
         fotoCNH         =   motorista.getFotoCNH();
         fotoPerfil      =   motorista.getFotoPerfil();
+
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
         statusCadastro  =   "Em análise";
 
@@ -124,9 +122,20 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
     public void botaoFinalizarCadastroMotorista(View view) {
 
         if (fotoCrlv != null) {
+            // tipoUsuarioNomeNo = atrobuto para auxiliar no nome do database
+            String tipoUsuarioNomeNo = tipoUsuario.substring(0,1).toUpperCase()+tipoUsuario.substring(1);
+
+            Endereco endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
+            endereco.salvarEnderecoDatabase(CadastroMotoristaCrlvActivity.this, tipoUsuarioNomeNo);
+
             // Método salva imagens no Storage, e depois salva os dados no Database
             Motorista.salvarMotoristaStorage(nome, sobrenome, telefone, tipoUsuario, statusCadastro, fotoCNH,
-                    fotoPerfil, fotoCrlv, CadastroMotoristaCrlvActivity.this,MainActivity.class);
+                    fotoPerfil, fotoCrlv, CadastroMotoristaCrlvActivity.this, MainActivity.class);
 
         } else {
             Toast.makeText(CadastroMotoristaCrlvActivity.this,

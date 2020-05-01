@@ -37,7 +37,7 @@ public class RacaAnimal implements Parcelable{
         return 0;
     }
 
-    public static final Parcelable.Creator<RacaAnimal> CREATOR = new Parcelable.Creator<RacaAnimal>() {
+    public static final Creator<RacaAnimal> CREATOR = new Creator<RacaAnimal>() {
         @Override
         public RacaAnimal createFromParcel(Parcel in) {
             return new RacaAnimal(in);

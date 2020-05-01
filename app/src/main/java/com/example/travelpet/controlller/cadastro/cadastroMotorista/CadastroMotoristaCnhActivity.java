@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Motorista;
-import com.example.travelpet.model.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,7 +24,8 @@ import java.io.IOException;
 public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroTermoMotorista
-    private String  tipoUsuario, nome, sobrenome, telefone;
+    private String  tipoUsuario, nome, sobrenome, telefone,
+                    cep, logradouro, bairro, localidade, uf;
 
     // Variavel armazena a foto da carteira de motorista CNH
     private byte[] fotoCNH;
@@ -45,11 +46,18 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
         // Recuperando dados passados da Activity CadastroTermoMotorista
         Intent intent = getIntent();
         Motorista motorista = intent.getParcelableExtra("motorista");
+        Endereco endereco = intent.getParcelableExtra("endereco");
 
         tipoUsuario  =   motorista.getTipoUsuario();
         nome         =   motorista.getNome();
         sobrenome    =   motorista.getSobrenome();
         telefone     =   motorista.getTelefone();
+
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
 
         textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaCnh);
@@ -123,8 +131,16 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
             motorista.setTelefone(telefone);
             motorista.setFotoCNH(fotoCNH);
 
+            Endereco endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
+
             Intent intent = new Intent(CadastroMotoristaCnhActivity.this, CadastroMotoristaFotoActivity.class);
             intent.putExtra("motorista", motorista);
+            intent.putExtra("endereco",endereco);
             startActivity(intent);
 
         }else{

@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Motorista;
-import com.example.travelpet.model.Usuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,7 +24,8 @@ import java.io.IOException;
 public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
     // Variaveis usadas para pegar dados da Activity CadastroCnhMotorista
-    private String  tipoUsuario, nome, sobrenome, telefone;
+    private String  tipoUsuario, nome, sobrenome, telefone,
+                    cep, logradouro, bairro, localidade, uf;
 
     // Variaveis usadas para armazenar fotos decocumentos do motorista
     private byte[] fotoCNH, fotoPerfil;
@@ -45,12 +46,19 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
         // Recuperando dados passados da Activity CadastroCnhMototorista
         Intent intent = getIntent();
         Motorista motorista = intent.getParcelableExtra("motorista");
+        Endereco endereco = intent.getParcelableExtra("endereco");
 
         tipoUsuario  =   motorista.getTipoUsuario();
         nome         =   motorista.getNome();
         sobrenome    =   motorista.getSobrenome();
         telefone     =   motorista.getTelefone();
         fotoCNH      =   motorista.getFotoCNH();
+
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
         textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaFoto);
 
@@ -112,7 +120,6 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
         if(fotoPerfil != null) {
 
             Motorista motorista = new Motorista();
-
             motorista.setTipoUsuario(tipoUsuario);
             motorista.setNome(nome);
             motorista.setSobrenome(sobrenome);
@@ -120,8 +127,16 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
             motorista.setFotoCNH(fotoCNH);
             motorista.setFotoPerfil(fotoPerfil);
 
+            Endereco endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
+
             Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaCrlvActivity.class);
             intent.putExtra("motorista", motorista);
+            intent.putExtra("endereco",endereco);
             startActivity(intent);
 
         }else{

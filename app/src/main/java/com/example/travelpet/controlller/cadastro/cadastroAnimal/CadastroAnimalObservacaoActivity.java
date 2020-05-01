@@ -8,15 +8,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
-import com.example.travelpet.model.Usuario;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
 
     // Variaveis usadas para armazenar dados da Activity CadastroAnimalPorte
-    private String tipoUsuario,nome, sobrenome, telefone,
+    private String tipoUsuario,nome, sobrenome, telefone,cpf,
+                   cep, logradouro, bairro, localidade,uf,
                    nomeAnimal, especieAnimal, racaAnimal, porteAnimal;
 
     private String fluxoDados;
@@ -33,6 +34,7 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
+        Endereco endereco = intent.getParcelableExtra("endereco");
         Animal animal = intent.getParcelableExtra("animal");
 
         // Dados DonoAnimal
@@ -40,7 +42,15 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         nome         =   donoAnimal.getNome();
         sobrenome    =   donoAnimal.getSobrenome();
         telefone     =   donoAnimal.getTelefone();
+        cpf          =   donoAnimal.getCpf();
         fluxoDados   =   donoAnimal.getFluxoDados();
+
+        // Dados Endereco
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
         // Dados Animal
         nomeAnimal          =   animal.getNomeAnimal();
@@ -64,7 +74,15 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
             donoAnimal.setNome(nome);
             donoAnimal.setSobrenome(sobrenome);
             donoAnimal.setTelefone(telefone);
+            donoAnimal.setCpf(cpf);
             donoAnimal.setFluxoDados(fluxoDados);
+
+            Endereco endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
 
             Animal animal = new Animal();
             animal.setNomeAnimal(nomeAnimal);
@@ -75,6 +93,7 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
 
             Intent intent = new Intent(CadastroAnimalObservacaoActivity.this, CadastroAnimalFotoActivity.class);
             intent.putExtra("donoAnimal",donoAnimal);
+            intent.putExtra("endereco", endereco);
             intent.putExtra ("animal", animal);
             startActivity(intent);
 

@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -155,15 +154,16 @@ public class Animal implements Parcelable {
         // DatabaseReference = Referência do Firebase
 
          FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-         DatabaseReference animaisRef = fireDB.getReference().child("animais");
+         DatabaseReference animaisRef = fireDB.getReference().child("animais").child(getIdUsuario()).child(getIdAnimal());
         // Referência DatabaseRefence para animais
         // animaisRef.child("animais") = indica o nó filho chamado animais
         // .push(); = pega o id criado pelo nó
-        DatabaseReference animais = animaisRef.child(getIdUsuario()).child(getIdAnimal());
+
+        //DatabaseReference animais = animaisRef.child(getIdUsuario()).child(getIdAnimal());
 
         // Configurando usuário no Firebase
         // this = pois salvara todos os dados de uma vez (idUsuario, idAnimal, nomeAnimal...)
-        animais.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
+        animaisRef.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 

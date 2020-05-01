@@ -8,117 +8,240 @@
     android:layout_width="match_parent"
     android:fillViewport="true">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorApp"
-    tools:context=".controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity">
-
-    <TextView
-        android:id="@+id/textViewBoasVindas"
-        android:layout_width="359dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:gravity="center"
-        android:text="Por favor preencha os campos com seus dados"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputNomeUsuario"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas">
+        android:layout_height="match_parent"
+        android:background="@color/colorApp"
+        tools:context=".controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editNomeUsuario"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textViewBoasVindas"
+            android:layout_width="359dp"
             android:layout_height="wrap_content"
-            android:hint="Nome"
-            android:maxLength="100"
-            tools:text="@tools:sample/first_names" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/fredoka_one_regular"
+            android:gravity="center"
+            android:text="Por favor preencha os campos com seus dados"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputSobrenome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputNomeUsuario">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editSobrenomeUsuario"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputNomeUsuario"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Sobrenome"
-            android:maxLength="100"
-            tools:text="@tools:sample/full_names" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputTelefone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintBottom_toTopOf="@+id/botaoProximoUsuarioDados"
-        app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
-        app:layout_constraintTop_toBottomOf="@+id/textInputSobrenome"
-        app:layout_constraintVertical_bias="0.0">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editNomeUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:maxLength="100" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTelefone"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputSobrenome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Telefone"
-            android:inputType="text|phone" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputNomeUsuario">
 
-    <Button
-        android:id="@+id/botaoProximoUsuarioDados"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_azul_seletor"
-        android:onClick="botaoProximoUsuarioDados"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editSobrenomeUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sobrenome"
+                android:maxLength="100" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!--android:drawableLeft="@drawable/ic_seta_laranja_proximo_24dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputSobrenome">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefone"
+                android:inputType="text|phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputCpf"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputTelefone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editCpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CPF"
+                android:inputType="number"
+                android:maxLength="11"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputCep"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputCpf">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editCep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CEP"
+                android:inputType="number"
+                android:maxLength="8" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLogradouro"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputCep">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editLogradouro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Logradouro" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputBairro"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.593"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLogradouro">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editBairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLocalidade"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintBottom_toTopOf="@+id/botaoProximoUsuarioDados"
+            app:layout_constraintEnd_toStartOf="@+id/textInputUf"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputBairro"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editLocalidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputUf"
+            android:layout_width="50dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/edit_text_branco_seletor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputBairro">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="UF"
+                android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
+                android:maxLength="2"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/botaoProximoUsuarioDados"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_azul_seletor"
+            android:onClick="botaoProximoUsuarioDados"
+            android:text="Próximo"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!--android:drawableLeft="@drawable/ic_seta_laranja_proximo_24dp"
     android:padding="10dp"-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

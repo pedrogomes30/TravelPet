@@ -9,13 +9,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.domain.Endereco;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Usuario;
 
 public class CadastroMotoristaTermoActivity extends AppCompatActivity {
 
     // Variaveis usadas para recuperar dados da Activity CadastroDadosUsuario
-    private String  tipoUsuario, nome, sobrenome, telefone;
+    private String  tipoUsuario, nome, sobrenome, telefone,
+                    cep, logradouro, bairro, localidade, uf;
 
     private CheckBox checkBoxTermos;
 
@@ -33,12 +35,20 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
         // Recuperando dados passados da Activity CadastroTipoUsuario
         Intent intent = getIntent();
         Motorista motorista = intent.getParcelableExtra("motorista");
+        Endereco endereco = intent.getParcelableExtra("endereco");
 
+        // Dados Motorista
         tipoUsuario  =   motorista.getTipoUsuario();
         nome         =   motorista.getNome();
         sobrenome    =   motorista.getSobrenome();
         telefone     =   motorista.getTelefone();
 
+        // Dados Endereco
+        cep          =   endereco.getCep();
+        logradouro   =   endereco.getLogradouro();
+        bairro       =   endereco.getBairro();
+        localidade   =   endereco.getLocalidade();
+        uf           =   endereco.getUf();
 
         checkBoxTermos = findViewById(R.id.checkBoxTermos);
 
@@ -50,16 +60,22 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
         if ( checkBoxTermos.isChecked()){
 
             Motorista motorista = new Motorista();
-
             motorista.setTipoUsuario(tipoUsuario);
             motorista.setNome(nome);
             motorista.setSobrenome(sobrenome);
             motorista.setTelefone(telefone);
 
+            Endereco endereco = new Endereco();
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
 
             //      Enviando dados para a Activity CadastroEspecie
             Intent intent = new Intent(CadastroMotoristaTermoActivity.this, CadastroMotoristaCnhActivity.class);
             intent.putExtra("motorista", motorista);
+            intent.putExtra("endereco",endereco);
             startActivity(intent);
 
 

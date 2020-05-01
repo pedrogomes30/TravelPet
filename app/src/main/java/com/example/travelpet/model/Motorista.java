@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.travelpet.controlller.MainActivity;
-import com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaCrlvActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
