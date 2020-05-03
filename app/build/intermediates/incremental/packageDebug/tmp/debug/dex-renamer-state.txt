@@ -1,4 +1,4 @@
-#Fri May 01 18:08:38 BRT 2020
+#Sat May 02 22:26:48 BRT 2020
 base.0=C\:\\Users\\fox\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
