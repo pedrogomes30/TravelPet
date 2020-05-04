@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\fox\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-se\\values-se.xml",
+            "outputFile": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-se\\values-se.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\fox\\.gradle\\caches\\transforms-2\\files-2.1\\6ad88e2606f73580b0d80634426b3ce9\\jetified-android-about-page-1.2.5\\res\\values-se\\values-se.xml",
+                    "source": "C:\\Users\\rodri\\.gradle\\caches\\transforms-2\\files-2.1\\18edf4ed0fd118ec5683ebb2f0c44445\\jetified-android-about-page-1.2.5\\res\\values-se\\values-se.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

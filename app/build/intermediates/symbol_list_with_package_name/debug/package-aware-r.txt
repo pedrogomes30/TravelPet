@@ -1191,6 +1191,7 @@ drawable about_icon_twitter
 drawable about_icon_youtube
 drawable avd_hide_password
 drawable avd_show_password
+drawable baseline_map_black_24dp
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1464,8 +1465,13 @@ id direct
 id disableHome
 id drawer_layout
 id dynamic
+id editBairro
+id editCep
+id editCpf
 id editDestino
 id editLocal
+id editLocalidade
+id editLogradouro
 id editNomeAnimal
 id editNomeUsuario
 id editObservacaoAnimal
@@ -1475,6 +1481,7 @@ id editTextNomeAnimal
 id editTextNomeUsuario
 id editTextObservacaoAnimal
 id editTextSobrenomeUsuario
+id editUf
 id edit_phone_number
 id edit_query
 id email
@@ -1558,6 +1565,8 @@ id message
 id middle
 id mini
 id mobile_navigation
+id moto_drawer_layout
+id moto_nav_view
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
@@ -1569,6 +1578,7 @@ id nav_controller_view_tag
 id nav_host_fragment
 id nav_info
 id nav_meus_animais
+id nav_meus_veiculos
 id nav_pagamento
 id nav_viagem
 id nav_view
@@ -1676,6 +1686,11 @@ id text
 id text2
 id textEmail
 id textEspecieAnimal
+id textInputBairro
+id textInputCep
+id textInputCpf
+id textInputLocalidade
+id textInputLogradouro
 id textInputNomeAnimal
 id textInputNomeUsuario
 id textInputObservacao
@@ -1683,6 +1698,7 @@ id textInputObservacaoAnimal
 id textInputRacaAnimal
 id textInputSobrenome
 id textInputTelefone
+id textInputUf
 id textNomeAnimal
 id textNomeUsuario
 id textPorteAnimal
@@ -1727,6 +1743,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toolbar
+id toolbar_motorista
 id top
 id topPanel
 id top_level_view
@@ -1834,9 +1851,11 @@ layout activity_perfil_passageiro
 layout activity_splash
 layout activity_teste_perfil_motorista
 layout adapter_lista_animais
+layout app_bar_perfil_motorista
 layout app_bar_perfil_passageiro
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
+layout content_perfil_motorista
 layout content_perfil_passageiro
 layout content_viagem
 layout custom_dialog
@@ -1910,7 +1929,9 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+menu activity_perfil_motorista_drawer
 menu activity_perfil_passageiro_drawer
+menu perfil_motorista
 menu perfil_passageiro
 mipmap ic_launcher
 mipmap ic_launcher_round

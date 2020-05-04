@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity;
+import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
 import com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
     Button BTSignOut;
+    ImageView imgv ; //teste para tela motorista
 
     // Array de String para solicitar permissões
     public String [] permissoesNecessarias = new String []{
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         fbDB = FirebaseDatabase.getInstance();
         BTSignIn = findViewById(R.id.sign_in_button);
         BTSignOut = findViewById(R.id.sign_out_button);
+        imgv = findViewById(R.id.logoAppTravelPet); //atalho tela motorista
         setButtons();
 
     }
@@ -88,7 +92,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        imgv.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent it = new Intent(getApplicationContext(), PerfilMotoristaActivity.class);
+                startActivity(it);
+                return false;
+            }
+        }); //atalho tela motorista
     }
 
     public void ToastThis (String mensagem)
