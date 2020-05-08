@@ -32,7 +32,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controlller.perfil.motorista.PerfilMotoristaActivity"></activity>
+        <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity"></activity>
+        <activity android:name=".controlller.perfil.motorista.PerfilMotoristaActivity" />
         <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
         <activity android:name=".controlller.MainActivity" />
         <activity android:name=".controlller.perfil.motorista.TestePerfilMotoristaActivity" />

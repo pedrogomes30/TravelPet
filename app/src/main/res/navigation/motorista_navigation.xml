@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motorista_navigation"
+    app:startDestination="@id/mapMotoristaFragment">
+
+    <fragment
+        android:id="@+id/mapMotoristaFragment"
+        android:name="com.example.travelpet.controlller.perfil.motorista.ui.MapMotoristaFragment"
+        android:label="fragment_map_motorista"
+        tools:layout="@layout/fragment_map_motorista" />
+</navigation>

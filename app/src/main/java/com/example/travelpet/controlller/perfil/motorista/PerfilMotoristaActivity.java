@@ -13,11 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 
 public class PerfilMotoristaActivity extends AppCompatActivity {
 
-
-
     private DatabaseReference referencia;
     private FirebaseAuth autenticacao;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

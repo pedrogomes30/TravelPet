@@ -22,8 +22,13 @@
         animal e forneça segurança e agilidade neste tipo de transporte.</string>
 
 
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_viagem">ViagemActivity</string>
+    <string name="por_favor_preencha_os_campos_com_os_dados_de_seu_veiculo">Por favor preencha os campos com os dados de seu veículo</string>
+    <string name="marca_do_ve_culo">Marca do Veículo</string>
+    <string name="ano_ve_culo">Ano Veículo</string>
+    <string name="placa_do_ve_culo">Placa do Veículo</string>
+    <string name="modelo_do_veiculo">Modelo do Veículo</string>
+    <string name="crvl_do_ve_culo">CRVL do Veículo</string>
 </resources>
