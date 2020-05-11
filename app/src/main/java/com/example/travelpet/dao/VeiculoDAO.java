@@ -3,13 +3,13 @@ package com.example.travelpet.dao;
 import android.app.Activity;
 import android.net.Uri;
 import android.widget.Toast;
-
 import com.example.travelpet.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import androidx.annotation.NonNull;
@@ -18,7 +18,9 @@ public class VeiculoDAO {
 
     private Veiculo veiculo;
     int tipo;
-    String resultado;
+    String resultado,fotoURL;
+
+    public VeiculoDAO (){}
 
     public VeiculoDAO (Veiculo veiculo, int tipo )
     {
@@ -34,7 +36,7 @@ public class VeiculoDAO {
     }
 
     //Metodo para salvar o veículo no firebase
-    public String salvarVeiculoDatabase () {
+    public String salvarVeiculoRealtimeDatabase () {
 
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference veiculosRef = fireDB.getReference().child("veiculos").child(veiculo.getIdUsuario()).child(veiculo.getIdVeiculo());
@@ -64,25 +66,50 @@ public class VeiculoDAO {
         return resultado;
     }
 
-public String salvarVeiculoStorage ()
+
+    public String salvarVeiculo (Veiculo veic)
+    {
+        this.veiculo = veic;
+        veiculo.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+        veiculo.setIdVeiculo(gerarPushKeyIdVeiculo());
+        veiculo.setFotoCRVLurl(salvaImagemCRVL(veiculo.getFotoCrvl()));
+        String foto = salvarVeiculoRealtimeDatabase();
+
+        return foto;
+    }
+
+
+public String salvaImagemCRVL (byte[] foto )
 {
+    StorageReference reference = ConfiguracaoFirebase.getFirebaseStorage()
+            .child("veiculos")
+            .child(UsuarioFirebase.getEmailUsuario())
+            .child(veiculo.getIdVeiculo())
+            .child(veiculo.getIdVeiculo() + ".FOTO.CRVL.JPEG");
 
+    UploadTask uploadTask = reference.putBytes(foto);
+    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
+    {
+        @Override
+        public void onSuccess(UploadTask.TaskSnapshot snapshot)
+        {
+            Task<Uri> uri = snapshot.getStorage().getDownloadUrl();
+            while(!uri.isComplete());
+            //Uri url = uri.getResult();
+           // fotoURL = url.toString();
+            fotoURL = uri.getResult().toString();
 
-
+        }
+    }).addOnFailureListener(new OnFailureListener()
+    {
+        @Override
+        public void onFailure(@NonNull Exception e)
+        {
+            fotoURL = "vai que vai";
+        }
+    });
+    System.out.println(fotoURL);
+    return fotoURL;
 }
-
-
-public void salvaImagemFirebase (UploadTask.TaskSnapshot snapshot)
-{
-
-    Task<Uri> uri = snapshot.getStorage().getDownloadUrl();
-    while(!uri.isComplete());
-    Uri url = uri.getResult();
-    String fotoVeiculoUrl = url.toString();
-
-
-}
-
-
 
 }

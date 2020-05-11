@@ -8,7 +8,7 @@
     tools:context=".controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity">
 
     <TextView
-        android:id="@+id/textViewBoasVindas"
+        android:id="@+id/tvBoasVindasVeiculo"
         android:layout_width="366dp"
         android:layout_height="171dp"
         android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBoasVindas" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBoasVindasVeiculo" />
 
     <Button
         android:id="@+id/botaoMotorista"

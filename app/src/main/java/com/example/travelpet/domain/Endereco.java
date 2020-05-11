@@ -87,6 +87,7 @@ public class Endereco implements Parcelable {
     //      Metodo para salvar os dados do endereço do usuario no database do firebase
     public void salvarEnderecoDatabase(final Activity activityAtual, String tipoUsuario){
 
+        tipoUsuario = tipoUsuario.substring(0,1).toUpperCase()+tipoUsuario.substring(1);
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
 
         DatabaseReference enderecosRef = fireDB.getReference().child("enderecos"+tipoUsuario)

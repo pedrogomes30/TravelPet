@@ -118,7 +118,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
     public void botaoProximoMotoristaFoto(View view){
 
         if(fotoPerfil != null) {
-
+            System.out.println(fotoPerfil);
             Motorista motorista = new Motorista();
             motorista.setTipoUsuario(tipoUsuario);
             motorista.setNome(nome);
@@ -134,7 +134,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
             endereco.setLocalidade(localidade);
             endereco.setUf(uf);
 
-            Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaCrlvActivity.class);
+            Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaVeiculoActivity.class);
             intent.putExtra("motorista", motorista);
             intent.putExtra("endereco",endereco);
             startActivity(intent);

@@ -25,12 +25,12 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
 
 
     private String tipoUsuario, nome, sobrenome, telefone, cpf,
-                   cep, logradouro, bairro, localidade, uf;
+            cep, logradouro, bairro, localidade, uf;
     private String fluxoDados;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
     private TextInputEditText campoNome,campoSobrenome, campoTelefone, campoCpf,
-                              campoCep, campoLogradouro, campoBairro, campoLocalidade, campoUf;
+            campoCep, campoLogradouro, campoBairro, campoLocalidade, campoUf;
 
     private Util util;
 

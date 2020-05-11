@@ -110,6 +110,7 @@ public class Usuario implements Parcelable{
         // this = pois salvara todos os dados (id,nome,email,telefone,tipo)
         // excessão vai ser a senha pois já temos ela salva, e não e interessante
         // que se tenha uma senha que fique sendo visualizada sempre
+
         usuarios.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

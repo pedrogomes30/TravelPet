@@ -17,6 +17,7 @@ import com.example.travelpet.dao.UsuarioFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -31,10 +32,12 @@ public class Motorista extends Usuario implements Parcelable {
     private String fotoCnhUrl;
     private String fotoPerfilUrl;
     private String fotoCrvlUrl;
+
     // Construtor
     public Motorista() {
     }
 
+    @Exclude
     public byte[] getFotoCNH() {
         return fotoCNH;
     }
@@ -43,6 +46,7 @@ public class Motorista extends Usuario implements Parcelable {
         this.fotoCNH = fotoCNH;
     }
 
+    @Exclude
     public byte[] getFotoPerfil() {
         return fotoPerfil;
     }
@@ -51,6 +55,7 @@ public class Motorista extends Usuario implements Parcelable {
         this.fotoPerfil = fotoPerfil;
     }
 
+    @Exclude
     public byte[] getFotoCrlv() {
         return fotoCrlv;
     }
@@ -92,10 +97,8 @@ public class Motorista extends Usuario implements Parcelable {
     }
 
     // Método salva imagens no Storage, depois chama metodo pra salvar dados no storage
-    public static void salvarMotoristaStorage(final String nome, final String sobrenome, final String telefone,
-                                  final String tipoUsuario, final String statusCadastro, final byte[] fotoCNH,
-                                  final byte[] fotoPerfil, final byte[] fotoCrlv, final Activity activityAtual,
-                                  final Class<MainActivity> activitySeguinte){
+    public static void salvarMotoristaStorage(final Motorista motorista, final Activity activityAtual,
+                                              final Class<MainActivity> activitySeguinte){
 
 
         // Salvando FotoCnh no Storage
@@ -105,7 +108,7 @@ public class Motorista extends Usuario implements Parcelable {
                 .child(UsuarioFirebase.getEmailUsuario()+".FOTO.CNH.JPEG");
         // Método para realmente salvar no Firebase
         // putBytes = para os dados da imagem em bytes
-        UploadTask uploadTaskFotoCnh = imagemRefFotoCnh.putBytes (fotoCNH);
+        UploadTask uploadTaskFotoCnh = imagemRefFotoCnh.putBytes (motorista.getFotoCNH());
         uploadTaskFotoCnh.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -123,7 +126,7 @@ public class Motorista extends Usuario implements Parcelable {
                         .child(UsuarioFirebase.getEmailUsuario())
                         .child(UsuarioFirebase.getEmailUsuario()+".FOTO.PERFIL.JPEG");
 
-                UploadTask uploadTaskFotoPerfil = imagemRefFotoPerfil.putBytes (fotoPerfil);
+                UploadTask uploadTaskFotoPerfil = imagemRefFotoPerfil.putBytes (motorista.getFotoPerfil());
                 uploadTaskFotoPerfil.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -140,7 +143,7 @@ public class Motorista extends Usuario implements Parcelable {
                                 .child(UsuarioFirebase.getEmailUsuario())
                                 .child(UsuarioFirebase.getEmailUsuario()+".FOTO.CRVL.JPEG");
 
-                        UploadTask uploadTaskFotoCrvl= imagemRefFotoCrvl.putBytes (fotoCrlv);
+                        UploadTask uploadTaskFotoCrvl= imagemRefFotoCrvl.putBytes (motorista.getFotoCrlv());
                         uploadTaskFotoCrvl.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -152,24 +155,20 @@ public class Motorista extends Usuario implements Parcelable {
                                 String fotoCrvlUrl = url.toString();
 
                                 // Envia os dados para a classe
-                                Motorista motorista = new Motorista();
                                 motorista.setId(UsuarioFirebase.getIdentificadorUsuario());
                                 motorista.setEmail(UsuarioFirebase.getEmailUsuario());
-                                motorista.setNome(nome);
-                                motorista.setSobrenome(sobrenome);
-                                motorista.setTelefone(telefone);
-                                motorista.setTipoUsuario(tipoUsuario);
-                                motorista.setStatusCadastro(statusCadastro);
 
-                                motorista.setFotoCnhUrl(fotoCnhUrl);
-                                motorista.setFotoPerfilUrl(fotoPerfilUrl);
-                                motorista.setFotoCrvlUrl(fotoCrvlUrl);
 
                                 // Emite um local de salvamento so para passar como parametro no metodo salvar
                                 String localSalvamento = "CadastroMotoristaCrlvActivity";
 
                                 // Chama método para salvar os dados no Database
                                 motorista.salvarUsuarioDatabase(activityAtual, localSalvamento);
+
+
+                                //String resultado =  motoristaDAO.salvaMotorista(motorista);
+                                //Toast.makeText(, resultado, Toast.LENGTH_SHORT).show();
+
 
                                 // Depois que salva todos os dados chama essa caixa de dialogo
                                 AlertDialog.Builder builder = new AlertDialog.Builder(activityAtual);

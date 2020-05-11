@@ -3,12 +3,15 @@ package com.example.travelpet.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
 public class Veiculo implements Parcelable {
 
 
     //private String corVeiculo;
     //private String capacidadeAnimal;
 
+    private byte [] fotoCrvl;
     private String marcaVeiculo;
     private String modeloVeiculo;
     private String crvlVeiculo;
@@ -16,13 +19,13 @@ public class Veiculo implements Parcelable {
     private String placaVeiculo;
     private String idUsuario;
 
-    private String fotoCRVL;
+    private String fotoCRVLurl;
     private String idVeiculo;
 
     public Veiculo () {}
 
 
-    public String getIdUsuario(){return idUsuario; }
+    public String getIdUsuario(){ return idUsuario; }
 
     public void setIdUsuario (String idUsuario) {this.idUsuario = idUsuario ;}
 
@@ -50,47 +53,52 @@ public class Veiculo implements Parcelable {
 
     public void setCrvlVeiculo(String crvlVeiculo) {this.crvlVeiculo = crvlVeiculo;}
 
-    public String getFotoCRVL() {return fotoCRVL;}
+    @Exclude
+    public byte[] getFotoCrvl() { return fotoCrvl;}
 
-    public void setFotoCRVL(String fotoCRVL) {this.fotoCRVL = fotoCRVL;}
+    public void setFotoCrvl(byte[] fotoCrvl) { this.fotoCrvl = fotoCrvl; }
+
+    public String getFotoCRVLurl() { return fotoCRVLurl; }
+
+    public void setFotoCRVLurl(String fotoCRVLurl) { this.fotoCRVLurl = fotoCRVLurl; }
 
     //public String getCapacidadeAnimal() {return capacidadeAnimal;}
 
-   //public void setCapacidadeAnimal(String capacidadeAnimal) {this.capacidadeAnimal = capacidadeAnimal;}
+    //public void setCapacidadeAnimal(String capacidadeAnimal) {this.capacidadeAnimal = capacidadeAnimal;}
 
     //public String getCorVeiculo() {return corVeiculo;}
 
     //public void setCorVeiculo(String corVeiculo) {this.corVeiculo = corVeiculo;}
 
-    protected Veiculo(Parcel in) {
-        idUsuario = in.readString();
-        idVeiculo = in.readString();
-        marcaVeiculo = in.readString();
-        modeloVeiculo = in.readString();
-        anoVeiculo = in.readString();
-        placaVeiculo = in.readString();
-        crvlVeiculo = in.readString();
-        fotoCRVL = in.readString();
-        //corVeiculo = in.readString();
-        //capacidadeAnimal = in.readString();
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(idUsuario);
-        parcel.writeString(idVeiculo);
+        parcel.writeByteArray(fotoCrvl);
         parcel.writeString(marcaVeiculo);
         parcel.writeString(modeloVeiculo);
+        parcel.writeString(crvlVeiculo);
         parcel.writeString(anoVeiculo);
         parcel.writeString(placaVeiculo);
-        parcel.writeString(crvlVeiculo);
-        parcel.writeString(fotoCRVL);
-        //parcel.writeString(corVeiculo);
-        //parcel.writeString(capacidadeAnimal);
+        parcel.writeString(idUsuario);
+        parcel.writeString(fotoCRVLurl);
+        parcel.writeString(idVeiculo);
     }
 
-    @Override
-    public int describeContents() {return 0;}
+    protected Veiculo(Parcel in) {
+        fotoCrvl = in.createByteArray();
+        marcaVeiculo = in.readString();
+        modeloVeiculo = in.readString();
+        crvlVeiculo = in.readString();
+        anoVeiculo = in.readString();
+        placaVeiculo = in.readString();
+        idUsuario = in.readString();
+        fotoCRVLurl = in.readString();
+        idVeiculo = in.readString();
+    }
 
     public static final Creator<Veiculo> CREATOR = new Creator<Veiculo>() {
         @Override
@@ -103,5 +111,10 @@ public class Veiculo implements Parcelable {
             return new Veiculo[size];
         }
     };
+
+
+
+
+
 
 }
