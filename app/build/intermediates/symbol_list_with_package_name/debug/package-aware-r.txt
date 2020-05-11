@@ -1413,6 +1413,7 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
+id btProximoVeiculo
 id btn_holder
 id buttonChamarMotorista
 id buttonEnviarCNH
@@ -1494,6 +1495,11 @@ id end
 id end_padder
 id enterAlways
 id enterAlwaysCollapsed
+id etAnoVeiculo
+id etCRVLveiculo
+id etMarcaVeiculo
+id etModeloVeiculo
+id etPlacaVeiculo
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1558,6 +1564,7 @@ id logoAppTravelPet
 id logoTravelPet
 id main_tos_and_pp
 id mapMotorista
+id mapMotoristaFragment
 id masked
 id media_actions
 id menuSair
@@ -1567,6 +1574,7 @@ id mini
 id mobile_navigation
 id moto_drawer_layout
 id moto_nav_view
+id motorista_navigation
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
@@ -1737,6 +1745,11 @@ id text_tools
 id textinput_counter
 id textinput_error
 id textinput_helper_text
+id tiAnoVeiculo
+id tiCRVLveiculo
+id tiMarcaVeiculo
+id tiModeloVeiculo
+id tiPlacaVeiculo
 id ticker
 id time
 id title
@@ -1756,6 +1769,7 @@ id transition_scene_layoutid_cache
 id transition_transform
 id trouble_signing_in
 id trouble_signing_in_possible_fixes
+id tvBoasVindasVeiculo
 id tvDropDownLayout
 id tvSpinnerLayout
 id unchecked
@@ -1841,6 +1855,7 @@ layout activity_cadastro_motorista_cnh
 layout activity_cadastro_motorista_crlv
 layout activity_cadastro_motorista_foto
 layout activity_cadastro_motorista_termo
+layout activity_cadastro_motorista_veiculo
 layout activity_cadastro_usuario_dados
 layout activity_cadastro_usuario_tipo
 layout activity_editar_animal
@@ -1936,6 +1951,7 @@ menu perfil_passageiro
 mipmap ic_launcher
 mipmap ic_launcher_round
 navigation mobile_navigation
+navigation motorista_navigation
 plurals fui_error_weak_password
 string abc_action_bar_home_description
 string abc_action_bar_up_description
@@ -1973,6 +1989,7 @@ string about_play_store
 string about_twitter
 string about_website
 string about_youtube
+string ano_ve_culo
 string app_name
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
@@ -1996,6 +2013,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string crvl_do_ve_culo
 string default_web_client_id
 string descricao
 string fab_transformation_scrim_behavior
@@ -2105,6 +2123,7 @@ string google_maps_key
 string google_storage_bucket
 string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
+string marca_do_ve_culo
 string menu_configuracao
 string menu_contato
 string menu_info
@@ -2112,6 +2131,7 @@ string menu_meus_animais
 string menu_pagamento
 string menu_sair
 string menu_viagem
+string modelo_do_veiculo
 string mtrl_chip_close_icon_content_description
 string nav_app_bar_navigate_up_description
 string nav_app_bar_open_drawer_description
@@ -2125,6 +2145,8 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string placa_do_ve_culo
+string por_favor_preencha_os_campos_com_os_dados_de_seu_veiculo
 string project_id
 string search_menu_title
 string status_bar_notification_info_overflow

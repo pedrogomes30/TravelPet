@@ -52,6 +52,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity" />
         <activity android:name="com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
         <activity android:name="com.example.travelpet.controlller.MainActivity" />
