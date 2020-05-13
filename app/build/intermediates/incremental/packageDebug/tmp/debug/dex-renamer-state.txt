@@ -1,4 +1,4 @@
-#Mon May 11 01:04:55 BRT 2020
+#Wed May 13 14:52:43 BRT 2020
 base.0=C\:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
