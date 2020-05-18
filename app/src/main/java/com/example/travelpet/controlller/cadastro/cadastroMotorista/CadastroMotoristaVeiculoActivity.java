@@ -16,13 +16,12 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
 
-    //private String
-
     private TextInputEditText modeloVeiculo, marcaVeiculo, anoVeiculo, placaVeiculo, crvlVeiculo;
     private String modeloV, marcaV, anoV, placaV, crvlV;
-    Button btProximo;
-    Motorista motorista;
-    Endereco endereco;
+    private Button btProximo;
+
+    private Motorista motorista;
+    private Endereco endereco;
 
 
     @Override
@@ -74,9 +73,6 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
                     intent.putExtra("veiculo",veiculo);
                     startActivity(intent);
                 }
-
-
-
             }
         });
     }

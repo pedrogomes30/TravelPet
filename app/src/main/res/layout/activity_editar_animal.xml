@@ -38,12 +38,12 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <ImageButton
-            android:id="@+id/imageButtonCameraAnimal"
+            android:id="@+id/botaoCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buttonCameraAnimal"
+            android:onClick="botaoCamera"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewFotoAnimal"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonGaleriaAnimal"
+            app:layout_constraintEnd_toStartOf="@+id/botaoGaleria"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
@@ -51,14 +51,14 @@
             app:srcCompat="@drawable/ic_camera_cinza_24dp" />
 
         <ImageButton
-            android:id="@+id/imageButtonGaleriaAnimal"
+            android:id="@+id/botaoGaleria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buttonGaleriaAnimal"
+            android:onClick="botaoGaleria"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewFotoAnimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageButtonCameraAnimal"
+            app:layout_constraintStart_toEndOf="@+id/botaoCamera"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
             app:layout_constraintVertical_bias="0.897"
             app:srcCompat="@drawable/ic_galeria_cinza_24dp" />
@@ -196,7 +196,7 @@
             android:fontFamily="@font/fredoka_one_regular"
             android:text="Porte:"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/botaoSalvarAnimal"
+            app:layout_constraintBottom_toTopOf="@+id/botaoSalvar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRaca"
             app:layout_constraintVertical_bias="0.0" />
@@ -223,7 +223,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/edit_text_branco_seletor"
-            app:layout_constraintBottom_toTopOf="@+id/botaoSalvarAnimal"
+            app:layout_constraintBottom_toTopOf="@+id/botaoSalvar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -242,7 +242,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/botaoSalvarAnimal"
+            android:id="@+id/botaoSalvar"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -250,16 +250,16 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:background="@drawable/button_laranja_seletor"
-            android:onClick="botaoSalvarAnimal"
+            android:onClick="botaoSalvar"
             android:text="Salvar"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/botaoExcluirAnimal"
+            app:layout_constraintBottom_toTopOf="@+id/botaoExcluir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/botaoExcluirAnimal"
+            android:id="@+id/botaoExcluir"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -267,7 +267,7 @@
             android:layout_marginBottom="32dp"
             android:layout_weight="1"
             android:background="@drawable/button_azul_seletor"
-            android:onClick="botaoExcluirAnimal"
+            android:onClick="botaoExcluir"
             android:text="Excluir"
             android:textColor="#FFFFFF"
             android:textSize="18sp"

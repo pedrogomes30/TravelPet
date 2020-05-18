@@ -21,6 +21,7 @@ import com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaAc
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.Permissao;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Usuario;
@@ -139,24 +140,22 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                    UsuarioFirebase usuarioFirebase = new UsuarioFirebase();
+                    //UsuarioFirebase usuarioFirebase = new UsuarioFirebase();
                     // Método para Recuperar dados do usuario do database
-                    DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
+                    //DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
+                    DatabaseReference motoristaRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                             .child("motorista")
-                            .child(usuarioFirebase.getIdentificadorUsuario());
-                    usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+                    motoristaRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             // dataSnapshot.exists()= verifica se existe o usuário no database
                             if(dataSnapshot.exists()) {
 
-                                Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                                String tipoUsuario = usuario.getTipoUsuario();
-
+                                Motorista motorista = dataSnapshot.getValue(Motorista.class);
+                                String tipoUsuario = motorista.getTipoUsuario();
+                                String statusCadastroMotorista = motorista.getStatusCadastro();
                                 if (tipoUsuario.equals("motorista")) {
-
-                                    Motorista motorista = dataSnapshot.getValue(Motorista.class);
-                                    String statusCadastroMotorista = motorista.getStatusCadastro();
 
                                     if (statusCadastroMotorista.equals("Em análise")){
 
@@ -203,17 +202,18 @@ public class MainActivity extends AppCompatActivity {
 
                                 }*/
                             }else{
-                                UsuarioFirebase usuarioFirebaseDonoAnimal = new UsuarioFirebase();
+                                //UsuarioFirebase usuarioFirebaseDonoAnimal = new UsuarioFirebase();
                                 // Método para Recuperar dados do usuario do database
-                                DatabaseReference usuariosRefDonoAnimal = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
+                                //DatabaseReference usuariosRefDonoAnimal = ConfiguracaoFirebase.getFirebaseDatabase().getReference()
+                                DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                                         .child("donoAnimal")
-                                        .child(usuarioFirebaseDonoAnimal.getIdentificadorUsuario());
-                                usuariosRefDonoAnimal.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+                                donoAnimalRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if(dataSnapshot.exists()) {
 
-                                            startActivity(new Intent(getApplicationContext(), PerfilPassageiroActivity.class));
+                                            startActivity(new Intent(MainActivity.this, PerfilPassageiroActivity.class));
                                             finish();
 
                                         }else{

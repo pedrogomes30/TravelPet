@@ -25,6 +25,8 @@ import com.example.travelpet.R;
 import com.example.travelpet.controlller.MainActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,8 +44,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    private DatabaseReference referencia;
-    private FirebaseAuth autenticacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,56 +66,38 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Configurações iniciais
-        referencia = FirebaseDatabase.getInstance().getReference();
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
 
-        final ImageView imageView = view.findViewById(R.id.imageViewPerfil);
-        final TextView  textNomeUsuario = view.findViewById(R.id.textNomeUsuario);
-        final TextView textEmail = view.findViewById(R.id.textEmail);
+        final ImageView campoFotoUsuario = view.findViewById(R.id.imageViewPerfil);
+        final TextView  campoNomeUsuario = view.findViewById(R.id.textNomeUsuario);
+        final TextView  campoEmailUsuario = view.findViewById(R.id.textEmail);
 
-        DatabaseReference usuarios = referencia.child( "donoAnimal" ).child(UsuarioFirebase.getIdentificadorUsuario());
-
-        usuarios.addValueEventListener(new ValueEventListener() {
+        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child( "donoAnimal")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        donoAnimalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Usuario dadosUsuario = dataSnapshot.getValue(Usuario.class);
+                DonoAnimal donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
                 // Recupera dados do usuário no database para exibir no NavigationDrawer
-                String fotoUrl              =   dadosUsuario.getFotoUsuarioUrl();
-                String nomeUsuario          =   dadosUsuario.getNome();
-                String sobrenomeUsuario     =   dadosUsuario.getSobrenome();
-                String emailUsuario         =   dadosUsuario.getEmail();
+                String fotoPerfilUrl      =   donoAnimal.getFotoPerfilUrl();
+                String nomeUsuario        =   donoAnimal.getNome();
+                String sobrenomeUsuario   =   donoAnimal.getSobrenome();
+                String emailUsuario       =   donoAnimal.getEmail();
 
-                textNomeUsuario.setText(nomeUsuario+" "+sobrenomeUsuario);
-                textEmail.setText(emailUsuario);
+                campoNomeUsuario.setText(nomeUsuario+" "+sobrenomeUsuario);
+                campoEmailUsuario.setText(emailUsuario);
 
-                // Recupera a Referência do user do usuario atual
-                FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
-                // Recupera a foto de perfil da conta do gmail
-                Uri fotoUsuarioEmail = usuario.getPhotoUrl();
-
-                // Se não tiver foto no database e não tiver foto no gmail, executa
-                if(fotoUrl.equals("vazio")&& fotoUsuarioEmail== null){
-                    // envia a imagem padrão para o perfil
-                    imageView.setImageResource(R.drawable.iconperfiloficial);
-
-                }else if(!fotoUrl.equals("vazio")){ // Envia a a foto do database
-                    Uri fotoUsuarioUrl = Uri.parse(fotoUrl);
+                if(!fotoPerfilUrl.equals("")){
+                    Uri fotoUsuarioUri = Uri.parse(fotoPerfilUrl);
                     Glide.with(PerfilPassageiroActivity.this)
-                            .load( fotoUsuarioUrl )
-                            // .into = define qual imageView irá utilizar
-                            .into( imageView );
-
-                }else { // Envia a a foto da conta do gmail
-                        Glide.with(PerfilPassageiroActivity.this)
-                                .load( fotoUsuarioEmail )
-                                // .into = define qual imageView irá utilizar
-                                .into( imageView );
-
+                            .load( fotoPerfilUrl )
+                            .into( campoFotoUsuario);
+                }else{
+                    campoFotoUsuario.setImageResource(R.drawable.iconperfiloficial);
                 }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

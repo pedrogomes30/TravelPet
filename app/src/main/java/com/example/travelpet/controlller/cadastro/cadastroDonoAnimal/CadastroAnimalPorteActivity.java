@@ -1,4 +1,4 @@
-package com.example.travelpet.controlller.cadastro.cadastroAnimal;
+package com.example.travelpet.controlller.cadastro.cadastroDonoAnimal;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,81 +15,35 @@ import com.example.travelpet.model.DonoAnimal;
 
 public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
-    // Variaveis usadas para armazenar dados da Activity CadastroAnimalEspecieRaca
-    private String tipoUsuario, nome, sobrenome, telefone, cpf,
-                   cep, logradouro, bairro, localidade,uf,
-                   nomeAnimal, especieAnimal, racaAnimal;
-
-    private String fluxoDados;
+    private DonoAnimal donoAnimal;
+    private Endereco endereco;
+    private Animal animal;
 
     private RadioGroup radioGroupPorteAnimal;
-
     private String porteAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_animal_porte);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         Intent intent = getIntent();
-        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
-        Endereco endereco = intent.getParcelableExtra("endereco");
-        Animal animal = intent.getParcelableExtra("animal");
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+        animal = intent.getParcelableExtra("animal");
 
-        // Dados DonoAnimal
-        tipoUsuario  =   donoAnimal.getTipoUsuario();
-        nome         =   donoAnimal.getNome();
-        sobrenome    =   donoAnimal.getSobrenome();
-        telefone     =   donoAnimal.getTelefone();
-        cpf          =   donoAnimal.getCpf();
-        fluxoDados   =   donoAnimal.getFluxoDados();
-
-        // Dados Endereco
-        cep          =   endereco.getCep();
-        logradouro   =   endereco.getLogradouro();
-        bairro       =   endereco.getBairro();
-        localidade   =   endereco.getLocalidade();
-        uf           =   endereco.getUf();
-
-        // Dados Animal
-        nomeAnimal          =   animal.getNomeAnimal();
-        especieAnimal       =   animal.getEspecieAnimal();
-        racaAnimal          =   animal.getRacaAnimal();
-
-        // Referência o id do radioGroup do xml, com a variavel tipo radioGroup
         radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
 
-        // Chama o método verifica tipo porte
         verificaTipoPorte(porteAnimal);
 
     }
 
-    public void botaoProximoAnimalPorte(View view) {
+    public void botaoProximo(View view) {
 
         if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
                 || porteAnimal == "Grande - Acima de 50cm") {
 
-            DonoAnimal donoAnimal = new DonoAnimal();
-            donoAnimal.setTipoUsuario(tipoUsuario);
-            donoAnimal.setNome(nome);
-            donoAnimal.setSobrenome(sobrenome);
-            donoAnimal.setTelefone(telefone);
-            donoAnimal.setCpf(cpf);
-            donoAnimal.setFluxoDados(fluxoDados);
-
-            Endereco endereco = new Endereco();
-            endereco.setCep(cep);
-            endereco.setLogradouro(logradouro);
-            endereco.setBairro(bairro);
-            endereco.setLocalidade(localidade);
-            endereco.setUf(uf);
-
-            Animal animal = new Animal();
-            animal.setNomeAnimal(nomeAnimal);
-            animal.setEspecieAnimal(especieAnimal);
-            animal.setRacaAnimal(racaAnimal);
             animal.setPorteAnimal(porteAnimal);
 
             Intent intent = new Intent(CadastroAnimalPorteActivity.this, CadastroAnimalObservacaoActivity.class);
@@ -124,10 +78,10 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
                 }else {
                     porteAnimal = null;
                 }
-
             }
         });
     }
+
     @Override
     public void finish() {
         super.finish();

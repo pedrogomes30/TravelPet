@@ -1,4 +1,4 @@
-package com.example.travelpet.controlller.cadastro.cadastroAnimal;
+package com.example.travelpet.controlller.cadastro.cadastroDonoAnimal;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,12 +29,9 @@ import java.util.ArrayList;
 
 public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    // Variaveis usadas para armazenar dados da Activity CadastroAnimalNome
-    private String  tipoUsuario, nome, sobrenome, telefone,cpf,
-                    cep, logradouro, bairro, localidade,uf,
-                    nomeAnimal;
-    // armazena de onde ta vindo o fluxo de dados
-    private String fluxoDados;
+    private DonoAnimal donoAnimal;
+    private Endereco endereco;
+    private Animal animal;
 
     // Spinner
     private Spinner spinnerEspecieAnimal;
@@ -45,39 +42,19 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
     // AutoComplete
     private String racaAnimal;
     private AutoCompleteTextView campoRacaAnimal;
-    private DatabaseReference usuariosRef;
     ArrayList<String> listaRacaAnimal = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_animal_especie_raca);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         // Recuperando dados passados da Activity <CadastroNomeAnimal
         Intent intent = getIntent();
-        DonoAnimal donoAnimal = intent.getParcelableExtra("donoAnimal");
-        Endereco endereco = intent.getParcelableExtra("endereco");
-        Animal animal = intent.getParcelableExtra("animal");
-
-        // Dados DonoAnimal
-        tipoUsuario  =   donoAnimal.getTipoUsuario();
-        nome         =   donoAnimal.getNome();
-        sobrenome    =   donoAnimal.getSobrenome();
-        telefone     =   donoAnimal.getTelefone();
-        cpf          =   donoAnimal.getCpf();
-        fluxoDados   =   donoAnimal.getFluxoDados();
-
-        // Dados Adress
-        cep          =   endereco.getCep();
-        logradouro   =   endereco.getLogradouro();
-        bairro       =   endereco.getBairro();
-        localidade   =   endereco.getLocalidade();
-        uf           =   endereco.getUf();
-
-        // Dados Animal
-        nomeAnimal = animal.getNomeAnimal();
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+        animal = intent.getParcelableExtra("animal");
 
         // referenciando spinner, do xml
         spinnerEspecieAnimal = findViewById(R.id.spinnerEspecieAnimal);
@@ -91,7 +68,6 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
 
         // referenciando campo AutoComplete, do xml
         campoRacaAnimal = findViewById(R.id.autoCompleteRacaAnimal);
-
 
     }
 
@@ -122,6 +98,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         if(especieAnimal.equals("réptil")){
             especieAnimal = "reptil";
         }
+
         listarRacas(especieAnimal);
     }
 
@@ -136,43 +113,30 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         listaRacaAnimal.clear();
 
         //              Colocando os nomes das raças do banco de dados em uma lista de acordo com a especia escolhida
-        usuariosRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimal);
-        usuariosRef.addChildEventListener(new ChildEventListener() {
+        DatabaseReference especieRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                                        .child("racaAnimal")
+                                        .child(especieAnimal);
 
+        especieRef.addChildEventListener(new ChildEventListener() {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                 // Pegando os dados do BD através da classe RacaAnimal
                 RacaAnimal racasAnimais = dataSnapshot.getValue(RacaAnimal.class);
                 // Add cada nome das raças na lista (listaRacaAnimal
                 listaRacaAnimal.add(racasAnimais.getNomeRacaAnimal());
 
             }
-
-
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-
-            public void onChildRemoved( DataSnapshot dataSnapshot) {
-
-            }
-
-
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-
-            public void onCancelled( DatabaseError databaseError) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+            public void onChildRemoved( DataSnapshot dataSnapshot) {}
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+            public void onCancelled( DatabaseError databaseError) {}
         });
         // Montando Array com a lista de raça do BD
         ArrayAdapter<String> adapterRaca = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaRacaAnimal);
         campoRacaAnimal.setAdapter(adapterRaca);
     }
 
-    public void botaoProximoAnimalEspecieRaca(View view){
+    public void botaoProximo(View view){
 
         racaAnimal = campoRacaAnimal.getText().toString();
 
@@ -183,23 +147,6 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
                     especieAnimal = "réptil";
                 }
 
-                DonoAnimal donoAnimal = new DonoAnimal();
-                donoAnimal.setTipoUsuario(tipoUsuario);
-                donoAnimal.setNome(nome);
-                donoAnimal.setSobrenome(sobrenome);
-                donoAnimal.setTelefone(telefone);
-                donoAnimal.setCpf(cpf);
-                donoAnimal.setFluxoDados(fluxoDados);
-
-                Endereco endereco = new Endereco();
-                endereco.setCep(cep);
-                endereco.setLogradouro(logradouro);
-                endereco.setBairro(bairro);
-                endereco.setLocalidade(localidade);
-                endereco.setUf(uf);
-
-                Animal animal = new Animal();
-                animal.setNomeAnimal(nomeAnimal);
                 animal.setEspecieAnimal(especieAnimal);
                 animal.setRacaAnimal(racaAnimal);
 
@@ -208,6 +155,7 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
                 intent.putExtra ("endereco",endereco);
                 intent.putExtra ("animal",animal);
                 startActivity(intent);
+
             }else{
                 Toast.makeText(CadastroAnimalEspecieRacaActivity.this,
                         "Digite a raça do seu animal",

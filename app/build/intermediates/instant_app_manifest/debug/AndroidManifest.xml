@@ -54,7 +54,7 @@
         android:theme="@style/AppTheme" >
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity" />
         <activity android:name="com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity" />
         <activity android:name="com.example.travelpet.controlller.MainActivity" />
         <activity android:name="com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity" />
         <!--
@@ -72,7 +72,7 @@
         <activity
             android:name="com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
             android:parentActivityName="com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalFotoActivity" />
         <activity
             android:name="com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -80,9 +80,9 @@
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaCnhActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalPorteActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalEspecieRacaActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalPorteActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalEspecieRacaActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
         <activity android:name="com.example.travelpet.controlller.SplashActivity" >

@@ -11,6 +11,7 @@ import com.example.travelpet.model.Usuario;
 
 public class CadastroUsuarioTipoActivity extends AppCompatActivity {
 
+    private Usuario usuario;
     private String tipoUsuario;
 
     @Override
@@ -18,13 +19,14 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario_tipo);
 
+        usuario = new Usuario();
+
     }
 
     public void botaoPassageiro( View view ){
 
         tipoUsuario = "donoAnimal";
 
-        Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
 
         Intent intent = new Intent(CadastroUsuarioTipoActivity.this, CadastroUsuarioDadosActivity.class);
@@ -37,7 +39,6 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
 
         tipoUsuario = "motorista";
 
-        Usuario usuario = new Usuario();
         usuario.setTipoUsuario(tipoUsuario);
 
         Intent intent = new Intent(CadastroUsuarioTipoActivity.this, CadastroUsuarioDadosActivity.class);

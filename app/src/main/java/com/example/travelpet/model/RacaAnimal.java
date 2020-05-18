@@ -8,8 +8,7 @@ public class RacaAnimal implements Parcelable{
 
     private String nomeRacaAnimal;
 
-    public RacaAnimal() {
-    }
+    public RacaAnimal() {}
 
     public String getNomeRacaAnimal() {
         return nomeRacaAnimal;
@@ -22,13 +21,12 @@ public class RacaAnimal implements Parcelable{
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected RacaAnimal(Parcel in) {
-        //idRacaAnimal = in.readString();
+
         nomeRacaAnimal = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        //dest.writeString(idRacaAnimal);
         dest.writeString(nomeRacaAnimal);
     }
 

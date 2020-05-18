@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity"></activity>
         <activity android:name=".controlller.perfil.motorista.PerfilMotoristaActivity" />
-        <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity" />
+        <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity" />
         <activity android:name=".controlller.MainActivity" />
         <activity android:name=".controlller.perfil.motorista.TestePerfilMotoristaActivity" />
         <!--
@@ -52,7 +52,7 @@
         <activity
             android:name=".controlller.perfil.passageiro.ui.meusAnimais.EditarAnimalActivity"
             android:parentActivityName=".controlller.perfil.passageiro.PerfilPassageiroActivity" />
-        <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalFotoActivity" />
+        <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalFotoActivity" />
         <activity
             android:name=".controlller.perfil.passageiro.PerfilPassageiroActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -60,9 +60,9 @@
         <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity" />
         <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity" />
         <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaCnhActivity" />
-        <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalPorteActivity" />
-        <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalEspecieRacaActivity" />
-        <activity android:name=".controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity" />
+        <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalPorteActivity" />
+        <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalEspecieRacaActivity" />
+        <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity" />
         <activity android:name=".controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
         <activity android:name=".controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
         <activity android:name=".controlller.SplashActivity">

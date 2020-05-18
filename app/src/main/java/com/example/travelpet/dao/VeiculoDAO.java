@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -79,7 +80,7 @@ public class VeiculoDAO
     public String salvarVeiculo (Veiculo veic)
     {
         this.veiculo = veic;
-        veiculo.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
+        veiculo.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         veiculo.setIdVeiculo(gerarPushKeyIdVeiculo());
         veiculo.setFotoCRVLurl(salvaImagemCRVL(veiculo.getFotoCrvl()));
         String foto = salvarVeiculoRealtimeDatabase(veiculo);
@@ -91,7 +92,7 @@ public class VeiculoDAO
     {
         StorageReference reference = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("veiculos")
-                .child(UsuarioFirebase.getEmailUsuario())
+                .child(veiculo.getIdUsuario())
                 .child(veiculo.getIdVeiculo())
                 .child(veiculo.getIdVeiculo() + ".FOTO.CRVL.JPEG");
 
@@ -121,7 +122,9 @@ public class VeiculoDAO
     public ArrayList<Veiculo> receberVeiculos ()
     {
         veiculos = new ArrayList<Veiculo>();
-        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("veiculos").child(UsuarioFirebase.getIdentificadorUsuario());
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("veiculos")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         referencia.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -146,7 +149,9 @@ public class VeiculoDAO
     public int contarVeiculos ()
     {
 
-        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("veiculos").child(UsuarioFirebase.getIdentificadorUsuario());
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("veiculos")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         referencia.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -184,7 +189,7 @@ public class VeiculoDAO
 
         StorageReference veiculoStorage = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("veiculos")
-                .child(UsuarioFirebase.getEmailUsuario())
+                .child(veiculo.getIdUsuario())
                 .child(veiculo.getIdVeiculo())
                 .child(veiculo.getIdVeiculo()+".FOTO.CRVL.JPEG");
 

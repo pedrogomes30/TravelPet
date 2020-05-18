@@ -84,24 +84,23 @@ public class Endereco implements Parcelable {
         this.uf = uf;
     }
 
-    //      Metodo para salvar os dados do endereço do usuario no database do firebase
-    public void salvarEnderecoDatabase(final Activity activityAtual, String tipoUsuario){
-
+    /*     Metodo para salvar os dados do endereço do usuario no database do firebase
+    public void salvarEnderecoDatabase(String tipoUsuario){
+        // Transformando a primeira letra do "tipoUsuario" em maiuscula
+        // para usar no metodo de salvarEnderecoDatabase
         tipoUsuario = tipoUsuario.substring(0,1).toUpperCase()+tipoUsuario.substring(1);
-        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
 
+        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference enderecosRef = fireDB.getReference().child("enderecos"+tipoUsuario)
                                                               .child(UsuarioFirebase.getIdentificadorUsuario());
 
         enderecosRef.setValue(this).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(activityAtual,
-                        "Erro ao salvar endereço do usuário",
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
-    }
+    } */
 
     // Métodos Necessarios para usar a Interface Parcelable
     public Endereco(Parcel in) {

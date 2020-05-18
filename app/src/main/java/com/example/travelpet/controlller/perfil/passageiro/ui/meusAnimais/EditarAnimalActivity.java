@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +27,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.adapter.CustomAdapterEditarAnimal;
 import com.example.travelpet.adapter.CustomItem;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
+import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.Animal;
@@ -44,131 +46,105 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditarAnimalActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    // Puxar dados dados Firebase
-    private String emailUsuario;
-    private String idAnimal,fotoAnimalUrl, nomeAnimal, especieAnimal,
-            racaAnimal, porteAnimal, observacaoAnimal;
+    private Animal animal;
+    private AnimalDAO animalDAO;
 
-    // Váriaveis usados na imagem do animal
-    private CircleImageView imageViewFotoAnimal;
-    private String fotoAnimalUri;
-    // Váriavel para verificação, se a foto do Animal foi alterada
+    private String nomeAnimal, especieAnimal, racaAnimal,
+                   porteAnimal, observacaoAnimal, fotoAnimalUrl;
+
+    private String nomeAnimalEdit, especieAnimalEdit, racaAnimalEdit,
+                   porteAnimalEdit, observacaoAnimalEdit;
+
+    // Foto Animal
+    private CircleImageView campoFotoAnimal;
     private Bitmap imagem = null;
     private byte[] fotoAnimal;
-    private StorageReference storageReference;
-
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
     private static final int SELECAO_GALERIA = 200;
 
-    // Nome Animal
-    private EditText editTextNomeAnimal;
-    private String nomeAnimalEdit;
+
+    private EditText campotNomeAnimal, campotObservacaoAnimal;
 
     // Spinner Especie
-    private Spinner spinnerEspecielAnimal;
-    private String especieAnimalEdit;
+    private Spinner campoSpinnerEspecielAnimal;
     ArrayList<CustomItem> customList;
 
     // Raça Animal
-    private AutoCompleteTextView autoCompleteRacaAnimal;
-    private  String racaAnimalEdit;
+    private AutoCompleteTextView campoAutoCompleteRacaAnimal;
     ArrayList<String> listaRacaAnimal = new ArrayList<>();
 
     // Spinner Porte
-    private Spinner spinnerPorteAnimal;
-    private String porteAnimalEdit;
+    private Spinner campoSpinnerPorteAnimal;
     private List<String> listaPorteAnimal = new ArrayList<String>();
-
-    // Observação Animal
-    private EditText editTextObservacaoAnimal;
-    private String observacaoAnimalEdit;
-
-    private Animal animalDestinatario;
-
-    // Variáveis para recolher dados editados
-
-    // Variável utilizada no processo de excluir Animal
-    DatabaseReference databaseReference;
-    private DatabaseReference databaseReferenceListaAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_animal);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Editar Animal");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        // Recupera referência do database
-        databaseReference = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
-        // Recupera a referência do Storage
-        storageReference    =   ConfiguracaoFirebase.getFirebaseStorage();
-
-        emailUsuario        =   UsuarioFirebase.getEmailUsuario();
+        animalDAO = new AnimalDAO();
 
         // Relacionando os componentes do xml
-        imageViewFotoAnimal         =   findViewById(R.id.imageViewFotoAnimal);
-        editTextNomeAnimal          =   findViewById(R.id.editTextNomeAnimal);
-        spinnerEspecielAnimal       =   findViewById(R.id.spinnerEspecieAnimal);
-        autoCompleteRacaAnimal      =   findViewById(R.id.autoCompleteRacaAnimal);
-        spinnerPorteAnimal          =   findViewById(R.id.spinnerPorteAnimal);
-        editTextObservacaoAnimal    =   findViewById(R.id.editTextObservacaoAnimal);
+        campoFotoAnimal             =   findViewById(R.id.imageViewFotoAnimal);
+        campotNomeAnimal            =   findViewById(R.id.editTextNomeAnimal);
+        campoSpinnerEspecielAnimal  =   findViewById(R.id.spinnerEspecieAnimal);
+        campoAutoCompleteRacaAnimal =   findViewById(R.id.autoCompleteRacaAnimal);
+        campoSpinnerPorteAnimal     =   findViewById(R.id.spinnerPorteAnimal);
+        campotObservacaoAnimal      =   findViewById(R.id.editTextObservacaoAnimal);
 
 
         // Recuperar dados do animalDestinatario / escolhido
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
 
-            animalDestinatario = (Animal) bundle.getParcelable("animalSelecionado");
+            animal = bundle.getParcelable("animalSelecionado");
+
+            //animalDestinatario = (Animal) bundle.getParcelable("animalSelecionado");
 
             // Recebendo os dados do animal escolhido na ListaAnimaisFragmet
-            idAnimal = animalDestinatario.getIdAnimal();
-            fotoAnimalUrl = animalDestinatario.getFotoAnimal();
-            nomeAnimal = animalDestinatario.getNomeAnimal();
-            especieAnimal = animalDestinatario.getEspecieAnimal();
-            racaAnimal = animalDestinatario.getRacaAnimal();
-            porteAnimal = animalDestinatario.getPorteAnimal();
-            observacaoAnimal = animalDestinatario.getObservacaoAnimal();
+            nomeAnimal       =  animal.getNomeAnimal();
+            especieAnimal    =  animal.getEspecieAnimal();
+            racaAnimal       =  animal.getRacaAnimal();
+            porteAnimal      =  animal.getPorteAnimal();
+            observacaoAnimal =  animal.getObservacaoAnimal();
+            fotoAnimalUrl    =  animal.getFotoAnimalUrl();
 
             // Variavel para comparação, para saber se ouve alteração
-            nomeAnimalEdit = nomeAnimal;
             especieAnimalEdit = especieAnimal;
-            racaAnimalEdit = racaAnimal;
-            observacaoAnimalEdit = observacaoAnimal;
 
             //              Enviando os dados recebidos para o XML
+            // Envia nomeAnimal, para exibir no arquivo XML
+            campotNomeAnimal.setText(nomeAnimal);
+            // Envia o tipo da racaAnimal, para o XML
+            campoAutoCompleteRacaAnimal.setText(racaAnimal);
+            //Envia observacaoAnimal para exibir no arquivo XML
+            campotObservacaoAnimal.setText(observacaoAnimal);
 
             // Envia a foto do animal para o XML
             if(fotoAnimalUrl != null){
-                Uri url = Uri.parse(fotoAnimalUrl);
+                Uri fotoAnimalUri = Uri.parse(fotoAnimalUrl);
                 Glide.with(EditarAnimalActivity.this)
-                        .load(url)
-                        .into(imageViewFotoAnimal);
+                        .load(fotoAnimalUri)
+                        .into(campoFotoAnimal);
             }else{
-                imageViewFotoAnimal.setImageResource(R.drawable.iconperfilanimal);
+                campoFotoAnimal.setImageResource(R.drawable.iconperfilanimal);
             }
-
-            // Envia nomeAnimal, para exibir no arquivo XML
-            editTextNomeAnimal.setText(nomeAnimal);
 
             //Montando o arrayList SpinnerEspecieAnimal, para colocar no XML
             customList = getCustomList(especieAnimalEdit);
             CustomAdapterEditarAnimal adapter = new CustomAdapterEditarAnimal(this, customList);
-            if (spinnerEspecielAnimal != null) {
-                spinnerEspecielAnimal.setAdapter(adapter);
-                spinnerEspecielAnimal.setOnItemSelectedListener(this);
+            if (campoSpinnerEspecielAnimal != null) {
+                campoSpinnerEspecielAnimal.setAdapter(adapter);
+                campoSpinnerEspecielAnimal.setOnItemSelectedListener(this);
             }
 
-            // Envia o tipo da racaAnimal, para o XML
-            autoCompleteRacaAnimal.setText(racaAnimal);
-
-            // Inserindo dados ao array do Spinner, baseado no porte recebido do database
-            // e colocando no XML
+            // Inserindo dados ao array do Spinner no XML, baseado no porte recebido do database
             if(porteAnimal.equals("Pequeno - Até 35cm")){
                 listaPorteAnimal.add("Pequeno - Até 35cm");
                 listaPorteAnimal.add("Médio - De 36 a 49cm");
@@ -186,94 +162,14 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
 
             }
             ArrayAdapter<String> adapterPorte = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,listaPorteAnimal);
-            spinnerPorteAnimal.setAdapter(adapterPorte);
-
-            //Envia observacaoAnimal para exibir no arquivo XML
-            editTextObservacaoAnimal.setText(observacaoAnimal);
+            campoSpinnerPorteAnimal.setAdapter(adapterPorte);
 
         }
 
-        //              MÉTODOS OUVINTES
-
-        // Método Ouvinte editTextNomeAnimal
-        editTextNomeAnimal.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override //executa uma determinada ação durante a modificação do editText
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                nomeAnimalEdit = editTextNomeAnimal.getText().toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        // Método ouvinte autoCompleteRacaAnimal
-        autoCompleteRacaAnimal.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            //executa uma determinada ação durante a modificação do editText
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                racaAnimalEdit = autoCompleteRacaAnimal.getText().toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        // Método Ouvinte porteAnimal (Spinner)
-        AdapterView.OnItemSelectedListener escolhaPorte = new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                // Armazena a mudança do porte do animal
-                porteAnimalEdit = spinnerPorteAnimal.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
-        spinnerPorteAnimal.setOnItemSelectedListener(escolhaPorte);
-
-        // Método Ouvinte editTextObservacaoAnimal
-        editTextObservacaoAnimal.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override //executa uma determinada ação durante a modificação do editText
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-                observacaoAnimalEdit = editTextObservacaoAnimal.getText().toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
     }
 
     // Evento de clique do botão camera
-    public void buttonCameraAnimal(View view){
+    public void botaoCamera(View view){
 
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Verifica se a intent conseguiu fazer o pedido ( que e abrir a camera)
@@ -284,14 +180,78 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
         }
     }
     // Evento do clique do botão galeria
-    public void buttonGaleriaAnimal(View view) {
+    public void botaoGaleria(View view) {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
         if (i.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(i,SELECAO_GALERIA);
         }
     }
+
+    public void botaoSalvar(View view){
+
+        nomeAnimalEdit       = campotNomeAnimal.getText().toString();
+        racaAnimalEdit       = campoAutoCompleteRacaAnimal.getText().toString();
+        porteAnimalEdit      = campoSpinnerPorteAnimal.getSelectedItem().toString();
+        observacaoAnimalEdit = campotObservacaoAnimal.getText().toString();
+
+        // tipoLocalSave = 2 - EditarAnimalAcitivity
+        int tipoLocalSave = 2;
+
+        if(fotoAnimal != null ){
+
+            animal.setNomeAnimal(nomeAnimalEdit);
+            animal.setEspecieAnimal(especieAnimalEdit);
+            animal.setRacaAnimal(racaAnimalEdit);
+            animal.setPorteAnimal(porteAnimalEdit);
+            animal.setObservacaoAnimal(observacaoAnimalEdit);
+            animal.setFotoAnimal(fotoAnimal);
+            //       Funcionando, mas Ainda em fase de analise
+            animalDAO.salvarImagemAnimalStorage(animal, tipoLocalSave,
+                                 EditarAnimalActivity.this,
+                                             PerfilPassageiroActivity.class);
+
+        }else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
+                (!racaAnimal.equals(racaAnimalEdit)) || (!porteAnimal.equals(porteAnimalEdit)) ||
+                (!observacaoAnimal.equals(observacaoAnimalEdit))){
+
+            animal.setNomeAnimal(nomeAnimalEdit);
+            animal.setEspecieAnimal(especieAnimalEdit);
+            animal.setRacaAnimal(racaAnimalEdit);
+            animal.setPorteAnimal(porteAnimalEdit);
+            animal.setObservacaoAnimal(observacaoAnimalEdit);
+            //       Funcionando, mas ainda em fase de analise
+            animalDAO.salvarAnimalRealtimeDatabase(animal, tipoLocalSave,
+                                       EditarAnimalActivity.this,
+                                                   PerfilPassageiroActivity.class);
+
+        }
+    }
+
+    public void botaoExcluir(View view){
+
+        animalDAO.contarAnimais();
+        AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
+        msgBox.setTitle("Excluindo...");
+        msgBox.setIcon(R.drawable.ic_lixeira_24dp);
+        msgBox.setMessage("Tem certeza que deseja excluir este animal?");
+        msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                animalDAO.excluirAnimal(animal,EditarAnimalActivity.this);
+
+            }
+        });
+        msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        msgBox.show();
+    }
+
     // Método para pegar a foto da Câmera ou Galeria
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -311,7 +271,7 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
                 }
 
                 if (imagem != null) {
-                    imageViewFotoAnimal.setImageBitmap(imagem);
+                    campoFotoAnimal.setImageBitmap(imagem);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     fotoAnimal = baos.toByteArray();
@@ -364,9 +324,9 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
 
         }
         return customList;
-
     }
-    // Método para ouvir o SpinnerEspecieAnimal
+
+    // Método pegar o item selecionado no SpinnerEspecieAnimal
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         try {
@@ -388,11 +348,8 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
             especieAnimalEdit = "réptil";
         }
     }
-
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 
     // Método Listar campoRaçaAnimal autoComplete depedendo da especie do SpinnerEsopecieAnimal
     public  void listarRacas(String lr) {
@@ -401,7 +358,9 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
         listaRacaAnimal.clear();
 
         //              Colocando os nomes das raças do banco de dados em uma lista
-        databaseReferenceListaAnimal = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal").child(especieAnimalEdit);
+        DatabaseReference databaseReferenceListaAnimal = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("racaAnimal")
+                .child(especieAnimalEdit);
         databaseReferenceListaAnimal.addChildEventListener(new ChildEventListener() {
 
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -409,82 +368,15 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
                 RacaAnimal racasAnimais = dataSnapshot.getValue(RacaAnimal.class);
                 // Add cada nome das raças na lista (listaRacaAnimal)
                 listaRacaAnimal.add(racasAnimais.getNomeRacaAnimal());
-
             }
-
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-
-            public void onChildRemoved( DataSnapshot dataSnapshot) {
-
-            }
-
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            public void onCancelled( DatabaseError databaseError) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+            public void onChildRemoved( DataSnapshot dataSnapshot) {}
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+            public void onCancelled( DatabaseError databaseError) {}
         });
         // Montando Array com a lista de raça do BD
         ArrayAdapter<String> adapterRaca = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaRacaAnimal);
-        autoCompleteRacaAnimal.setAdapter(adapterRaca);
-    }
-
-    public void botaoSalvarAnimal(View view){
-
-        if(imagem != null ){
-            String localSalvamentoAnimal = "EditarAnimalActivity";
-            // Método salva a imagem no Storage, depois salva os dados no DataBase
-            Animal.salvarAnimalStorage(emailUsuario,idAnimal,nomeAnimalEdit,especieAnimalEdit,racaAnimalEdit,
-                    porteAnimalEdit, observacaoAnimalEdit,fotoAnimal,
-         EditarAnimalActivity.this,PerfilPassageiroActivity.class,localSalvamentoAnimal);
-
-        }else if((!nomeAnimal.equals(nomeAnimalEdit)) || (!especieAnimal.equals(especieAnimalEdit)) ||
-                (!racaAnimal.equals(racaAnimalEdit)) || (!porteAnimal.equals(porteAnimalEdit)) ||
-                (!observacaoAnimal.equals(observacaoAnimalEdit))){
-
-            String localSalvamentoAnimal = "EditarAnimalActivity";
-            Animal animal = new Animal();
-            animal.setIdUsuario(UsuarioFirebase.getIdentificadorUsuario());
-            animal.setIdAnimal(idAnimal);
-            animal.setNomeAnimal(nomeAnimalEdit);
-            animal.setEspecieAnimal(especieAnimalEdit);
-            animal.setRacaAnimal(racaAnimalEdit);
-            animal.setPorteAnimal(porteAnimalEdit);
-            animal.setObservacaoAnimal(observacaoAnimalEdit);
-            animal.setFotoAnimal(fotoAnimalUrl);
-            animal.salvarAnimalDatabase(EditarAnimalActivity.this, localSalvamentoAnimal);
-
-            super.finish();
-            overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
-        }
-    }
-
-    public void botaoExcluirAnimal(View view){
-
-        AlertDialog.Builder msgBox = new AlertDialog.Builder(EditarAnimalActivity.this);
-        msgBox.setTitle("Excluindo...");
-        msgBox.setIcon(R.drawable.ic_lixeira_24dp);
-        msgBox.setMessage("Tem certeza que deseja excluir este animal?");
-        msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                // Chama Método excluirAnimal da classe Animal
-                Animal.excluirAnimal(emailUsuario, idAnimal, EditarAnimalActivity.this);
-            }
-        });
-        msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        msgBox.show();
+        campoAutoCompleteRacaAnimal.setAdapter(adapterRaca);
     }
 
     @Override
@@ -492,8 +384,5 @@ public class EditarAnimalActivity extends AppCompatActivity implements AdapterVi
         super.finish();
         overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
-
-
-
 }
 

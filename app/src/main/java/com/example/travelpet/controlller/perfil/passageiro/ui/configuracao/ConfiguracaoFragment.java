@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +23,12 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.ListaAnimaisFragment;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Usuario;
 import com.firebase.ui.auth.AuthUI;
@@ -47,11 +51,13 @@ import static android.app.Activity.RESULT_OK;
 
 public class ConfiguracaoFragment extends Fragment {
 
-    private CircleImageView imageViewCircleFotoPerfil;
-    private ImageButton imageButtonCamera, imageButtonGaleria;
-    private EditText editTextNomeUsuario, editTextSobrenomeUsuario;
-    private ImageView imageViewAtualizarNomeUsuario,imageViewAtualizarSobrenomeUsuario;
-    private Button buttonSalvarConfiguracao, buttonSair;
+    private DonoAnimal    donoAnimal;
+    private DonoAnimalDAO donoAnimalDAO;
+
+    private CircleImageView campoFotoPerfil;
+    private EditText        campoNome, campoSobrenome;
+    private ImageButton     botaoCamera, botaoGaleria;
+    private Button          botaoSalvar, botaoSair;
 
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
@@ -59,14 +65,9 @@ public class ConfiguracaoFragment extends Fragment {
     private Bitmap imagem = null;
     private byte[] fotoUsuario;
 
-
-    private StorageReference storageReference;
-    private String email;
-
     // Variável usada no processo de pegar os dados do database
-    private DatabaseReference referencia = FirebaseDatabase.getInstance().getReference();
-    private String nome,sobrenome,telefone,tipoUsuario, fotoUsuarioUrl;
-    private String nomeEdit, sobrenomeEdit, localSalvamentoUsuario;
+    private String nome,sobrenome, fotoPerfilUrl;
+    private String nomeEdit, sobrenomeEdit;
 
     // Variável usada no processo de trocar de Fragment
     private ListaAnimaisFragment listaAnimaisFragment;
@@ -74,69 +75,50 @@ public class ConfiguracaoFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_configuracao, container, false);
 
-        // Recupera a referência do Storage
-        storageReference    =   ConfiguracaoFirebase.getFirebaseStorage();
-        email               =   UsuarioFirebase.getEmailUsuario();
+        donoAnimalDAO = new DonoAnimalDAO();
 
-        imageViewCircleFotoPerfil = root.findViewById(R.id.imageViewCircleFotoPerfil);
-        imageButtonCamera   =   root.findViewById(R.id.imageButtonCamera);
-        imageButtonGaleria  =   root.findViewById(R.id.imageButtonGaleria);
+        campoFotoPerfil     =   root.findViewById(R.id.imageViewCircleFotoPerfil);
+        campoNome           =   root.findViewById(R.id.editTextNomeUsuario);
+        campoSobrenome      =   root.findViewById(R.id.editTextSobrenomeUsuario);
+        botaoCamera         =   root.findViewById(R.id.imageButtonCamera);
+        botaoGaleria        =   root.findViewById(R.id.imageButtonGaleria);
+        botaoSalvar         =   root.findViewById(R.id.botaoSalvar);
+        botaoSair           =   root.findViewById(R.id.botaoSair);
 
-        editTextNomeUsuario = root.findViewById(R.id.editTextNomeUsuario);
-        editTextSobrenomeUsuario = root.findViewById(R.id.editTextSobrenomeUsuario);
-
-        imageViewAtualizarNomeUsuario = root.findViewById(R.id.imageViewAtualizarNomeUsuario);
-        imageViewAtualizarSobrenomeUsuario = root.findViewById(R.id.imageViewAtualizarSobrenomeUsuario);
-
-        buttonSalvarConfiguracao = root.findViewById(R.id.buttonSalvarConfiguracao);
-        buttonSair = root.findViewById(R.id.buttonSair);
-
-        DatabaseReference usuarios = referencia.child( "donoAnimal" ).child(UsuarioFirebase.getIdentificadorUsuario());
-
-        usuarios.addValueEventListener(new ValueEventListener() {
+        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child( "donoAnimal" )
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        donoAnimalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Usuario dadosUsuario = dataSnapshot.getValue(Usuario.class);
+                donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
                 // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
-                nome              =   dadosUsuario.getNome();
-                sobrenome         =   dadosUsuario.getSobrenome();
-                telefone          =   dadosUsuario.getTelefone();
-                tipoUsuario       =   dadosUsuario.getTipoUsuario();
-                fotoUsuarioUrl    =   dadosUsuario.getFotoUsuarioUrl();
+                nome            =   donoAnimal.getNome();
+                sobrenome       =   donoAnimal.getSobrenome();
+                fotoPerfilUrl   =   donoAnimal.getFotoPerfilUrl();
 
-                // Enviando o nome e sobrenome do Usuário para o xml da fragment
-                editTextNomeUsuario.setText(nome);
-                editTextSobrenomeUsuario.setText(sobrenome);
+                //          Enviando os dados para o layout XML
+                if(!fotoPerfilUrl.equals("")){
+
+                    Uri fotoPerfilUri = Uri.parse(fotoPerfilUrl);
+                    Glide.with(getActivity()).load( fotoPerfilUri ).into( campoFotoPerfil );
+
+                }else{
+                    campoFotoPerfil.setImageResource(R.drawable.iconperfiloficial);
+                }
+
+                campoNome.setText(nome);
+                campoSobrenome.setText(sobrenome);
+
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        // Recupera dados do usuário ( usado no processo de pegar foto de perfil do usuario)
-        FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
-        // Recupera a foto de perfil do usuario atual
-        Uri fotoUsuarioEmail = usuario.getPhotoUrl();
-
-        // Verifica a foto do usuario firebase não está vazia
-        if(fotoUsuarioEmail != null){
-            // Glide e uma biblioteca que foi inserida graças a dependencia "firebase-ui-storage"
-            Glide.with(getActivity())
-                    .load( fotoUsuarioEmail )
-                    .into( imageViewCircleFotoPerfil );
-
-        }else{// caso esteja vazio
-            // Envia imagem padrão para a foto de perfil em configurações
-            imageViewCircleFotoPerfil.setImageResource(R.drawable.iconperfiloficial);
-        }
-
-        // Evento de clique do botão camera
-        imageButtonCamera.setOnClickListener(new View.OnClickListener() {
+        //              Configurando função dos botões
+        botaoCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -146,46 +128,53 @@ public class ConfiguracaoFragment extends Fragment {
                 }
             }
         });
-        imageButtonGaleria.setOnClickListener(new View.OnClickListener() {
+        botaoGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
                 if (i.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(i,SELECAO_GALERIA);
+
                 }
             }
         });
-        buttonSalvarConfiguracao.setOnClickListener(new View.OnClickListener() {
+
+        botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                nomeEdit = editTextNomeUsuario.getText().toString().toUpperCase();
-                sobrenomeEdit = editTextSobrenomeUsuario.getText().toString().toUpperCase();
-                localSalvamentoUsuario = "ConfiguracaoFragmet";
-                // Verificando se a imagem não está vazia
-                if(imagem != null){
+                nomeEdit      = campoNome.getText().toString().toUpperCase();
+                sobrenomeEdit = campoSobrenome.getText().toString().toUpperCase();
 
-                    DonoAnimal.atualizarDonoAnimal(email,nomeEdit, sobrenomeEdit, telefone,
-                                                   tipoUsuario, fotoUsuario, getActivity(), localSalvamentoUsuario);
+                // Verificando se a imagem não está vazia
+                if(fotoUsuario != null){
+
+                    donoAnimal.setNome(nomeEdit);
+                    donoAnimal.setSobrenome(sobrenomeEdit);
+                    donoAnimalDAO.salvarImagemDonoAnimalStorage(fotoUsuario, donoAnimal);
+                    fotoUsuario = null;
+
+                    Toast.makeText(getActivity(),
+                            "Atualização  feita com sucesso",
+                            Toast.LENGTH_SHORT).show();
+
 
                 }else if(!nome.equals(nomeEdit) || !sobrenome.equals(sobrenomeEdit)){
 
-                    DonoAnimal donoAnimal = new DonoAnimal();
-                    donoAnimal.setId(UsuarioFirebase.getIdentificadorUsuario());
-                    donoAnimal.setEmail(email);
                     donoAnimal.setNome(nomeEdit);
                     donoAnimal.setSobrenome(sobrenomeEdit);
-                    donoAnimal.setTelefone(telefone);
-                    donoAnimal.setTipoUsuario(tipoUsuario);
-                    donoAnimal.setFotoUsuarioUrl(fotoUsuarioUrl);
-                    donoAnimal.salvarUsuarioDatabase(getActivity(), localSalvamentoUsuario);
-               }
+                    donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal);
+
+                    Toast.makeText(getActivity(),
+                            "Atualização feita com sucesso",
+                            Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
-        buttonSair.setOnClickListener(new View.OnClickListener() {
+        botaoSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Caixa de diálogo
@@ -218,6 +207,7 @@ public class ConfiguracaoFragment extends Fragment {
 
         return root;
     }
+
     //          Método para verificar de onde será pego a foto, da camera ou galeria
     /* Capturando (Recuperando a imagem, sobre-escrevendo o método
     // requestCode = saber se e SELECAO_GALERIA definido no começo
@@ -256,7 +246,7 @@ public class ConfiguracaoFragment extends Fragment {
                 // Verificando se a imagem não está vazia
                 if(imagem != null) {
                     // Envia a imagem para o XML
-                    imageViewCircleFotoPerfil.setImageBitmap(imagem);
+                    campoFotoPerfil.setImageBitmap(imagem);
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);

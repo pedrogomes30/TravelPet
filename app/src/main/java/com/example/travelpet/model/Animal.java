@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -29,9 +30,9 @@ public class Animal implements Parcelable {
     private String especieAnimal;
     private String racaAnimal;
     private String porteAnimal;
-    private String fotoAnimal;
     private String observacaoAnimal;
-
+    private byte [] fotoAnimal;
+    private String fotoAnimalUrl;
 
     // Construtor
     public Animal() {
@@ -85,14 +86,6 @@ public class Animal implements Parcelable {
         this.porteAnimal = porteAnimal;
     }
 
-    public String getFotoAnimal() {
-        return fotoAnimal;
-    }
-
-    public void setFotoAnimal(String fotoAnimal) {
-        this.fotoAnimal = fotoAnimal;
-    }
-
     public String getObservacaoAnimal() {
         return observacaoAnimal;
     }
@@ -100,17 +93,36 @@ public class Animal implements Parcelable {
     public void setObservacaoAnimal(String observacaoAnimal) {
         this.observacaoAnimal = observacaoAnimal;
     }
+    @Exclude
+    public byte[] getFotoAnimal() {
+        return fotoAnimal;
+    }
+
+    public void setFotoAnimal(byte[] fotoAnimal) {
+        this.fotoAnimal = fotoAnimal;
+    }
+
+    public String getFotoAnimalUrl() {
+        return fotoAnimalUrl;
+    }
+
+    public void setFotoAnimalUrl(String fotoAnimalUrl) {
+        this.fotoAnimalUrl = fotoAnimalUrl;
+    }
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Animal(Parcel in) {
+
         idUsuario = in.readString();
         idAnimal = in.readString();
         nomeAnimal = in.readString();
         especieAnimal = in.readString();
         racaAnimal = in.readString();
         porteAnimal = in.readString();
-        fotoAnimal = in.readString();
         observacaoAnimal = in.readString();
+        fotoAnimalUrl = in.readString();
+        fotoAnimal = in.createByteArray();
+
     }
 
     @Override
@@ -121,8 +133,9 @@ public class Animal implements Parcelable {
         dest.writeString(especieAnimal);
         dest.writeString(racaAnimal);
         dest.writeString(porteAnimal);
-        dest.writeString(fotoAnimal);
         dest.writeString(observacaoAnimal);
+        dest.writeString(fotoAnimalUrl);
+        dest.writeByteArray(fotoAnimal);
     }
 
     @Override
@@ -141,7 +154,7 @@ public class Animal implements Parcelable {
             return new Animal[size];
         }
     };
-
+    /*
     public static String gerarPushKeyIdAnimal(){
         DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
         String chave = referencia.push().getKey();
@@ -316,7 +329,7 @@ public class Animal implements Parcelable {
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    } */
 
 
 }

@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textViewNomeArquivoMotoristaCrvl"
+        android:id="@+id/textViewNomeFotoCrvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -73,13 +73,13 @@
         android:textColor="@color/colorApp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/botaoFinalizarCadastroMotorista"
+        app:layout_constraintBottom_toTopOf="@+id/botaoFinalizar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/botaoFinalizarCadastroMotorista"
+        android:id="@+id/botaoFinalizar"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -87,7 +87,7 @@
         android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="botaoFinalizarCadastroMotorista"
+        android:onClick="botaoFinalizar"
         android:text="Finalizar"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

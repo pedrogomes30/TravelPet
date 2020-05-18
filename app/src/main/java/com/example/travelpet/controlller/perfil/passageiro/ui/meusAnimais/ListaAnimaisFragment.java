@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.ListaAnimaisAdapter;
-import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
+import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.RecyclerItemClickListener;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
@@ -33,12 +34,10 @@ public class ListaAnimaisFragment extends Fragment {
     private RecyclerView recyclerViewListaAnimais;
     private ListaAnimaisAdapter adapter;
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
-    private DatabaseReference usuariosRef;
+    private DatabaseReference animalRef;
 
     private ValueEventListener valueEventListenerListaAnimais;
 
-    // Variavel para passar o fluxo de dados para "CadastroAnimalNomeActivity"
-    private String fluxoDados = "perfilUsuario";
 
     public static ListaAnimaisFragment newInstance() {
         return new ListaAnimaisFragment();
@@ -54,6 +53,7 @@ public class ListaAnimaisFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                String fluxoDados = "perfilUsuario";
                 DonoAnimal donoAnimal = new DonoAnimal();
                 donoAnimal.setFluxoDados(fluxoDados);
 
@@ -64,7 +64,9 @@ public class ListaAnimaisFragment extends Fragment {
         });
 
         recyclerViewListaAnimais = view.findViewById(R.id.recyclerViewListaAnimais);
-        usuariosRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("animais").child(UsuarioFirebase.getIdentificadorUsuario());
+        animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("animais")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
 
         adapter = new ListaAnimaisAdapter( listaAnimais, getActivity());
 
@@ -89,19 +91,14 @@ public class ListaAnimaisFragment extends Fragment {
                 }
 
                 @Override
-                public void onLongItemClick(View view, int position) {
-
-                }
-
+                public void onLongItemClick(View view, int position) {}
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                }
-            }
-            )
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {}
+            })
         );
         return view;
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -111,7 +108,7 @@ public class ListaAnimaisFragment extends Fragment {
     @Override
     public void onStop(){
         super.onStop();
-        usuariosRef.removeEventListener( valueEventListenerListaAnimais );
+        animalRef.removeEventListener( valueEventListenerListaAnimais );
     }
 
     @Override
@@ -121,7 +118,7 @@ public class ListaAnimaisFragment extends Fragment {
     }
 
     public void recuperarAnimais(){
-        valueEventListenerListaAnimais = usuariosRef.addValueEventListener(new ValueEventListener() {
+        valueEventListenerListaAnimais = animalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot) {
 

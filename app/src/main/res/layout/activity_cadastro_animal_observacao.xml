@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".controlller.cadastro.cadastroAnimal.CadastroAnimalObservacaoActivity">
+    tools:context=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity">
 
     <TextView
         android:id="@+id/textViewObervacao"
@@ -33,7 +33,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/edit_text_branco_seletor"
-        app:layout_constraintBottom_toTopOf="@+id/botaoProximoAnimalObservacao"
+        app:layout_constraintBottom_toTopOf="@+id/btProximo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/botaoProximoAnimalObservacao"
+        android:id="@+id/btProximo"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -60,7 +60,7 @@
         android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="botaoProximoAnimalObservacao"
+        android:onClick="btProximo"
         android:text="Próximo"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

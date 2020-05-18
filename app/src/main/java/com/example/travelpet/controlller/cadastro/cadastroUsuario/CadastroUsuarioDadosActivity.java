@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.cadastro.cadastroAnimal.CadastroAnimalNomeActivity;
+import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity;
 import com.example.travelpet.domain.CepListener;
 import com.example.travelpet.domain.Endereco;
@@ -24,13 +24,17 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CadastroUsuarioDadosActivity extends AppCompatActivity {
 
 
-    private String tipoUsuario, nome, sobrenome, telefone, cpf,
-            cep, logradouro, bairro, localidade, uf;
-    private String fluxoDados;
+    private Usuario usuario;
+    private DonoAnimal donoAnimal;
+    private Motorista motorista;
+    private Endereco endereco;
+
+    private String tipoUsuario,nome, sobrenome, telefone, cpf, fluxoDados,
+                   cep, logradouro, bairro, localidade, uf;
 
     // Váriaveis usadas para referênciar dados dos campos do nome e sobrenome do xml
-    private TextInputEditText campoNome,campoSobrenome, campoTelefone, campoCpf,
-            campoCep, campoLogradouro, campoBairro, campoLocalidade, campoUf;
+    private TextInputEditText campoNome,campoSobrenome, campoTelefone, campoCpf,campoCep,
+                              campoLogradouro, campoBairro, campoLocalidade, campoUf;
 
     private Util util;
 
@@ -38,19 +42,16 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario_dados);
-
-        // Efeito de Transição
-        // 1ª (R.anim.activity_filho_entrando)= animação que vai executar pra activity que ta estrando
-        // 2ª = Animação que vai executar pra activity que tiver saindo
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
+
+        donoAnimal = new DonoAnimal();
+        motorista = new Motorista();
+        endereco = new Endereco();
 
         // Recuperando dados da Activity (CadastroTipoUsuario)
         Intent intent = getIntent();
-        Usuario usuario = intent.getParcelableExtra("usuario");
+        usuario = intent.getParcelableExtra("usuario");
         tipoUsuario = usuario.getTipoUsuario();
-
-        // Variável para referênciar fluxo de dados
-        fluxoDados = "cadastroUsuario";
 
         campoNome       =   findViewById(R.id.editNomeUsuario);
         campoSobrenome  =   findViewById(R.id.editSobrenomeUsuario);
@@ -62,7 +63,7 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
         campoLogradouro =   findViewById(R.id.editLogradouro); // Rua
         campoBairro     =   findViewById(R.id.editBairro);
         campoLocalidade =   findViewById(R.id.editLocalidade); // Cidade
-        campoUf     =   findViewById(R.id.editUf); //Estado
+        campoUf         =   findViewById(R.id.editUf); //Estado
 
         // Entidade que vai permitir o travamento das views
         util = new Util(this,
@@ -81,7 +82,6 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
     // Metodo para retornar a url
     public String getUriZipCode(){
         return "https://viacep.com.br/ws/"+campoCep.getText()+"/json/";
-        //return "https://viacep.com.br/ws/"+etZipCode.getText()+"/json/";
     }
 
     // metodo que permite o acesso ao util ali encima
@@ -95,7 +95,6 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
         setField( R.id.editBairro, address.getBairro() );
         setField( R.id.editLocalidade, address.getLocalidade() );
         setField( R.id.editUf, address.getUf() );
-        //setSpinner( R.id.sp_state, R.array.states, address.getUf() );
     }
 
     private void setField( int id, String data ) {
@@ -103,13 +102,14 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
     }
 
     // Evento de clique do botão PrcoximoNomeUsuario
-    public void botaoProximoUsuarioDados(View view){
+    public void botaoProximo(View view) {
 
-        // Recuperando textos dos campos, transformando em String e salvando nas variaveis
+        // Recuperando textos dos campos, transformando em String
         nome        =   campoNome.getText().toString().toUpperCase();
         sobrenome   =   campoSobrenome.getText().toString().toUpperCase();
         telefone    =   campoTelefone.getText().toString();
         cpf         =   campoCpf.getText().toString();
+        fluxoDados  =   "cadastroUsuario";
         cep         =   campoCep.getText().toString();
         logradouro  =   campoLogradouro.getText().toString();
         bairro      =   campoBairro.getText().toString();
@@ -117,6 +117,47 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
         uf          =   campoUf.getText().toString().toUpperCase();
 
         //Verificando se não estiver vazio
+        if (verificaCampos() == true) {
+
+            endereco.setCep(cep);
+            endereco.setLogradouro(logradouro);
+            endereco.setBairro(bairro);
+            endereco.setLocalidade(localidade);
+            endereco.setUf(uf);
+
+            if (tipoUsuario.equals("donoAnimal")) {
+
+                donoAnimal.setTipoUsuario(tipoUsuario);
+                donoAnimal.setNome(nome);
+                donoAnimal.setSobrenome(sobrenome);
+                donoAnimal.setTelefone(telefone);
+                donoAnimal.setCpf(cpf);
+                donoAnimal.setFluxoDados(fluxoDados);
+
+                Intent intent = new Intent(CadastroUsuarioDadosActivity.this, CadastroAnimalNomeActivity.class);
+                intent.putExtra("donoAnimal", donoAnimal);
+                intent.putExtra("endereco", endereco);
+                startActivity(intent);
+
+            }else if (tipoUsuario.equals("motorista")) {
+
+                motorista.setTipoUsuario(tipoUsuario);
+                motorista.setNome(nome);
+                motorista.setSobrenome(sobrenome);
+                motorista.setTelefone(telefone);
+                motorista.setCpf(cpf);
+
+                Intent intent = new Intent(this, CadastroMotoristaTermoActivity.class);
+                intent.putExtra("motorista", motorista);
+                intent.putExtra("endereco", endereco);
+                startActivity(intent);
+            }
+        }
+    }
+    public Boolean verificaCampos ()
+    {
+        Boolean verificado = false;
+
         if(!nome.isEmpty()){
             if(!sobrenome.isEmpty()){
                 if(!telefone.isEmpty() && telefone.length() == 15){
@@ -127,87 +168,24 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
                                     if(!localidade.isEmpty()) {
                                         if(!uf.isEmpty() && uf.length() == 2) {
 
-                                            Endereco endereco = new Endereco();
-                                            endereco.setCep(cep);
-                                            endereco.setLogradouro(logradouro);
-                                            endereco.setBairro(bairro);
-                                            endereco.setLocalidade(localidade);
-                                            endereco.setUf(uf);
+                                            verificado = true;
 
-                                            if (tipoUsuario.equals("donoAnimal")) {
-
-                                                DonoAnimal donoAnimal = new DonoAnimal();
-                                                donoAnimal.setTipoUsuario(tipoUsuario);
-                                                donoAnimal.setNome(nome);
-                                                donoAnimal.setSobrenome(sobrenome);
-                                                donoAnimal.setTelefone(telefone);
-                                                donoAnimal.setCpf(cpf);
-                                                donoAnimal.setFluxoDados(fluxoDados);
-
-                                                Intent intent = new Intent(this, CadastroAnimalNomeActivity.class);
-                                                intent.putExtra("donoAnimal", donoAnimal);
-                                                intent.putExtra("endereco", endereco);
-                                                startActivity(intent);
-
-                                            } else if (tipoUsuario.equals("motorista")) {
-
-                                                Motorista motorista = new Motorista();
-                                                motorista.setTipoUsuario(tipoUsuario);
-                                                motorista.setNome(nome);
-                                                motorista.setSobrenome(sobrenome);
-                                                motorista.setTelefone(telefone);
-
-                                                Intent intent = new Intent(this, CadastroMotoristaTermoActivity.class);
-                                                intent.putExtra("motorista", motorista);
-                                                intent.putExtra("endereco", endereco);
-                                                startActivity(intent);
-                                            }
-                                        }else{
-                                            Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                                    "Preencha o UF corretamente",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }else{
-                                        Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                                "Preencha a Cidade",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }else{
-                                    Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                            "Preencha o Bairro",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }else{
-                                Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                        "Preencha o Logradouro",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }else{
-                            Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                    "Preencha o CEP corretamente",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        Toast.makeText(CadastroUsuarioDadosActivity.this,
-                                "Preencha o CPF corretamente",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }else{ // Se tefefoneUsuario estiver vazio então exibe está mensagem
-                    Toast.makeText(CadastroUsuarioDadosActivity.this,
-                            "Preencha o Telefone corretamente",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }else{ // Se o campo Sobrenome estiver vazio então exibe está mensagem
-                Toast.makeText(CadastroUsuarioDadosActivity.this,
-                        "Preencha o Sobrenome",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }else{
-            Toast.makeText(CadastroUsuarioDadosActivity.this,
-                    "Preencha o Nome",
-                    Toast.LENGTH_SHORT).show();
-        }
+                                        } else { ToastIt("Preencha o UF corretamente"); }
+                                    } else { ToastIt("Preencha a Cidade"); }
+                                } else { ToastIt("Preencha o Bairro"); }
+                            } else { ToastIt("Preencha o Logradouro"); }
+                        } else { ToastIt("Preencha o CEP corretamente"); }
+                    } else { ToastIt("Preencha o CPF corretamente"); }
+                } else { ToastIt("Preencha o Telefone corretamente"); }
+            } else { ToastIt("Preencha o Sobrenome"); }
+        } else { ToastIt("Preencha o Nome"); }
+        return verificado;
     }
+    public void ToastIt (String mensagem)
+    {
+        Toast.makeText(CadastroUsuarioDadosActivity.this,mensagem,Toast.LENGTH_SHORT).show();
+    }
+
     // Metodo chamado quando clica no botão voltar do aparelho
     @Override
     public void finish() {
@@ -216,3 +194,4 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
 }
+

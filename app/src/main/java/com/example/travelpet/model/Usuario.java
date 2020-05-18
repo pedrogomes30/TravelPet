@@ -11,31 +11,31 @@ import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Usuario implements Parcelable{
 
-    protected String id;
+    protected String idUsuario;
+    protected String tipoUsuario;
     protected String nome;
     protected String sobrenome;
     protected String telefone;
     protected String cpf;
-    protected String tipoUsuario;
     protected String email;
-    protected String fotoUsuarioUrl;
-
+    protected byte[] fotoPerfil;
+    protected String fotoPerfilUrl;
 
     // Construtor
-    public Usuario() {
-    }
+    public Usuario() {}
 
     // Métodos Getter and Setter
-    public String getId() {
-        return id;
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
@@ -86,74 +86,56 @@ public class Usuario implements Parcelable{
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getFotoUsuarioUrl() {
-        return fotoUsuarioUrl;
+    @Exclude
+    public byte[] getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setFotoUsuarioUrl(String fotoUsuarioUrl) {
-        this.fotoUsuarioUrl = fotoUsuarioUrl;
+    public void setFotoPerfil(byte[] fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
-    // Método para salvar os dados do usuário no firebase
-    public void salvarUsuarioDatabase(final Activity activity, final String localSalvamentoUsuario){
-    //public void salvar(){
-        // DatabaseReference = Referência do Firebase
-        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-        // DatabaseReference usuariosRef = fireDB.getReference().child(tipoUsuario);
-        // Referência DatabaseRefence para usuário
-        // usuariosRef.child("usuarios") = indica o nó filho chamado usuarios
-        // child(getId()) = recupera o id do nó  usuarios
-        DatabaseReference usuarios = fireDB.getReference().child(tipoUsuario).child(getId());
+    public String getFotoPerfilUrl() {
+        return fotoPerfilUrl;
+    }
 
-
-        // Configurando usuário no Firebase
-        // this = pois salvara todos os dados (id,nome,email,telefone,tipo)
-        // excessão vai ser a senha pois já temos ela salva, e não e interessante
-        // que se tenha uma senha que fique sendo visualizada sempre
-
-        usuarios.setValue(this).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                if(localSalvamentoUsuario.equals("CadastroAnimalFotoActivity")){
-
-                    Toast.makeText(activity,
-                            "Sucesso ao cadastrar usuário",
-                            Toast.LENGTH_SHORT).show();
-
-                }else if(localSalvamentoUsuario.equals("ConfiguracaoFragmet")){
-
-                    Toast.makeText(activity,
-                            "Alteração feita com sucesso",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-                if(localSalvamentoUsuario.equals("CadastroAnimalFotoActivity")){
-
-                    Toast.makeText(activity,
-                            "Erro ao cadastrar usuário",
-                            Toast.LENGTH_SHORT).show();
-
-                }else if(localSalvamentoUsuario.equals("ConfiguracaoFragmet")){
-                    Toast.makeText(activity,
-                            "Erro ao atualizar dados usuário",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    public void setFotoPerfilUrl(String fotoPerfilUrl) {
+        this.fotoPerfilUrl = fotoPerfilUrl;
     }
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Usuario(Parcel in) {
-        tipoUsuario = in.readString();
+
+        tipoUsuario   = in.readString();
+        /*
+        idUsuario     = in.readString();
+        tipoUsuario   = in.readString();
+        nome          = in.readString();
+        sobrenome     = in.readString();
+        telefone      = in.readString();
+        cpf           = in.readString();
+        email         = in.readString();
+        fotoPerfil    = in.createByteArray();
+        fotoPerfilUrl = in.readString();
+         */
+
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+
         dest.writeString(tipoUsuario);
+        /*
+        dest.writeString(idUsuario);
+        dest.writeString(tipoUsuario);
+        dest.writeString(nome);
+        dest.writeString(sobrenome);
+        dest.writeString(telefone);
+        dest.writeString(cpf);
+        dest.writeString(email);
+        dest.writeByteArray(fotoPerfil);
+        dest.writeString(fotoPerfilUrl);
+         */
     }
 
     @Override

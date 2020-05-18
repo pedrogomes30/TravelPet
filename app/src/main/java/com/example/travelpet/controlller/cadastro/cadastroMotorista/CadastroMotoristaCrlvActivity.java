@@ -1,5 +1,6 @@
 package com.example.travelpet.controlller.cadastro.cadastroMotorista;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,12 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.dao.EnderecoDAO;
+import com.example.travelpet.dao.MotoristaDAO;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 
@@ -26,33 +32,34 @@ import java.io.IOException;
 
 public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroFotoUsuario
 
+    private Motorista motorista;
+    private Veiculo veiculo;
+    private Endereco endereco;
 
-    // Variaveis usadas para armazenar fotos decocumentos do motorista
-    private byte[] fotoCNH, fotoPerfil, fotoCrlv;
+    private MotoristaDAO motoristaDAO;
+    private EnderecoDAO enderecoDAO;
+    private VeiculoDAO veiculoDAO;
 
-    private TextView textViewNomeArquivo;
+    private TextView campoNomeFotoCrvl;
+
+    private byte[] fotoCrvl;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
 
     private String statusCadastro;
 
-    private Motorista motorista;
-    private Veiculo veiculo;
-    private VeiculoDAO veiculoDAO;
-    private Endereco endereco;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_motorista_crlv);
-        veiculoDAO =  new VeiculoDAO();
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        // Recuperando dados passados da Activity CadastroMotoristaFotoActivity
+        motoristaDAO = new MotoristaDAO();
+        enderecoDAO  = new EnderecoDAO();
+        veiculoDAO   = new VeiculoDAO();
+
         Intent intent = getIntent();
         motorista = intent.getParcelableExtra("motorista");
         endereco = intent.getParcelableExtra("endereco");
@@ -60,7 +67,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
         statusCadastro  =   "Em análise";
 
-        textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaCrvl);
+        campoNomeFotoCrvl = findViewById(R.id.textViewNomeFotoCrvl);
     }
 
     @Override
@@ -88,11 +95,14 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     // Tranforma a imagem em um array de Bytes e armazena na variável
-                   motorista.setFotoCrlv(baos.toByteArray());
-                    veiculo.setFotoCrvl(baos.toByteArray());
+
+                    //motorista.setFotoCrlv(baos.toByteArray());
+                    //veiculo.setFotoCrvl(baos.toByteArray());
+                    // fotoAnimal = baos.toByteArray();
+                    fotoCrvl = baos.toByteArray();
 
                     // Envia o nome da imagem para o XML
-                    textViewNomeArquivo.setText(returnCursor.getString(nameIndex));
+                    campoNomeFotoCrvl.setText(returnCursor.getString(nameIndex));
 
                     Toast.makeText(CadastroMotoristaCrlvActivity.this,
                             "Sucesso ao selececionar a imagem",
@@ -115,17 +125,35 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         }
     }
 
-    public void botaoFinalizarCadastroMotorista(View view) {
+    public void botaoFinalizar(View view) {
 
-        if (motorista.getFotoCrlv() != null) {
-            // tipoUsuarioNomeNo = atrobuto para auxiliar no nome do database
+        if (fotoCrvl != null) {
+            //          Funcionando, mas ainda em fase de analise
 
-            endereco.salvarEnderecoDatabase(CadastroMotoristaCrlvActivity.this, motorista.getTipoUsuario());
+            enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, motorista.getTipoUsuario());
 
-            // Método salva imagens no Storage, e depois salva os dados no Database
-            Motorista.salvarMotoristaStorage(motorista, CadastroMotoristaCrlvActivity.this, MainActivity.class);
-
+            veiculo.setFotoCrvl(fotoCrvl);
             veiculoDAO.salvarVeiculo(veiculo);
+
+            motorista.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+            motorista.setEmail(UsuarioFirebase.getEmailUsuario());
+            motorista.setStatusCadastro(statusCadastro);
+            motoristaDAO.salvarImagemMotoristaStorage(motorista);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(CadastroMotoristaCrlvActivity.this);
+            builder.setTitle("Cadastro realizado com sucesso");
+            builder.setMessage("Agora iremos avaliar seus dados a análise pode levar até 7 dias útéis");
+            builder.setCancelable(false);
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(CadastroMotoristaCrlvActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
         } else {
             Toast.makeText(CadastroMotoristaCrlvActivity.this,

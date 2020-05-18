@@ -23,14 +23,11 @@ import java.io.IOException;
 
 public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
-    // Variaveis usadas para pegar dados da Activity CadastroCnhMotorista
-    private String  tipoUsuario, nome, sobrenome, telefone,
-                    cep, logradouro, bairro, localidade, uf;
+    private Motorista motorista;
+    private Endereco endereco;
 
-    // Variaveis usadas para armazenar fotos decocumentos do motorista
-    private byte[] fotoCNH, fotoPerfil;
-
-    private TextView textViewNomeArquivo;
+    private TextView campoNomeFotoMotorista;
+    private byte[] fotoPerfil;
 
     // requestCode = SELECAO_GALERIA = e um codigo para ser passado no requestCode
     private static final int SELECAO_GALERIA = 200;
@@ -45,22 +42,10 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
         // Recuperando dados passados da Activity CadastroCnhMototorista
         Intent intent = getIntent();
-        Motorista motorista = intent.getParcelableExtra("motorista");
-        Endereco endereco = intent.getParcelableExtra("endereco");
+        motorista = intent.getParcelableExtra("motorista");
+        endereco = intent.getParcelableExtra("endereco");
 
-        tipoUsuario  =   motorista.getTipoUsuario();
-        nome         =   motorista.getNome();
-        sobrenome    =   motorista.getSobrenome();
-        telefone     =   motorista.getTelefone();
-        fotoCNH      =   motorista.getFotoCNH();
-
-        cep          =   endereco.getCep();
-        logradouro   =   endereco.getLogradouro();
-        bairro       =   endereco.getBairro();
-        localidade   =   endereco.getLocalidade();
-        uf           =   endereco.getUf();
-
-        textViewNomeArquivo = findViewById(R.id.textViewNomeArquivoMotoristaFoto);
+        campoNomeFotoMotorista = findViewById(R.id.textViewNomeFotoMotorista);
 
     }
 
@@ -92,7 +77,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
                     fotoPerfil = baos.toByteArray();
 
                     // Envia o nome da imagem para o XML
-                    textViewNomeArquivo.setText(returnCursor.getString(nameIndex));
+                    campoNomeFotoMotorista.setText(returnCursor.getString(nameIndex));
 
                     Toast.makeText(CadastroMotoristaFotoActivity.this,
                             "Sucesso ao selececionar a imagem",
@@ -115,24 +100,11 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
         }
     }
 
-    public void botaoProximoMotoristaFoto(View view){
+    public void botaoProximo(View view){
 
         if(fotoPerfil != null) {
-            System.out.println(fotoPerfil);
-            Motorista motorista = new Motorista();
-            motorista.setTipoUsuario(tipoUsuario);
-            motorista.setNome(nome);
-            motorista.setSobrenome(sobrenome);
-            motorista.setTelefone(telefone);
-            motorista.setFotoCNH(fotoCNH);
-            motorista.setFotoPerfil(fotoPerfil);
 
-            Endereco endereco = new Endereco();
-            endereco.setCep(cep);
-            endereco.setLogradouro(logradouro);
-            endereco.setBairro(bairro);
-            endereco.setLocalidade(localidade);
-            endereco.setUf(uf);
+            motorista.setFotoPerfil(fotoPerfil);
 
             Intent intent = new Intent(CadastroMotoristaFotoActivity.this, CadastroMotoristaVeiculoActivity.class);
             intent.putExtra("motorista", motorista);
@@ -145,6 +117,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public void finish() {
         super.finish();
