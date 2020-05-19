@@ -1307,6 +1307,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable placaveiculo
 drawable side_nav_bar
 drawable spinner_background
 drawable tela_branca_login
@@ -1409,6 +1410,8 @@ id browser_actions_menu_items
 id browser_actions_menu_view
 id btProximo
 id btProximoVeiculo
+id bt_addVeiculo_cadastrar
+id bt_addVeiculo_fotocrvl
 id btn_holder
 id buttonChamarMotorista
 id buttonEnviarCNH
@@ -1495,6 +1498,11 @@ id etCRVLveiculo
 id etMarcaVeiculo
 id etModeloVeiculo
 id etPlacaVeiculo
+id et_addVeiculo_ano
+id et_addVeiculo_crvl
+id et_addVeiculo_marca
+id et_addVeiculo_modelo
+id et_addVeiculo_placa
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1503,6 +1511,7 @@ id fill_horizontal
 id fill_vertical
 id filled
 id fixed
+id floatAddVeiculo
 id forever
 id fragment_phone
 id fragment_register_email
@@ -1526,6 +1535,7 @@ id image
 id imageButtonCamera
 id imageButtonGaleria
 id imageFotoAnimalLista
+id imageView
 id imageViewAtualizarNomeUsuario
 id imageViewAtualizarSobrenomeUsuario
 id imageViewCircleFotoPerfil
@@ -1615,6 +1625,7 @@ id radioButtonMedio
 id radioButtonPequeno
 id radioGroupPorteAnimal
 id recyclerViewListaAnimais
+id recyclerViewListaVeiculos
 id resend_barrier
 id resend_code
 id right
@@ -1690,6 +1701,11 @@ id textEspecieAnimal
 id textInputBairro
 id textInputCep
 id textInputCpf
+id textInputLayout
+id textInputLayout2
+id textInputLayout3
+id textInputLayout4
+id textInputLayout5
 id textInputLocalidade
 id textInputLogradouro
 id textInputNomeAnimal
@@ -1766,6 +1782,10 @@ id trouble_signing_in_possible_fixes
 id tvBoasVindasVeiculo
 id tvDropDownLayout
 id tvSpinnerLayout
+id tv_adapterVeiculoMarca
+id tv_adapterVeiculoModelo
+id tv_adapterVeiculoPlaca
+id tv_fragAddVeiculo
 id unchecked
 id uniform
 id unlabeled
@@ -1860,6 +1880,7 @@ layout activity_perfil_passageiro
 layout activity_splash
 layout activity_teste_perfil_motorista
 layout adapter_lista_animais
+layout adapterlistaveiculos
 layout app_bar_perfil_motorista
 layout app_bar_perfil_passageiro
 layout browser_actions_context_menu_page
@@ -1885,8 +1906,10 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout fragment_add_veiculo
 layout fragment_configuracao
 layout fragment_contato
+layout fragment_lista_veiculos
 layout fragment_map_motorista
 layout fragment_pagamento
 layout fragment_tools

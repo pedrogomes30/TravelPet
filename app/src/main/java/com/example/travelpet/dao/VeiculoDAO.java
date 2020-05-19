@@ -114,7 +114,7 @@ public class VeiculoDAO
                 fotoURL = "vai que vai";
             }
         });
-        fotoURL= reference.getDownloadUrl().toString();
+        fotoURL= reference.getDownloadUrl().getResult().toString();
         System.out.println(fotoURL);
         return fotoURL;
     }

@@ -10,6 +10,8 @@ public class Veiculo implements Parcelable {
 
     //private String corVeiculo;
     //private String capacidadeAnimal;
+    //disponibilidade
+    //
 
     private byte [] fotoCrvl;
     private String marcaVeiculo;
