@@ -31,4 +31,6 @@
     <string name="placa_do_ve_culo">Placa do Veículo</string>
     <string name="modelo_do_veiculo">Modelo do Veículo</string>
     <string name="crvl_do_ve_culo">CRVL do Veículo</string>
+    <string name="dono_de_animal">Dono de Animal</string>
+    <string name="motorista">Motorista</string>
 </resources>

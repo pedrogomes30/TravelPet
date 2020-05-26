@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Button BTSignOut;
     ImageView imgv ; //teste para tela motorista
 
+
     // Array de String para solicitar permissões
     public String [] permissoesNecessarias = new String []{
             // Definindo Permiissões
@@ -272,8 +273,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+
     }
 }

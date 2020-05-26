@@ -221,5 +221,4 @@ public class VeiculoDAO
                 });
         return  resultado;
     }
-
 }

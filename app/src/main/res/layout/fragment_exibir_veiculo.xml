@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controlller.perfil.motorista.ui.meusVeiculos.ExibirVeiculoFragment"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/placaveiculo"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_exibir_modelo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="@string/modelo_do_veiculo"
+        android:textColor="@color/colorApp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Modelo:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_modelo"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_exibir_modelo" />
+
+    <TextView
+        android:id="@+id/tv_exibir_marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="@string/marca_do_ve_culo"
+        android:textColor="@color/colorApp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_exibir_modelo"
+        app:layout_constraintStart_toStartOf="@+id/tv_exibir_modelo"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exibir_modelo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Marca:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_marca"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_exibir_marca" />
+
+    <TextView
+        android:id="@+id/tv_exibir_ano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="@string/ano_ve_culo"
+        android:textColor="@color/colorApp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_exibir_marca"
+        app:layout_constraintStart_toStartOf="@+id/tv_exibir_marca"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exibir_marca" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Ano:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_ano"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_exibir_ano" />
+
+    <TextView
+        android:id="@+id/tv_exibir_crvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="@string/crvl_do_ve_culo"
+        android:textColor="@color/colorApp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_exibir_ano"
+        app:layout_constraintStart_toStartOf="@+id/tv_exibir_ano"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exibir_ano" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="CRVL:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_crvl"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_exibir_crvl" />
+
+    <TextView
+        android:id="@+id/tv_exibir_placa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="@string/placa_do_ve_culo"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.65" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Status:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_status"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_exibir_status" />
+
+    <TextView
+        android:id="@+id/tv_exibir_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Status"
+        android:textColor="@color/colorApp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="@+id/tv_exibir_crvl"
+        app:layout_constraintStart_toStartOf="@+id/tv_exibir_crvl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_exibir_crvl" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <Button
+        android:id="@+id/bt_excluirVeiculo"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_azul_seletor"
+        android:text="Excluir"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

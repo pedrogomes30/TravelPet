@@ -44,7 +44,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +61,11 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                 R.id.nav_contato, R.id.nav_meus_animais, R.id.nav_info)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
 

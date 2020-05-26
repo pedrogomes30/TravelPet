@@ -20,12 +20,15 @@ public class Veiculo implements Parcelable {
     private String anoVeiculo;
     private String placaVeiculo;
     private String idUsuario;
+    private String status;
 
     private String fotoCRVLurl;
     private String idVeiculo;
 
-    public Veiculo () {}
-
+    public Veiculo ()
+    {
+        setStatus("Bloqueado");
+    }
 
     public String getIdUsuario(){ return idUsuario; }
 
@@ -52,6 +55,10 @@ public class Veiculo implements Parcelable {
     public void setPlacaVeiculo(String placaVeiculo) {this.placaVeiculo = placaVeiculo;}
 
     public String getCrvlVeiculo() {return crvlVeiculo;}
+
+    public String getStatus ()  {return status;}
+
+    public void setStatus (String status) {this.status = status;}
 
     public void setCrvlVeiculo(String crvlVeiculo) {this.crvlVeiculo = crvlVeiculo;}
 
@@ -88,6 +95,7 @@ public class Veiculo implements Parcelable {
         parcel.writeString(idUsuario);
         parcel.writeString(fotoCRVLurl);
         parcel.writeString(idVeiculo);
+        parcel.writeString(status);
     }
 
     protected Veiculo(Parcel in) {
@@ -100,6 +108,7 @@ public class Veiculo implements Parcelable {
         idUsuario = in.readString();
         fotoCRVLurl = in.readString();
         idVeiculo = in.readString();
+        status = in.readString();
     }
 
     public static final Creator<Veiculo> CREATOR = new Creator<Veiculo>() {
@@ -113,10 +122,4 @@ public class Veiculo implements Parcelable {
             return new Veiculo[size];
         }
     };
-
-
-
-
-
-
 }

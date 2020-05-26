@@ -9,5 +9,38 @@
         android:id="@+id/mapMotoristaFragment"
         android:name="com.example.travelpet.controlller.perfil.motorista.ui.MapMotoristaFragment"
         android:label="fragment_map_motorista"
-        tools:layout="@layout/fragment_map_motorista" />
+        tools:layout="@layout/fragment_map_motorista" >
+        <action
+            android:id="@+id/action_mapMotoristaFragment_to_listaVeiculosFragment"
+            app:destination="@id/listaVeiculosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaVeiculosFragment"
+        android:name="com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos.ListaVeiculosFragment"
+        android:label="fragment_lista_veiculos"
+        tools:layout="@layout/fragment_lista_veiculos" >
+        <action
+            android:id="@+id/action_listaVeiculosFragment_to_addVeiculoFragment"
+            app:destination="@id/addVeiculoFragment" />
+        <action
+            android:id="@+id/action_listaVeiculosFragment_to_exibirVeiculoFragment"
+            app:destination="@id/exibirVeiculoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addVeiculoFragment"
+        android:name="com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos.addVeiculoFragment"
+        android:label="addVeiculoFragment" >
+        <action
+            android:id="@+id/action_addVeiculoFragment_to_listaVeiculosFragment"
+            app:popUpTo="@id/listaVeiculosFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/exibirVeiculoFragment"
+        android:name="com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos.ExibirVeiculoFragment"
+        android:label="fragment_exibir_veiculo"
+        tools:layout="@layout/fragment_exibir_veiculo" >
+        <action
+            android:id="@+id/action_exibirVeiculoFragment_to_listaVeiculosFragment"
+            app:popUpTo="@id/listaVeiculosFragment" />
+    </fragment>
 </navigation>

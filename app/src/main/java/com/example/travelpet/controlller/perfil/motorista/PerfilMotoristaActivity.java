@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.travelpet.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
@@ -23,8 +24,11 @@ public class PerfilMotoristaActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_motorista);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-           //NavigationView navigationView = findViewById()
+        DrawerLayout drawer = findViewById(R.id.moto_drawer_layout);
+        NavigationView navigationView = findViewById(R.id.moto_drawer_layout);
+
+
+
     }
 
     @Override

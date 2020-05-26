@@ -1,7 +1,16 @@
 package com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +18,24 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.travelpet.R;
+import com.example.travelpet.dao.VeiculoDAO;
+import com.example.travelpet.model.Veiculo;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class addVeiculoFragment extends Fragment
 {
 
     private TextInputEditText modelo,marca,ano,placa,crvl;
     private String modeloV, marcaV, anoV, placaV, crvlV;
-    Button btfotocrvl,btcadastrar;
+    private Button btfotocrvl,btcadastrar;
+    private byte [] fotoCRVL;
+    private Veiculo veiculo;
+    private VeiculoDAO veiculoDAO;
 
+    private static final int SELECAO_GALERIA = 200;
 
     public addVeiculoFragment() {}
 
@@ -36,17 +54,100 @@ public class addVeiculoFragment extends Fragment
 
         btfotocrvl  =   view.findViewById(R.id.bt_addVeiculo_fotocrvl);
         btcadastrar =   view.findViewById(R.id.bt_addVeiculo_cadastrar);
+        veiculoDAO = new VeiculoDAO();
 
+        onclickBtCadastrar();
+        onclickBtFotocrvl();
 
         return view;
     }
 
-
     public void onclickBtCadastrar()
-    {}
+    {
+        btcadastrar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(fotoCRVL != null)
+                {
+                    marcaV  =   marca.getText().toString().toUpperCase();
+                    modeloV =   modelo.getText().toString().toUpperCase();
+                    anoV    =   ano.getText().toString().toUpperCase();
+                    placaV  =   placa.getText().toString().toUpperCase();
+                    crvlV   =   crvl.getText().toString().toUpperCase();
+
+                    if (verificaCampos()== "completo")
+                    {
+                        veiculo = new Veiculo();
+                        veiculo.setMarcaVeiculo(marcaV);
+                        veiculo.setModeloVeiculo(modeloV);
+                        veiculo.setAnoVeiculo(anoV);
+                        veiculo.setPlacaVeiculo(placaV);
+                        veiculo.setCrvlVeiculo(crvlV);
+                        veiculo.setFotoCrvl(fotoCRVL);
+                        veiculoDAO.salvarVeiculo(veiculo);
+
+                        ToastIt("Veículo Salvo");
+
+                        getActivity().onBackPressed();
+                    }
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        getActivity();
+        if (resultCode == Activity.RESULT_OK)
+        {
+            try
+            {
+                Uri localImagemSelecionada = data.getData();
+
+                Cursor returnCursor = getActivity().getContentResolver().query(localImagemSelecionada,null,null,null,null);
+                returnCursor.moveToFirst();
+
+                Bitmap imagem = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),localImagemSelecionada);
+
+                if ( imagem != null )
+                {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imagem.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                    fotoCRVL = baos.toByteArray();
+
+                    btfotocrvl.setText("Mudar foto");
+
+                    ToastIt("Sucesso ao selecionar Imagem");
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void onclickBtFotocrvl()
-    {}
+    {
+        btfotocrvl.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if(i.resolveActivity(getActivity().getPackageManager()) != null)
+                {
+                    startActivityForResult(i,SELECAO_GALERIA);
+                }
+            }
+        });
+    }
 
     public String verificaCampos ()
     {
@@ -76,5 +177,6 @@ public class addVeiculoFragment extends Fragment
     {
         Toast.makeText(getActivity().getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
     }
+
 
 }
