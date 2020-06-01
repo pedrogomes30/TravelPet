@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.travelpet.R;
+import com.example.travelpet.dao.VeiculoDAO;
+import com.example.travelpet.model.Veiculo;
 
 import org.w3c.dom.Text;
 
@@ -20,6 +23,7 @@ public class ExibirVeiculoFragment extends Fragment {
 
     private TextView placa,modelo,marca,ano,crvl,status;
     private Button btExcluirVeiculo;
+    private Veiculo veiculo;
 
     public ExibirVeiculoFragment() {}
 
@@ -28,6 +32,8 @@ public class ExibirVeiculoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        View view =  inflater.inflate(R.layout.fragment_exibir_veiculo, container, false);
+       veiculo = new Veiculo();
+       veiculo =  getArguments().getParcelable("veiculo");
 
        placa    =   view.findViewById(R.id.tv_exibir_placa);
        modelo   =   view.findViewById(R.id.tv_exibir_modelo);
@@ -37,9 +43,8 @@ public class ExibirVeiculoFragment extends Fragment {
        status   =   view.findViewById(R.id.tv_exibir_status);
 
        btExcluirVeiculo = view.findViewById(R.id.bt_excluirVeiculo);
-
-
-
+       setarTextViews();
+       onClickExcluirVeiculo();
 
        return view;
     }
@@ -51,10 +56,20 @@ public class ExibirVeiculoFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-
+                VeiculoDAO veicDAO = new VeiculoDAO();
+                Toast.makeText(getActivity(),veicDAO.excluirVeiculo(veiculo),Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(view).navigate(R.id.action_veiculoExcluido);
             }
         });
     }
 
-
+    public void setarTextViews ()
+    {
+        placa.setText(veiculo.getPlacaVeiculo());
+        modelo.setText(veiculo.getModeloVeiculo());
+        marca.setText(veiculo.getMarcaVeiculo());
+        ano.setText(veiculo.getAnoVeiculo());
+        crvl.setText(veiculo.getCrvlVeiculo());
+        status.setText(veiculo.getStatus());
+    }
 }

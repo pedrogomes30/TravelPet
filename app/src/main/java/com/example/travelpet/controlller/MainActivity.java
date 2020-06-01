@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     }else if(statusCadastroMotorista.equals("Aprovado")){
 
-                                        startActivity(new Intent(getApplicationContext(), TestePerfilMotoristaActivity.class));
+                                        startActivity(new Intent(getApplicationContext(),PerfilMotoristaActivity.class));
                                         finish();
                                     }
 

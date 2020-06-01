@@ -44,7 +44,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         View view = inflater.inflate(R.layout.fragment_map_motorista, container, false);
 
         //Criando Mapa
-        mapView = (MapView) mapView.findViewById(R.id.mapMotorista);
+        mapView =  view.findViewById(R.id.mapMotorista);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 

@@ -3,39 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_viagem"
-            android:icon="@drawable/baseline_map_black_24dp"
+            android:id="@+id/mapMotoristaFragment"
+            android:icon="@drawable/ic_stat_name"
             android:title="@string/menu_viagem" />
+
         <item
-            android:id="@+id/nav_pagamento"
-            android:icon="@drawable/ic_pagamento_cinza_24dp"
-            android:title="@string/menu_pagamento" />
-        <item
-            android:id="@+id/nav_meus_veiculos"
+            android:id="@+id/listaVeiculosFragment"
             android:icon="@drawable/ic_viagem_cinza_24dp"
             android:title="Meus Veículos" />
+
         <item
-            android:id="@+id/nav_configuracao"
-            android:icon="@drawable/ic_configuracao_cinza_24dp"
-            android:title="@string/menu_configuracao" />
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_info_cinza_24dp"
+            android:title="@string/menu_info" />
 
-    </group>
 
-    <item android:title="Comunicação">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_contato"
-                    android:icon="@drawable/ic_contato_cinza_24dp"
-                    android:title="@string/menu_contato" />
-                <item
-                    android:id="@+id/nav_info"
-                    android:icon="@drawable/ic_info_cinza_24dp"
-                    android:title="@string/menu_info" />
-            </group>
-        </menu>
-    </item>
+        <item
+            android:id="@+id/moto_logout"
+            android:icon="@drawable/ic_exit"
+            android:title="Logout"
+            />
 
 </menu>

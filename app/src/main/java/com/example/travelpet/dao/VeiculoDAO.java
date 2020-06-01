@@ -1,11 +1,8 @@
 package com.example.travelpet.dao;
 
-import android.app.Activity;
 import android.net.Uri;
-import android.widget.Toast;
 
 import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.model.Usuario;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,10 +14,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 public class VeiculoDAO
 {
@@ -28,7 +28,7 @@ public class VeiculoDAO
     private Veiculo veiculo;
     int tipo,quantidade;
     String resultado,fotoURL;
-    ArrayList<Veiculo> veiculos;
+    private ArrayList<Veiculo> veiculos;
 
     public VeiculoDAO (){}
 
@@ -48,7 +48,6 @@ public class VeiculoDAO
     //Metodo para salvar o veículo no firebase
     public String salvarVeiculoRealtimeDatabase (Veiculo veiculo)
     {
-
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference veiculosRef = fireDB.getReference().child("veiculos").child(veiculo.getIdUsuario()).child(veiculo.getIdVeiculo());
 
@@ -77,15 +76,16 @@ public class VeiculoDAO
         return resultado;
     }
 
-    public String salvarVeiculo (Veiculo veic)
+    public void salvarVeiculo (Veiculo veic)
     {
+        String url;
         this.veiculo = veic;
         veiculo.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        systemOUT("idUsuario salvarVeiculo() =" + veiculo.getIdUsuario());
         veiculo.setIdVeiculo(gerarPushKeyIdVeiculo());
-        veiculo.setFotoCRVLurl(salvaImagemCRVL(veiculo.getFotoCrvl()));
-        String foto = salvarVeiculoRealtimeDatabase(veiculo);
+        systemOUT("idVeiculo salvarVeiculo() =" + veiculo.getIdVeiculo());
+        salvaImagemCRVL(veiculo.getFotoCrvl());
 
-        return foto;
     }
 
     public String salvaImagemCRVL (byte[] foto )
@@ -96,6 +96,9 @@ public class VeiculoDAO
                 .child(veiculo.getIdVeiculo())
                 .child(veiculo.getIdVeiculo() + ".FOTO.CRVL.JPEG");
 
+        systemOUT("idUsuario salvaImagemCRVL ="+veiculo.getIdUsuario());
+        systemOUT("idVeiculo salvaImagemCRVL ="+veiculo.getIdVeiculo());
+
         UploadTask uploadTask = reference.putBytes(foto);
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
         {
@@ -104,7 +107,10 @@ public class VeiculoDAO
             {
                 Task<Uri> uri = snapshot.getStorage().getDownloadUrl();
                 while(!uri.isComplete());
-
+                fotoURL= uri.getResult().toString();
+                veiculo.setFotoCRVLurl(fotoURL);
+                salvarVeiculoRealtimeDatabase(veiculo);
+                System.out.println("uri da foto CRVL: " + fotoURL);
             }
         }).addOnFailureListener(new OnFailureListener()
         {
@@ -114,14 +120,12 @@ public class VeiculoDAO
                 fotoURL = "vai que vai";
             }
         });
-        fotoURL= reference.getDownloadUrl().getResult().toString();
-        System.out.println(fotoURL);
+
         return fotoURL;
     }
 
     public ArrayList<Veiculo> receberVeiculos ()
     {
-        veiculos = new ArrayList<Veiculo>();
         DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("veiculos")
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
@@ -133,8 +137,10 @@ public class VeiculoDAO
 
                 for (DataSnapshot dados : dataSnapshot.getChildren())
                 {
-                    veiculos.add(dados.getValue(Veiculo.class));
+                    veiculo = dados.getValue(Veiculo.class);
+                    veiculos.add(veiculo);
                 }
+
             }
 
                 @Override
@@ -151,7 +157,7 @@ public class VeiculoDAO
 
         DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("veiculos")
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+                .child(veiculo.getIdUsuario());
         referencia.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -169,24 +175,45 @@ public class VeiculoDAO
         return quantidade;
     }
 
-    public String excluirVeiculo(Veiculo veiculo)
+    public String excluirVeiculo(final Veiculo veiculo)
     {
-        if (contarVeiculos() <= 1)
+
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("veiculos")
+                .child(veiculo.getIdUsuario());
+        referencia.addValueEventListener(new ValueEventListener()
         {
-            excluirVeiculoStorage(veiculo);
-            excluirVeiculoRealTime(veiculo);
-        }
-        else
-        {
-            resultado = "Você só possui 1 Veículo ";
-        }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.getChildrenCount() > 1)
+                {
+                    excluirVeiculoRealTime(veiculo);
+                    excluirVeiculoStorage(veiculo);
+                    resultado = "Veículo = "+veiculo.getIdVeiculo()+" excluido com sucesso";
+
+                }
+                else
+                {
+                    resultado = "Você só possui 1 Veículo ";
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+                resultado = "teste";
+
+            }
+        });
+
 
         return resultado;
     }
 
     public String excluirVeiculoStorage (Veiculo veiculo)
     {
-
         StorageReference veiculoStorage = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("veiculos")
                 .child(veiculo.getIdUsuario())
@@ -200,15 +227,22 @@ public class VeiculoDAO
             {
                 resultado = "CRVL excluido Com Sucesso !!!!!!!!";
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Imagem não encontrada");
+            }
         });
         return resultado;
+
     }
 
     public String excluirVeiculoRealTime (final Veiculo veiculo)
     {
+
         ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("veiculos")
-                .child(UsuarioFirebase.getIdentificadorUsuario())
+                .child(veiculo.getIdUsuario())
                 .child(veiculo.getIdVeiculo())
                 .removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>()
@@ -218,7 +252,21 @@ public class VeiculoDAO
                     {
                         resultado = "veiculo " + veiculo.getIdVeiculo() + " Excluido com Sucesso!!!";
                     }
+                }
+                ).addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        resultado =e.getMessage().toString();
+                    }
                 });
+
         return  resultado;
+    }
+
+    public void systemOUT (String mensagem )
+    {
+        System.out.println(mensagem);
     }
 }

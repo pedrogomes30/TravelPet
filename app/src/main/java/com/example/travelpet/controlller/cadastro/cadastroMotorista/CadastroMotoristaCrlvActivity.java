@@ -108,6 +108,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
                             "Sucesso ao selececionar a imagem",
                             Toast.LENGTH_SHORT).show();
 
+                    veiculo.setFotoCrvl(fotoCrvl);
                 }
             } catch (IOException e) {
                 e.printStackTrace(); // Caso ocorra um erro podemos ver aqui
@@ -132,13 +133,13 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
             enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, motorista.getTipoUsuario());
 
-            veiculo.setFotoCrvl(fotoCrvl);
-            veiculoDAO.salvarVeiculo(veiculo);
 
             motorista.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
             motorista.setEmail(UsuarioFirebase.getEmailUsuario());
             motorista.setStatusCadastro(statusCadastro);
             motoristaDAO.salvarImagemMotoristaStorage(motorista);
+
+            veiculoDAO.salvarVeiculo(veiculo);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(CadastroMotoristaCrlvActivity.this);
             builder.setTitle("Cadastro realizado com sucesso");

@@ -22,7 +22,6 @@
        android:fitsSystemWindows="true"
 
        app:menu="@menu/activity_perfil_motorista_drawer"
-       app:headerLayout="@layout/nav_header_perfil_motorista"
        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

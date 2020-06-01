@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
     private TextInputEditText campoNumeroRegistroCnh;
     private String numeroRegistroCnh;
-
+    private Button btProximo;
 
 
     @Override
@@ -52,9 +53,12 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
         motorista = intent.getParcelableExtra("motorista");
         endereco = intent.getParcelableExtra("endereco");
 
+        btProximo = findViewById(R.id.botaoProximo_cadCNH);
         campoNomeFotoCnh = findViewById(R.id.textViewNomeFotoCnh);
 
         campoNumeroRegistroCnh = findViewById(R.id.editNumeroRegistroCnh);
+
+        botaoProximoOnclick();
 
     }
 
@@ -114,6 +118,7 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
         }
     }
 
+    /*
     public void botaoProximo(View view){
         numeroRegistroCnh = campoNumeroRegistroCnh.getText().toString();
 
@@ -139,6 +144,42 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
+    */
+
+    public void botaoProximoOnclick()
+    {
+        btProximo.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                numeroRegistroCnh = campoNumeroRegistroCnh.getText().toString();
+
+                if(!numeroRegistroCnh.isEmpty() && numeroRegistroCnh.length() == 11) {
+                    if (fotoCNH != null) {
+
+                        motorista.setRegistroCnh(numeroRegistroCnh);
+                        motorista.setFotoCNH(fotoCNH);
+
+                        Intent intent = new Intent(getApplicationContext(), CadastroMotoristaFotoActivity.class);
+                        intent.putExtra("motorista", motorista);
+                        intent.putExtra("endereco", endereco);
+                        startActivity(intent);
+
+                    }else{
+                        Toast.makeText(CadastroMotoristaCnhActivity.this,
+                                "Envie a foto da CNH",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(CadastroMotoristaCnhActivity.this,
+                            "Preencha o registro da CNH corretamente",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void finish() {
         super.finish();

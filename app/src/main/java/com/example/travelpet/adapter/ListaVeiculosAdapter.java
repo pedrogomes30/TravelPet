@@ -5,18 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.travelpet.R;
 import com.example.travelpet.model.Veiculo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ListaVeiculosAdapter extends RecyclerView.Adapter<ListaVeiculosAdapter.MyViewHolder>
 {
-    ArrayList<Veiculo> listaVeiculos;
+    ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
     LayoutInflater layoutInflater;
 
     public ListaVeiculosAdapter () {}
@@ -25,7 +25,6 @@ public class ListaVeiculosAdapter extends RecyclerView.Adapter<ListaVeiculosAdap
     {
         layoutInflater = LayoutInflater.from(context);
         this.listaVeiculos = veiculos;
-
     }
 
     @NonNull
@@ -48,6 +47,7 @@ public class ListaVeiculosAdapter extends RecyclerView.Adapter<ListaVeiculosAdap
     public int getItemCount() {
         return listaVeiculos.size();
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {

@@ -68,6 +68,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
 
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
+        //navigationView.setNavigationItemSelectedListener();
 
         final ImageView campoFotoUsuario = view.findViewById(R.id.imageViewPerfil);
         final TextView  campoNomeUsuario = view.findViewById(R.id.textNomeUsuario);

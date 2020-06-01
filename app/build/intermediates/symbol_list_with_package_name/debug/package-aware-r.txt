@@ -1265,6 +1265,7 @@ drawable ic_configuracao_cinza_24dp
 drawable ic_contato_cinza_24dp
 drawable ic_editar_branco_24dp
 drawable ic_especie_spinner
+drawable ic_exit
 drawable ic_galeria_cinza_24dp
 drawable ic_gato_spinner
 drawable ic_info_cinza_24dp
@@ -1283,6 +1284,7 @@ drawable ic_roedor_spinner
 drawable ic_seta_branca_voltar_24dp
 drawable ic_seta_laranja_proximo_24dp
 drawable ic_spinner_especie_arrow_drop_down_circle_24dp
+drawable ic_stat_name
 drawable ic_viagem_cinza_24dp
 drawable ic_wallet_white_24dp
 drawable iconperfil
@@ -1358,6 +1360,7 @@ id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
 id action0
+id action_addVeiculo
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -1368,16 +1371,21 @@ id action_bar_title
 id action_container
 id action_context_bar
 id action_divider
+id action_exibirVeiculo
 id action_image
+id action_mapMotoristaFragment_to_listaVeiculosFragment
 id action_menu_divider
 id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
 id action_text
+id action_veiculoCadastrado
+id action_veiculoExcluido
 id actions
 id activity_chooser_view_content
 id add
+id addVeiculoFragment
 id adicionarAnimal
 id adjust_height
 id adjust_width
@@ -1400,6 +1408,7 @@ id botaoGaleria
 id botaoMotorista
 id botaoPassageiro
 id botaoProximo
+id botaoProximo_cadCNH
 id botaoSair
 id botaoSalvar
 id bottom
@@ -1412,6 +1421,7 @@ id btProximo
 id btProximoVeiculo
 id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
+id bt_excluirVeiculo
 id btn_holder
 id buttonChamarMotorista
 id buttonEnviarCNH
@@ -1503,6 +1513,7 @@ id et_addVeiculo_crvl
 id et_addVeiculo_marca
 id et_addVeiculo_modelo
 id et_addVeiculo_placa
+id exibirVeiculoFragment
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1520,6 +1531,9 @@ id glide_custom_view_target_tag
 id gone
 id group_divider
 id groups
+id guideline
+id guideline2
+id guideline3
 id header
 id header_text
 id heading
@@ -1536,6 +1550,7 @@ id imageButtonCamera
 id imageButtonGaleria
 id imageFotoAnimalLista
 id imageView
+id imageView2
 id imageViewAtualizarNomeUsuario
 id imageViewAtualizarSobrenomeUsuario
 id imageViewCircleFotoPerfil
@@ -1543,6 +1558,7 @@ id imageViewFotoAnimal
 id imageViewLapisNome
 id imageViewLapisRacaAnimal
 id imageViewPerfil
+id imageViewPerfilMotorista
 id info
 id invisible
 id invisible_frame
@@ -1562,6 +1578,7 @@ id linearLayoutRacaAnimal
 id linearLayoutSobrenomeUsuario
 id listMode
 id list_item
+id listaVeiculosFragment
 id logo
 id logoAppTravelPet
 id logoTravelPet
@@ -1576,6 +1593,8 @@ id middle
 id mini
 id mobile_navigation
 id moto_drawer_layout
+id moto_logout
+id moto_nav_host_fragment
 id moto_nav_view
 id motorista_navigation
 id mtrl_child_content_container
@@ -1589,7 +1608,6 @@ id nav_controller_view_tag
 id nav_host_fragment
 id nav_info
 id nav_meus_animais
-id nav_meus_veiculos
 id nav_pagamento
 id nav_viagem
 id nav_view
@@ -1697,6 +1715,7 @@ id terrain
 id text
 id text2
 id textEmail
+id textEmailMotorista
 id textEspecieAnimal
 id textInputBairro
 id textInputCep
@@ -1718,6 +1737,7 @@ id textInputSobrenome
 id textInputTelefone
 id textInputUf
 id textNomeAnimal
+id textNomeMotorista
 id textNomeUsuario
 id textPorteAnimal
 id textRacaAnimal
@@ -1725,6 +1745,7 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textView
+id textView6
 id textViewBoasVindas
 id textViewBoasVindas3
 id textViewCNH
@@ -1785,6 +1806,12 @@ id tvSpinnerLayout
 id tv_adapterVeiculoMarca
 id tv_adapterVeiculoModelo
 id tv_adapterVeiculoPlaca
+id tv_exibir_ano
+id tv_exibir_crvl
+id tv_exibir_marca
+id tv_exibir_modelo
+id tv_exibir_placa
+id tv_exibir_status
 id tv_fragAddVeiculo
 id unchecked
 id uniform
@@ -1909,6 +1936,7 @@ layout design_text_input_password_icon
 layout fragment_add_veiculo
 layout fragment_configuracao
 layout fragment_contato
+layout fragment_exibir_veiculo
 layout fragment_lista_veiculos
 layout fragment_map_motorista
 layout fragment_pagamento
@@ -2033,6 +2061,7 @@ string common_signin_button_text_long
 string crvl_do_ve_culo
 string default_web_client_id
 string descricao
+string dono_de_animal
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
 string facebook_application_id
@@ -2149,6 +2178,7 @@ string menu_pagamento
 string menu_sair
 string menu_viagem
 string modelo_do_veiculo
+string motorista
 string mtrl_chip_close_icon_content_description
 string nav_app_bar_navigate_up_description
 string nav_app_bar_open_drawer_description

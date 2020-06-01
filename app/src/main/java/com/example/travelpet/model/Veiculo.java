@@ -62,14 +62,15 @@ public class Veiculo implements Parcelable {
 
     public void setCrvlVeiculo(String crvlVeiculo) {this.crvlVeiculo = crvlVeiculo;}
 
+    public String getFotoCRVLurl() { return fotoCRVLurl; }
+
+    public void setFotoCRVLurl(String fotoCRVLurl) { this.fotoCRVLurl = fotoCRVLurl; }
+
     @Exclude
     public byte[] getFotoCrvl() { return fotoCrvl;}
 
     public void setFotoCrvl(byte[] fotoCrvl) { this.fotoCrvl = fotoCrvl; }
 
-    public String getFotoCRVLurl() { return fotoCRVLurl; }
-
-    public void setFotoCRVLurl(String fotoCRVLurl) { this.fotoCRVLurl = fotoCRVLurl; }
 
     //public String getCapacidadeAnimal() {return capacidadeAnimal;}
 

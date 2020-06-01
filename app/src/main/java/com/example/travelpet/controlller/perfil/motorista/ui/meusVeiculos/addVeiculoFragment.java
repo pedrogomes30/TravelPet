@@ -6,22 +6,19 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.navigation.Navigation;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.travelpet.R;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -55,6 +52,7 @@ public class addVeiculoFragment extends Fragment
         btfotocrvl  =   view.findViewById(R.id.bt_addVeiculo_fotocrvl);
         btcadastrar =   view.findViewById(R.id.bt_addVeiculo_cadastrar);
         veiculoDAO = new VeiculoDAO();
+
 
         onclickBtCadastrar();
         onclickBtFotocrvl();
@@ -90,7 +88,7 @@ public class addVeiculoFragment extends Fragment
 
                         ToastIt("Veículo Salvo");
 
-                        getActivity().onBackPressed();
+                        Navigation.findNavController(view).navigate(R.id.action_veiculoCadastrado);
                     }
                 }
             }

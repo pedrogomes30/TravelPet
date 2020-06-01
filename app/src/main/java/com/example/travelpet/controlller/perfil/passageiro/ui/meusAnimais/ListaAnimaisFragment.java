@@ -88,6 +88,7 @@ public class ListaAnimaisFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), EditarAnimalActivity.class);
                     intent.putExtra("animalSelecionado", animalSelecionado);
                     startActivity(intent);
+
                 }
 
                 @Override
@@ -125,7 +126,6 @@ public class ListaAnimaisFragment extends Fragment {
                 for( DataSnapshot dados: dataSnapshot.getChildren() ){
                     Animal animal = dados.getValue(Animal.class);
                     listaAnimais.add ( animal );
-
 
                 }
                 adapter.notifyDataSetChanged();

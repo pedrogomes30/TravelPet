@@ -93,12 +93,12 @@
         android:textColor="@color/colorApp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/botaoProximo"
+        app:layout_constraintBottom_toTopOf="@+id/botaoProximo_cadCNH"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/botaoProximo"
+        android:id="@+id/botaoProximo_cadCNH"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -106,7 +106,6 @@
         android:layout_marginBottom="32dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
-        android:onClick="botaoProximo"
         android:text="Próximo"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
