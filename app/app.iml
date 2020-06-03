@@ -186,5 +186,6 @@
     <orderEntry type="library" name="Gradle: com.github.Cutta:GifView:1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.medyo:android-about-page:1.2.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: de.hdodenhof:circleimageview:3.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: dev.ahamed.mva2:adapter:2.0.0-alpha01@aar" level="project" />
   </component>
 </module>

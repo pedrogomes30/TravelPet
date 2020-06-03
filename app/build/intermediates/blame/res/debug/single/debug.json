@@ -88,12 +88,12 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\ic_editar_branco_24dp.xml"
     },
     {
-        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_foreground.png"
-    },
-    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\anim_activity_filho_saindo.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\anim\\activity_filho_saindo.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_logo_travel_pet_laranja.png.flat",
@@ -112,6 +112,10 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\giphy.gif"
     },
     {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_done.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xxhdpi\\ic_done.png"
+    },
+    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_lixeira_24dp.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\ic_lixeira_24dp.xml"
     },
@@ -122,6 +126,10 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_adapterlistaveiculos_bs.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\adapterlistaveiculos_bs.xml"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_edit_text_branco_seletor.xml.flat",
@@ -188,6 +196,10 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\edit_text_branco.xml"
     },
     {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_dialog_viagem_solicitada.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\dialog_viagem_solicitada.xml"
+    },
+    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_logo_travel_pet.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-xhdpi\\ic_logo_travel_pet.png"
     },
@@ -214,6 +226,10 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_done.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-mdpi\\ic_done.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
@@ -304,6 +320,10 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\anim\\activity_pai_saindo.xml"
     },
     {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_close.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xxhdpi\\ic_close.png"
+    },
+    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_nav_header_perfil_passageiro.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\nav_header_perfil_passageiro.xml"
     },
@@ -360,6 +380,10 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\ic_marcador_usuario_24dp.xml"
     },
     {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_done.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-anydpi-v24\\ic_done.xml"
+    },
+    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_ave_spinner.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\ic_ave_spinner.xml"
     },
@@ -370,6 +394,14 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\navigation_mobile_navigation.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\navigation\\mobile_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_done.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xhdpi\\ic_done.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_close.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-anydpi-v24\\ic_close.xml"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\anim_activity_pai_entrando.xml.flat",
@@ -412,6 +444,10 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_logo_travel_pet.xml"
     },
     {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_done.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-hdpi\\ic_done.png"
+    },
+    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\font_comfortaa_regular.ttf.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\font\\comfortaa_regular.ttf"
     },
@@ -422,6 +458,10 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_tela_branca_login.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\tela_branca_login.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_close.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-mdpi\\ic_close.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_viagem.xml.flat",
@@ -442,6 +482,10 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_logo_travel_pet_laranja.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\logo_travel_pet_laranja.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_close.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xhdpi\\ic_close.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_motorista_foto.xml.flat",
@@ -536,12 +580,12 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\menu\\activity_perfil_motorista_drawer.xml"
     },
     {
-        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_lista_animais_fragment.xml.flat",
-        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\lista_animais_fragment.xml"
-    },
-    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_exit.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xhdpi\\ic_exit.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_lista_animais_fragment.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\lista_animais_fragment.xml"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\navigation_motorista_navigation.xml.flat",
@@ -554,6 +598,14 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_animal_foto.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_animal_foto.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_layout_bottom_sheet_motorista.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\layout_bottom_sheet_motorista.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_close.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-hdpi\\ic_close.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_logo_travel_pet_laranja.png.flat",
@@ -582,5 +634,9 @@
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add_veiculo.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\fragment_add_veiculo.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bottom_sheet_background.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\bottom_sheet_background.xml"
     }
 ]

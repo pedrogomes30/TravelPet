@@ -1,5 +1,6 @@
 package com.example.travelpet.controlller.perfil.motorista;
 
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Motorista;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,10 +38,11 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
     private AppBarConfiguration mAppBarConfiguration;
     private DatabaseReference referencia;
     private FirebaseAuth autenticacao;
-
     private ImageView imgvHeader;
     private TextView nomeHeader, emailHeader;
     private NavigationView navigationView;
+    private Dialog dialog;
+
 
 
     @Override
@@ -52,8 +55,7 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
         DrawerLayout drawer = findViewById(R.id.moto_drawer_layout);
         navigationView = findViewById(R.id.moto_nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
-
-
+        dialog = new Dialog(this);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.mapMotoristaFragment, R.id.listaVeiculosFragment)
                 .setDrawerLayout(drawer)
@@ -63,17 +65,30 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
         NavigationUI.setupActionBarWithNavController(this,navController,mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView,navController);
 
-
         View view  = navigationView.inflateHeaderView(R.layout.nav_header_perfil_motorista);
-
 
         imgvHeader = view.findViewById(R.id.imageViewPerfilMotorista);
         nomeHeader = view.findViewById(R.id.textNomeMotorista);
         emailHeader = view.findViewById(R.id.textEmailMotorista);
 
         configuraHeader();
-
+        setOnclickTeste();
     }
+
+    public void setOnclickTeste()
+    {
+        dialog.setContentView(R.layout.dialog_viagem_solicitada);
+        dialog.setTitle("Viagem Solicitada");
+        imgvHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+            }
+        });
+    }
+
+
+
 
     public void configuraHeader ()
     {

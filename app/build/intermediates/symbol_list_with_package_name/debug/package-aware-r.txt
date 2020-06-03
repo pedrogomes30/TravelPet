@@ -1192,6 +1192,7 @@ drawable about_icon_youtube
 drawable avd_hide_password
 drawable avd_show_password
 drawable baseline_map_black_24dp
+drawable bottom_sheet_background
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -1261,8 +1262,10 @@ drawable ic_atencao_laranja_24dp
 drawable ic_ave_spinner
 drawable ic_cachorro_spinner
 drawable ic_camera_cinza_24dp
+drawable ic_close
 drawable ic_configuracao_cinza_24dp
 drawable ic_contato_cinza_24dp
+drawable ic_done
 drawable ic_editar_branco_24dp
 drawable ic_especie_spinner
 drawable ic_exit
@@ -1412,6 +1415,7 @@ id botaoProximo_cadCNH
 id botaoSair
 id botaoSalvar
 id bottom
+id bottom_sheet_motorista_container
 id browser_actions_header_text
 id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
@@ -1421,8 +1425,11 @@ id btProximo
 id btProximoVeiculo
 id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
+id bt_bs_motorista
 id bt_excluirVeiculo
 id btn_holder
+id button3
+id button4
 id buttonChamarMotorista
 id buttonEnviarCNH
 id buttonPanel
@@ -1433,6 +1440,7 @@ id button_next
 id button_resend_email
 id button_sign_in
 id cancel_action
+id card_adapter_motorista_bs
 id center
 id center_horizontal
 id center_vertical
@@ -1441,6 +1449,10 @@ id checkBoxTermos
 id checkbox
 id checked
 id chronometer
+id ci_animal1
+id ci_animal2
+id ci_animal3
+id circleImageView
 id circleImageViewFotoAnimal
 id circular
 id clip_horizontal
@@ -1448,6 +1460,7 @@ id clip_vertical
 id collapseActionView
 id confirmation_code
 id confirmation_code_layout
+id constraintLayout
 id container
 id content
 id contentPanel
@@ -1517,6 +1530,7 @@ id exibirVeiculoFragment
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fab_disponibilidade
 id fill
 id fill_horizontal
 id fill_vertical
@@ -1534,6 +1548,12 @@ id groups
 id guideline
 id guideline2
 id guideline3
+id guideline4
+id guideline5
+id guideline6
+id guideline7
+id guideline8
+id guideline9
 id header
 id header_text
 id heading
@@ -1644,6 +1664,7 @@ id radioButtonPequeno
 id radioGroupPorteAnimal
 id recyclerViewListaAnimais
 id recyclerViewListaVeiculos
+id recycler_bs_motorista
 id resend_barrier
 id resend_code
 id right
@@ -1745,6 +1766,7 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textView
+id textView2
 id textView6
 id textViewBoasVindas
 id textViewBoasVindas3
@@ -1806,6 +1828,9 @@ id tvSpinnerLayout
 id tv_adapterVeiculoMarca
 id tv_adapterVeiculoModelo
 id tv_adapterVeiculoPlaca
+id tv_ci_animal1
+id tv_ci_animal2
+id tv_ci_animal3
 id tv_exibir_ano
 id tv_exibir_crvl
 id tv_exibir_marca
@@ -1813,6 +1838,9 @@ id tv_exibir_modelo
 id tv_exibir_placa
 id tv_exibir_status
 id tv_fragAddVeiculo
+id tv_marcaveiculo_bs
+id tv_modeloveiculo_bs
+id tv_placaveiculo_bs
 id unchecked
 id uniform
 id unlabeled
@@ -1908,6 +1936,7 @@ layout activity_splash
 layout activity_teste_perfil_motorista
 layout adapter_lista_animais
 layout adapterlistaveiculos
+layout adapterlistaveiculos_bs
 layout app_bar_perfil_motorista
 layout app_bar_perfil_passageiro
 layout browser_actions_context_menu_page
@@ -1933,6 +1962,7 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout dialog_viagem_solicitada
 layout fragment_add_veiculo
 layout fragment_configuracao
 layout fragment_contato
@@ -1965,6 +1995,7 @@ layout fui_register_email_layout
 layout fui_welcome_back_email_link_prompt_layout
 layout fui_welcome_back_idp_prompt_layout
 layout fui_welcome_back_password_prompt_layout
+layout layout_bottom_sheet_motorista
 layout lista_animais_fragment
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
@@ -2400,6 +2431,8 @@ style Base_Widget_Design_TabLayout
 style Base_Widget_MaterialComponents_Chip
 style Base_Widget_MaterialComponents_TextInputEditText
 style Base_Widget_MaterialComponents_TextInputLayout
+style BottomSheetDialogTheme
+style BottomSheetStyle
 style CardView
 style CardView_Dark
 style CardView_Light

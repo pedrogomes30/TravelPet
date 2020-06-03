@@ -58,9 +58,12 @@ dependencies {
     // Dependência utilizada para usar o mapa
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
+    // Dependência do MultiViewAdapter
+    implementation 'dev.ahamed.mva2:adapter:2.0.0-alpha01'
+
     //          DEPEDENCIAS DO VIACEP
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //compile 'com.android.support:appcompat-v7:25.1.0'

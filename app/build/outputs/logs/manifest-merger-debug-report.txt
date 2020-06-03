@@ -23,6 +23,7 @@ MERGED from [com.github.medyo:android-about-page:1.2.5] C:\Users\rodri\.gradle\c
 MERGED from [com.google.firebase:firebase-storage:19.0.1] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\6a04a5af4bafe4a830d83cba2d6fc040\jetified-firebase-storage-19.0.1\AndroidManifest.xml:15:1-39:12
 MERGED from [de.hdodenhof:circleimageview:3.0.1] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\b9a3d08a9b0ea0862554ce5d16316a8a\jetified-circleimageview-3.0.1\AndroidManifest.xml:2:1-11:12
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\c68fd95edbf036eb6e25b894ffe98cc4\jetified-play-services-maps-17.0.0\AndroidManifest.xml:17:1-38:12
+MERGED from [dev.ahamed.mva2:adapter:2.0.0-alpha01] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\69594efc09ebdbf70fe69659c18f60e2\jetified-adapter-2.0.0-alpha01\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\20b74a44cb999bb67575dc51a3f48f05\jetified-firebase-auth-interop-18.0.0\AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-analytics:17.2.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\d6752681fad6685caa22a550dcc7ab42\jetified-firebase-analytics-17.2.0\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-measurement-api:17.2.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\eb8828f0422e5f8a719b6c66e08a639f\jetified-play-services-measurement-api-17.2.0\AndroidManifest.xml:17:1-36:12
@@ -336,6 +337,8 @@ MERGED from [de.hdodenhof:circleimageview:3.0.1] C:\Users\rodri\.gradle\caches\t
 MERGED from [de.hdodenhof:circleimageview:3.0.1] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\b9a3d08a9b0ea0862554ce5d16316a8a\jetified-circleimageview-3.0.1\AndroidManifest.xml:5:5-7:41
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\c68fd95edbf036eb6e25b894ffe98cc4\jetified-play-services-maps-17.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\c68fd95edbf036eb6e25b894ffe98cc4\jetified-play-services-maps-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [dev.ahamed.mva2:adapter:2.0.0-alpha01] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\69594efc09ebdbf70fe69659c18f60e2\jetified-adapter-2.0.0-alpha01\AndroidManifest.xml:20:5-22:41
+MERGED from [dev.ahamed.mva2:adapter:2.0.0-alpha01] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\69594efc09ebdbf70fe69659c18f60e2\jetified-adapter-2.0.0-alpha01\AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\20b74a44cb999bb67575dc51a3f48f05\jetified-firebase-auth-interop-18.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\20b74a44cb999bb67575dc51a3f48f05\jetified-firebase-auth-interop-18.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-analytics:17.2.0] C:\Users\rodri\.gradle\caches\transforms-2\files-2.1\d6752681fad6685caa22a550dcc7ab42\jetified-firebase-analytics-17.2.0\AndroidManifest.xml:5:5-44
