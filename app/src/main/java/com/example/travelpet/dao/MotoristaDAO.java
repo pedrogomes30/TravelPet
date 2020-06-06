@@ -1,21 +1,19 @@
 package com.example.travelpet.dao;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
-import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.Motorista;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -26,7 +24,8 @@ public class MotoristaDAO {
     public MotoristaDAO() {}
 
     // Método para salvar os dados do usuário no firebase
-    public void  salvarMotoristaRealtimeDatabase(Motorista motorista){
+    public void  salvarMotoristaRealtimeDatabase(Motorista motorista, final Activity activityAtual,
+                                                 final int tipoSave, final ProgressDialog progressDialog){
 
         DatabaseReference motoristaRefRealtime = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("motorista")
@@ -34,7 +33,11 @@ public class MotoristaDAO {
         motoristaRefRealtime.setValue(motorista).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
+                // tipoSave == 1 - CadastroMotoristaCrlv
+                if(tipoSave == 1){
+                    TelaCarregamento.pararCarregamento(progressDialog);
+                    Mensagem.mensagemCadastrarMotorista(activityAtual);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -44,9 +47,11 @@ public class MotoristaDAO {
         });
     }
 
-
     // Método salva imagens no Storage, depois chama metodo pra salvar dados no storage
-    public void salvarImagemMotoristaStorage(final Motorista motorista){
+    public void salvarImagemMotoristaStorage(final Motorista motorista,
+                                             final Activity activityAtual,
+                                             final int tipoSave,
+                                             final ProgressDialog progressDialog){
 
         // Salvando FotoCnh no Storage
         StorageReference imagemRefFotoCnh = ConfiguracaoFirebase.getFirebaseStorage()
@@ -86,7 +91,7 @@ public class MotoristaDAO {
 
                         motorista.setFotoCnhUrl(fotoCnhUrl);
                         motorista.setFotoPerfilUrl(fotoPerfilUrl);
-                        salvarMotoristaRealtimeDatabase(motorista);
+                        salvarMotoristaRealtimeDatabase(motorista, activityAtual, tipoSave, progressDialog);
 
                     }
                 });

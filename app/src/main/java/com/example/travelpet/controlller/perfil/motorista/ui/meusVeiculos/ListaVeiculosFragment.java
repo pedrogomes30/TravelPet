@@ -1,43 +1,33 @@
 package com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.example.travelpet.R;
-import com.example.travelpet.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.adapter.ListaVeiculosAdapter;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
 import com.example.travelpet.helper.RecyclerItemClickListener;
+import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ListaVeiculosFragment extends Fragment {

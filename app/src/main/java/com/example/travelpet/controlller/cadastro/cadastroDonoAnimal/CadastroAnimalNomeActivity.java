@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,7 +21,7 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
     private Endereco endereco;
     private Animal animal;
 
-    private TextInputEditText campoNomeANimal;
+    private TextInputEditText campoNomeAnimal;
     private String nomeAnimal;
 
     @Override
@@ -35,30 +36,29 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
         donoAnimal = intent.getParcelableExtra("donoAnimal");
         endereco = intent.getParcelableExtra("endereco");
 
-        campoNomeANimal = findViewById(R.id.editNomeAnimal);
+        campoNomeAnimal = findViewById(R.id.editNomeAnimal);
     }
-    
+
     public void botaoProximo(View view){
 
-       nomeAnimal = campoNomeANimal.getText().toString();
+        nomeAnimal = campoNomeAnimal.getText().toString();
 
         // Verifica se não esta vazia
-        if(!nomeAnimal.isEmpty()) {
+        if(!VerificaCampo.isVazio(nomeAnimal)) {
 
             animal.setNomeAnimal(nomeAnimal);
 
-            Intent intent = new Intent(CadastroAnimalNomeActivity.this, CadastroAnimalEspecieRacaActivity.class);
+            Intent intent = new Intent(this, CadastroAnimalEspecieRacaActivity.class);
             intent.putExtra("donoAnimal",donoAnimal);
             intent.putExtra("endereco",endereco);
             intent.putExtra ("animal", animal);
             startActivity(intent);
 
-        // Se estiver vazio então envia essa mensagem
         }else{
 
-            Toast.makeText(CadastroAnimalNomeActivity.this,
+            Toast.makeText(this,
                     "Preencha o nome do animal",
-                     Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
         }
     }
     @Override

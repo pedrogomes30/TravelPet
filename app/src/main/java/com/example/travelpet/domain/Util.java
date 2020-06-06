@@ -2,10 +2,6 @@ package com.example.travelpet.domain;
 
 import android.app.Activity;
 
-/**
- * Created by viniciusthiengo on 02/01/17.
- */
-
 public class Util {
     private Activity activity;
     private int[] ids;

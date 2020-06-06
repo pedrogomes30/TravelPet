@@ -7,14 +7,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by viniciusthiengo on 02/01/17.
- */
-// Usada para fazer busca dos dados, no caso de dados de endereço
 public class JsonRequest {
     public static String request(String uri ) throws Exception {
 
-        //fazer aqui a conexão com a url, com a uri, que agente vai informar , la no parâmetro da “String uri”
+        //fazer aqui a conexão com a uri, que agente vai formar , la no parâmetro da “String uri”
         URL url = new URL( uri );
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         InputStream in = new BufferedInputStream(urlConnection.getInputStream());

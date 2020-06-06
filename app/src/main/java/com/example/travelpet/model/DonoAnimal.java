@@ -1,21 +1,9 @@
 package com.example.travelpet.model;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 public class DonoAnimal extends Usuario implements Parcelable {
 

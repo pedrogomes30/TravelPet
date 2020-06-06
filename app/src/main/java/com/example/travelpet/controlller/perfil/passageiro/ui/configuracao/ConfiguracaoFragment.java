@@ -1,6 +1,6 @@
 package com.example.travelpet.controlller.perfil.passageiro.ui.configuracao;
 
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,37 +10,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.MainActivity;
-import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
-import com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.ListaAnimaisFragment;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.DonoAnimalDAO;
-import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.dao.EnderecoDAO;
+import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.domain.Util;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.helper.MascaraCampos;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
+import com.example.travelpet.helper.UsuarioFirebase;
+import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.DonoAnimal;
-import com.example.travelpet.model.Usuario;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 
@@ -51,71 +47,73 @@ import static android.app.Activity.RESULT_OK;
 
 public class ConfiguracaoFragment extends Fragment {
 
-    private DonoAnimal    donoAnimal;
+    private DonoAnimal donoAnimal;
+    private Endereco endereco;
     private DonoAnimalDAO donoAnimalDAO;
+    private EnderecoDAO enderecoDAO;
+    private ProgressDialog progressDialog;
+
+    // Variável usada no processo de pegar os dados do database
+    private String nome,sobrenome, cpf, fotoPerfilUrl, telefone,
+                   cep, logradouro, bairro, localidade, uf;
+
+    private String telefoneEdit, cepEdit, logradouroEdit,
+                   bairroEdit, localidadeEdit, ufEdit;
 
     private CircleImageView campoFotoPerfil;
-    private EditText        campoNome, campoSobrenome;
+    private TextView campoNome, campoCpf;
+    private TextInputEditText campoTelefone,campoCep,campoLogradouro,
+                              campoBairro, campoLocalidade, campoUf;
     private ImageButton     botaoCamera, botaoGaleria;
     private Button          botaoSalvar, botaoSair;
 
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
     private static final int SELECAO_GALERIA = 200;
-    private Bitmap imagem = null;
-    private byte[] fotoUsuario;
+    private byte[] fotoPerfil;
 
-    // Variável usada no processo de pegar os dados do database
-    private String nome,sobrenome, fotoPerfilUrl;
-    private String nomeEdit, sobrenomeEdit;
-
-    // Variável usada no processo de trocar de Fragment
-    private ListaAnimaisFragment listaAnimaisFragment;
-    private ConfiguracaoFragment configuracaoFragment;
+    private Util util;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_configuracao, container, false);
 
         donoAnimalDAO = new DonoAnimalDAO();
+        enderecoDAO = new EnderecoDAO();
+        progressDialog = new ProgressDialog(getActivity());
 
         campoFotoPerfil     =   root.findViewById(R.id.imageViewCircleFotoPerfil);
-        campoNome           =   root.findViewById(R.id.editTextNomeUsuario);
-        campoSobrenome      =   root.findViewById(R.id.editTextSobrenomeUsuario);
+        campoNome           =   root.findViewById(R.id.textViewNomeUsuario);
+        campoCpf            =   root.findViewById(R.id.textViewCpfUsuario);
+        campoTelefone       =   root.findViewById(R.id.editTelefone);
+        campoCep            =   root.findViewById(R.id.editCep);
+
+        //campoCep.addTextChangedListener( new CepListener( getActivity() ) );
+
+        campoLogradouro     =   root.findViewById(R.id.editLogradouro); // rua
+        campoBairro         =   root.findViewById(R.id.editBairro);
+        campoLocalidade     =   root.findViewById(R.id.editLocalidade); // cidade
+        campoUf             =   root.findViewById(R.id.editUf);
         botaoCamera         =   root.findViewById(R.id.imageButtonCamera);
         botaoGaleria        =   root.findViewById(R.id.imageButtonGaleria);
         botaoSalvar         =   root.findViewById(R.id.botaoSalvar);
         botaoSair           =   root.findViewById(R.id.botaoSair);
 
-        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child( "donoAnimal" )
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-        donoAnimalRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
-                // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
-                nome            =   donoAnimal.getNome();
-                sobrenome       =   donoAnimal.getSobrenome();
-                fotoPerfilUrl   =   donoAnimal.getFotoPerfilUrl();
+        /* Entidade que vai permitir o travamento das views
+        util = new Util(getActivity(),
+                R.id.editCep2,
+                R.id.editLogradouro2,
+                R.id.editBairro2,
+                R.id.editLocalidade2,
+                R.id.editUf2); */
 
-                //          Enviando os dados para o layout XML
-                if(!fotoPerfilUrl.equals("")){
 
-                    Uri fotoPerfilUri = Uri.parse(fotoPerfilUrl);
-                    Glide.with(getActivity()).load( fotoPerfilUri ).into( campoFotoPerfil );
 
-                }else{
-                    campoFotoPerfil.setImageResource(R.drawable.iconperfiloficial);
-                }
+        MascaraCampos.mascaraTelefone(campoTelefone);
+        MascaraCampos.mascaraCep(campoCep);
 
-                campoNome.setText(nome);
-                campoSobrenome.setText(sobrenome);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
+        recuperarDadosDatabaseDonoAnimal();
+        recuperarDadosDatabaseEndereco();
 
         //              Configurando função dos botões
         botaoCamera.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +126,7 @@ public class ConfiguracaoFragment extends Fragment {
                 }
             }
         });
+
         botaoGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +134,6 @@ public class ConfiguracaoFragment extends Fragment {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if (i.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(i,SELECAO_GALERIA);
-
                 }
             }
         });
@@ -144,114 +142,263 @@ public class ConfiguracaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                nomeEdit      = campoNome.getText().toString().toUpperCase();
-                sobrenomeEdit = campoSobrenome.getText().toString().toUpperCase();
-
-                // Verificando se a imagem não está vazia
-                if(fotoUsuario != null){
-
-                    donoAnimal.setNome(nomeEdit);
-                    donoAnimal.setSobrenome(sobrenomeEdit);
-                    donoAnimalDAO.salvarImagemDonoAnimalStorage(fotoUsuario, donoAnimal);
-                    fotoUsuario = null;
-
-                    Toast.makeText(getActivity(),
-                            "Atualização  feita com sucesso",
-                            Toast.LENGTH_SHORT).show();
-
-
-                }else if(!nome.equals(nomeEdit) || !sobrenome.equals(sobrenomeEdit)){
-
-                    donoAnimal.setNome(nomeEdit);
-                    donoAnimal.setSobrenome(sobrenomeEdit);
-                    donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal);
-
-                    Toast.makeText(getActivity(),
-                            "Atualização feita com sucesso",
-                            Toast.LENGTH_SHORT).show();
-
-                }
+                recuperarDadosEditados();
+                salvarAlteracoes();
             }
         });
 
         botaoSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Caixa de diálogo
-                AlertDialog.Builder msgBox = new AlertDialog.Builder(getContext());
-                msgBox.setTitle("Saindo...");
-                msgBox.setMessage("Tem certeza que deseja sair desta conta ?");
-                msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AuthUI.getInstance()
-                                .signOut(getContext())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                    }
-                                } );
-                        startActivity(new Intent(getActivity(), MainActivity.class));
-
-                    }
-                });
-                msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                msgBox.show();
+                Mensagem.mensagemDeslogarUsuario(getActivity());
             }
         });
 
         return root;
     }
 
+    /* Metodo para retornar a url
+    public String getUriZipCode(){
+        return "https://viacep.com.br/ws/"+campoCep.getText().toString()+"/json/";
+    }
+
+    // metodo que permite o acesso ao util
+    public void lockFields( boolean isToLock ){
+        util.lockFields( isToLock );
+    }
+
+    // Mapeamento
+    public void setDataViews(Endereco endereco){
+
+        setField( R.id.editLogradouro2, endereco.getLogradouro() );
+        setField( R.id.editBairro2, endereco.getBairro() );
+        setField( R.id.editLocalidade2, endereco.getLocalidade() );
+        setField( R.id.editUf2, endereco.getUf() );;
+    }
+
+    private void setField( int id, String data ) {
+
+        ((EditText) getView().findViewById(id)).setText( data );
+    }
+    */
+
+    public void recuperarDadosDatabaseDonoAnimal(){
+        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child( "donoAnimal" )
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        donoAnimalRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
+                // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
+                fotoPerfilUrl   =   donoAnimal.getFotoPerfilUrl();
+                nome            =   donoAnimal.getNome();
+                sobrenome       =   donoAnimal.getSobrenome();
+                cpf             =   donoAnimal.getCpf();
+                telefone        =   donoAnimal.getTelefone();
+
+
+                //          Enviando os dados para o layout XML
+                if(!fotoPerfilUrl.equals("")){
+
+                    Uri fotoPerfilUri = Uri.parse(fotoPerfilUrl);
+                    Glide.with(getActivity()).load( fotoPerfilUri ).into( campoFotoPerfil );
+
+                }else{
+                    campoFotoPerfil.setImageResource(R.drawable.iconperfiloficial);
+                }
+
+                campoNome.setText(nome+" "+sobrenome);
+                campoCpf.setText(cpf);
+                campoTelefone.setText(telefone);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    public void recuperarDadosDatabaseEndereco(){
+
+        DatabaseReference enderecoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child( "enderecosDonoAnimal" )
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        enderecoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                endereco = dataSnapshot.getValue(Endereco.class);
+                cep = endereco.getCep();
+                logradouro = endereco.getLogradouro();
+                bairro = endereco.getBairro();
+                localidade = endereco.getLocalidade();
+                uf = endereco.getUf();
+
+                campoCep.setText(cep);
+                campoLogradouro.setText(logradouro);
+                campoBairro.setText(bairro);
+                campoLocalidade.setText(localidade);
+                campoUf.setText(uf);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    public void recuperarDadosEditados(){
+
+        telefoneEdit    =   campoTelefone.getText().toString();
+        cepEdit         =   campoCep.getText().toString();
+        logradouroEdit  =   campoLogradouro.getText().toString();
+        bairroEdit      =   campoBairro.getText().toString();
+        localidadeEdit  =   campoLocalidade.getText().toString();
+        ufEdit          =   campoUf.getText().toString().toUpperCase();
+    }
+
+    public void salvarAlteracoes(){
+
+        int tipoSave = 2; // tipoLocalSave = 2 - Atualizar dados DonoAnimal
+
+        if(fotoPerfil != null){
+            if(validarCampos()) {
+                TelaCarregamento.iniciarCarregamento(progressDialog);
+
+                if ((!VerificaCampo.isMesmoValor(cep, cepEdit)) ||
+                    (!VerificaCampo.isMesmoValor(logradouro, logradouroEdit)) ||
+                    (!VerificaCampo.isMesmoValor(bairro, bairroEdit)) ||
+                    (!VerificaCampo.isMesmoValor(localidade, localidadeEdit)) ||
+                    (!VerificaCampo.isMesmoValor(uf, ufEdit))) {
+
+                    endereco.setCep(cepEdit);
+                    endereco.setLogradouro(logradouroEdit);
+                    endereco.setBairro(bairroEdit);
+                    endereco.setLocalidade(localidadeEdit);
+                    endereco.setUf(ufEdit);
+                    enderecoDAO.salvarEnderecoRealtimeDatabase(endereco,
+                            donoAnimal.getTipoUsuario(),
+                            tipoSave = 0, progressDialog);
+
+                }
+
+                if (!VerificaCampo.isMesmoValor(telefone, telefoneEdit)) {
+                    donoAnimal.setTelefone(telefoneEdit);
+                }
+
+                donoAnimal.setFotoPerfil(fotoPerfil);
+                donoAnimalDAO.salvarImagemDonoAnimalStorage(donoAnimal, progressDialog,
+                        tipoSave = 2, getActivity());
+                fotoPerfil = null;
+
+            }
+        }else if((!VerificaCampo.isMesmoValor(cep,cepEdit) ||
+                  !VerificaCampo.isMesmoValor(logradouro,logradouroEdit) ||
+                  !VerificaCampo.isMesmoValor(bairro, bairroEdit) ||
+                  !VerificaCampo.isMesmoValor(localidade,localidadeEdit) ||
+                  !VerificaCampo.isMesmoValor(uf,ufEdit))){
+
+            if(validarCampos()) {
+
+                TelaCarregamento.iniciarCarregamento(progressDialog);
+
+                if (!VerificaCampo.isMesmoValor(telefone, telefoneEdit)) {
+
+                    donoAnimal.setTelefone(telefoneEdit);
+                    donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog,
+                            tipoSave = 0, getActivity());
+                }
+                endereco.setCep(cepEdit);
+                endereco.setLogradouro(logradouroEdit);
+                endereco.setBairro(bairroEdit);
+                endereco.setLocalidade(localidadeEdit);
+                endereco.setUf(ufEdit);
+                enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, donoAnimal.getTipoUsuario(),
+                        tipoSave = 2, progressDialog);
+                Mensagem.mensagemAtualizarDonoAnimal(getActivity());
+            }
+
+        }else if(!VerificaCampo.isMesmoValor(telefone,telefoneEdit)){
+
+            if(validarCampos()) {
+
+                TelaCarregamento.iniciarCarregamento(progressDialog);
+
+                donoAnimal.setTelefone(telefoneEdit);
+                donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog,
+                        tipoSave = 2, getActivity());
+            }
+        }
+    }
+
+    public Boolean validarCampos() {
+
+        Boolean validado = false;
+        if(!VerificaCampo.isVazio(telefoneEdit) && telefoneEdit.length() == 15) {
+            if (!VerificaCampo.isVazio(cepEdit) && cepEdit.length() == 9) {
+                if (!VerificaCampo.isVazio(logradouroEdit)) {
+                    if (!VerificaCampo.isVazio(bairroEdit)) {
+                        if (!VerificaCampo.isVazio(localidadeEdit)) {
+                            if (validarUf(ufEdit)) {
+
+                                validado = true;
+
+                            } else { ToastIt("Preencha o UF corretamente");}
+                        } else { ToastIt("Preencha a Cidade");}
+                    } else { ToastIt("Preencha o Bairro");}
+                } else { ToastIt("Preencha o Logradouro");}
+            }else { ToastIt("Preencha o CEP corretamente");}
+        }else{ ToastIt("Preenche o telefone corretamente"); }
+
+        return validado;
+    }
+
+    public boolean validarUf(String uf){
+        Boolean validado = false;
+        String[] estados = getResources().getStringArray(R.array.states);
+        for( int i = 0; i < estados.length; i++ ) {
+            if (uf.equals(estados[i]) ) {
+                validado = true;
+                //break;
+            }
+        }
+        return validado;
+    }
+
+    public void ToastIt (String mensagem) {
+        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
+    }
+
     //          Método para verificar de onde será pego a foto, da camera ou galeria
-    /* Capturando (Recuperando a imagem, sobre-escrevendo o método
-    // requestCode = saber se e SELECAO_GALERIA definido no começo
-    // resultCode = código de resultado para saber se deu certo ou não a execução do onActivityResult
-    // Intent data = dados retornados , no caso a imagem */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Teste resultCode
-        // se for igual ao RESULT_OK, deu td ok
         if( resultCode == RESULT_OK){
             // null = por que pode receber dados de dois lugares , camera ou galeria
-            //Bitmap imagem = null;
+            Bitmap imagem = null;
 
             try{
 
                 switch (requestCode){
                     case SELECAO_CAMERA:
-                        // data = parâmetro refênciado la encima no "onActivityResult"
-                        // getExtras() = recupera recursos extras
-                        // get("data"); = recebe uma String ("data) que o dado retornado
-                        // (Bitmap) = e um cash para Bitmap, referenciando que o tipo da variável
                         imagem = (Bitmap) data.getExtras().get("data");
                         break;
                     case SELECAO_GALERIA:
                         // Recupera o local da imagem selecionada
-                        // data.getData(); = local da imagem
                         Uri localImagemSelecionada = data.getData();
-                        // getActivity(). = foi necessário usar pois estamos dentro de um Fragment
-                        // é não uma Activity
                         // getContentResolver() = responsável por recupera conteúdo dentro do app android
                         imagem = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), localImagemSelecionada);
                         break;
                 }
-                // Verificando se a imagem não está vazia
+
                 if(imagem != null) {
                     // Envia a imagem para o XML
                     campoFotoPerfil.setImageBitmap(imagem);
-
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    // Converte a imagem para um array de byts
-                    fotoUsuario = baos.toByteArray();
+                    // Converte a imagem para um array de bytes
+                    fotoPerfil = baos.toByteArray();
                 }
 
                 }catch (Exception e){

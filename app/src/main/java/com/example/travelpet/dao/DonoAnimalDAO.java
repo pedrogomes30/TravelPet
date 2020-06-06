@@ -1,31 +1,29 @@
 package com.example.travelpet.dao;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.travelpet.model.Animal;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.DonoAnimal;
-import com.example.travelpet.model.Usuario;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class DonoAnimalDAO {
-    //private DonoAnimal donoAnimal;
-    //private byte[] fotoUsuario;
-
 
     public DonoAnimalDAO() {}
 
     // Método para salvar os dados do usuário no firebase
-    public void  salvarDonoAnimalRealtimeDatabase(DonoAnimal donoAnimal){
+    public void salvarDonoAnimalRealtimeDatabase(DonoAnimal donoAnimal, final ProgressDialog progressDialog,
+                                                 final int tipoSave, final Activity activity){
 
         DatabaseReference donoAnimalRefRealtime = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("donoAnimal")
@@ -34,6 +32,12 @@ public class DonoAnimalDAO {
             @Override
             public void onSuccess(Void aVoid) {
 
+
+                // tipoSave == 2 - Atualizar dados DonoAnimal - ConfiguracaoFragment
+                if(tipoSave == 2){
+                    TelaCarregamento.pararCarregamento(progressDialog);
+                    Mensagem.mensagemAtualizarDonoAnimal(activity);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -42,17 +46,11 @@ public class DonoAnimalDAO {
             }
         });
     }
-    /*
-    public void salvarDonoAnimal (byte[] fotoU, DonoAnimal donoA)
-    {
-        this.donoAnimal = donoA;
-        this.fotoUsuario = fotoU;
-        donoAnimal.setId(UsuarioFirebase.getIdentificadorUsuario());
-        salvarFotoDonoAnimalStorage(fotoUsuario);
-    } */
+    //----------------------------------------------------------------------------------------------
 
     // Método salva primeiro a foto do usuario no storage e depois salvar os dados no database
-    public void salvarImagemDonoAnimalStorage(byte[] fotoUsuario, final DonoAnimal donoAnimal){
+    public void salvarImagemDonoAnimalStorage(final DonoAnimal donoAnimal, final ProgressDialog progressDialog,
+                                              final int tipoLocalSave, final Activity activity){
         // Salvar imagem no firebase
         StorageReference donoAnimalRefStorage = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("donoAnimal")
@@ -60,7 +58,7 @@ public class DonoAnimalDAO {
                 .child(donoAnimal.getIdUsuario()+".FOTO.PERFIL.JPEG");
 
 
-        UploadTask uploadTask = donoAnimalRefStorage.putBytes(fotoUsuario);
+        UploadTask uploadTask = donoAnimalRefStorage.putBytes(donoAnimal.getFotoPerfil());
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -73,7 +71,7 @@ public class DonoAnimalDAO {
                 String fotoPerfilUrl = url.toString();
 
                 donoAnimal.setFotoPerfilUrl(fotoPerfilUrl);
-                salvarDonoAnimalRealtimeDatabase(donoAnimal);
+                salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog, tipoLocalSave, activity);
 
             }
         }).addOnFailureListener(new OnFailureListener() {

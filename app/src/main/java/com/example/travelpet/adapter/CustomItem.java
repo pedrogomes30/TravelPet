@@ -2,9 +2,9 @@ package com.example.travelpet.adapter;
 
 public class CustomItem {
     private String spinnerItemName;
-    private  int spinnerItemImage;
+    private  String spinnerItemImage;
 
-    public CustomItem(String spinnerItemName, int spinnerItemImage) {
+    public CustomItem(String spinnerItemName, String spinnerItemImage) {
         this.spinnerItemName = spinnerItemName;
         this.spinnerItemImage = spinnerItemImage;
     }
@@ -13,7 +13,7 @@ public class CustomItem {
         return spinnerItemName;
     }
 
-    public int getSpinnerItemImage() {
+    public String getSpinnerItemImage() {
         return spinnerItemImage;
     }
 }

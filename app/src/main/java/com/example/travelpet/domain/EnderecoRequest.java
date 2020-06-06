@@ -7,20 +7,13 @@ import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
 
-//import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
-//import br.com.thiengo.marketplaceapp.SignUpActivity;
-
-/**
- * Created by viniciusthiengo on 03/01/17.
- */
-
 public class EnderecoRequest extends AsyncTask<Void, Void, Endereco> {
     // Referencia fraca
     private WeakReference<CadastroUsuarioDadosActivity> activity;
 
     // Construtor
     public EnderecoRequest(CadastroUsuarioDadosActivity activity ){
-        this.activity = new WeakReference<>( activity );
+        this.activity = new WeakReference<CadastroUsuarioDadosActivity>( activity );
     }
 
     @Override // Serve para travar antes da requisição

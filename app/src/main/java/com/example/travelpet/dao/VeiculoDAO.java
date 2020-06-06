@@ -2,7 +2,10 @@ package com.example.travelpet.dao;
 
 import android.net.Uri;
 
+import com.example.travelpet.controlller.perfil.passageiro.ui.configuracao.ConfiguracaoFragment;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

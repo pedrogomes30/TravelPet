@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
 import com.example.travelpet.helper.RecyclerItemClickListener;
+import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +53,7 @@ public class ListaAnimaisFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String fluxoDados = "perfilUsuario";
+                String fluxoDados = "listaAnimais";
                 DonoAnimal donoAnimal = new DonoAnimal();
                 donoAnimal.setFluxoDados(fluxoDados);
 
@@ -88,7 +88,6 @@ public class ListaAnimaisFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), EditarAnimalActivity.class);
                     intent.putExtra("animalSelecionado", animalSelecionado);
                     startActivity(intent);
-
                 }
 
                 @Override
@@ -126,6 +125,7 @@ public class ListaAnimaisFragment extends Fragment {
                 for( DataSnapshot dados: dataSnapshot.getChildren() ){
                     Animal animal = dados.getValue(Animal.class);
                     listaAnimais.add ( animal );
+
 
                 }
                 adapter.notifyDataSetChanged();

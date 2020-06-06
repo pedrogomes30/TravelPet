@@ -35,7 +35,7 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
         radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
 
-        verificaTipoPorte(porteAnimal);
+        verificarPorte(porteAnimal);
 
     }
 
@@ -46,20 +46,20 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
             animal.setPorteAnimal(porteAnimal);
 
-            Intent intent = new Intent(CadastroAnimalPorteActivity.this, CadastroAnimalObservacaoActivity.class);
+            Intent intent = new Intent(this, CadastroAnimalObservacaoActivity.class);
             intent.putExtra ("donoAnimal",donoAnimal);
             intent.putExtra ("endereco",endereco);
             intent.putExtra ("animal",animal);
             startActivity(intent);
 
         }else{
-            Toast.makeText(CadastroAnimalPorteActivity.this,
+            Toast.makeText(this,
                     "Selecione o porte do seu Animal",
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void verificaTipoPorte(String vtp) {
+    public void verificarPorte(String vtp) {
 
         // .setOnCheckedChangeListener(); = Verifica qual item foi selecionado dentro do RadioGroup
         //new RadioGroup.OnCheckedChangeListener = imstancia um objeto que dentro dele tem um metodo para recuperar o item selecionado

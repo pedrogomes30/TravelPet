@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.domain.Endereco;
-import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Motorista;
-import com.example.travelpet.model.Usuario;
 
 public class CadastroMotoristaTermoActivity extends AppCompatActivity {
 
@@ -46,16 +44,16 @@ public class CadastroMotoristaTermoActivity extends AppCompatActivity {
         if ( checkBoxTermos.isChecked()){
 
             //      Enviando dados para a Activity CadastroEspecie
-            Intent intent = new Intent(CadastroMotoristaTermoActivity.this, CadastroMotoristaCnhActivity.class);
+            Intent intent = new Intent(this, CadastroMotoristaCnhActivity.class);
             intent.putExtra("motorista", motorista);
             intent.putExtra("endereco", endereco);
             startActivity(intent);
 
 
         }else{
-            Toast.makeText(CadastroMotoristaTermoActivity.this,
-                    "Aceite os termos para prosseguir",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                     "Aceite os termos para prosseguir",
+                           Toast.LENGTH_SHORT).show();
         }
     }
     @Override

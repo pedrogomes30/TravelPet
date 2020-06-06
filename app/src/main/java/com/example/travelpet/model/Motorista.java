@@ -1,25 +1,9 @@
 package com.example.travelpet.model;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-
-import com.example.travelpet.controlller.MainActivity;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 
 public class Motorista extends Usuario implements Parcelable {

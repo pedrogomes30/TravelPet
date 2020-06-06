@@ -47,6 +47,7 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array states
 attr action
 attr actionBarDivider
 attr actionBarItemBackground
@@ -1192,6 +1193,7 @@ drawable about_icon_youtube
 drawable avd_hide_password
 drawable avd_show_password
 drawable baseline_map_black_24dp
+drawable bg_round
 drawable bottom_sheet_background
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
@@ -1411,7 +1413,6 @@ id botaoGaleria
 id botaoMotorista
 id botaoPassageiro
 id botaoProximo
-id botaoProximo_cadCNH
 id botaoSair
 id botaoSalvar
 id bottom
@@ -1499,10 +1500,7 @@ id editNumeroRegistroCnh
 id editObservacaoAnimal
 id editSobrenomeUsuario
 id editTelefone
-id editTextNomeAnimal
-id editTextNomeUsuario
 id editTextObservacaoAnimal
-id editTextSobrenomeUsuario
 id editUf
 id edit_phone_number
 id edit_query
@@ -1571,12 +1569,8 @@ id imageButtonGaleria
 id imageFotoAnimalLista
 id imageView
 id imageView2
-id imageViewAtualizarNomeUsuario
-id imageViewAtualizarSobrenomeUsuario
 id imageViewCircleFotoPerfil
 id imageViewFotoAnimal
-id imageViewLapisNome
-id imageViewLapisRacaAnimal
 id imageViewPerfil
 id imageViewPerfilMotorista
 id info
@@ -1592,10 +1586,6 @@ id left
 id light
 id line1
 id line3
-id linearLayoutNomeAnimal
-id linearLayoutNomeUsuario
-id linearLayoutRacaAnimal
-id linearLayoutSobrenomeUsuario
 id listMode
 id list_item
 id listaVeiculosFragment
@@ -1771,11 +1761,15 @@ id textView6
 id textViewBoasVindas
 id textViewBoasVindas3
 id textViewCNH
+id textViewCPF
+id textViewCpfUsuario
 id textViewDigiteNomeAnimal
 id textViewEspecie
+id textViewEspecieAnimal
 id textViewFotoPefil
 id textViewLogin
 id textViewNome
+id textViewNomeAnimal
 id textViewNomeFotoCnh
 id textViewNomeFotoCrvl
 id textViewNomeFotoMotorista
@@ -1783,7 +1777,7 @@ id textViewNomeUsuario
 id textViewObervacao
 id textViewPorte
 id textViewRaca
-id textViewSobrenomeUsuario
+id textViewRacaAnimal
 id textViewTextoCNH
 id textViewTextoCrlvMotorista
 id textViewTextoTermo
@@ -1947,7 +1941,6 @@ layout content_viagem
 layout custom_dialog
 layout custom_dropdown_layout
 layout custom_spinner_layout
-layout custom_spinner_layout_editar_animal
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -2016,6 +2009,7 @@ layout notification_template_media
 layout notification_template_media_custom
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout progress_dialog
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material

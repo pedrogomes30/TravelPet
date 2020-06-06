@@ -1,18 +1,18 @@
 package com.example.travelpet.dao;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalFotoActivity;
-import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
+import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Animal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,10 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class AnimalDAO {
-    //private Animal animal;
-    //private String fotoAnimalUrl;
-    //private int tipoLocalSave; // RealtimeDatabase
-    //private String mensagem;
+
     int quantidadeAnimais; // contar animais
 
     public AnimalDAO() {}
@@ -39,10 +36,11 @@ public class AnimalDAO {
         return chave;
     }
 
+
     //      Método para salvar os dados do animal no firebase
-    public void salvarAnimalRealtimeDatabase(Animal animal, final int tipoLocalSave,
-                                             final Activity activityAtual,
-                                             final Class<PerfilPassageiroActivity> activitySeguinte){
+    public void salvarAnimalRealtimeDatabase(Animal animal, final ProgressDialog progressDialog,
+                                             final int tipoSave,
+                                             final Activity activity){
 
         DatabaseReference animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("animais")
@@ -52,24 +50,18 @@ public class AnimalDAO {
             @Override
             public void onSuccess(Void aVoid) {
 
-                // tipoLocalSave == 1 - CadastroAnimalFotoActivity ou ListaAnimaisFragment
-                if(tipoLocalSave == 1){
-                    Toast.makeText(activityAtual,
-                            "Cadastro realizado com sucesso",
-                            Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(activityAtual, activitySeguinte);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    activityAtual.startActivity(intent);
+                TelaCarregamento.pararCarregamento(progressDialog);
+
+                // tipoSave == 1 - (cadastrarUsuario/Animal) - CadastroAnimalFotoActivity ou ListaAnimaisFragment
+                if(tipoSave == 1){
+                    Mensagem.mensagemCadastrarDados(activity);
                 }
 
-                // tipoLocalSave == 2 = EditarAnimalActivity
-                if(tipoLocalSave == 2){
-                    Toast.makeText(activityAtual,
-                            "Atualização feita com Sucesso",
-                            Toast.LENGTH_SHORT).show();
-                    activityAtual.finish();
-                    activityAtual.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+                // tipoSave == 2 - atualizar os dados do animal -  EditarAnimalActivity
+                if(tipoSave == 2){
+                    Mensagem.mensagemAtualizarAnimal(activity);
                 }
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -78,19 +70,12 @@ public class AnimalDAO {
             }
         });
     }
-    /*
-    public String salvarAnimal (byte[] fotoAnimal , Animal animal, int tipoLocalSave)
-    {
-        //this.animal = anim;
-        mensagem = salvarFotoAnimalStorage(fotoAnimal, animal, tipoLocalSave);
-
-        return mensagem;
-    } */
 
     // Método salvar a foto e os dados do animal / função salvar e atualizar
-    public void salvarImagemAnimalStorage(final Animal animal, final int tipoLocalSave,
-                                          final Activity activityAtual,
-                                          final Class<PerfilPassageiroActivity> activitySeguinte){
+    public void salvarAnimalStorage(final Animal animal,
+                                          final ProgressDialog progressDialog,
+                                          final int tipoSave,
+                                          final Activity activity){
 
         StorageReference animalStorageRef = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("animais")
@@ -109,7 +94,7 @@ public class AnimalDAO {
                 String fotoAnimalUrl = url.toString();
 
                 animal.setFotoAnimalUrl(fotoAnimalUrl);
-                salvarAnimalRealtimeDatabase(animal, tipoLocalSave, activityAtual, activitySeguinte);
+                salvarAnimalRealtimeDatabase(animal, progressDialog,tipoSave, activity);
 
 
             }
@@ -119,7 +104,6 @@ public class AnimalDAO {
 
             }
         });
-
     }
 
     public int contarAnimais () {
@@ -146,30 +130,18 @@ public class AnimalDAO {
         return quantidadeAnimais;
     }
 
-    public void  excluirAnimal(Animal animal, Activity activityAtual) {
+    public void  excluirAnimal(Animal animal, Activity activity) {
 
         quantidadeAnimais = contarAnimais();
 
-        if (quantidadeAnimais <= 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(activityAtual);
+        if (quantidadeAnimais == 1) {
 
-            builder.setTitle("Você Possui 1 animal");
-            builder.setIcon(R.drawable.ic_atencao_laranja_24dp);
-            builder.setMessage("Não e possível excluir com apenas 1 animal cadastrado");
-            builder.setCancelable(false);
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            Mensagem.mensagemImpedirExcluirAnimal(activity);
 
         }else {
 
             excluirAnimalRealTimeDatabase(animal);
-            excluirImagemAnimalStorage(animal, activityAtual);
+            excluirAnimalStorage(animal, activity);
 
         }
     }
@@ -187,7 +159,7 @@ public class AnimalDAO {
                 });
     }
 
-    public void excluirImagemAnimalStorage (Animal animal, final Activity activityAtual) {
+    public void excluirAnimalStorage (Animal animal, final Activity activity) {
 
         StorageReference animalStorageRef = ConfiguracaoFirebase.getFirebaseStorage()
                 .child("animais")
@@ -198,8 +170,9 @@ public class AnimalDAO {
         animalStorageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                activityAtual.finish();
-                activityAtual.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
+                Toast.makeText(activity, "Animal excluído com sucesso", Toast.LENGTH_SHORT).show();
+                activity.finish();
+                activity.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
             }
         });
 

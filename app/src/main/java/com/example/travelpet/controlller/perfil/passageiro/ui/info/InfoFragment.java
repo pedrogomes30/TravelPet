@@ -13,7 +13,7 @@ import mehdi.sakout.aboutpage.AboutPage;
 
 public class InfoFragment extends Fragment {
 
-    public  InfoFragment() {
+    public InfoFragment() {
         // Required empty public constructor
     }
 

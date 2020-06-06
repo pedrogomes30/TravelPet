@@ -6,12 +6,6 @@ import android.text.TextWatcher;
 
 import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
 
-//import br.com.thiengo.marketplaceapp.SignUpActivity;
-// substitui o de cima por esse caminho de baixo
-
-/**
- * Created by viniciusthiengo on 03/01/17.
- */
 
 public class CepListener implements TextWatcher {
     private Context context;
@@ -31,7 +25,7 @@ public class CepListener implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String zipCode = editable.toString();
 
-        if( editable.length() == 8 ){
+        if( editable.length() == 9 ){
             new EnderecoRequest( (CadastroUsuarioDadosActivity) context ).execute();
         }
     }

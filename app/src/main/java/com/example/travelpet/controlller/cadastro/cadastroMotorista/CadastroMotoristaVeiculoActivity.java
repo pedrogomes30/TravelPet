@@ -1,15 +1,16 @@
 package com.example.travelpet.controlller.cadastro.cadastroMotorista;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.travelpet.R;
 import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.material.textfield.TextInputEditText;
@@ -67,7 +68,7 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
                     veiculo.setPlacaVeiculo(placaV);
                     veiculo.setCrvlVeiculo(crvlV);
 
-                    Intent intent = new Intent(CadastroMotoristaVeiculoActivity.this, CadastroMotoristaCrlvActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), CadastroMotoristaCrlvActivity.class);
                     intent.putExtra("motorista", motorista);
                     intent.putExtra("endereco",endereco);
                     intent.putExtra("veiculo",veiculo);
@@ -82,15 +83,15 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
     {
         String verificado = "incompleto";
 
-        if (!marcaV.isEmpty())
+        if (!VerificaCampo.isVazio(marcaV))
         {
-            if (!modeloV.isEmpty())
+            if (!VerificaCampo.isVazio(modeloV))
             {
-                if (!anoV.isEmpty())
+                if (!VerificaCampo.isVazio(anoV))
                 {
-                    if (!placaV.isEmpty())
+                    if (!VerificaCampo.isVazio(placaV))
                     {
-                        if (!crvlV.isEmpty())
+                        if (!VerificaCampo.isVazio(crvlV))
                         {
                             verificado = "completo";
                         } else { ToastIt("Preencha o CRVL"); }
@@ -105,7 +106,7 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
 
     public void ToastIt (String mensagem)
     {
-        Toast.makeText(getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,mensagem,Toast.LENGTH_SHORT).show();
     }
 
     @Override

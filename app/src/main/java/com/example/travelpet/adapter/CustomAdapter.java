@@ -1,6 +1,7 @@
 package com.example.travelpet.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class CustomAdapter extends ArrayAdapter {
     }
 
 
-    @NonNull
+    //@NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
@@ -31,7 +33,16 @@ public class CustomAdapter extends ArrayAdapter {
         ImageView spinnerIV = convertView.findViewById(R.id.ivSpinnerLayout);
         TextView spinnerTV = convertView.findViewById(R.id.tvSpinnerLayout);
         if (item != null) {
-            spinnerIV.setImageResource(item.getSpinnerItemImage());
+
+            if(item.getSpinnerItemImage()== null){
+                spinnerIV.setImageResource(R.drawable.ic_especie_spinner);
+            }else{
+                Uri fotoEspecieSpinnerUri = Uri.parse(item.getSpinnerItemImage());
+                Glide.with(getContext())
+                        .load( fotoEspecieSpinnerUri )
+                        .into( spinnerIV);
+            }
+
             spinnerTV.setText(item.getSpinnerItemName());
         }
         return convertView;
@@ -46,7 +57,17 @@ public class CustomAdapter extends ArrayAdapter {
         ImageView dropDownIV = convertView.findViewById(R.id.ivDropDownLayout);
         TextView dropDownTV = convertView.findViewById(R.id.tvDropDownLayout);
         if (item != null) {
-            dropDownIV.setImageResource(item.getSpinnerItemImage());
+
+            if(item.getSpinnerItemImage()== null){
+                dropDownIV.setImageResource(R.drawable.ic_especie_spinner);
+            }else{
+                Uri fotoEspecieSpinnerUri = Uri.parse(item.getSpinnerItemImage());
+                Glide.with(getContext())
+                        .load( fotoEspecieSpinnerUri )
+                        .into( dropDownIV);
+            }
+
+
             dropDownTV.setText(item.getSpinnerItemName());
         }
         return convertView;

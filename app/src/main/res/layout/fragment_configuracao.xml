@@ -16,7 +16,7 @@
             android:id="@+id/imageViewCircleFotoPerfil"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/iconperfiloficial"
             app:civ_border_color="@color/colorApp"
             app:civ_border_width="3dp"
@@ -50,10 +50,10 @@
             app:srcCompat="@drawable/ic_galeria_cinza_24dp" />
 
         <TextView
-            android:id="@+id/textViewNomeUsuario"
+            android:id="@+id/textViewNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/fredoka_one_regular"
             android:text="Nome:"
@@ -61,94 +61,168 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewCircleFotoPerfil" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutNomeUsuario"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="0dp"
-            android:paddingTop="0dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewNomeUsuario"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewNomeUsuario"
-            app:layout_constraintTop_toTopOf="@+id/textViewNomeUsuario">
-
-            <EditText
-                android:id="@+id/editTextNomeUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Nome do Usuário"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/imageViewAtualizarNomeUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_editar_branco_24dp" />
-
-        </LinearLayout>
-
         <TextView
-            android:id="@+id/textViewSobrenomeUsuario"
+            android:id="@+id/textViewNomeUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
-            android:fontFamily="@font/fredoka_one_regular"
-            android:text="Sobrenome:"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/botaoSair"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNomeUsuario"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/linearLayoutSobrenomeUsuario"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="0dp"
-            android:paddingTop="0dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewSobrenomeUsuario"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="nome do Usuario"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewNome"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewSobrenomeUsuario"
-            app:layout_constraintTop_toTopOf="@+id/textViewSobrenomeUsuario">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textViewNome" />
 
-            <EditText
-                android:id="@+id/editTextSobrenomeUsuario"
-                android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textViewCPF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/fredoka_one_regular"
+            android:text="CPF:"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+
+        <TextView
+            android:id="@+id/textViewCpfUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="cpf do Usuario"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCPF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textViewCPF" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCPF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTelefone"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Sobrenome do Usuário"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:hint="Telefone"
+                android:inputType="text|phone"
+                android:maxLength="15" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/imageViewAtualizarSobrenomeUsuario"
-                android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputCep"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputTelefone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editCep"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_editar_branco_24dp" />
+                android:hint="CEP"
+                android:inputType="number"
+                android:maxLength="9" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLogradouro"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputCep">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editLogradouro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Logradouro" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputBairro"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
+            app:layout_constraintHorizontal_bias="0.593"
+            app:layout_constraintStart_toStartOf="@+id/textInputSobrenome"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLogradouro">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editBairro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLocalidade"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/botaoSalvar"
+            app:layout_constraintEnd_toStartOf="@+id/textInputUf"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputBairro"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editLocalidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputUf"
+            android:layout_width="50dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLocalidade"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textInputLocalidade">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
+                android:hint="UF"
+                android:maxLength="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/botaoSalvar"
@@ -165,6 +239,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/botaoSair"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.589"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
@@ -173,7 +248,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:background="@drawable/button_azul_seletor"
             android:text="Sair"
@@ -182,7 +257,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.578"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,20 +41,21 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         observacaoAnimal = campoObservacaoAnimal.getText().toString();
 
 
-            animal.setObservacaoAnimal(observacaoAnimal);
+        animal.setObservacaoAnimal(observacaoAnimal);
 
-                Intent intent = new Intent(CadastroAnimalObservacaoActivity.this, CadastroAnimalFotoActivity.class);
-                intent.putExtra("donoAnimal", donoAnimal);
-                intent.putExtra("endereco", endereco);
-                intent.putExtra("animal", animal);
-                startActivity(intent);
+        Intent intent = new Intent(this, CadastroAnimalFotoActivity.class);
+        intent.putExtra("donoAnimal", donoAnimal);
+        intent.putExtra("endereco", endereco);
+        intent.putExtra("animal", animal);
+        startActivity(intent);
 
     }
     @Override
-    public void finish() {
+    public  void finish() {
         super.finish();
         overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
     }
+
 
 }
 

@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:hint="CPF"
                 android:inputType="number"
-                android:maxLength="11"/>
+                android:maxLength="14"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:hint="CEP"
                 android:inputType="number"
-                android:maxLength="8" />
+                android:maxLength="9" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
