@@ -12,7 +12,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity;
 import com.example.travelpet.domain.CepListener;
-import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.domain.Util;
 import com.example.travelpet.helper.MascaraCampos;
 import com.example.travelpet.helper.ValidaCpf;

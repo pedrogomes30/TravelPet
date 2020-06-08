@@ -76,8 +76,8 @@ public class EditarAnimalActivity extends AppCompatActivity{
         campoSpinnerPorteAnimal     =   findViewById(R.id.spinnerPorteAnimal);
         campotObservacaoAnimal      =   findViewById(R.id.editTextObservacaoAnimal);
 
-        recuperarDadosAnimalSelecionado();
-        setarDadosTela();
+        getDadosAnimalSelecionado();
+        setDadosAnimalSelecionado();
 
     }
 
@@ -99,7 +99,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
     public void botaoSalvar(View view){
 
-        recuperarDadosEditados();
+        getDadosEditados();
         salvarAlteracoes();
 
     }
@@ -128,18 +128,13 @@ public class EditarAnimalActivity extends AppCompatActivity{
         builder.show();
     }
 
-    public void recuperarDadosAnimalSelecionado(){
+    public void getDadosAnimalSelecionado(){
     // Recuperar dados do animalDestinatario / escolhido
     Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
 
             animal = bundle.getParcelable("animalSelecionado");
-            // if(espcieAnimal.getNomeEspecie.equals()
-            /*
-            animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("racaAnimal")
-                .child(especieAnimal.getNomeEspecie);
-             */
+
             nomeAnimal = animal.getNomeAnimal();
             especieAnimal = animal.getEspecieAnimal();
             racaAnimal = animal.getRacaAnimal();
@@ -150,7 +145,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
         }
     }
 
-    public void setarDadosTela(){
+    public void setDadosAnimalSelecionado(){
         // Envia a foto do animal para o XML
         if (fotoAnimalUrl != null) {
             Uri fotoAnimalUri = Uri.parse(fotoAnimalUrl);
@@ -188,7 +183,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
         campoSpinnerPorteAnimal.setAdapter(adapterPorte);
     }
 
-    public void recuperarDadosEditados(){
+    public void getDadosEditados(){
 
         porteAnimalEdit      = campoSpinnerPorteAnimal.getSelectedItem().toString();
         observacaoAnimalEdit = campotObservacaoAnimal.getText().toString();

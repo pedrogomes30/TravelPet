@@ -1,7 +1,13 @@
-package com.example.travelpet.helper;
+package com.example.travelpet.dao;
 
+import android.app.Activity;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -36,6 +42,18 @@ public class UsuarioFirebase {
             fotoPerfilUrl = "";
         }
         return fotoPerfilUrl;
+    }
+
+    public static void deslogarUsuario(final Activity activityAtual){
+
+        AuthUI.getInstance()
+                .signOut(activityAtual)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                    }
+                } );
+
     }
 
 }

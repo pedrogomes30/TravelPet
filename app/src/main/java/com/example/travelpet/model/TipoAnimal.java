@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.travelpet.adapter.CustomItem;
-import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

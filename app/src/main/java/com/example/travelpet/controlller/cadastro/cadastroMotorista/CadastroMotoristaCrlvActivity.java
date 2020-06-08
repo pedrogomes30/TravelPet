@@ -19,10 +19,10 @@ import com.example.travelpet.R;
 import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.dao.MotoristaDAO;
 import com.example.travelpet.dao.VeiculoDAO;
-import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.TelaCarregamento;
-import com.example.travelpet.helper.UsuarioFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 

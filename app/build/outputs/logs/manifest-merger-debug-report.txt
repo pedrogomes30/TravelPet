@@ -215,10 +215,10 @@ activity#com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroA
 ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:37:9-110
 	android:name
 		ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:37:19-107
-activity#com.example.travelpet.controlller.MainActivity
-ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:9-62
+activity#com.example.travelpet.controlller.Login
+ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:9-55
 	android:name
-		ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:19-59
+		ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:19-52
 activity#com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity
 ADDED from C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:39:9-95
 	android:name

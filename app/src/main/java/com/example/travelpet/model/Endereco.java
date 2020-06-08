@@ -1,4 +1,4 @@
-package com.example.travelpet.domain;
+package com.example.travelpet.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

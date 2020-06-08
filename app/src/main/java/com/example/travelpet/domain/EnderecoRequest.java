@@ -3,6 +3,7 @@ package com.example.travelpet.domain;
 import android.os.AsyncTask;
 
 import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
+import com.example.travelpet.model.Endereco;
 import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;

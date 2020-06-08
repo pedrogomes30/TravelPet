@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
-import com.example.travelpet.helper.ConfiguracaoFirebase;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.DonoAnimal;

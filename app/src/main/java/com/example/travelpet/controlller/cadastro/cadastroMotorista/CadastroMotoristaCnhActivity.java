@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.Motorista;
 import com.google.android.material.textfield.TextInputEditText;

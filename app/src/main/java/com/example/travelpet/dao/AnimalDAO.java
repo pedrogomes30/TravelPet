@@ -9,10 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.example.travelpet.R;
 import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.helper.ConfiguracaoFirebase;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
-import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Animal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

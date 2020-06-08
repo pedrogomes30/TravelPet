@@ -54,7 +54,7 @@
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity" />
         <activity android:name="com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity" />
-        <activity android:name="com.example.travelpet.controlller.MainActivity" />
+        <activity android:name="com.example.travelpet.controlller.Login" />
         <activity android:name="com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

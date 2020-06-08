@@ -20,9 +20,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.helper.Mensagem;
-import com.example.travelpet.helper.UsuarioFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +34,10 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    private ImageView campoFotoUsuario ;
+    private TextView  campoNomeUsuario,campoEmailUsuario ;
+
+    private String fotoPerfilUrl, nomeUsuario, sobrenomeUsuario, emailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_passageiro);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -58,42 +61,12 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
 
-        final ImageView campoFotoUsuario = view.findViewById(R.id.imageViewPerfil);
-        final TextView  campoNomeUsuario = view.findViewById(R.id.textNomeUsuario);
-        final TextView  campoEmailUsuario = view.findViewById(R.id.textEmail);
+          campoFotoUsuario = view.findViewById(R.id.imageViewPerfil);
+          campoNomeUsuario = view.findViewById(R.id.textNomeUsuario);
+          campoEmailUsuario = view.findViewById(R.id.textEmail);
 
-        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child( "donoAnimal")
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-        donoAnimalRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+          getDadosDonoAnimalDatabase();
 
-                DonoAnimal donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
-                // Recupera dados do usuário no database para exibir no NavigationDrawer
-                String fotoPerfilUrl      =   donoAnimal.getFotoPerfilUrl();
-                String nomeUsuario        =   donoAnimal.getNome();
-                String sobrenomeUsuario   =   donoAnimal.getSobrenome();
-                String emailUsuario       =   donoAnimal.getEmail();
-
-                campoNomeUsuario.setText(nomeUsuario+" "+sobrenomeUsuario);
-                campoEmailUsuario.setText(emailUsuario);
-
-                if(!fotoPerfilUrl.equals("")){
-                    Uri fotoUsuarioUri = Uri.parse(fotoPerfilUrl);
-                    Glide.with(PerfilPassageiroActivity.this)
-                            .load( fotoUsuarioUri)
-                            .into( campoFotoUsuario);
-                }else{
-                    campoFotoUsuario.setImageResource(R.drawable.iconperfiloficial);
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
     //Menu dos 3 pontos direito da tela do toolbar
     @Override
@@ -123,6 +96,42 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void getDadosDonoAnimalDatabase(){
+
+        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child( "donoAnimal")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        donoAnimalRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                DonoAnimal donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
+                fotoPerfilUrl      =   donoAnimal.getFotoPerfilUrl();
+                nomeUsuario        =   donoAnimal.getNome();
+                sobrenomeUsuario   =   donoAnimal.getSobrenome();
+                emailUsuario       =   donoAnimal.getEmail();
+
+                campoNomeUsuario.setText(nomeUsuario+" "+sobrenomeUsuario);
+                campoEmailUsuario.setText(emailUsuario);
+
+                if(!fotoPerfilUrl.equals("")){
+                    Uri fotoUsuarioUri = Uri.parse(fotoPerfilUrl);
+                    Glide.with(PerfilPassageiroActivity.this)
+                            .load( fotoUsuarioUri)
+                            .into( campoFotoUsuario);
+                }else{
+                    campoFotoUsuario.setImageResource(R.drawable.iconperfiloficial);
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

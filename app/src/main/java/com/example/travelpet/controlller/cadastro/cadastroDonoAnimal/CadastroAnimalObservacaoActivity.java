@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.textfield.TextInputEditText;

@@ -2,10 +2,7 @@ package com.example.travelpet.dao;
 
 import android.net.Uri;
 
-import com.example.travelpet.controlller.perfil.passageiro.ui.configuracao.ConfiguracaoFragment;
 import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.helper.ConfiguracaoFirebase;
-import com.example.travelpet.helper.UsuarioFirebase;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,13 +14,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 public class VeiculoDAO
 {

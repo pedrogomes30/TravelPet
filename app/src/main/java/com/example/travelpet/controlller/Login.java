@@ -14,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
-import com.example.travelpet.helper.Login;
+import com.example.travelpet.helper.ValidarLogin;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
@@ -25,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
     FirebaseAuth fbAuth;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                Login.logarUsuario(this);
+                ValidarLogin.logarUsuario(this);
 
             }else{
 
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void signOut() {
         // [START auth_fui_signout]
-        Login.deslogarUsuario(this);
+        UsuarioFirebase.deslogarUsuario(this);
 
         ToastThis("Usuário deslogado");
         // [END auth_fui_signout]
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
             if ( permissaoResultado == PackageManager.PERMISSION_DENIED ){
 
-                Permissao.alertaValidacaoPermissao(MainActivity.this);
+                Permissao.alertaValidacaoPermissao(Login.this);
             }
         }
     }

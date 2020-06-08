@@ -92,9 +92,9 @@
 56        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity" />
 56-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:37:9-110
 56-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:37:19-107
-57        <activity android:name="com.example.travelpet.controlller.MainActivity" />
-57-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:9-62
-57-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:19-59
+57        <activity android:name="com.example.travelpet.controlller.Login" />
+57-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:9-55
+57-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:38:19-52
 58        <activity android:name="com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity" />
 58-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:39:9-95
 58-->C:\Users\rodrigo\AndroidStudioProjects\TravelPet\app\src\main\AndroidManifest.xml:39:19-92

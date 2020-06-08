@@ -8,8 +8,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.MainActivity;
+import com.example.travelpet.controlller.Login;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
+import com.example.travelpet.dao.UsuarioFirebase;
 
 public class Mensagem {
 
@@ -38,7 +39,7 @@ public class Mensagem {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent intent = new Intent(activity, MainActivity.class);
+                Intent intent = new Intent(activity, Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 activity.startActivity(intent);
             }
@@ -89,8 +90,8 @@ public class Mensagem {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                Login.deslogarUsuario(activity);
-                activity.startActivity(new Intent(activity, MainActivity.class));
+                UsuarioFirebase.deslogarUsuario(activity);
+                activity.startActivity(new Intent(activity, Login.class));
                 activity.finish();
             }
         });

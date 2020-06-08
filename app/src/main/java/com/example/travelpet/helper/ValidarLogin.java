@@ -7,12 +7,11 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalEspecieRacaActivity;
-import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
 import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity;
 import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
-import com.example.travelpet.controlller.perfil.motorista.TestePerfilMotoristaActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.Motorista;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class Login {
+public class ValidarLogin {
 
     public static void  logarUsuario(final Activity activityAtual){
 
@@ -106,18 +105,6 @@ public class Login {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-    }
-
-    public static void deslogarUsuario(final Activity activityAtual){
-
-        AuthUI.getInstance()
-                .signOut(activityAtual)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // ...
-                    }
-                } );
-
     }
 
 }

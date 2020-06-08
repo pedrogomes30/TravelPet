@@ -35,7 +35,7 @@
         <activity android:name=".controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity"></activity>
         <activity android:name=".controlller.perfil.motorista.PerfilMotoristaActivity" />
         <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalObservacaoActivity" />
-        <activity android:name=".controlller.MainActivity" />
+        <activity android:name=".controlller.Login" />
         <activity android:name=".controlller.perfil.motorista.TestePerfilMotoristaActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

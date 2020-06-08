@@ -22,14 +22,14 @@ import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.EnderecoDAO;
-import com.example.travelpet.domain.Endereco;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.domain.Util;
 import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.helper.ConfiguracaoFirebase;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.helper.MascaraCampos;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
-import com.example.travelpet.helper.UsuarioFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.textfield.TextInputEditText;
@@ -112,8 +112,8 @@ public class ConfiguracaoFragment extends Fragment {
         MascaraCampos.mascaraTelefone(campoTelefone);
         MascaraCampos.mascaraCep(campoCep);
 
-        recuperarDadosDatabaseDonoAnimal();
-        recuperarDadosDatabaseEndereco();
+        getDadosDonoAnimalDatabase();
+        getDadosEnderecoDatabase();
 
         //              Configurando função dos botões
         botaoCamera.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +142,7 @@ public class ConfiguracaoFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                recuperarDadosEditados();
+                getDadosEditados();
                 salvarAlteracoes();
             }
         });
@@ -183,7 +183,7 @@ public class ConfiguracaoFragment extends Fragment {
     }
     */
 
-    public void recuperarDadosDatabaseDonoAnimal(){
+    public void getDadosDonoAnimalDatabase(){
         DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child( "donoAnimal" )
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
@@ -192,7 +192,6 @@ public class ConfiguracaoFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
-                // Necessario pegar os dados de novo para salvar junto com a foto, nome ou sobrenome alterado de novo
                 fotoPerfilUrl   =   donoAnimal.getFotoPerfilUrl();
                 nome            =   donoAnimal.getNome();
                 sobrenome       =   donoAnimal.getSobrenome();
@@ -220,7 +219,7 @@ public class ConfiguracaoFragment extends Fragment {
         });
     }
 
-    public void recuperarDadosDatabaseEndereco(){
+    public void getDadosEnderecoDatabase(){
 
         DatabaseReference enderecoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child( "enderecosDonoAnimal" )
@@ -229,11 +228,11 @@ public class ConfiguracaoFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 endereco = dataSnapshot.getValue(Endereco.class);
-                cep = endereco.getCep();
-                logradouro = endereco.getLogradouro();
-                bairro = endereco.getBairro();
-                localidade = endereco.getLocalidade();
-                uf = endereco.getUf();
+                cep         =   endereco.getCep();
+                logradouro  =   endereco.getLogradouro();
+                bairro      =   endereco.getBairro();
+                localidade  =   endereco.getLocalidade();
+                uf          =   endereco.getUf();
 
                 campoCep.setText(cep);
                 campoLogradouro.setText(logradouro);
@@ -247,7 +246,7 @@ public class ConfiguracaoFragment extends Fragment {
         });
     }
 
-    public void recuperarDadosEditados(){
+    public void getDadosEditados(){
 
         telefoneEdit    =   campoTelefone.getText().toString();
         cepEdit         =   campoCep.getText().toString();
