@@ -35,7 +35,7 @@ public class CustomAdapter extends ArrayAdapter {
         if (item != null) {
 
             if(item.getSpinnerItemImage()== null){
-                spinnerIV.setImageResource(R.drawable.ic_especie_spinner);
+                spinnerIV.setImageResource(R.drawable.ic_spinner_especie);
             }else{
                 Uri fotoEspecieSpinnerUri = Uri.parse(item.getSpinnerItemImage());
                 Glide.with(getContext())
@@ -59,7 +59,7 @@ public class CustomAdapter extends ArrayAdapter {
         if (item != null) {
 
             if(item.getSpinnerItemImage()== null){
-                dropDownIV.setImageResource(R.drawable.ic_especie_spinner);
+                dropDownIV.setImageResource(R.drawable.ic_spinner_especie);
             }else{
                 Uri fotoEspecieSpinnerUri = Uri.parse(item.getSpinnerItemImage());
                 Glide.with(getContext())

@@ -109,7 +109,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
         animalDAO.contarAnimais();
         AlertDialog.Builder builder = new AlertDialog.Builder(EditarAnimalActivity.this);
         builder.setTitle("Excluindo...");
-        builder.setIcon(R.drawable.ic_lixeira_24dp);
+        builder.setIcon(R.drawable.ic_lixeira);
         builder.setMessage("Tem certeza que deseja excluir este animal?");
         builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
@@ -153,7 +153,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
                     .load(fotoAnimalUri)
                     .into(campoFotoAnimal);
         } else {
-            campoFotoAnimal.setImageResource(R.drawable.iconperfilanimal);
+            campoFotoAnimal.setImageResource(R.drawable.imagem_animal);
         }
 
         campoNome.setText(nomeAnimal);

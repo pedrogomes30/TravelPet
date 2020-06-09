@@ -65,7 +65,7 @@ public class ConfiguracaoFragment extends Fragment {
     private TextInputEditText campoTelefone,campoCep,campoLogradouro,
                               campoBairro, campoLocalidade, campoUf;
     private ImageButton     botaoCamera, botaoGaleria;
-    private Button          botaoSalvar, botaoSair;
+    private Button          botaoSalvar;
 
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
@@ -97,7 +97,6 @@ public class ConfiguracaoFragment extends Fragment {
         botaoCamera         =   root.findViewById(R.id.imageButtonCamera);
         botaoGaleria        =   root.findViewById(R.id.imageButtonGaleria);
         botaoSalvar         =   root.findViewById(R.id.botaoSalvar);
-        botaoSair           =   root.findViewById(R.id.botaoSair);
 
         /* Entidade que vai permitir o travamento das views
         util = new Util(getActivity(),
@@ -147,13 +146,6 @@ public class ConfiguracaoFragment extends Fragment {
             }
         });
 
-        botaoSair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Mensagem.mensagemDeslogarUsuario(getActivity());
-            }
-        });
 
         return root;
     }
@@ -206,7 +198,7 @@ public class ConfiguracaoFragment extends Fragment {
                     Glide.with(getActivity()).load( fotoPerfilUri ).into( campoFotoPerfil );
 
                 }else{
-                    campoFotoPerfil.setImageResource(R.drawable.iconperfiloficial);
+                    campoFotoPerfil.setImageResource(R.drawable.imagem_usuario);
                 }
 
                 campoNome.setText(nome+" "+sobrenome);

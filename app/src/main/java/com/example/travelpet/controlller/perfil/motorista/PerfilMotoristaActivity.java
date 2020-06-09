@@ -113,7 +113,7 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
                             .load(fotoPerfilUrl)
                             .into(imgvHeader);
                 }
-                else{ imgvHeader.setImageResource(R.drawable.iconperfiloficial); }
+                else{ imgvHeader.setImageResource(R.drawable.imagem_usuario); }
             }
 
             @Override

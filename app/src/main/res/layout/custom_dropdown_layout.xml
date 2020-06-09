@@ -9,7 +9,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:padding="10dp"
-        android:src="@drawable/ic_especie_spinner" />
+        android:src="@drawable/ic_spinner_especie" />
 
     <TextView
         android:id="@+id/tvDropDownLayout"

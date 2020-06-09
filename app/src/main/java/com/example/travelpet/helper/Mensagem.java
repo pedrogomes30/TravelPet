@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.travelpet.R;
-import com.example.travelpet.controlller.Login;
+import com.example.travelpet.controlller.LoginActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.UsuarioFirebase;
 
@@ -39,7 +39,7 @@ public class Mensagem {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent intent = new Intent(activity, Login.class);
+                Intent intent = new Intent(activity, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 activity.startActivity(intent);
             }
@@ -68,7 +68,7 @@ public class Mensagem {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Você Possui 1 animal");
-        builder.setIcon(R.drawable.ic_atencao_laranja_24dp);
+        builder.setIcon(R.drawable.ic_atencao_);
         builder.setMessage("Não e possível excluir com apenas 1 animal cadastrado");
         builder.setCancelable(false);
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -80,26 +80,4 @@ public class Mensagem {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-    public static void mensagemDeslogarUsuario(final Activity activity){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Saindo...");
-        builder.setMessage("Tem certeza que deseja sair desta conta ?");
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                UsuarioFirebase.deslogarUsuario(activity);
-                activity.startActivity(new Intent(activity, Login.class));
-                activity.finish();
-            }
-        });
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {}
-        });
-        builder.show();
-    }
-
 }

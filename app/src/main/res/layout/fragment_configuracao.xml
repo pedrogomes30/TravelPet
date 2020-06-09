@@ -17,7 +17,7 @@
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/iconperfiloficial"
+            android:src="@drawable/imagem_usuario"
             app:civ_border_color="@color/colorApp"
             app:civ_border_width="3dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageViewCircleFotoPerfil"
             app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@drawable/ic_camera_cinza_24dp" />
+            app:srcCompat="@drawable/ic_camera" />
 
         <ImageButton
             android:id="@+id/imageButtonGaleria"
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageButtonCamera"
             app:layout_constraintTop_toTopOf="@+id/imageViewCircleFotoPerfil"
             app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@drawable/ic_galeria_cinza_24dp" />
+            app:srcCompat="@drawable/ic_galeria" />
 
         <TextView
             android:id="@+id/textViewNome"
@@ -230,34 +230,16 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:background="@drawable/button_laranja_seletor"
             android:text="Salvar"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/botaoSair"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.589"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/botaoSair"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_azul_seletor"
-            android:text="Sair"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.578"
+            app:layout_constraintHorizontal_bias="0.589"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_viagem" />
 
     <fragment
-        android:id="@+id/nav_pagamento"
-        android:name="com.example.travelpet.controlller.perfil.passageiro.ui.pagamento.PagamentoFragment"
-        android:label="@string/menu_pagamento"
-        tools:layout="@layout/fragment_pagamento" />
-
-    <fragment
         android:id="@+id/nav_meus_animais"
         android:name="com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.ListaAnimaisFragment"
         android:label="@string/menu_meus_animais"
@@ -29,20 +23,17 @@
         android:label="@string/menu_configuracao"
         tools:layout="@layout/fragment_configuracao" />
 
-
-    <fragment
-        android:id="@+id/nav_contato"
-        android:name="com.example.travelpet.controlller.perfil.passageiro.ui.contato.ContatoFragment"
-        android:label="@string/menu_contato"
-        tools:layout="@layout/fragment_contato" />
-
-
     <fragment
         android:id="@+id/nav_info"
         android:name="com.example.travelpet.controlller.perfil.passageiro.ui.info.InfoFragment"
         android:label="@string/menu_info"
         tools:layout="@layout/fragment_info" />
 
+    <fragment
+        android:id="@+id/nav_sair"
+        android:name="com.example.travelpet.controlller.perfil.passageiro.ui.pagamento.SairFragment"
+        android:label=""
+        tools:layout="@layout/fragment_sair" />
 
 
 </navigation>

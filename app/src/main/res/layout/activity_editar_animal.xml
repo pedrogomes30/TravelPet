@@ -30,7 +30,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/iconperfilanimal"
+            android:src="@drawable/imagem_animal"
             app:civ_border_color="@color/colorApp"
             app:civ_border_width="3dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
             app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@drawable/ic_camera_cinza_24dp" />
+            app:srcCompat="@drawable/ic_camera" />
 
         <ImageButton
             android:id="@+id/botaoGaleria"
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toEndOf="@+id/botaoCamera"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
             app:layout_constraintVertical_bias="0.897"
-            app:srcCompat="@drawable/ic_galeria_cinza_24dp" />
+            app:srcCompat="@drawable/ic_galeria" />
 
         <TextView
             android:id="@+id/textViewNome"

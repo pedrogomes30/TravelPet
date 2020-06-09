@@ -15,7 +15,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="10dp"
-            android:src="@drawable/ic_especie_spinner" />
+            android:src="@drawable/ic_spinner_especie" />
 
         <TextView
             android:id="@+id/tvSpinnerLayout"
@@ -35,6 +35,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:padding="10dp"
-        android:src="@drawable/ic_spinner_especie_arrow_drop_down_circle_24dp" />
+        android:src="@drawable/ic_spinner_seta_para_baixo" />
 
 </RelativeLayout>

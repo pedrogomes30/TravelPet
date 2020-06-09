@@ -10,12 +10,12 @@
 
         <item
             android:id="@+id/listaVeiculosFragment"
-            android:icon="@drawable/ic_viagem_cinza_24dp"
+            android:icon="@drawable/ic_menu_viagem"
             android:title="Meus Veículos" />
 
         <item
             android:id="@+id/nav_info"
-            android:icon="@drawable/ic_info_cinza_24dp"
+            android:icon="@drawable/ic_menu_info"
             android:title="@string/menu_info" />
 
 

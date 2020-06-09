@@ -33,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 public class PerfilPassageiroActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
     private ImageView campoFotoUsuario ;
     private TextView  campoNomeUsuario,campoEmailUsuario ;
 
@@ -51,8 +50,10 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_viagem, R.id.nav_pagamento, R.id.nav_configuracao,
-                R.id.nav_contato, R.id.nav_meus_animais, R.id.nav_info)
+                R.id.nav_viagem,
+                R.id.nav_meus_animais,
+                R.id.nav_configuracao,
+                R.id.nav_info,R.id.nav_sair)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -76,18 +77,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
         return true;
 
-    }
-    // Ação ao clicar em algum item do Menu dos 3 pontos do Toolbar
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.menuSair:
-
-                Mensagem.mensagemDeslogarUsuario(this);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -122,7 +111,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                             .load( fotoUsuarioUri)
                             .into( campoFotoUsuario);
                 }else{
-                    campoFotoUsuario.setImageResource(R.drawable.iconperfiloficial);
+                    campoFotoUsuario.setImageResource(R.drawable.imagem_usuario);
                 }
 
             }

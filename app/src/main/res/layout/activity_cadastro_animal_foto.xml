@@ -28,7 +28,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/iconperfilanimal"
+        android:src="@drawable/imagem_animal"
         app:civ_border_color="@color/white"
         app:civ_border_width="3dp"
         app:layout_constraintEnd_toEndOf="parent"

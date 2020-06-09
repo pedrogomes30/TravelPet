@@ -51,7 +51,7 @@ public class ListaAnimaisAdapter extends RecyclerView.Adapter<ListaAnimaisAdapte
             Uri uri = Uri.parse(animal.getFotoAnimalUrl());
             Glide.with( context ).load(uri).into(holder.imageFotoAnimalLista);
         }else{
-            holder.imageFotoAnimalLista.setImageResource( R.drawable.iconperfilanimal);
+            holder.imageFotoAnimalLista.setImageResource( R.drawable.imagem_animal);
         }
     }
 
