@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/bottom_sheet_donoanimal_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_background"
+    android:backgroundTint="@color/white"
+    android:padding="8dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecione até 3 animais para a viagem"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_bs_donoanimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/bt_bs_donoanimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecionar"
+            android:background="@drawable/button_azul_seletor"/>
+
+
+</LinearLayout>

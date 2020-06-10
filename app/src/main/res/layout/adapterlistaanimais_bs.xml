@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardview_animal_bs"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/colorApp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ci_animal_bs"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="2dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/white"
+            android:src="@drawable/iconperfilanimal"/>
+
+        <TextView
+            android:id="@+id/tv_nomeanimal_bs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do Animal"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeMinTextSize="8sp"
+            android:textStyle="bold"
+            android:padding="2dp"
+            android:textSize="12sp"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

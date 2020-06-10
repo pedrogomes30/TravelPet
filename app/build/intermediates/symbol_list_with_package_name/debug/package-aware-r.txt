@@ -1311,6 +1311,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable placaveiculo
+drawable png
 drawable side_nav_bar
 drawable spinner_background
 drawable tela_branca_login
@@ -1411,6 +1412,7 @@ id botaoPassageiro
 id botaoProximo
 id botaoSalvar
 id bottom
+id bottom_sheet_donoanimal_container
 id bottom_sheet_motorista_container
 id browser_actions_header_text
 id browser_actions_menu_item_icon
@@ -1421,6 +1423,7 @@ id btProximo
 id btProximoVeiculo
 id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
+id bt_bs_donoanimal
 id bt_bs_motorista
 id bt_excluirVeiculo
 id btn_holder
@@ -1437,6 +1440,7 @@ id button_resend_email
 id button_sign_in
 id cancel_action
 id card_adapter_motorista_bs
+id cardview_animal_bs
 id center
 id center_horizontal
 id center_vertical
@@ -1448,6 +1452,7 @@ id chronometer
 id ci_animal1
 id ci_animal2
 id ci_animal3
+id ci_animal_bs
 id circleImageView
 id circleImageViewFotoAnimal
 id circular
@@ -1648,6 +1653,7 @@ id radioButtonPequeno
 id radioGroupPorteAnimal
 id recyclerViewListaAnimais
 id recyclerViewListaVeiculos
+id recycler_bs_donoanimal
 id recycler_bs_motorista
 id resend_barrier
 id resend_code
@@ -1826,6 +1832,7 @@ id tv_exibir_status
 id tv_fragAddVeiculo
 id tv_marcaveiculo_bs
 id tv_modeloveiculo_bs
+id tv_nomeanimal_bs
 id tv_placaveiculo_bs
 id unchecked
 id uniform
@@ -1920,6 +1927,7 @@ layout activity_perfil_motorista_drawer
 layout activity_perfil_passageiro
 layout activity_splash
 layout adapter_lista_animais
+layout adapterlistaanimais_bs
 layout adapterlistaveiculos
 layout adapterlistaveiculos_bs
 layout app_bar_perfil_motorista
@@ -1979,6 +1987,7 @@ layout fui_register_email_layout
 layout fui_welcome_back_email_link_prompt_layout
 layout fui_welcome_back_idp_prompt_layout
 layout fui_welcome_back_password_prompt_layout
+layout layout_bottom_sheet_donoanimal
 layout layout_bottom_sheet_motorista
 layout lista_animais_fragment
 layout mtrl_layout_snackbar

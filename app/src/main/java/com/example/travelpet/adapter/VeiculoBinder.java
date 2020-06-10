@@ -3,10 +3,8 @@ package com.example.travelpet.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.travelpet.R;
 import com.example.travelpet.model.Veiculo;
-
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;

@@ -14,15 +14,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import mva2.adapter.ListSection;
+import mva2.adapter.MultiViewAdapter;
+import mva2.adapter.util.Mode;
 
 import com.example.travelpet.R;
+import com.example.travelpet.adapter.AnimalBinder;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.Destino;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +42,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,6 +56,14 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap gMap;
     private MapView mapView;
+    private BottomSheetDialog bsDialog;
+    private View bsView;
+    private MultiViewAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerBs;
+    ListSection<Animal> listSection;
+
+
     // Variáveis para recuperar localização de um usuário
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -63,13 +86,53 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         mapView.onResume();
 
 
-        try {
+        try
+        {
             MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-        mapView.getMapAsync(this);
 
+        mapView.getMapAsync(this);
+        //btChamarOnClick();
+        setBottomSheet();
+        btchamar();
+        return view;
+    }
+
+    public void setBottomSheet()
+    {
+        //BottomSheet
+        bsDialog    = new BottomSheetDialog(getActivity(),R.style.BottomSheetDialogTheme);
+        bsView      = getActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_donoanimal,null);
+        recyclerBs = bsView.findViewById(R.id.recycler_bs_donoanimal);
+        bsDialog.setContentView(bsView);
+
+        //MultiViewAdapter
+        adapter = new MultiViewAdapter();
+        adapter.registerItemBinders(new AnimalBinder());
+
+        listSection = new ListSection<>();
+        listSection.add(testeAnimal("1","1","PERNALONGA"));
+        listSection.add(testeAnimal("2","2","FRAJOLA"));
+        listSection.add(testeAnimal("3","3","JERRY"));
+        listSection.add(testeAnimal("4","4","TOM"));
+        listSection.setSelectionMode(Mode.MULTIPLE);
+
+        adapter.addSection(listSection);
+        adapter.setSelectionMode(Mode.MULTIPLE);
+
+        layoutManager = new GridLayoutManager(getActivity(),3);
+        recyclerBs.setLayoutManager(layoutManager);
+        recyclerBs.setHasFixedSize(true);
+        recyclerBs.setAdapter(adapter);
+
+    }
+
+    public void btChamarOnClick()
+    {
         // Envento de clique do botão "Chamar Motorista"
         buttonChamarMotorista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,17 +192,64 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-        return view;
     }
+
+    public void btchamar()
+    {
+        buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                bsDialog.show();
+            }
+        });
+
+        bsView.findViewById(R.id.bt_bs_donoanimal).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                bsDialog.dismiss();
+            }
+        });
+
+        DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal");
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                //System.out.println("toString: " + dataSnapshot.toString());
+                for (DataSnapshot dados : dataSnapshot.getChildren())
+                {
+                    System.out.println("getKey: "+ dados.getKey()); // pegou a especie
+                    String teste = dados.child("iconeURL").getValue(String.class);//pega a imagem da especie
+
+                    System.out.println("teste = " + teste);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
+
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap)
+    {
         gMap = googleMap;
 
         // Recuperar Localização do usuário - Aula 494
         recuperarLocalizacaoUsuario();
 
     }
-    public Address recuperarEndereco(String endereco){
+
+    public Address recuperarEndereco(String endereco)
+    {
 
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         // Recuperando dados baseado no endereço do usuário
@@ -161,8 +271,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         }
         return null;
     }
+
     // Método Recuperar Localização do Usuário 494
-    public void recuperarLocalizacaoUsuario() {
+    public void recuperarLocalizacaoUsuario()
+    {
         // LocationManager = tradução = gerente de localização= gerencia a localização
         locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         // locationListener = tradução = ouvinte de localização
@@ -220,5 +332,15 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
         }
 
+    }
+
+    public Animal testeAnimal (String idUsuario, String idAnimal, String nomeAnimal)
+    {
+        Animal animal = new Animal();
+        animal.setIdUsuario(idUsuario);
+        animal.setIdAnimal(idAnimal);
+        animal.setNomeAnimal(nomeAnimal);
+
+        return animal;
     }
 }
