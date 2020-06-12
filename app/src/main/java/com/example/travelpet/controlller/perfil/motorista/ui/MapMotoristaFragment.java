@@ -186,8 +186,9 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     public void recuperarLocalizacaoUsuario ()
     {
-        locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
             @Override
             public void onLocationChanged(Location location) {
                 double latitude = location.getLatitude();
@@ -203,7 +204,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                         );
                 gMap.moveCamera
                         (
-                            CameraUpdateFactory.newLatLngZoom(localMotorista,15)
+                            CameraUpdateFactory.newLatLngZoom(localMotorista,16)
                         );
             }
 
@@ -228,7 +229,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             locationManager.requestLocationUpdates
                     (
                             LocationManager.GPS_PROVIDER,
-                            10000, //tempo mínimo para atualização de localização (milisegundos)
+                            5000, //tempo mínimo para atualização de localização (milisegundos)
                             10, //distância mínima para atualização de localização (metros)
                             locationListener
                     );

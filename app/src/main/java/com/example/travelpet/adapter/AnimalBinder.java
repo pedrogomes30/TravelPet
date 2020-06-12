@@ -30,7 +30,7 @@ public class AnimalBinder extends ItemBinder<Animal, AnimalBinder.AnimalViewHold
     public void bindViewHolder(AnimalBinder.AnimalViewHolder holder, Animal item)
     {
         holder.nomeAnimal.setText(item.getNomeAnimal());
-        holder.fotoAnimal.setImageResource(R.drawable.iconperfilanimal);
+        holder.fotoAnimal.setImageResource(R.drawable.about_icon_email);
 
         int corClick    =   ContextCompat.getColor(holder.nomeAnimal.getContext(),R.color.colorApp);
         int colorApp    =   ContextCompat.getColor(holder.nomeAnimal.getContext(),R.color.white);

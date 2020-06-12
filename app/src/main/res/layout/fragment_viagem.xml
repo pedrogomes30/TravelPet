@@ -19,15 +19,14 @@
         android:padding="8dp">
 
         <EditText
-            android:id="@+id/editLocal"
+            android:id="@+id/editOrigem"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
             android:drawableLeft="@drawable/circulo_verde_local_viagem"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:enabled="false"
-            android:hint="Meu Local"
+            android:hint="Seu local atual, ou digite um local de origem"
             android:inputType="textPersonName"
             android:textColor="@color/colorApp"
             android:textColorHint="@android:color/darker_gray"
@@ -42,7 +41,7 @@
             android:drawablePadding="6dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
-            android:hint="Digite seu destino"
+            android:hint="Digite o local de local"
             android:inputType="textPersonName"
             android:textColor="@color/colorApp"
             android:textColorHint="@android:color/darker_gray"
@@ -59,7 +58,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_laranja_seletor"
-        android:text="Chamar Motorista"
+        android:text="Nova Viagem"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />

@@ -1,20 +1,28 @@
 package com.example.travelpet.model;
 
+import com.google.firebase.database.Exclude;
+
 // Classe usada no processo do buttonChamarMotorista = aula 495
 // Fragment ViagemFragment
-public class Destino {
+public class Local
+{
+    @Exclude
+    public static final String ORIGEM ="origem";
+    @Exclude
+    public static final String DESTINO = "destino";
 
+    private String idLocal;
     private String rua;
     private String numero;
     private String cidade;
     private String bairro;
     private String cep;
+    private String tipoLocal;
 
     private String latitude;
     private String longitude;
 
-    public Destino() {
-    }
+    public Local() {}
 
     public String getRua() {
         return rua;
@@ -70,5 +78,21 @@ public class Destino {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getIdLocal() {
+        return idLocal;
+    }
+
+    public void setIdLocal(String idLocal) {
+        this.idLocal = idLocal;
+    }
+
+    public String getTipoLocal() {
+        return tipoLocal;
+    }
+
+    public void setTipoLocal(String tipoLocal) {
+        this.tipoLocal = tipoLocal;
     }
 }
