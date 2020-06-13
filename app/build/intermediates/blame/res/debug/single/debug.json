@@ -8,12 +8,12 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\button_laranja_escuro_pressionado.xml"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_animal_foto.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_animal_foto.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_menu_meu_animais.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\ic_menu_meu_animais.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_animal_foto.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_animal_foto.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_tela_branca_login.png.flat",
@@ -92,12 +92,12 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\side_nav_bar.xml"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_adapterlistaveiculos_bs.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\adapterlistaveiculos_bs.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_lista_animais.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_lista_animais.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_adapterlistaveiculos_bs.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\adapterlistaveiculos_bs.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_custom_dropdown_layout.xml.flat",
@@ -208,10 +208,6 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable-mdpi\\ic_exit.png"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_tools.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_tools.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\font_comfortaa_bold.ttf.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\font\\comfortaa_bold.ttf"
     },
@@ -234,10 +230,6 @@
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
-    },
-    {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_contato.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_contato.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_close.png.flat",

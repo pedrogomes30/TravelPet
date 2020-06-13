@@ -34,67 +34,22 @@ public class ListaAnimaisFragment extends Fragment {
     private AdapterListaAnimais adapter;
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
     private DatabaseReference animalRef;
-
     private ValueEventListener valueEventListenerListaAnimais;
-
+    private FloatingActionButton btAdicionarAnimal;
+    RecyclerView.LayoutManager layoutManager;
 
     public static ListaAnimaisFragment newInstance() {
         return new ListaAnimaisFragment();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container,
-                              Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_animais, container, false);
 
-        //Configurando Evento de clique do FloatingActionButton
-        FloatingActionButton adicionarAnimal = view.findViewById(R.id.adicionarAnimal);
-        adicionarAnimal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        iniciarComponentes(view);
+        iniciarRecyclerView();
+        botaoAdicionarAnimal();
 
-                String fluxoDados = "listaAnimais";
-                DonoAnimal donoAnimal = new DonoAnimal();
-                donoAnimal.setFluxoDados(fluxoDados);
-
-                Intent intent = new Intent(getActivity(), CadastroAnimalNomeActivity.class);
-                intent.putExtra("donoAnimal", donoAnimal);
-                startActivity(intent);
-            }
-        });
-
-        recyclerViewListaAnimais = view.findViewById(R.id.recyclerViewListaAnimais);
-        animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-
-        adapter = new AdapterListaAnimais( listaAnimais, getActivity());
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewListaAnimais.setLayoutManager( layoutManager );
-        recyclerViewListaAnimais.setHasFixedSize( true );
-        recyclerViewListaAnimais.setAdapter( adapter );
-
-        recyclerViewListaAnimais.addOnItemTouchListener(
-            new RecyclerItemClickListener(
-            getActivity(),
-            recyclerViewListaAnimais,
-            new RecyclerItemClickListener.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(View view, int position) {
-
-                    Animal animalSelecionado = listaAnimais.get(position);
-                    Intent intent = new Intent(getActivity(), EditarAnimalActivity.class);
-                    intent.putExtra("animalSelecionado", animalSelecionado);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onLongItemClick(View view, int position) {}
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {}
-            })
-        );
         return view;
     }
 
@@ -116,7 +71,64 @@ public class ListaAnimaisFragment extends Fragment {
         listaAnimais.clear();
     }
 
+    public void iniciarComponentes(View view){
+
+        recyclerViewListaAnimais = view.findViewById(R.id.recyclerViewListaAnimais);
+        btAdicionarAnimal = view.findViewById(R.id.adicionarAnimal);
+        animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("animais")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        adapter = new AdapterListaAnimais( listaAnimais, getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
+    }
+
+    public void iniciarRecyclerView(){
+
+        recyclerViewListaAnimais.setLayoutManager( layoutManager );
+        recyclerViewListaAnimais.setHasFixedSize( true );
+        recyclerViewListaAnimais.setAdapter( adapter );
+        recyclerViewListaAnimais.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getActivity(),
+                        recyclerViewListaAnimais,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                Animal animalSelecionado = listaAnimais.get(position);
+                                Intent intent = new Intent(getActivity(), EditarAnimalActivity.class);
+                                intent.putExtra("animalSelecionado", animalSelecionado);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {}
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {}
+                        })
+        );
+    }
+
+    public void botaoAdicionarAnimal(){
+
+        btAdicionarAnimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String fluxoDados = "listaAnimais";
+                DonoAnimal donoAnimal = new DonoAnimal();
+                donoAnimal.setFluxoDados(fluxoDados);
+
+                Intent intent = new Intent(getActivity(), CadastroAnimalNomeActivity.class);
+                intent.putExtra("donoAnimal", donoAnimal);
+                startActivity(intent);
+            }
+        });
+    }
+
     public void recuperarAnimais(){
+
         valueEventListenerListaAnimais = animalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot dataSnapshot) {
@@ -130,9 +142,7 @@ public class ListaAnimaisFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 

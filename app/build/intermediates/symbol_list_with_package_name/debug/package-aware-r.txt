@@ -1785,8 +1785,6 @@ id textViewTituloCrlvMotorista
 id textViewTituloFotoAnimal
 id textViewTituloFotoMotorista
 id text_input_password_toggle
-id text_share
-id text_tools
 id textinput_counter
 id textinput_error
 id textinput_helper_text
@@ -1957,13 +1955,11 @@ layout design_text_input_password_icon
 layout dialog_viagem_solicitada
 layout fragment_add_veiculo
 layout fragment_configuracao
-layout fragment_contato
 layout fragment_exibir_veiculo
 layout fragment_lista_animais
 layout fragment_lista_veiculos
 layout fragment_map_motorista
 layout fragment_sair
-layout fragment_tools
 layout fragment_viagem
 layout fui_activity_invisible
 layout fui_activity_register_email
