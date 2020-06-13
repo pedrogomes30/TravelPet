@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
+import com.example.travelpet.controlller.cadastro.CadastroUsuarioDadosActivity;
 
 
 public class CepListener implements TextWatcher {

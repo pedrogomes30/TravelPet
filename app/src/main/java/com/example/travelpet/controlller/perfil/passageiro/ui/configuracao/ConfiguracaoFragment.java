@@ -30,7 +30,7 @@ import com.example.travelpet.helper.MascaraCampos;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.dao.UsuarioFirebase;
-import com.example.travelpet.helper.VerificaCampo;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -256,11 +256,11 @@ public class ConfiguracaoFragment extends Fragment {
             if(validarCampos()) {
                 TelaCarregamento.iniciarCarregamento(progressDialog);
 
-                if ((!VerificaCampo.isMesmoValor(cep, cepEdit)) ||
-                    (!VerificaCampo.isMesmoValor(logradouro, logradouroEdit)) ||
-                    (!VerificaCampo.isMesmoValor(bairro, bairroEdit)) ||
-                    (!VerificaCampo.isMesmoValor(localidade, localidadeEdit)) ||
-                    (!VerificaCampo.isMesmoValor(uf, ufEdit))) {
+                if ((!VerificaDado.isMesmoValor(cep, cepEdit)) ||
+                    (!VerificaDado.isMesmoValor(logradouro, logradouroEdit)) ||
+                    (!VerificaDado.isMesmoValor(bairro, bairroEdit)) ||
+                    (!VerificaDado.isMesmoValor(localidade, localidadeEdit)) ||
+                    (!VerificaDado.isMesmoValor(uf, ufEdit))) {
 
                     endereco.setCep(cepEdit);
                     endereco.setLogradouro(logradouroEdit);
@@ -273,7 +273,7 @@ public class ConfiguracaoFragment extends Fragment {
 
                 }
 
-                if (!VerificaCampo.isMesmoValor(telefone, telefoneEdit)) {
+                if (!VerificaDado.isMesmoValor(telefone, telefoneEdit)) {
                     donoAnimal.setTelefone(telefoneEdit);
                 }
 
@@ -283,17 +283,17 @@ public class ConfiguracaoFragment extends Fragment {
                 fotoPerfil = null;
 
             }
-        }else if((!VerificaCampo.isMesmoValor(cep,cepEdit) ||
-                  !VerificaCampo.isMesmoValor(logradouro,logradouroEdit) ||
-                  !VerificaCampo.isMesmoValor(bairro, bairroEdit) ||
-                  !VerificaCampo.isMesmoValor(localidade,localidadeEdit) ||
-                  !VerificaCampo.isMesmoValor(uf,ufEdit))){
+        }else if((!VerificaDado.isMesmoValor(cep,cepEdit) ||
+                  !VerificaDado.isMesmoValor(logradouro,logradouroEdit) ||
+                  !VerificaDado.isMesmoValor(bairro, bairroEdit) ||
+                  !VerificaDado.isMesmoValor(localidade,localidadeEdit) ||
+                  !VerificaDado.isMesmoValor(uf,ufEdit))){
 
             if(validarCampos()) {
 
                 TelaCarregamento.iniciarCarregamento(progressDialog);
 
-                if (!VerificaCampo.isMesmoValor(telefone, telefoneEdit)) {
+                if (!VerificaDado.isMesmoValor(telefone, telefoneEdit)) {
 
                     donoAnimal.setTelefone(telefoneEdit);
                     donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog,
@@ -309,7 +309,7 @@ public class ConfiguracaoFragment extends Fragment {
                 Mensagem.mensagemAtualizarDonoAnimal(getActivity());
             }
 
-        }else if(!VerificaCampo.isMesmoValor(telefone,telefoneEdit)){
+        }else if(!VerificaDado.isMesmoValor(telefone,telefoneEdit)){
 
             if(validarCampos()) {
 
@@ -325,11 +325,11 @@ public class ConfiguracaoFragment extends Fragment {
     public Boolean validarCampos() {
 
         Boolean validado = false;
-        if(!VerificaCampo.isVazio(telefoneEdit) && telefoneEdit.length() == 15) {
-            if (!VerificaCampo.isVazio(cepEdit) && cepEdit.length() == 9) {
-                if (!VerificaCampo.isVazio(logradouroEdit)) {
-                    if (!VerificaCampo.isVazio(bairroEdit)) {
-                        if (!VerificaCampo.isVazio(localidadeEdit)) {
+        if(!VerificaDado.isVazio(telefoneEdit) && telefoneEdit.length() == 15) {
+            if (!VerificaDado.isVazio(cepEdit) && cepEdit.length() == 9) {
+                if (!VerificaDado.isVazio(logradouroEdit)) {
+                    if (!VerificaDado.isVazio(bairroEdit)) {
+                        if (!VerificaDado.isVazio(localidadeEdit)) {
                             if (validarUf(ufEdit)) {
 
                                 validado = true;

@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Endereco;
-import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,43 +24,26 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
     private Motorista motorista;
     private Endereco endereco;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_motorista_veiculo);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        Intent intent = getIntent();
-        motorista = intent.getParcelableExtra("motorista");
-        endereco = intent.getParcelableExtra("endereco");
-
-        modeloVeiculo   =   findViewById(R.id.etModeloVeiculo);
-        marcaVeiculo    =   findViewById(R.id.etMarcaVeiculo);
-        anoVeiculo      =   findViewById(R.id.etAnoVeiculo);
-        placaVeiculo    =   findViewById(R.id.etPlacaVeiculo);
-        crvlVeiculo     =   findViewById(R.id.etCRVLveiculo);
-        btProximo       =   findViewById(R.id.btProximoVeiculo);
-
-        botaoProximoCadVeiculo();
+        iniciarComponentes();
+        getDadosTelaAnterior(); // CadastroMotoristaFoto
+        botaoProximo();
     }
 
-    public void botaoProximoCadVeiculo ()
-    {
+    public void botaoProximo() {
         btProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                marcaV  =   marcaVeiculo.getText().toString().toUpperCase();
-                modeloV =   modeloVeiculo.getText().toString().toUpperCase();
-                anoV    =   anoVeiculo.getText().toString().toUpperCase();
-                placaV  =   placaVeiculo.getText().toString().toUpperCase();
-                crvlV   =   crvlVeiculo.getText().toString().toUpperCase();
+                getDadosDigitados();
 
-                if(verificaCampos() == "completo")
-                {
+                if(validarDados()){
                     Veiculo veiculo = new Veiculo();
                     veiculo.setMarcaVeiculo(marcaV);
                     veiculo.setModeloVeiculo(modeloV);
@@ -78,35 +61,51 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
         });
     }
 
-
-    public String verificaCampos ()
-    {
-        String verificado = "incompleto";
-
-        if (!VerificaCampo.isVazio(marcaV))
-        {
-            if (!VerificaCampo.isVazio(modeloV))
-            {
-                if (!VerificaCampo.isVazio(anoV))
-                {
-                    if (!VerificaCampo.isVazio(placaV))
-                    {
-                        if (!VerificaCampo.isVazio(crvlV))
-                        {
-                            verificado = "completo";
-                        } else { ToastIt("Preencha o CRVL"); }
-                    } else { ToastIt("Preencha a Placa"); }
-                } else { ToastIt("Preencha o Ano"); }
-            } else { ToastIt("Preencha o Modelo"); }
-        } else { ToastIt("Preencha o CRVL"); }
-
-        return verificado;
+    public void iniciarComponentes(){
+        modeloVeiculo   =   findViewById(R.id.etModeloVeiculo);
+        marcaVeiculo    =   findViewById(R.id.etMarcaVeiculo);
+        anoVeiculo      =   findViewById(R.id.etAnoVeiculo);
+        placaVeiculo    =   findViewById(R.id.etPlacaVeiculo);
+        crvlVeiculo     =   findViewById(R.id.etCRVLveiculo);
+        btProximo       =   findViewById(R.id.btProximoVeiculo);
     }
 
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        motorista = intent.getParcelableExtra("motorista");
+        endereco = intent.getParcelableExtra("endereco");
+    }
 
-    public void ToastIt (String mensagem)
-    {
-        Toast.makeText(this,mensagem,Toast.LENGTH_SHORT).show();
+    public void getDadosDigitados(){
+        marcaV  =   marcaVeiculo.getText().toString().toUpperCase();
+        modeloV =   modeloVeiculo.getText().toString().toUpperCase();
+        anoV    =   anoVeiculo.getText().toString().toUpperCase();
+        placaV  =   placaVeiculo.getText().toString().toUpperCase();
+        crvlV   =   crvlVeiculo.getText().toString().toUpperCase();
+    }
+
+    public Boolean validarDados (){
+        Boolean validado = false;
+
+        if (!VerificaDado.isVazio(marcaV))
+        {
+            if (!VerificaDado.isVazio(modeloV))
+            {
+                if (!VerificaDado.isVazio(anoV))
+                {
+                    if (!VerificaDado.isVazio(placaV))
+                    {
+                        if (!VerificaDado.isVazio(crvlV))
+                        {
+                            validado = true;
+
+                        } else { Mensagem.toastIt("Preencha o CRVL", this); }
+                    } else { Mensagem.toastIt("Preencha a Placa", this); }
+                } else { Mensagem.toastIt("Preencha o Ano", this); }
+            } else { Mensagem.toastIt("Preencha o Modelo", this); }
+        } else { Mensagem.toastIt("Preencha o CRVL", this); }
+
+        return validado;
     }
 
     @Override

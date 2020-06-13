@@ -3,15 +3,15 @@ package com.example.travelpet.controlller.cadastro.cadastroDonoAnimal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.model.Endereco;
-import com.example.travelpet.helper.VerificaCampo;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
+import com.example.travelpet.model.Endereco;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroAnimalNomeActivity extends AppCompatActivity {
@@ -30,21 +30,15 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_animal_nome);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        animal = new Animal();
-
-        Intent intent = getIntent();
-        donoAnimal = intent.getParcelableExtra("donoAnimal");
-        endereco = intent.getParcelableExtra("endereco");
-
-        campoNomeAnimal = findViewById(R.id.editNomeAnimal);
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroUsuarioDadosActivity
     }
 
     public void botaoProximo(View view){
 
-        nomeAnimal = campoNomeAnimal.getText().toString();
+        getDadosDigitados();
 
-        // Verifica se não esta vazia
-        if(!VerificaCampo.isVazio(nomeAnimal)) {
+        if(validarDados()) {
 
             animal.setNomeAnimal(nomeAnimal);
 
@@ -54,13 +48,37 @@ public class CadastroAnimalNomeActivity extends AppCompatActivity {
             intent.putExtra ("animal", animal);
             startActivity(intent);
 
-        }else{
-
-            Toast.makeText(this,
-                    "Preencha o nome do animal",
-                    Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void iniciarComponentes(){
+        animal = new Animal();
+        campoNomeAnimal = findViewById(R.id.editNomeAnimal);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+    }
+
+    public void getDadosDigitados(){
+        nomeAnimal = campoNomeAnimal.getText().toString();
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if(!VerificaDado.isVazio(nomeAnimal)){
+
+            validado = true;
+        } else {
+            Mensagem.toastIt("Preencha o nome do animal", this);
+        }
+        return validado;
+    }
+
     @Override
     public void finish() {
         super.finish();

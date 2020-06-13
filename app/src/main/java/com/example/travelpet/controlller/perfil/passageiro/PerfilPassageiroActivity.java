@@ -1,10 +1,11 @@
 package com.example.travelpet.controlller.perfil.passageiro;
 
+import android.content.ClipData;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,10 +20,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
-import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.DonoAnimal;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -35,9 +35,12 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ImageView campoFotoUsuario ;
     private TextView  campoNomeUsuario,campoEmailUsuario ;
-
     private String fotoPerfilUrl, nomeUsuario, sobrenomeUsuario, emailUsuario;
 
+    private ImageButton imageButton;
+    private Button button;
+    private TextView textView;
+    private ClipData.Item item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,11 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
+        campoFotoUsuario  = view.findViewById(R.id.imageViewPerfil);
+        campoNomeUsuario  = view.findViewById(R.id.textNomeUsuario);
+        campoEmailUsuario = view.findViewById(R.id.textEmail);
+        getDadosDonoAnimalDatabase();
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -53,29 +61,13 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                 R.id.nav_viagem,
                 R.id.nav_meus_animais,
                 R.id.nav_configuracao,
-                R.id.nav_info,R.id.nav_sair)
+                R.id.nav_info,
+                R.id.nav_sair)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
-
-          campoFotoUsuario = view.findViewById(R.id.imageViewPerfil);
-          campoNomeUsuario = view.findViewById(R.id.textNomeUsuario);
-          campoEmailUsuario = view.findViewById(R.id.textEmail);
-
-          getDadosDonoAnimalDatabase();
-
-    }
-    //Menu dos 3 pontos direito da tela do toolbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.perfil_passageiro, menu);
-
-        return true;
 
     }
 

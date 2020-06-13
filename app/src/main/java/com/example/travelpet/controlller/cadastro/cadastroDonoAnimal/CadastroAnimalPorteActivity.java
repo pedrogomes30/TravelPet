@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.model.Endereco;
+import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
+import com.example.travelpet.model.Endereco;
 
 public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
@@ -28,21 +28,15 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_animal_porte);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        Intent intent = getIntent();
-        donoAnimal = intent.getParcelableExtra("donoAnimal");
-        endereco = intent.getParcelableExtra("endereco");
-        animal = intent.getParcelableExtra("animal");
-
-        radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
-
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroAnimalEspecieRaca
         verificarPorte(porteAnimal);
 
     }
 
     public void botaoProximo(View view) {
 
-        if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
-                || porteAnimal == "Grande - Acima de 50cm") {
+        if (validarDados()) {
 
             animal.setPorteAnimal(porteAnimal);
 
@@ -52,14 +46,21 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
             intent.putExtra ("animal",animal);
             startActivity(intent);
 
-        }else{
-            Toast.makeText(this,
-                    "Selecione o porte do seu Animal",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void verificarPorte(String vtp) {
+    public void iniciarComponentes(){
+        radioGroupPorteAnimal = findViewById(R.id.radioGroupPorteAnimal);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+        animal = intent.getParcelableExtra("animal");
+    }
+
+    public void verificarPorte(String vp) {
 
         // .setOnCheckedChangeListener(); = Verifica qual item foi selecionado dentro do RadioGroup
         //new RadioGroup.OnCheckedChangeListener = imstancia um objeto que dentro dele tem um metodo para recuperar o item selecionado
@@ -80,6 +81,22 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
+                || porteAnimal == "Grande - Acima de 50cm") {
+
+            validado = true;
+
+        }else{
+            Mensagem.toastIt("Selecione o porte do seu Animal", this);
+        }
+
+        return validado;
     }
 
     @Override

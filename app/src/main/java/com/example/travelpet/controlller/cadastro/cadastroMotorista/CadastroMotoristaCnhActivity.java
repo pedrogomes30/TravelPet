@@ -15,8 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Endereco;
-import com.example.travelpet.helper.VerificaCampo;
 import com.example.travelpet.model.Motorista;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -38,16 +39,10 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_motorista_cnh);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        // Recuperando dados passados da Activity CadastroTermoMotorista
-        Intent intent = getIntent();
-        motorista = intent.getParcelableExtra("motorista");
-        endereco = intent.getParcelableExtra("endereco");
-
-        campoNomeFotoCnh = findViewById(R.id.textViewNomeFotoCnh);
-        campoNumeroRegistroCnh = findViewById(R.id.editNumeroRegistroCnh);
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroMotoristaTermo
 
     }
 
@@ -62,29 +57,52 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
     public void botaoProximo(View view){
 
-        numeroRegistroCnh = campoNumeroRegistroCnh.getText().toString();
+        getDadosDigitados();
 
-        if(!VerificaCampo.isVazio(numeroRegistroCnh) && numeroRegistroCnh.length() == 11) {
+        if(validarDados()) {
+
+            motorista.setRegistroCnh(numeroRegistroCnh);
+            motorista.setFotoCNH(fotoCNH);
+
+            Intent intent = new Intent(this, CadastroMotoristaFotoActivity.class);
+            intent.putExtra("motorista", motorista);
+            intent.putExtra("endereco", endereco);
+            startActivity(intent);
+        }
+
+    }
+
+    public void iniciarComponentes(){
+        campoNomeFotoCnh = findViewById(R.id.textViewNomeFotoCnh);
+        campoNumeroRegistroCnh = findViewById(R.id.editNumeroRegistroCnh);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        motorista = intent.getParcelableExtra("motorista");
+        endereco = intent.getParcelableExtra("endereco");
+    }
+
+    public void getDadosDigitados(){
+        numeroRegistroCnh = campoNumeroRegistroCnh.getText().toString();
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if(!VerificaDado.isVazio(numeroRegistroCnh) && numeroRegistroCnh.length() == 11) {
             if (fotoCNH != null) {
 
-                motorista.setRegistroCnh(numeroRegistroCnh);
-                motorista.setFotoCNH(fotoCNH);
-
-                Intent intent = new Intent(this, CadastroMotoristaFotoActivity.class);
-                intent.putExtra("motorista", motorista);
-                intent.putExtra("endereco", endereco);
-                startActivity(intent);
+                validado = true;
 
             }else{
-                Toast.makeText(this,
-                        "Envie a foto da CNH",
-                        Toast.LENGTH_SHORT).show();
+                Mensagem.toastIt("Envie a foto da CNH", this);
             }
         }else{
-            Toast.makeText(this,
-                    "Preencha o registro da CNH corretamente",
-                    Toast.LENGTH_SHORT).show();
+            Mensagem.toastIt("Preencha o registro da CNH corretamente", this);
         }
+        return validado;
     }
 
     @Override

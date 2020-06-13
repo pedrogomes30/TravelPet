@@ -7,15 +7,12 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity;
+import com.example.travelpet.controlller.cadastro.CadastroUsuarioTipoActivity;
 import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.Motorista;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

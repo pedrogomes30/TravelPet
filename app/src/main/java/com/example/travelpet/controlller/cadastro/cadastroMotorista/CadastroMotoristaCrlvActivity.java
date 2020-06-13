@@ -18,11 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.dao.MotoristaDAO;
-import com.example.travelpet.dao.VeiculoDAO;
-import com.example.travelpet.model.Endereco;
-import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.dao.VeiculoDAO;
+import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
+import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 
@@ -35,19 +36,14 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
     private Motorista motorista;
     private Veiculo veiculo;
     private Endereco endereco;
-
     private MotoristaDAO motoristaDAO;
     private EnderecoDAO enderecoDAO;
     private VeiculoDAO veiculoDAO;
 
     private ProgressDialog progressDialog;
-
     private TextView campoNomeFotoCrvl;
-
     private byte[] fotoCrvl;
-
     private static final int SELECAO_GALERIA = 200;
-
     private String statusCadastro;
 
     @Override
@@ -56,19 +52,9 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_motorista_crlv);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        motoristaDAO = new MotoristaDAO();
-        enderecoDAO  = new EnderecoDAO();
-        veiculoDAO   = new VeiculoDAO();
-        progressDialog = new ProgressDialog(this);
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroMotoristaVeiculo
 
-        Intent intent = getIntent();
-        motorista = intent.getParcelableExtra("motorista");
-        endereco = intent.getParcelableExtra("endereco");
-        veiculo = intent.getParcelableExtra("veiculo");
-
-        statusCadastro  =   "Em análise";
-
-        campoNomeFotoCrvl = findViewById(R.id.textViewNomeFotoCrvl);
     }
 
     public void botaoEnviarFotoCrvl (View view) {
@@ -83,10 +69,9 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
     public void botaoFinalizar(View view) {
 
-        if (fotoCrvl != null) {
-
+        if (validarDados()) {
             TelaCarregamento.iniciarCarregamento(progressDialog);
-            //          Funcionando, mas ainda em fase de analise
+            statusCadastro  =   "Em análise";
             int tipoSave = 1; // tipo = 1 - Cadastro de dados
             enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, motorista.getTipoUsuario(),
                                                        tipoSave, progressDialog );
@@ -99,13 +84,34 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
             motorista.setStatusCadastro(statusCadastro);
             motoristaDAO.salvarImagemMotoristaStorage(motorista, this,
                                                      tipoSave, progressDialog);
-
-
-        } else {
-            Toast.makeText(this,
-                    "Envie a foto do CRVL",
-                    Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void iniciarComponentes(){
+        motoristaDAO = new MotoristaDAO();
+        enderecoDAO  = new EnderecoDAO();
+        veiculoDAO   = new VeiculoDAO();
+        progressDialog = new ProgressDialog(this);
+        campoNomeFotoCrvl = findViewById(R.id.textViewNomeFotoCrvl);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        motorista = intent.getParcelableExtra("motorista");
+        endereco = intent.getParcelableExtra("endereco");
+        veiculo = intent.getParcelableExtra("veiculo");
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if (fotoCrvl != null) {
+            validado = true;
+        }else{
+            Mensagem.toastIt("Envie a foto do CRVL", this);
+        }
+        return validado;
     }
 
     @Override

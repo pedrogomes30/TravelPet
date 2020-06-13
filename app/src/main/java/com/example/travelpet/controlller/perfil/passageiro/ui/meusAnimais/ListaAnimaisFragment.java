@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelpet.R;
-import com.example.travelpet.adapter.ListaAnimaisAdapter;
 import com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
 public class ListaAnimaisFragment extends Fragment {
 
     private RecyclerView recyclerViewListaAnimais;
-    private ListaAnimaisAdapter adapter;
+    private AdapterListaAnimais adapter;
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
     private DatabaseReference animalRef;
 
@@ -45,7 +44,7 @@ public class ListaAnimaisFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,  ViewGroup container,
                               Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.lista_animais_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_animais, container, false);
 
         //Configurando Evento de clique do FloatingActionButton
         FloatingActionButton adicionarAnimal = view.findViewById(R.id.adicionarAnimal);
@@ -68,7 +67,7 @@ public class ListaAnimaisFragment extends Fragment {
                 .child("animais")
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
 
-        adapter = new ListaAnimaisAdapter( listaAnimais, getActivity());
+        adapter = new AdapterListaAnimais( listaAnimais, getActivity());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewListaAnimais.setLayoutManager( layoutManager );

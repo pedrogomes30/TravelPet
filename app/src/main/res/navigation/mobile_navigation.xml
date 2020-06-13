@@ -15,7 +15,7 @@
         android:id="@+id/nav_meus_animais"
         android:name="com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais.ListaAnimaisFragment"
         android:label="@string/menu_meus_animais"
-        tools:layout="@layout/lista_animais_fragment" />
+        tools:layout="@layout/fragment_lista_animais" />
 
     <fragment
         android:id="@+id/nav_configuracao"

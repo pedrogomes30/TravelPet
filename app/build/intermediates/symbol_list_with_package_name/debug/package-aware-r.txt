@@ -1959,6 +1959,7 @@ layout fragment_add_veiculo
 layout fragment_configuracao
 layout fragment_contato
 layout fragment_exibir_veiculo
+layout fragment_lista_animais
 layout fragment_lista_veiculos
 layout fragment_map_motorista
 layout fragment_sair
@@ -1989,7 +1990,6 @@ layout fui_welcome_back_idp_prompt_layout
 layout fui_welcome_back_password_prompt_layout
 layout layout_bottom_sheet_donoanimal
 layout layout_bottom_sheet_motorista
-layout lista_animais_fragment
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout nav_header_perfil_motorista
@@ -2017,7 +2017,6 @@ layout support_simple_spinner_dropdown_item
 menu activity_perfil_motorista_drawer
 menu activity_perfil_passageiro_drawer
 menu perfil_motorista
-menu perfil_passageiro
 mipmap ic_launcher
 mipmap ic_launcher_round
 navigation mobile_navigation

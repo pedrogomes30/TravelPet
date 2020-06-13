@@ -7,9 +7,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
+import com.example.travelpet.model.Endereco;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
@@ -27,20 +27,14 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_animal_observacao);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        Intent intent = getIntent();
-        donoAnimal = intent.getParcelableExtra("donoAnimal");
-        endereco = intent.getParcelableExtra("endereco");
-        animal = intent.getParcelableExtra("animal");
-
-        campoObservacaoAnimal = findViewById(R.id.editObservacaoAnimal);
+        iniciarComponenetes();
+        getDadosTelaAnterior(); //CadastroAnimalPorte
 
     }
 
-    public void btProximo(View view) {
+    public void botaoProximo(View view) {
 
-        observacaoAnimal = campoObservacaoAnimal.getText().toString();
-
-
+        getDadosDigitados();
         animal.setObservacaoAnimal(observacaoAnimal);
 
         Intent intent = new Intent(this, CadastroAnimalFotoActivity.class);
@@ -48,8 +42,23 @@ public class CadastroAnimalObservacaoActivity extends AppCompatActivity {
         intent.putExtra("endereco", endereco);
         intent.putExtra("animal", animal);
         startActivity(intent);
-
     }
+
+    public void iniciarComponenetes(){
+        campoObservacaoAnimal = findViewById(R.id.editObservacaoAnimal);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+        animal = intent.getParcelableExtra("animal");
+    }
+
+    public void getDadosDigitados(){
+        observacaoAnimal = campoObservacaoAnimal.getText().toString();
+    }
+
     @Override
     public  void finish() {
         super.finish();

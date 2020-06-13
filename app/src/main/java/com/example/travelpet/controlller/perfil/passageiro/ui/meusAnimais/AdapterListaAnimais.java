@@ -1,4 +1,4 @@
-package com.example.travelpet.adapter;
+package com.example.travelpet.controlller.perfil.passageiro.ui.meusAnimais;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,13 +19,13 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 // Aula 302 - Listando Contatos
-public class ListaAnimaisAdapter extends RecyclerView.Adapter<ListaAnimaisAdapter.MyViewHolder> {
+public class AdapterListaAnimais extends RecyclerView.Adapter<AdapterListaAnimais.MyViewHolder> {
 
     // Variavel para receber a lista do adapter, e passar como parametro no construtor
     private List<Animal> listaAnimais;
     private Context context;
 
-    public ListaAnimaisAdapter(List<Animal> listaA, Context c) {
+    public AdapterListaAnimais(List<Animal> listaA, Context c) {
         this.listaAnimais = listaA;
         this.context = c;
     }

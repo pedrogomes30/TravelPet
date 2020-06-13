@@ -82,8 +82,8 @@
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalPorteActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalEspecieRacaActivity" />
         <activity android:name="com.example.travelpet.controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
-        <activity android:name="com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.CadastroUsuarioDadosActivity" />
+        <activity android:name="com.example.travelpet.controlller.cadastro.CadastroUsuarioTipoActivity" />
         <activity android:name="com.example.travelpet.controlller.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

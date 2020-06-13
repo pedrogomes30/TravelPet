@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Motorista;
 
@@ -34,14 +35,10 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_motorista_foto);
-
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        Intent intent = getIntent();
-        motorista = intent.getParcelableExtra("motorista");
-        endereco = intent.getParcelableExtra("endereco");
-
-        campoNomeFotoMotorista = findViewById(R.id.textViewNomeFotoMotorista);
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroMotoristaCnh
 
     }
 
@@ -57,7 +54,7 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
 
     public void botaoProximo(View view){
 
-        if(fotoPerfil != null) {
+        if(validarDados()) {
 
             motorista.setFotoPerfil(fotoPerfil);
 
@@ -65,12 +62,29 @@ public class CadastroMotoristaFotoActivity extends AppCompatActivity {
             intent.putExtra("motorista", motorista);
             intent.putExtra("endereco",endereco);
             startActivity(intent);
-
-        }else{
-            Toast.makeText(this,
-                    "Envie a foto de Perfil",
-                    Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void iniciarComponentes(){
+        campoNomeFotoMotorista = findViewById(R.id.textViewNomeFotoMotorista);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        motorista = intent.getParcelableExtra("motorista");
+        endereco = intent.getParcelableExtra("endereco");
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if(fotoPerfil != null) {
+            validado = true;
+        }else{
+            Mensagem.toastIt("Envie a foto de Perfil", this);
+        }
+        return validado;
     }
 
     @Override

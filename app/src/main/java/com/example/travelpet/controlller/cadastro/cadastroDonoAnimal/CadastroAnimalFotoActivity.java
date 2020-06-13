@@ -16,12 +16,13 @@ import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.EnderecoDAO;
-import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.dao.UsuarioFirebase;
-import com.example.travelpet.model.Endereco;
 import com.example.travelpet.helper.Base64Custom;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
+import com.example.travelpet.model.Endereco;
 
 import java.io.ByteArrayOutputStream;
 
@@ -54,22 +55,11 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_animal_foto);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        donoAnimalDAO = new DonoAnimalDAO();
-        enderecoDAO = new EnderecoDAO();
-        animalDAO = new AnimalDAO();
-        progressDialog = new ProgressDialog(CadastroAnimalFotoActivity.this);
-
-        Intent intent = getIntent();
-        donoAnimal = intent.getParcelableExtra("donoAnimal");
-        endereco = intent.getParcelableExtra("endereco");
-        animal = intent.getParcelableExtra("animal");
-
-        fluxoDados = donoAnimal.getFluxoDados();
-
-        campoFotoAnimal = findViewById(R.id.circleImageViewFotoAnimal);
-
+        iniciarComponentes();
+        getDadosTelaAnterior();//CadastroAnimalObsercacao
     }
 
+    // Funções Botões-------------------------------------------------------------------------------
     public void botaoCamera(View view){
 
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -91,41 +81,52 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
     public void botaoFinalizar(View view) {
 
-        int tipoSave = 1; // tipoSave = 1 / CADASTRO
+        if(validarDados()) {
+            int tipoSave = 1; // tipoSave = 1 / CADASTRO
+            if (fluxoDados.equals("cadastroUsuarioDados")) {
 
-        if(fotoAnimal != null && fluxoDados.equals("cadastroUsuarioDados")){
+                TelaCarregamento.iniciarCarregamento(progressDialog);
 
-            TelaCarregamento.iniciarCarregamento(progressDialog);
+                setDadosCadastroUsuario();
 
-            setarDadosCadastroUsuario();
+                donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog, tipoSave,
+                        this);
 
-            donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog, tipoSave,
-                    this);
+                enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, donoAnimal.getTipoUsuario(), tipoSave,
+                        progressDialog);
+                animal.setFotoAnimal(fotoAnimal);
 
-            enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, donoAnimal.getTipoUsuario(), tipoSave,
-                    progressDialog);
-            animal.setFotoAnimal(fotoAnimal);
+                animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave, this);
 
-            animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave,this);
+            }else if (fluxoDados.equals("listaAnimais")) {
 
-
-        }else if(fotoAnimal != null && fluxoDados.equals("listaAnimais")){
-
-            TelaCarregamento.iniciarCarregamento(progressDialog);
-
-            setarDadosAdicionarAnimal();
-
-            animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave,this);
-
-        }else{
-            Toast.makeText(this,
-                    "Envie a foto do seu Animal ",
-                    Toast.LENGTH_SHORT).show();
-
+                TelaCarregamento.iniciarCarregamento(progressDialog);
+                setDadosAdicionarAnimal();
+                animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave, this);
+            }
         }
     }
 
-    public void setarDadosCadastroUsuario(){
+    // Funções de Auxilio---------------------------------------------------------------------------
+    public void iniciarComponentes(){
+        donoAnimalDAO = new DonoAnimalDAO();
+        enderecoDAO = new EnderecoDAO();
+        animalDAO = new AnimalDAO();
+        progressDialog = new ProgressDialog(CadastroAnimalFotoActivity.this);
+
+        campoFotoAnimal = findViewById(R.id.circleImageViewFotoAnimal);
+    }
+
+    public void getDadosTelaAnterior(){
+        Intent intent = getIntent();
+        donoAnimal = intent.getParcelableExtra("donoAnimal");
+        endereco = intent.getParcelableExtra("endereco");
+        animal = intent.getParcelableExtra("animal");
+
+        fluxoDados = donoAnimal.getFluxoDados();
+    }
+
+    public void setDadosCadastroUsuario(){
         // Classe DonoAnimal
         donoAnimal.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         donoAnimal.setEmail(UsuarioFirebase.getEmailUsuario());
@@ -137,11 +138,24 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         animal.setFotoAnimal(fotoAnimal);
     }
 
-    public void setarDadosAdicionarAnimal(){
+    public void setDadosAdicionarAnimal(){
         // Classe Animal
         animal.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         animal.setIdAnimal(animalDAO.gerarPushKeyIdAnimal());
         animal.setFotoAnimal(fotoAnimal);
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
+
+        if (fotoAnimal != null) {
+            validado = true;
+        }else{
+            Mensagem.toastIt("Envie a foto do seu Animal ", this);
+        }
+
+        return validado;
     }
 
     @Override

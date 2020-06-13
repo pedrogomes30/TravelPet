@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.helper.TelaCarregamento;
-import com.example.travelpet.helper.VerificaCampo;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
 
 import java.io.ByteArrayOutputStream;
@@ -197,10 +197,10 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
             TelaCarregamento.iniciarCarregamento(progressDialog);
 
-            if(!VerificaCampo.isMesmoValor(porteAnimal, porteAnimalEdit)){
+            if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit)){
                 animal.setPorteAnimal(porteAnimalEdit);
             }
-            if(!VerificaCampo.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
+            if(!VerificaDado.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
                 animal.setObservacaoAnimal(observacaoAnimalEdit);
             }
 
@@ -208,8 +208,8 @@ public class EditarAnimalActivity extends AppCompatActivity{
             animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave,
                     EditarAnimalActivity.this);
 
-        }else if(!VerificaCampo.isMesmoValor(porteAnimal, porteAnimalEdit) ||
-                !VerificaCampo.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
+        }else if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit) ||
+                !VerificaDado.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
 
             TelaCarregamento.iniciarCarregamento(progressDialog);
 

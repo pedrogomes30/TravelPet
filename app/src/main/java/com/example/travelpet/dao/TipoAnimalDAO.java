@@ -1,10 +1,9 @@
-package com.example.travelpet.model;
+package com.example.travelpet.dao;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.travelpet.adapter.CustomItem;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.adapter.ItemSpinnerEspecie;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -13,12 +12,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class TipoAnimal {
+public class TipoAnimalDAO {
 
-    public static ArrayList<CustomItem> getListaEspecie() {
+    public static ArrayList<ItemSpinnerEspecie> getListaEspecie() {
 
-        final ArrayList<CustomItem> listaEspecie = new ArrayList<>();
-        listaEspecie.add(new CustomItem("espécie", null));
+        final ArrayList<ItemSpinnerEspecie> listaEspecie = new ArrayList<>();
+        listaEspecie.add(new ItemSpinnerEspecie("espécie", null));
 
         DatabaseReference especieRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("racaAnimal");
@@ -26,7 +25,7 @@ public class TipoAnimal {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                listaEspecie.add(new CustomItem(dataSnapshot.getKey(), dataSnapshot.child("iconeUrl").getValue(String.class)));
+                listaEspecie.add(new ItemSpinnerEspecie(dataSnapshot.getKey(), dataSnapshot.child("iconeUrl").getValue(String.class)));
             }
 
             @Override

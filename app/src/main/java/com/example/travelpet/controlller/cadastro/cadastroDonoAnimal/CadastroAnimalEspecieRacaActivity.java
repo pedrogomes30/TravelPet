@@ -8,20 +8,18 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
-import com.example.travelpet.adapter.CustomAdapter;
-import com.example.travelpet.adapter.CustomItem;
-import com.example.travelpet.model.Endereco;
-import com.example.travelpet.helper.VerificaCampo;
+import com.example.travelpet.adapter.AdapterSpinnerEspecie;
+import com.example.travelpet.adapter.ItemSpinnerEspecie;
+import com.example.travelpet.dao.TipoAnimalDAO;
+import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
-import com.example.travelpet.model.TipoAnimal;
-
-import java.util.ArrayList;
+import com.example.travelpet.model.Endereco;
 
 public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -31,14 +29,12 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
 
     // Spinner
     private Spinner spinnerEspecieAnimal;
-    ArrayList<CustomItem> listaEspecieAnimal =new ArrayList<>();;
     int width = 150;
     private String especieAnimal;
 
     // AutoComplete
     private String racaAnimal;
     private AutoCompleteTextView campoRacaAnimal;
-    ArrayList<String> listaRacaAnimal= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +42,46 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         setContentView(R.layout.activity_cadastro_animal_especie_raca);
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
+        iniciarComponentes();
+        getDadosTelaAnterior(); //CadastroAnimalNomeActivity
+        setDadosSpinnerEspecie();
+
+    }
+
+    public void botaoProximo(View view) {
+
+        getDadosDigitados();
+
+        if (validarDados()) {
+
+                animal.setEspecieAnimal(especieAnimal);
+                animal.setRacaAnimal(racaAnimal);
+                Intent intent = new Intent(this, CadastroAnimalPorteActivity.class);
+                intent.putExtra("donoAnimal", donoAnimal);
+                intent.putExtra("endereco", endereco);
+                intent.putExtra("animal", animal);
+                startActivity(intent);
+        }
+    }
+
+    public void iniciarComponentes(){
+        spinnerEspecieAnimal = findViewById(R.id.spinnerEspecieAnimal);
+        campoRacaAnimal = findViewById(R.id.autoCompleteRacaAnimal);
+    }
+
+    public void getDadosTelaAnterior(){
         Intent intent = getIntent();
         donoAnimal = intent.getParcelableExtra("donoAnimal");
         endereco = intent.getParcelableExtra("endereco");
         animal = intent.getParcelableExtra("animal");
+    }
 
-        spinnerEspecieAnimal = findViewById(R.id.spinnerEspecieAnimal);
-        CustomAdapter adapter = new CustomAdapter(this,TipoAnimal.getListaEspecie() );
-
+    public void setDadosSpinnerEspecie(){
+        AdapterSpinnerEspecie adapter = new AdapterSpinnerEspecie(this, TipoAnimalDAO.getListaEspecie() );
         if (spinnerEspecieAnimal != null) {
             spinnerEspecieAnimal.setAdapter(adapter);
             spinnerEspecieAnimal.setOnItemSelectedListener(this);
         }
-
-        campoRacaAnimal = findViewById(R.id.autoCompleteRacaAnimal);
-
     }
 
     // Método para receber o item escolhido no Spinner
@@ -72,46 +93,41 @@ public class CadastroAnimalEspecieRacaActivity<escolha> extends AppCompatActivit
         } catch (Exception e) {
         }
 
-        CustomItem item = (CustomItem) adapterView.getSelectedItem();
+        ItemSpinnerEspecie item = (ItemSpinnerEspecie) adapterView.getSelectedItem();
         especieAnimal = item.getSpinnerItemName().toLowerCase();
 
         //listarRacas(especieAnimal);
         //listaRacaAnimal.clear();
         ArrayAdapter<String> adapterRaca = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
-                TipoAnimal.getListaRaca(especieAnimal));
+                TipoAnimalDAO.getListaRaca(especieAnimal));
 
         campoRacaAnimal.setAdapter(adapterRaca);
     }
+
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
 
-    public void botaoProximo(View view){
-
+    public void getDadosDigitados(){
         racaAnimal = campoRacaAnimal.getText().toString();
+    }
+
+    public Boolean validarDados () {
+
+        Boolean validado = false;
 
         if(!especieAnimal.equals("espécie")){
+            if(!VerificaDado.isVazio(racaAnimal)){
 
-            if(!VerificaCampo.isVazio(racaAnimal)){
-
-                animal.setEspecieAnimal(especieAnimal);
-                animal.setRacaAnimal(racaAnimal);
-                Intent intent = new Intent(this, CadastroAnimalPorteActivity.class);
-                intent.putExtra ("donoAnimal",donoAnimal);
-                intent.putExtra ("endereco",endereco);
-                intent.putExtra ("animal",animal);
-                startActivity(intent);
+                validado = true;
 
             }else{
-                Toast.makeText(this,
-                        "Digite a raça do seu animal",
-                        Toast.LENGTH_SHORT).show();
+                Mensagem.toastIt("Digite a raça do seu animal", this);
             }
         }else{
-            Toast.makeText(this,
-                    "Selecione a Espécie do seu animal",
-                    Toast.LENGTH_SHORT).show();
+            Mensagem.toastIt("Selecione a Espécie do seu animal", this);
         }
+        return validado;
     }
 
     public void finish() {

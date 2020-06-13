@@ -80,4 +80,30 @@ public class Mensagem {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    public static void mensagemDeslogarUsuario(final Activity activity){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Saindo...");
+        builder.setMessage("Tem certeza que deseja sair desta conta ?");
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                UsuarioFirebase.deslogarUsuario(activity);
+                activity.startActivity(new Intent(activity, LoginActivity.class));
+                activity.finish();
+            }
+        });
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+        builder.show();
+    }
+
+    public static void toastIt (String mensagem, Activity activity) {
+        Toast.makeText(activity,mensagem,Toast.LENGTH_SHORT).show();
+    }
+
+
 }

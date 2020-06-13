@@ -1,4 +1,4 @@
-package com.example.travelpet.controlller.cadastro.cadastroUsuario;
+package com.example.travelpet.controlller.cadastro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario_tipo);
 
-        usuario = new Usuario();
+        iniciarComponentes();
 
     }
 
@@ -46,6 +46,12 @@ public class CadastroUsuarioTipoActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void iniciarComponentes(){
+        usuario = new Usuario();
+    }
+
+
     /* Método para voltar com o botão do próprio aparelho
     @Override
     public void onBackPressed() {

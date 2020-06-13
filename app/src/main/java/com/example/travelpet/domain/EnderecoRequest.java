@@ -2,7 +2,7 @@ package com.example.travelpet.domain;
 
 import android.os.AsyncTask;
 
-import com.example.travelpet.controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity;
+import com.example.travelpet.controlller.cadastro.CadastroUsuarioDadosActivity;
 import com.example.travelpet.model.Endereco;
 import com.google.gson.Gson;
 
@@ -32,7 +32,7 @@ public class EnderecoRequest extends AsyncTask<Void, Void, Endereco> {
     protected Endereco doInBackground(Void... voids) {
         try {
             // Acesso ao JsonRequest
-            String jsonString = JsonRequest.request( activity.get().getUriZipCode() );
+            String jsonString = JsonRequest.request( activity.get().getUriCep() );
 
             Gson gson = new Gson();
             // Address.class = classe pojo classe que vai ser mapeada

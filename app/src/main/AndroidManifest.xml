@@ -62,8 +62,8 @@
         <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalPorteActivity" />
         <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalEspecieRacaActivity" />
         <activity android:name=".controlller.cadastro.cadastroDonoAnimal.CadastroAnimalNomeActivity" />
-        <activity android:name=".controlller.cadastro.cadastroUsuario.CadastroUsuarioDadosActivity" />
-        <activity android:name=".controlller.cadastro.cadastroUsuario.CadastroUsuarioTipoActivity" />
+        <activity android:name=".controlller.cadastro.CadastroUsuarioDadosActivity" />
+        <activity android:name=".controlller.cadastro.CadastroUsuarioTipoActivity" />
         <activity android:name=".controlller.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

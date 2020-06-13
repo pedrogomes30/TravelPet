@@ -2,7 +2,7 @@ package com.example.travelpet.helper;
 
 
 // Usado no ConfiguracaoFragment
-public class VerificaCampo {
+public class VerificaDado {
 
     public static boolean isMesmoValor(String valorInicial, String valorEditado){
         boolean resultado = valorInicial.equals(valorEditado);

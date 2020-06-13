@@ -17,8 +17,8 @@ import com.example.travelpet.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter {
-    public CustomAdapter(Context context, ArrayList<CustomItem> customList) {
+public class AdapterSpinnerEspecie extends ArrayAdapter {
+    public AdapterSpinnerEspecie(Context context, ArrayList<ItemSpinnerEspecie> customList) {
         super(context, 0, customList);
     }
 
@@ -29,7 +29,7 @@ public class CustomAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_spinner_layout, parent, false);
         }
-        CustomItem item = (CustomItem) getItem(position);
+        ItemSpinnerEspecie item = (ItemSpinnerEspecie) getItem(position);
         ImageView spinnerIV = convertView.findViewById(R.id.ivSpinnerLayout);
         TextView spinnerTV = convertView.findViewById(R.id.tvSpinnerLayout);
         if (item != null) {
@@ -53,7 +53,7 @@ public class CustomAdapter extends ArrayAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_dropdown_layout, parent, false);
         }
-        CustomItem item = (CustomItem) getItem(position);
+        ItemSpinnerEspecie item = (ItemSpinnerEspecie) getItem(position);
         ImageView dropDownIV = convertView.findViewById(R.id.ivDropDownLayout);
         TextView dropDownTV = convertView.findViewById(R.id.tvDropDownLayout);
         if (item != null) {

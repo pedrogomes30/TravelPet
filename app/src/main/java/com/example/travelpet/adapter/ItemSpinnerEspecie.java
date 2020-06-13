@@ -1,10 +1,10 @@
 package com.example.travelpet.adapter;
 
-public class CustomItem {
+public class ItemSpinnerEspecie {
     private String spinnerItemName;
     private  String spinnerItemImage;
 
-    public CustomItem(String spinnerItemName, String spinnerItemImage) {
+    public ItemSpinnerEspecie(String spinnerItemName, String spinnerItemImage) {
         this.spinnerItemName = spinnerItemName;
         this.spinnerItemImage = spinnerItemImage;
     }
