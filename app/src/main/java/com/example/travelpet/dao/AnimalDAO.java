@@ -22,9 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+
 public class AnimalDAO {
 
     int quantidadeAnimais; // contar animais
+    ArrayList<Animal> listaAnimal = new ArrayList<>();
 
     public AnimalDAO() {}
 
@@ -173,7 +177,39 @@ public class AnimalDAO {
                 activity.overridePendingTransition(R.anim.activity_pai_entrando, R.anim.activity_filho_saindo);
             }
         });
+    }
 
+    public ArrayList<Animal> receberListaAnimal (final CountDownLatch contador)
+    {
+        DatabaseReference referenciaAnimais = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("animais")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+
+        System.out.println("referencia =" + referenciaAnimais.toString());
+
+        referenciaAnimais.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot data : dataSnapshot.getChildren())
+                {
+                    Animal animal = data.getValue(Animal.class);
+                    listaAnimal.add(animal);
+                }
+                contador.countDown();
+                System.out.println("lista animais após o for: "+ listaAnimal.size());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+                contador.countDown();
+            }
+
+        });
+
+        return listaAnimal;
     }
 
 

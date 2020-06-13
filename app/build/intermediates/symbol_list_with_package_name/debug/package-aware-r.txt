@@ -1425,6 +1425,8 @@ id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
 id bt_bs_donoanimal
 id bt_bs_motorista
+id bt_cancelDialog_origemDestino
+id bt_confirmDialog_origemDestino
 id bt_excluirVeiculo
 id btn_holder
 id button3
@@ -1818,9 +1820,17 @@ id tvSpinnerLayout
 id tv_adapterVeiculoMarca
 id tv_adapterVeiculoModelo
 id tv_adapterVeiculoPlaca
+id tv_bairroDestino
+id tv_bairroOrigem
+id tv_cepDestino
+id tv_cepOrigem
 id tv_ci_animal1
 id tv_ci_animal2
 id tv_ci_animal3
+id tv_cidadeDestino
+id tv_cidadeOrigem
+id tv_estadoDestino
+id tv_estadoOrigem
 id tv_exibir_ano
 id tv_exibir_crvl
 id tv_exibir_marca
@@ -1831,7 +1841,11 @@ id tv_fragAddVeiculo
 id tv_marcaveiculo_bs
 id tv_modeloveiculo_bs
 id tv_nomeanimal_bs
+id tv_numeroDestino
+id tv_numeroOrigem
 id tv_placaveiculo_bs
+id tv_ruaDestino
+id tv_ruaOrigem
 id unchecked
 id uniform
 id unlabeled
@@ -1952,6 +1966,7 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout dialog_origem_destino
 layout dialog_viagem_solicitada
 layout fragment_add_veiculo
 layout fragment_configuracao

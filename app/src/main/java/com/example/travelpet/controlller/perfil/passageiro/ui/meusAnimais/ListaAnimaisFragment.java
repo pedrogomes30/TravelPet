@@ -136,8 +136,6 @@ public class ListaAnimaisFragment extends Fragment {
                 for( DataSnapshot dados: dataSnapshot.getChildren() ){
                     Animal animal = dados.getValue(Animal.class);
                     listaAnimais.add ( animal );
-
-
                 }
                 adapter.notifyDataSetChanged();
             }

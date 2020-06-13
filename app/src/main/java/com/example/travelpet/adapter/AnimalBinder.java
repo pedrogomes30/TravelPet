@@ -1,10 +1,13 @@
 package com.example.travelpet.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.model.Animal;
 
@@ -16,6 +19,12 @@ import mva2.adapter.ItemViewHolder;
 
 public class AnimalBinder extends ItemBinder<Animal, AnimalBinder.AnimalViewHolder>
 {
+    Context context;
+
+    public AnimalBinder (Context context)
+    {
+        this.context = context;
+    }
 
     @Override
     public AnimalBinder.AnimalViewHolder createViewHolder(ViewGroup parent)
@@ -36,7 +45,6 @@ public class AnimalBinder extends ItemBinder<Animal, AnimalBinder.AnimalViewHold
         int colorApp    =   ContextCompat.getColor(holder.nomeAnimal.getContext(),R.color.white);
 
 
-
             if (holder.isItemSelected() == true)
             {
                 holder.cardView.setBackgroundColor(corClick);
@@ -47,6 +55,13 @@ public class AnimalBinder extends ItemBinder<Animal, AnimalBinder.AnimalViewHold
                 holder.cardView.setBackgroundColor(colorApp);
                 holder.cardView.setCardElevation(4);
             }
+
+        if( item.getFotoAnimalUrl() != null ){
+            Uri uri = Uri.parse(item.getFotoAnimalUrl());
+            Glide.with( context ).load(uri).into(holder.fotoAnimal);
+        }else{
+            holder.fotoAnimal.setImageResource( R.drawable.imagem_animal);
+        }
 
     }
 

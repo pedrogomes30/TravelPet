@@ -1,9 +1,12 @@
 package com.example.travelpet.controlller.perfil.passageiro.ui.viagem;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +35,10 @@ import mva2.adapter.util.Mode;
 
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.AnimalBinder;
+import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
+import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.Local;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -49,8 +56,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
@@ -63,7 +78,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerBs;
     private ListSection<Animal> listSection;
-
+    private ArrayList<Animal> listaAnimais = new ArrayList<>();
+    private Dialog dialogOrigemDestino;
+    private CountDownLatch contador;
+    private AnimalDAO animalDAO;
 
     // Variáveis para recuperar localização de um usuário
     private LocationManager locationManager;
@@ -82,6 +100,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         buttonChamarMotorista = view.findViewById(R.id.buttonChamarMotorista);
         editDestino = view.findViewById(R.id.editDestino);
         editOrigem = view.findViewById(R.id.editOrigem);
+        animalDAO = new AnimalDAO();
 
         // Criando mapa
         mapView = (MapView) view.findViewById(R.id.MapView);
@@ -90,55 +109,167 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
 
         iniciarMapa();
-        setBottomSheet();
         //btchamar();
         btNovaViagemOnClick();
         return view;
     }
 
     public void iniciarMapa() {
-        try {
+        try
+        {
             MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
         mapView.getMapAsync(this);
     }
 
-    public void setBottomSheet() {
+    public void exibirBottomSheet() {
         //BottomSheet
+
         bsDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
         bsView = getActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_donoanimal, null);
         recyclerBs = bsView.findViewById(R.id.recycler_bs_donoanimal);
         bsDialog.setContentView(bsView);
 
         //MultiViewAdapter
-        adapter = new MultiViewAdapter();
-        adapter.registerItemBinders(new AnimalBinder());
 
-        listSection = new ListSection<>();
-        listSection.add(testeAnimal("1", "1", "PERNALONGA"));
-        listSection.add(testeAnimal("2", "2", "FRAJOLA"));
-        listSection.add(testeAnimal("3", "3", "JERRY"));
-        listSection.add(testeAnimal("4", "4", "TOM"));
-        listSection.setSelectionMode(Mode.MULTIPLE);
+        popularAdapter();
+        //listSection = new ListSection<>();
+        //listSection.add(testeAnimal("1", "1", "PERNALONGA"));
+        //listSection.add(testeAnimal("2", "2", "FRAJOLA"));
+        //listSection.add(testeAnimal("3", "3", "JERRY"));
+        //listSection.add(testeAnimal("4", "4", "TOM"));
+        //listSection.setSelectionMode(Mode.MULTIPLE);
 
-        adapter.addSection(listSection);
-        adapter.setSelectionMode(Mode.MULTIPLE);
+        //adapter.addSection(listSection);
+        //adapter.setSelectionMode(Mode.MULTIPLE);
+
 
         layoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerBs.setLayoutManager(layoutManager);
         recyclerBs.setHasFixedSize(true);
-        recyclerBs.setAdapter(adapter);
+
+        bsDialog.show();
 
     }
 
-    public void btNovaViagemOnClick() {
-        // Envento de clique do botão "Chamar Motorista"
-        buttonChamarMotorista.setOnClickListener(new View.OnClickListener() {
+    public ArrayList<Animal> getAnimais () throws ExecutionException, InterruptedException
+    {
+        final ArrayList<Animal> animais = new ArrayList<>();
+        final DatabaseReference referenciaAnimais = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("animais")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+
+        FutureTask<ArrayList<Animal>> receberAnimais = new FutureTask<>(new Callable<ArrayList<Animal>>()
+        {
             @Override
-            public void onClick(View view) {
+            public ArrayList<Animal> call() throws Exception
+            {
+                final ArrayList<Animal>listaInterna = new ArrayList<>();
+
+
+                referenciaAnimais.addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        for (DataSnapshot data : dataSnapshot.getChildren())
+                        {
+                            Animal animal = dataSnapshot.getValue(Animal.class);
+                            listaInterna.add(animal);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError)
+                    {
+
+                    }
+                });
+
+                return listaInterna;
+            }
+        });
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.submit(receberAnimais);
+
+        return (ArrayList<Animal>) receberAnimais.get();
+    }
+
+    public void popularAdapter()
+    {
+
+       final Thread thread1 =  new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                listaAnimais.clear();
+
+                listaAnimais = animalDAO.receberListaAnimal(contador);
+
+                /*
+
+                DatabaseReference referenciaAnimais = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                        .child("animais")
+                        .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+
+                System.out.println("referencia =" + referenciaAnimais.toString());
+
+                referenciaAnimais.addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        for (DataSnapshot data : dataSnapshot.getChildren())
+                        {
+                            Animal animal = data.getValue(Animal.class);
+                            listaAnimais.add(animal);
+                        }
+                        contador.countDown();
+                        System.out.println("lista animais após o for: "+ listaAnimais.size());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError)
+                    {
+                        contador.countDown();
+                    }
+
+                });*/
+
+                try
+                {contador.await();}
+                catch (InterruptedException e)
+                { e.printStackTrace(); }
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        setMultiViewAdapter();
+                    }
+                });
+            }
+        });
+
+       thread1.start();
+    }
+
+    public void btNovaViagemOnClick()
+    {
+        // Envento de clique do botão "Chamar Motorista"
+        buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
 
                 // Pegando as String de Origem e destino
                 String enderecoOrigem = editOrigem.getText().toString();
@@ -161,7 +292,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 }
                 else
                 {
-                    Address addressOrigem = recuperaEnderecoViaString("enderecoOrigem");
+                    Address addressOrigem = recuperaEnderecoViaString(enderecoOrigem);
                     localOrigem = new Local();
                     localOrigem = addressToLocal(addressOrigem);
                 }
@@ -174,34 +305,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     if (addressDestino != null)
                     {
                         localDestino = new Local();
-
                         localDestino = addressToLocal(addressDestino);
 
-                        // Mensagem para Confirmação do endereço
-                        StringBuilder mensagem = new StringBuilder();
-                        mensagem.append("Cidade: " + localDestino.getCidade());
-                        mensagem.append("\nRua: " + localDestino.getRua());
-                        mensagem.append("\nBairro: " + localDestino.getBairro());
-                        mensagem.append("\nNúmero: " + localDestino.getNumero());
-                        mensagem.append("\nCep: " + localDestino.getCep());
-
-                        // Exibindo mensagem em caixa de dialogo
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                                .setTitle("Confirme seu endereco!")
-                                .setMessage(mensagem)
-                                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(getActivity(), "Viagem Aceita", Toast.LENGTH_SHORT);
-                                    }
-                                }).setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Toast.makeText(getActivity(), "Viagem Aceita", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        exibirDialogOrigemDestino();
                     }
 
                 }
@@ -214,44 +320,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    public void btchamar() {
-        buttonChamarMotorista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bsDialog.show();
-            }
-        });
-
-        bsView.findViewById(R.id.bt_bs_donoanimal).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bsDialog.dismiss();
-            }
-        });
-
-        DatabaseReference reference = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("racaAnimal");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //System.out.println("toString: " + dataSnapshot.toString());
-                for (DataSnapshot dados : dataSnapshot.getChildren()) {
-                    System.out.println("getKey: " + dados.getKey()); // pegou a especie
-                    String teste = dados.child("iconeURL").getValue(String.class);//pega a imagem da especie
-
-                    System.out.println("teste = " + teste);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap)
+    {
         gMap = googleMap;
 
         // Recuperar Localização do usuário - Aula 494
@@ -259,7 +330,93 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public Address recuperaEnderecoViaString(String endereco) {
+    public void exibirDialogOrigemDestino()
+    {
+        TextView ruaOrigem,numOrigem,bairroOrigem,cidadeOrigem,estadoOrigem,cepOrigem;
+        TextView ruaDestino,numDestino,bairroDestino,cidadeDestino,estadoDestino,cepDestino;
+        Button btConfirmar,btCancelar;
+
+        dialogOrigemDestino = new Dialog(getActivity());
+        dialogOrigemDestino.setContentView(R.layout.dialog_origem_destino);
+
+        //findviews Origem
+        ruaOrigem = dialogOrigemDestino.findViewById(R.id.tv_ruaOrigem);
+        numOrigem = dialogOrigemDestino.findViewById(R.id.tv_numeroOrigem);
+        bairroOrigem = dialogOrigemDestino.findViewById(R.id.tv_bairroOrigem);
+        cidadeOrigem = dialogOrigemDestino.findViewById(R.id.tv_cidadeOrigem);
+        estadoOrigem = dialogOrigemDestino.findViewById(R.id.tv_estadoOrigem);
+        cepOrigem = dialogOrigemDestino.findViewById(R.id.tv_cepOrigem);
+
+        //findviews Destino
+        ruaDestino = dialogOrigemDestino.findViewById(R.id.tv_ruaDestino);
+        numDestino = dialogOrigemDestino.findViewById(R.id.tv_numeroDestino);
+        bairroDestino = dialogOrigemDestino.findViewById(R.id.tv_bairroDestino);
+        cidadeDestino = dialogOrigemDestino.findViewById(R.id.tv_cidadeDestino);
+        estadoDestino = dialogOrigemDestino.findViewById(R.id.tv_estadoDestino);
+        cepDestino = dialogOrigemDestino.findViewById(R.id.tv_cepDestino);
+
+        btConfirmar = dialogOrigemDestino.findViewById(R.id.bt_confirmDialog_origemDestino);
+        btCancelar = dialogOrigemDestino.findViewById(R.id.bt_cancelDialog_origemDestino);
+
+        //SetText Origem
+        ruaOrigem.setText(localOrigem.getRua());
+        cidadeOrigem.setText("Cidade: " + localOrigem.getCidade());
+        estadoOrigem.setVisibility(View.GONE);
+
+        if(localOrigem.getNumero() ==  null || localOrigem.getNumero().equals(localOrigem.getRua()))
+        {numOrigem.setVisibility(View.GONE);}
+        else {numOrigem.setText("Número: " + localOrigem.getNumero());}
+
+        if(localOrigem.getBairro() ==  null)
+        {bairroOrigem.setVisibility(View.GONE);}
+        else {bairroOrigem.setText("Bairro: " + localOrigem.getBairro());}
+
+        if(localOrigem.getCep() ==  null)
+        {cepOrigem.setVisibility(View.GONE);}
+        else {cepOrigem.setText("Cep: " + localOrigem.getCep());}
+
+        //SetText Destino
+        ruaDestino.setText(localDestino.getRua());
+        cidadeDestino.setText("Cidade: " + localDestino.getCidade());
+        estadoDestino.setVisibility(View.GONE);
+
+        if(localDestino.getNumero() ==  null || localDestino.getNumero().equals(localDestino.getRua()))
+        {numDestino.setVisibility(View.GONE);}
+        else {numDestino.setText("Número: " + localDestino.getNumero());}
+
+        if(localDestino.getBairro() ==  null)
+        {bairroDestino.setVisibility(View.GONE);}
+        else {bairroDestino.setText("Bairro: " + localDestino.getBairro());}
+
+        if(localDestino.getCep() ==  null)
+        {cepDestino.setVisibility(View.GONE);}
+        else {cepDestino.setText("Cep: " + localDestino.getCep());}
+
+        btCancelar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialogOrigemDestino.dismiss();
+            }
+        });
+
+        btConfirmar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialogOrigemDestino.dismiss();
+                exibirBottomSheet();
+            }
+        });
+
+        dialogOrigemDestino.show();
+
+    }
+
+    public Address recuperaEnderecoViaString(String endereco)
+    {
 
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
@@ -282,7 +439,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return null;
     }
 
-    public Address recuperaEnderecoViaLocation(Location location) throws IOException {
+    public Address recuperaEnderecoViaLocation(Location location) throws IOException
+    {
         Geocoder geocoder;
         Address address = null;
         List<Address> addresses;
@@ -298,14 +456,16 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
     // Método Recuperar Localização do Usuário 494
-    public void recuperarLocalizacaoUsuario() {
+    public void recuperarLocalizacaoUsuario()
+    {
         // LocationManager = tradução = gerente de localização= gerencia a localização
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         // locationListener = tradução = ouvinte de localização
         locationListener = new LocationListener() {
 
             @Override
-            public void onLocationChanged(Location location) {
+            public void onLocationChanged(Location location)
+            {
                 //seta local do usuario
                 localizacaoAtual = location;
 
@@ -363,11 +523,13 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public void calcDistanciaLocais(LatLng origem, LatLng destino) {
+    public void calcDistanciaLocais(LatLng origem, LatLng destino)
+    {
 
     }
 
-    public Local addressToLocal(Address address) {
+    public Local addressToLocal(Address address)
+    {
         Local local = new Local();
         local.setRua(address.getThoroughfare());
         local.setBairro(address.getSubLocality());
@@ -381,7 +543,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return local;
     }
 
-    public Animal testeAnimal(String idUsuario, String idAnimal, String nomeAnimal) {
+    public Animal testeAnimal(String idUsuario, String idAnimal, String nomeAnimal)
+    {
         Animal animal = new Animal();
         animal.setIdUsuario(idUsuario);
         animal.setIdAnimal(idAnimal);
@@ -432,6 +595,25 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         distancia = localizacaoAtual.distanceTo(pontoA);
 
         return distancia;
+    }
+
+    public void setMultiViewAdapter()
+    {
+        //cria Adapter
+        adapter = new MultiViewAdapter();
+        adapter.registerItemBinders(new AnimalBinder(getActivity()));
+
+        //Instancia o ListSection para incluir listaAnimais
+        listSection = new ListSection<>();
+        listSection.setSelectionMode(Mode.MULTIPLE);
+        listSection.addAll(listaAnimais);
+
+        //adiciona o ListSection
+        adapter.addSection(listSection);
+        adapter.setSelectionMode(Mode.MULTIPLE);
+
+        recyclerBs.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 }//fim do fragment
