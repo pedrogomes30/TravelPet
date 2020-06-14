@@ -53,7 +53,6 @@ public class ConfiguracaoFragment extends Fragment {
     private EnderecoDAO enderecoDAO;
     private ProgressDialog progressDialog;
 
-    // Variável usada no processo de pegar os dados do database
     private String nome,sobrenome, cpf, fotoPerfilUrl, telefone,
                    cep, logradouro, bairro, localidade, uf;
 
@@ -64,58 +63,33 @@ public class ConfiguracaoFragment extends Fragment {
     private TextView campoNome, campoCpf;
     private TextInputEditText campoTelefone,campoCep,campoLogradouro,
                               campoBairro, campoLocalidade, campoUf;
-    private ImageButton     botaoCamera, botaoGaleria;
-    private Button          botaoSalvar;
+    private ImageButton     btCamera, btGaleria;
+    private Button          btSalvar;
 
     // Variáveis usadas para especificar o requestCode
     private static final int SELECAO_CAMERA = 100;
     private static final int SELECAO_GALERIA = 200;
     private byte[] fotoPerfil;
 
-    private Util util;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_configuracao, container, false);
+        View view = inflater.inflate(R.layout.fragment_configuracao, container, false);
 
-        donoAnimalDAO = new DonoAnimalDAO();
-        enderecoDAO = new EnderecoDAO();
-        progressDialog = new ProgressDialog(getActivity());
-
-        campoFotoPerfil     =   root.findViewById(R.id.imageViewCircleFotoPerfil);
-        campoNome           =   root.findViewById(R.id.textViewNomeUsuario);
-        campoCpf            =   root.findViewById(R.id.textViewCpfUsuario);
-        campoTelefone       =   root.findViewById(R.id.editTelefone);
-        campoCep            =   root.findViewById(R.id.editCep);
-
-        //campoCep.addTextChangedListener( new CepListener( getActivity() ) );
-
-        campoLogradouro     =   root.findViewById(R.id.editLogradouro); // rua
-        campoBairro         =   root.findViewById(R.id.editBairro);
-        campoLocalidade     =   root.findViewById(R.id.editLocalidade); // cidade
-        campoUf             =   root.findViewById(R.id.editUf);
-        botaoCamera         =   root.findViewById(R.id.imageButtonCamera);
-        botaoGaleria        =   root.findViewById(R.id.imageButtonGaleria);
-        botaoSalvar         =   root.findViewById(R.id.botaoSalvar);
-
-        /* Entidade que vai permitir o travamento das views
-        util = new Util(getActivity(),
-                R.id.editCep2,
-                R.id.editLogradouro2,
-                R.id.editBairro2,
-                R.id.editLocalidade2,
-                R.id.editUf2); */
-
-
-
-        MascaraCampos.mascaraTelefone(campoTelefone);
-        MascaraCampos.mascaraCep(campoCep);
-
+        iniciarComponentes(view);
         getDadosDonoAnimalDatabase();
         getDadosEnderecoDatabase();
+        MascaraCampos.mascaraTelefone(campoTelefone);
+        MascaraCampos.mascaraCep(campoCep);
+        botaoCamera();
+        botaoGaleria();
+        botaoSalvar();
 
-        //              Configurando função dos botões
-        botaoCamera.setOnClickListener(new View.OnClickListener() {
+        return view;
+    }
+
+    public void botaoCamera(){
+
+        btCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -125,8 +99,10 @@ public class ConfiguracaoFragment extends Fragment {
                 }
             }
         });
+    }
 
-        botaoGaleria.setOnClickListener(new View.OnClickListener() {
+    public void botaoGaleria(){
+        btGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -136,8 +112,10 @@ public class ConfiguracaoFragment extends Fragment {
                 }
             }
         });
+    }
 
-        botaoSalvar.setOnClickListener(new View.OnClickListener() {
+    public void botaoSalvar(){
+        btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -145,35 +123,26 @@ public class ConfiguracaoFragment extends Fragment {
                 salvarAlteracoes();
             }
         });
-
-
-        return root;
     }
 
-    /* Metodo para retornar a url
-    public String getUriZipCode(){
-        return "https://viacep.com.br/ws/"+campoCep.getText().toString()+"/json/";
+    public void iniciarComponentes(View view){
+        donoAnimalDAO = new DonoAnimalDAO();
+        enderecoDAO = new EnderecoDAO();
+        progressDialog = new ProgressDialog(getActivity());
+        campoFotoPerfil     =   view.findViewById(R.id.imageViewCircleFotoPerfil);
+        campoNome           =   view.findViewById(R.id.textViewNomeUsuario);
+        campoCpf            =   view.findViewById(R.id.textViewCpfUsuario);
+        campoTelefone       =   view.findViewById(R.id.editTelefone);
+        campoCep            =   view.findViewById(R.id.editCep);
+        //campoCep.addTextChangedListener( new CepListener( getActivity() ) );
+        campoLogradouro     =   view.findViewById(R.id.editLogradouro); // rua
+        campoBairro         =   view.findViewById(R.id.editBairro);
+        campoLocalidade     =   view.findViewById(R.id.editLocalidade); // cidade
+        campoUf             =   view.findViewById(R.id.editUf);
+        btCamera            =   view.findViewById(R.id.imageButtonCamera);
+        btGaleria           =   view.findViewById(R.id.imageButtonGaleria);
+        btSalvar            =   view.findViewById(R.id.botaoSalvar);
     }
-
-    // metodo que permite o acesso ao util
-    public void lockFields( boolean isToLock ){
-        util.lockFields( isToLock );
-    }
-
-    // Mapeamento
-    public void setDataViews(Endereco endereco){
-
-        setField( R.id.editLogradouro2, endereco.getLogradouro() );
-        setField( R.id.editBairro2, endereco.getBairro() );
-        setField( R.id.editLocalidade2, endereco.getLocalidade() );
-        setField( R.id.editUf2, endereco.getUf() );;
-    }
-
-    private void setField( int id, String data ) {
-
-        ((EditText) getView().findViewById(id)).setText( data );
-    }
-    */
 
     public void getDadosDonoAnimalDatabase(){
         DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
@@ -196,7 +165,6 @@ public class ConfiguracaoFragment extends Fragment {
 
                     Uri fotoPerfilUri = Uri.parse(fotoPerfilUrl);
                     Glide.with(getActivity()).load( fotoPerfilUri ).into( campoFotoPerfil );
-
                 }else{
                     campoFotoPerfil.setImageResource(R.drawable.imagem_usuario);
                 }
@@ -334,12 +302,12 @@ public class ConfiguracaoFragment extends Fragment {
 
                                 validado = true;
 
-                            } else { ToastIt("Preencha o UF corretamente");}
-                        } else { ToastIt("Preencha a Cidade");}
-                    } else { ToastIt("Preencha o Bairro");}
-                } else { ToastIt("Preencha o Logradouro");}
-            }else { ToastIt("Preencha o CEP corretamente");}
-        }else{ ToastIt("Preenche o telefone corretamente"); }
+                            } else { Mensagem.toastIt("Preencha o UF corretamente", getActivity());}
+                        } else { Mensagem.toastIt("Preencha a Cidade", getActivity());}
+                    } else { Mensagem.toastIt("Preencha o Bairro", getActivity());}
+                } else { Mensagem.toastIt("Preencha o Logradouro", getActivity());}
+            }else { Mensagem.toastIt("Preencha o CEP corretamente", getActivity());}
+        }else{ Mensagem.toastIt("Preenche o telefone corretamente", getActivity()); }
 
         return validado;
     }
@@ -354,10 +322,6 @@ public class ConfiguracaoFragment extends Fragment {
             }
         }
         return validado;
-    }
-
-    public void ToastIt (String mensagem) {
-        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
     }
 
     //          Método para verificar de onde será pego a foto, da camera ou galeria

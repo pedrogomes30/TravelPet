@@ -1401,7 +1401,7 @@ int id barrier 0x7f0a004e
 int id beginning 0x7f0a004f
 int id blocking 0x7f0a0050
 int id botaoCamera 0x7f0a0051
-int id botaoEnviarFotoCrvl 0x7f0a0052
+int id botaoEnviarFotoCrlv 0x7f0a0052
 int id botaoEnviarFotoPerfil 0x7f0a0053
 int id botaoExcluir 0x7f0a0054
 int id botaoFinalizar 0x7f0a0055
@@ -1514,7 +1514,7 @@ int id end_padder 0x7f0a00bf
 int id enterAlways 0x7f0a00c0
 int id enterAlwaysCollapsed 0x7f0a00c1
 int id etAnoVeiculo 0x7f0a00c2
-int id etCRVLveiculo 0x7f0a00c3
+int id etCRLVveiculo 0x7f0a00c3
 int id etMarcaVeiculo 0x7f0a00c4
 int id etModeloVeiculo 0x7f0a00c5
 int id etPlacaVeiculo 0x7f0a00c6
@@ -1769,7 +1769,7 @@ int id textViewLogin 0x7f0a01be
 int id textViewNome 0x7f0a01bf
 int id textViewNomeAnimal 0x7f0a01c0
 int id textViewNomeFotoCnh 0x7f0a01c1
-int id textViewNomeFotoCrvl 0x7f0a01c2
+int id textViewNomeFotoCrlv 0x7f0a01c2
 int id textViewNomeFotoMotorista 0x7f0a01c3
 int id textViewNomeUsuario 0x7f0a01c4
 int id textViewObervacao 0x7f0a01c5
@@ -1788,7 +1788,7 @@ int id textinput_counter 0x7f0a01d1
 int id textinput_error 0x7f0a01d2
 int id textinput_helper_text 0x7f0a01d3
 int id tiAnoVeiculo 0x7f0a01d4
-int id tiCRVLveiculo 0x7f0a01d5
+int id tiCRLVveiculo 0x7f0a01d5
 int id tiMarcaVeiculo 0x7f0a01d6
 int id tiModeloVeiculo 0x7f0a01d7
 int id tiPlacaVeiculo 0x7f0a01d8
@@ -2077,7 +2077,7 @@ int string common_google_play_services_wear_update_text 0x7f120038
 int string common_open_on_phone 0x7f120039
 int string common_signin_button_text 0x7f12003a
 int string common_signin_button_text_long 0x7f12003b
-int string crvl_do_ve_culo 0x7f12003c
+int string crlv_do_ve_culo 0x7f12003c
 int string default_web_client_id 0x7f12003d
 int string descricao 0x7f12003e
 int string dono_de_animal 0x7f12003f

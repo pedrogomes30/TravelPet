@@ -269,7 +269,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         veiculo.setMarcaVeiculo(marca);
         veiculo.setPlacaVeiculo(placa);
         veiculo.setAnoVeiculo(ano);
-        veiculo.setCrvlVeiculo(Crvl);
+        veiculo.setCrlvVeiculo(Crvl);
 
         return veiculo;
     }

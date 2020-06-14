@@ -83,7 +83,7 @@
                 android:id="@+id/et_addVeiculo_crvl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/crvl_do_ve_culo" />
+                android:hint="@string/crlv_do_ve_culo" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

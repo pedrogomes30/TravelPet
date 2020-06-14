@@ -82,7 +82,7 @@ public class addVeiculoFragment extends Fragment
                         veiculo.setModeloVeiculo(modeloV);
                         veiculo.setAnoVeiculo(anoV);
                         veiculo.setPlacaVeiculo(placaV);
-                        veiculo.setCrvlVeiculo(crvlV);
+                        veiculo.setCrlvVeiculo(crvlV);
                         veiculo.setFotoCrvl(fotoCRVL);
                         veiculoDAO.salvarVeiculo(veiculo);
 

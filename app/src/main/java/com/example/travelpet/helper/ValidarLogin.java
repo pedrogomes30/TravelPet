@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.travelpet.controlller.cadastro.CadastroUsuarioTipoActivity;
+import com.example.travelpet.controlller.cadastro.cadastroMotorista.CadastroMotoristaVeiculoActivity;
 import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;

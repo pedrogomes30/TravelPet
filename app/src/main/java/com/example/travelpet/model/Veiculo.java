@@ -16,7 +16,7 @@ public class Veiculo implements Parcelable {
     private byte [] fotoCrvl;
     private String marcaVeiculo;
     private String modeloVeiculo;
-    private String crvlVeiculo;
+    private String crlvVeiculo;
     private String anoVeiculo;
     private String placaVeiculo;
     private String idUsuario;
@@ -54,13 +54,13 @@ public class Veiculo implements Parcelable {
 
     public void setPlacaVeiculo(String placaVeiculo) {this.placaVeiculo = placaVeiculo;}
 
-    public String getCrvlVeiculo() {return crvlVeiculo;}
+    public String getCrlvVeiculo() {return crlvVeiculo;}
 
     public String getStatus ()  {return status;}
 
     public void setStatus (String status) {this.status = status;}
 
-    public void setCrvlVeiculo(String crvlVeiculo) {this.crvlVeiculo = crvlVeiculo;}
+    public void setCrlvVeiculo(String crvlVeiculo) {this.crlvVeiculo = crlvVeiculo;}
 
     public String getFotoCRVLurl() { return fotoCRVLurl; }
 
@@ -90,7 +90,7 @@ public class Veiculo implements Parcelable {
         parcel.writeByteArray(fotoCrvl);
         parcel.writeString(marcaVeiculo);
         parcel.writeString(modeloVeiculo);
-        parcel.writeString(crvlVeiculo);
+        parcel.writeString(crlvVeiculo);
         parcel.writeString(anoVeiculo);
         parcel.writeString(placaVeiculo);
         parcel.writeString(idUsuario);
@@ -103,7 +103,7 @@ public class Veiculo implements Parcelable {
         fotoCrvl = in.createByteArray();
         marcaVeiculo = in.readString();
         modeloVeiculo = in.readString();
-        crvlVeiculo = in.readString();
+        crlvVeiculo = in.readString();
         anoVeiculo = in.readString();
         placaVeiculo = in.readString();
         idUsuario = in.readString();

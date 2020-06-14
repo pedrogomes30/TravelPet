@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.helper.MascaraCampos;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Endereco;
@@ -17,8 +18,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
 
-    private TextInputEditText modeloVeiculo, marcaVeiculo, anoVeiculo, placaVeiculo, crvlVeiculo;
-    private String modeloV, marcaV, anoV, placaV, crvlV;
+    private TextInputEditText modeloVeiculo, marcaVeiculo, anoVeiculo, placaVeiculo, crlvVeiculo;
+    private String modeloV, marcaV, anoV, placaV, crlvV;
     private Button btProximo;
 
     private Motorista motorista;
@@ -44,12 +45,13 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
                 getDadosDigitados();
 
                 if(validarDados()){
+
                     Veiculo veiculo = new Veiculo();
                     veiculo.setMarcaVeiculo(marcaV);
                     veiculo.setModeloVeiculo(modeloV);
                     veiculo.setAnoVeiculo(anoV);
                     veiculo.setPlacaVeiculo(placaV);
-                    veiculo.setCrvlVeiculo(crvlV);
+                    veiculo.setCrlvVeiculo(crlvV);
 
                     Intent intent = new Intent(getApplicationContext(), CadastroMotoristaCrlvActivity.class);
                     intent.putExtra("motorista", motorista);
@@ -66,7 +68,7 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
         marcaVeiculo    =   findViewById(R.id.etMarcaVeiculo);
         anoVeiculo      =   findViewById(R.id.etAnoVeiculo);
         placaVeiculo    =   findViewById(R.id.etPlacaVeiculo);
-        crvlVeiculo     =   findViewById(R.id.etCRVLveiculo);
+        crlvVeiculo     =   findViewById(R.id.etCRLVveiculo);
         btProximo       =   findViewById(R.id.btProximoVeiculo);
     }
 
@@ -81,29 +83,29 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
         modeloV =   modeloVeiculo.getText().toString().toUpperCase();
         anoV    =   anoVeiculo.getText().toString().toUpperCase();
         placaV  =   placaVeiculo.getText().toString().toUpperCase();
-        crvlV   =   crvlVeiculo.getText().toString().toUpperCase();
+        crlvV   =    crlvVeiculo.getText().toString().toUpperCase();
     }
 
     public Boolean validarDados (){
         Boolean validado = false;
 
-        if (!VerificaDado.isVazio(marcaV))
+        if (!VerificaDado.isVazio(modeloV))
         {
-            if (!VerificaDado.isVazio(modeloV))
+            if (!VerificaDado.isVazio(marcaV))
             {
-                if (!VerificaDado.isVazio(anoV))
+                if (!VerificaDado.isVazio(anoV) && anoV.length() == 4)
                 {
-                    if (!VerificaDado.isVazio(placaV))
+                    if (!VerificaDado.isVazio(placaV) && anoV.length() == 7)
                     {
-                        if (!VerificaDado.isVazio(crvlV))
+                        if (!VerificaDado.isVazio(crlvV))
                         {
                             validado = true;
 
                         } else { Mensagem.toastIt("Preencha o CRVL", this); }
-                    } else { Mensagem.toastIt("Preencha a Placa", this); }
-                } else { Mensagem.toastIt("Preencha o Ano", this); }
-            } else { Mensagem.toastIt("Preencha o Modelo", this); }
-        } else { Mensagem.toastIt("Preencha o CRVL", this); }
+                    } else { Mensagem.toastIt("Preencha a placa corretamente", this); }
+                } else { Mensagem.toastIt("Preencha o ano corretamente (Ex.: 2010)", this); }
+            } else { Mensagem.toastIt("Preencha a marca", this); }
+        } else { Mensagem.toastIt("Preencha a modelo", this); }
 
         return validado;
     }
