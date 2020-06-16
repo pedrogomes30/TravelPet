@@ -36,7 +36,7 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoCrvl"
+        app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoCrlv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textViewNomeFotoCrvl"
+        android:id="@+id/textViewNomeFotoCrlv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -54,14 +54,14 @@
         android:text="Nenhum arquivo selecionado"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoCrvl"
+        app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoCrlv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTextoCrlvMotorista"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/botaoEnviarFotoCrvl"
+        android:id="@+id/botaoEnviarFotoCrlv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

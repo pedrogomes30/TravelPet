@@ -84,7 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/ano_ve_culo"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxLength="4"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -105,11 +106,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/placa_do_ve_culo"
-            android:maxLength="11" />
+            android:maxLength="7" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiCRVLveiculo"
+        android:id="@+id/tiCRLVveiculo"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
@@ -122,10 +123,10 @@
         app:layout_constraintTop_toBottomOf="@+id/tiPlacaVeiculo">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etCRVLveiculo"
+            android:id="@+id/etCRLVveiculo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/crvl_do_ve_culo"
+            android:hint="@string/crlv_do_ve_culo"
             android:inputType="number"
             android:maxLength="11" />
     </com.google.android.material.textfield.TextInputLayout>

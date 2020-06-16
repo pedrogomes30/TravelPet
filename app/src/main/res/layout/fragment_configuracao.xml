@@ -202,7 +202,9 @@
                 android:id="@+id/editLocalidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade" />
+                android:hint="Cidade"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -218,9 +220,9 @@
                 android:id="@+id/editUf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
                 android:hint="UF"
-                android:maxLength="2" />
+                android:maxLength="2"
+                android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

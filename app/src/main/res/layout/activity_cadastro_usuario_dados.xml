@@ -49,7 +49,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nome"
-                android:maxLength="100" />
+                android:maxLength="100"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Sobrenome"
-                android:maxLength="100" />
+                android:maxLength="100"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -175,7 +179,8 @@
                 android:id="@+id/editBairro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bairro" />
+                android:hint="Bairro"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -198,7 +203,9 @@
                 android:id="@+id/editLocalidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade" />
+                android:hint="Cidade"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -216,8 +223,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="UF"
-                android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
-                android:maxLength="2"/>
+                android:maxLength="2"
+                android:digits="abcdefghijklmnopqrstuvxwyzç ABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 

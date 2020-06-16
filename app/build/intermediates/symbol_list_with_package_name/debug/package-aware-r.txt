@@ -1402,7 +1402,7 @@ id barrier
 id beginning
 id blocking
 id botaoCamera
-id botaoEnviarFotoCrvl
+id botaoEnviarFotoCrlv
 id botaoEnviarFotoPerfil
 id botaoExcluir
 id botaoFinalizar
@@ -1517,7 +1517,7 @@ id end_padder
 id enterAlways
 id enterAlwaysCollapsed
 id etAnoVeiculo
-id etCRVLveiculo
+id etCRLVveiculo
 id etMarcaVeiculo
 id etModeloVeiculo
 id etPlacaVeiculo
@@ -1772,7 +1772,7 @@ id textViewLogin
 id textViewNome
 id textViewNomeAnimal
 id textViewNomeFotoCnh
-id textViewNomeFotoCrvl
+id textViewNomeFotoCrlv
 id textViewNomeFotoMotorista
 id textViewNomeUsuario
 id textViewObervacao
@@ -1791,7 +1791,7 @@ id textinput_counter
 id textinput_error
 id textinput_helper_text
 id tiAnoVeiculo
-id tiCRVLveiculo
+id tiCRLVveiculo
 id tiMarcaVeiculo
 id tiModeloVeiculo
 id tiPlacaVeiculo
@@ -2093,7 +2093,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
-string crvl_do_ve_culo
+string crlv_do_ve_culo
 string default_web_client_id
 string descricao
 string dono_de_animal

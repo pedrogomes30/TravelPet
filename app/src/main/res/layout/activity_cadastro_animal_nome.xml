@@ -62,9 +62,9 @@
             android:id="@+id/editNomeAnimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:digits="abcdefghijklmnopqrstuvxwyzç ABCDEFGHIJKLMNOPQRSTUVXWYZÇ ÁáÃãÉéÊêÈèÍíÎîÌìÓóÔôÒòÕõÚúÛûÙùÇçÑñÝý"
             android:hint="Nome do Animal"
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

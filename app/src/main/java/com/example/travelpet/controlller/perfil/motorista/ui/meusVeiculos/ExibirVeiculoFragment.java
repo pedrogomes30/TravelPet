@@ -69,7 +69,7 @@ public class ExibirVeiculoFragment extends Fragment {
         modelo.setText(veiculo.getModeloVeiculo());
         marca.setText(veiculo.getMarcaVeiculo());
         ano.setText(veiculo.getAnoVeiculo());
-        crvl.setText(veiculo.getCrvlVeiculo());
+        crvl.setText(veiculo.getCrlvVeiculo());
         status.setText(veiculo.getStatus());
     }
 }

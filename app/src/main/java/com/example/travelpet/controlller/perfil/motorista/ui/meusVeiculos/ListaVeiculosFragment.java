@@ -154,7 +154,7 @@ public class ListaVeiculosFragment extends Fragment {
         veiculo.setMarcaVeiculo(marca);
         veiculo.setPlacaVeiculo(placa);
         veiculo.setAnoVeiculo(ano);
-        veiculo.setCrvlVeiculo(Crvl);
+        veiculo.setCrlvVeiculo(Crvl);
 
         return veiculo;
     }

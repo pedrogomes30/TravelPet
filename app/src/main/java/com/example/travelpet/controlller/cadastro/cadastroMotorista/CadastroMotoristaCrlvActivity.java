@@ -41,7 +41,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
     private VeiculoDAO veiculoDAO;
 
     private ProgressDialog progressDialog;
-    private TextView campoNomeFotoCrvl;
+    private TextView campoNomeFotoCrlv;
     private byte[] fotoCrvl;
     private static final int SELECAO_GALERIA = 200;
     private String statusCadastro;
@@ -92,7 +92,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         enderecoDAO  = new EnderecoDAO();
         veiculoDAO   = new VeiculoDAO();
         progressDialog = new ProgressDialog(this);
-        campoNomeFotoCrvl = findViewById(R.id.textViewNomeFotoCrvl);
+        campoNomeFotoCrlv = findViewById(R.id.textViewNomeFotoCrlv);
     }
 
     public void getDadosTelaAnterior(){
@@ -138,7 +138,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
                     fotoCrvl = baos.toByteArray();
 
                     // Envia o nome da imagem para o XML
-                    campoNomeFotoCrvl.setText(returnCursor.getString(nameIndex));
+                    campoNomeFotoCrlv.setText(returnCursor.getString(nameIndex));
 
                     Toast.makeText(this,
                             "Sucesso ao selececionar a imagem",
