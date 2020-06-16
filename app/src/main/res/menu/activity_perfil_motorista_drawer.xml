@@ -18,10 +18,9 @@
             android:icon="@drawable/ic_menu_info"
             android:title="@string/menu_info" />
 
-
         <item
-            android:id="@+id/moto_logout"
-            android:icon="@drawable/ic_exit"
+            android:id="@+id/logoutMotoristaFragment"
+            android:icon="@drawable/ic_menu_sair"
             android:title="Logout"
             />
 

@@ -781,6 +781,7 @@ color fui_bgTwitter
 color fui_buttonShadow
 color fui_linkColor
 color fui_transparent
+color green
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color material_blue_grey_800
@@ -1213,6 +1214,9 @@ drawable button_branco_seletor
 drawable button_laranja_escuro_pressionado
 drawable button_laranja_padrao
 drawable button_laranja_seletor
+drawable button_vermelho_escuro_pressionado
+drawable button_vermelho_padrao
+drawable button_vermelho_seletor
 drawable circulo_verde_local_viagem
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
@@ -1375,6 +1379,7 @@ id action_context_bar
 id action_divider
 id action_exibirVeiculo
 id action_image
+id action_logoutMotorista
 id action_mapMotoristaFragment_to_listaVeiculosFragment
 id action_menu_divider
 id action_menu_presenter
@@ -1588,12 +1593,14 @@ id left
 id light
 id line1
 id line3
+id linear_origem_destino
 id listMode
 id list_item
 id listaVeiculosFragment
 id logo
 id logoAppTravelPet
 id logoTravelPet
+id logoutMotoristaFragment
 id main_tos_and_pp
 id mapMotorista
 id mapMotoristaFragment
@@ -1605,7 +1612,6 @@ id middle
 id mini
 id mobile_navigation
 id moto_drawer_layout
-id moto_logout
 id moto_nav_host_fragment
 id moto_nav_view
 id motorista_navigation
@@ -1973,6 +1979,7 @@ layout fragment_configuracao
 layout fragment_exibir_veiculo
 layout fragment_lista_animais
 layout fragment_lista_veiculos
+layout fragment_logout_motorista
 layout fragment_map_motorista
 layout fragment_sair
 layout fragment_viagem

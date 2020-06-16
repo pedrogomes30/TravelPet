@@ -89,7 +89,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_addVeiculoFragment_to_listaVeiculosFragment">
+                            <entry key="action_veiculoCadastrado">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -110,7 +110,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_exibirVeiculoFragment_to_listaVeiculosFragment">
+                            <entry key="action_veiculoExcluido">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -131,17 +131,29 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_listaVeiculosFragment_to_addVeiculoFragment">
+                            <entry key="action_addVeiculo">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_listaVeiculosFragment_to_exibirVeiculoFragment">
+                            <entry key="action_exibirVeiculo">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="logoutMotoristaFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="41" />
+                            <option name="y" value="-438" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -158,6 +170,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_mapMotoristaFragment_to_listaVeiculosFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mapMotoristaFragment_to_logoutMotoristaFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

@@ -144,11 +144,15 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         bsView.findViewById(R.id.bt_bs_motorista).setOnClickListener
                 (new View.OnClickListener()
                 {
+                    @SuppressLint("NewApi")
                     @Override
                     public void onClick(View view)
                     {
                         Toast.makeText(getActivity().getApplicationContext(),"Clicando", Toast.LENGTH_SHORT).show();
                         bsDialog.dismiss();
+                        fab.setBackgroundColor(getResources().getColor(R.color.green));
+                        //fab.setImageResource(getResources().getDrawable(R.drawable.ic_exit));
+                        //fab.setImageIcon(getResources().getDrawable(R.drawable.ic_exit));
                     }
                 }
                 );

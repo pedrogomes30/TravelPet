@@ -1,5 +1,8 @@
 package com.example.travelpet.model;
 
+import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.Exclude;
 
 // Classe usada no processo do buttonChamarMotorista = aula 495
@@ -19,8 +22,8 @@ public class Local
     private String cep;
     private String tipoLocal;
 
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
     public Local() {}
 
@@ -64,22 +67,6 @@ public class Local
         this.cep = cep;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
     public String getIdLocal() {
         return idLocal;
     }
@@ -94,5 +81,23 @@ public class Local
 
     public void setTipoLocal(String tipoLocal) {
         this.tipoLocal = tipoLocal;
+    }
+
+    public double getLatitude() { return latitude; }
+
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public double getLongitude() { return longitude; }
+
+    public void setLongitude(double longitude) {this.longitude = longitude;}
+
+    @Exclude
+    public Location getLocation ()
+    {
+        Location location = new Location("Local");
+        location.setLatitude(getLatitude());
+        location.setLongitude(getLongitude());
+
+        return location;
     }
 }

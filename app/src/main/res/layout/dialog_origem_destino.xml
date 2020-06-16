@@ -1,164 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="300dp"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="4dp"
-        android:layout_marginBottom="8dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Endereço de Origem "
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center_horizontal" />
-
-        <TextView
-            android:id="@+id/tv_ruaOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Rua Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_numeroOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Número Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_bairroOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Bairro Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_cidadeOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cidade Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_estadoOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Estado Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_cepOrigem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cep Origem"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="4dp"
-        android:layout_marginBottom="8dp">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Endereço de Destino "
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_margin="4dp"
+            android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/tv_ruaDestino"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Endereço de Origem "
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/tv_ruaOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rua Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_numeroOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_bairroOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_cidadeOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_estadoOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Estado Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_cepOrigem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cep Origem"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rua Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_margin="4dp"
+            android:layout_marginBottom="8dp">
 
-        <TextView
-            android:id="@+id/tv_numeroDestino"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Endereço de Destino "
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_ruaDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Rua Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_numeroDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Número Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_bairroDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_cidadeDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_estadoDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Estado Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/tv_cepDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cep Destino"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Número Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+            android:layout_margin="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_bairroDestino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Bairro Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+            <Button
+                android:id="@+id/bt_confirmDialog_origemDestino"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Confirmar"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_laranja_seletor"
+                android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tv_cidadeDestino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cidade Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+            <Button
+                android:id="@+id/bt_cancelDialog_origemDestino"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Cancelar"
+                android:layout_margin="4dp"
+                android:background="@drawable/button_azul_seletor"
+                android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tv_estadoDestino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Estado Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/tv_cepDestino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cep Destino"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
+</androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/bt_confirmDialog_origemDestino"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="Confirmar"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_laranja_seletor"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/bt_cancelDialog_origemDestino"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="Cancelar"
-            android:layout_margin="4dp"
-            android:background="@drawable/button_azul_seletor"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-</LinearLayout>

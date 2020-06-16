@@ -31,7 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-public class PerfilMotoristaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PerfilMotoristaActivity extends AppCompatActivity {
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -41,8 +41,6 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
     private TextView nomeHeader, emailHeader;
     private NavigationView navigationView;
     private Dialog dialog;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
         //navigationView.setNavigationItemSelectedListener(this);
         dialog = new Dialog(this);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.mapMotoristaFragment, R.id.listaVeiculosFragment)
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.mapMotoristaFragment, R.id.listaVeiculosFragment, R.id.logoutMotoristaFragment)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -85,8 +83,6 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
             }
         });
     }
-
-
 
 
     public void configuraHeader ()
@@ -130,19 +126,10 @@ public class PerfilMotoristaActivity extends AppCompatActivity implements Naviga
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.moto_nav_host_fragment);
 
-        switch (menuItem.getItemId())
-        {
-            case R.id.moto_logout:
-                {
-                    System.out.println("botão sair clickado");
-                }break;
-
-            default:{}break;
-        }
-
-        return false;
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
-
 }

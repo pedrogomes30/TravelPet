@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mapMotoristaFragment_to_listaVeiculosFragment"
             app:destination="@id/listaVeiculosFragment" />
+        <action
+            android:id="@+id/action_logoutMotorista"
+            app:destination="@id/logoutMotoristaFragment" />
     </fragment>
     <fragment
         android:id="@+id/listaVeiculosFragment"
@@ -43,4 +46,9 @@
             android:id="@+id/action_veiculoExcluido"
             app:popUpTo="@id/listaVeiculosFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/logoutMotoristaFragment"
+        android:name="com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos.LogoutMotoristaFragment"
+        android:label="fragment_logout_motorista"
+        tools:layout="@layout/fragment_logout_motorista" />
 </navigation>
