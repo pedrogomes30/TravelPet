@@ -27,12 +27,12 @@ public class MotoristaDAO {
                                                  final int tipoSave, final ProgressDialog progressDialog){
 
         DatabaseReference motoristaRefRealtime = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("motorista")
+                .child(ConfiguracaoFirebase.motorista)
                 .child(motorista.getIdUsuario());
         motoristaRefRealtime.setValue(motorista).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                // tipoSave == 1 - CadastroMotoristaCrlv
+                // tipoSave == 1 - Cadastrar - activity:CadastroMotoristaCrlv
                 if(tipoSave == 1){
                     TelaCarregamento.pararCarregamento(progressDialog);
                     Mensagem.mensagemCadastrarMotorista(activityAtual);
@@ -54,7 +54,7 @@ public class MotoristaDAO {
 
         // Salvando FotoCnh no Storage
         StorageReference imagemRefFotoCnh = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("motorista")
+                .child(ConfiguracaoFirebase.motorista)
                 .child(motorista.getIdUsuario())
                 .child(motorista.getIdUsuario()+".FOTO.CNH.JPEG");
         // Método para realmente salvar no Firebase
@@ -73,7 +73,7 @@ public class MotoristaDAO {
 
                 // Salvando FotoPerfil no Storage
                 StorageReference imagemRefFotoPerfil = ConfiguracaoFirebase.getFirebaseStorage()
-                        .child("motorista")
+                        .child(ConfiguracaoFirebase.motorista)
                         .child(motorista.getIdUsuario())
                         .child(motorista.getIdUsuario()+".FOTO.PERFIL.JPEG");
 

@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
+import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
@@ -59,26 +60,15 @@ public class EditarAnimalActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_animal);
+        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Editar Animal");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setSupportActionBar(toolbar);
-        overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
-        animalDAO = new AnimalDAO();
-        progressDialog = new ProgressDialog(EditarAnimalActivity.this);
-
-        // Relacionando os componentes do xml
-        campoFotoAnimal             =   findViewById(R.id.imageViewFotoAnimal);
-        campoNome                   =   findViewById(R.id.textViewNomeAnimal);
-        campoEspecie                =   findViewById(R.id.textViewEspecieAnimal);
-        campoRaca                   =   findViewById(R.id.textViewRacaAnimal);
-        campoSpinnerPorteAnimal     =   findViewById(R.id.spinnerPorteAnimal);
-        campotObservacaoAnimal      =   findViewById(R.id.editTextObservacaoAnimal);
-
+        iniciarComponentes();
         getDadosAnimalSelecionado();
         setDadosAnimalSelecionado();
-
     }
 
     public void botaoCamera(View view){
@@ -90,7 +80,6 @@ public class EditarAnimalActivity extends AppCompatActivity{
     }
 
     public void botaoGaleria(View view) {
-
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         if (i.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(i,SELECAO_GALERIA);
@@ -98,50 +87,36 @@ public class EditarAnimalActivity extends AppCompatActivity{
     }
 
     public void botaoSalvar(View view){
-
         getDadosEditados();
         salvarAlteracoes();
-
     }
 
     public void botaoExcluir(View view){
+        Mensagem.mensagemExcluirAnimal(this, animal);
+    }
 
-        animalDAO.contarAnimais();
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditarAnimalActivity.this);
-        builder.setTitle("Excluindo...");
-        builder.setIcon(R.drawable.ic_lixeira);
-        builder.setMessage("Tem certeza que deseja excluir este animal?");
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                animalDAO.excluirAnimal(animal, EditarAnimalActivity.this);
-
-            }
-        });
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.show();
+    public void iniciarComponentes(){
+        animalDAO = new AnimalDAO();
+        progressDialog = new ProgressDialog(EditarAnimalActivity.this);
+        campoFotoAnimal             =   findViewById(R.id.imageViewFotoAnimal);
+        campoNome                   =   findViewById(R.id.textViewNomeAnimal);
+        campoEspecie                =   findViewById(R.id.textViewEspecieAnimal);
+        campoRaca                   =   findViewById(R.id.textViewRacaAnimal);
+        campoSpinnerPorteAnimal     =   findViewById(R.id.spinnerPorteAnimal);
+        campotObservacaoAnimal      =   findViewById(R.id.editTextObservacaoAnimal);
     }
 
     public void getDadosAnimalSelecionado(){
     // Recuperar dados do animalDestinatario / escolhido
     Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-
             animal = bundle.getParcelable("animalSelecionado");
-
             nomeAnimal = animal.getNomeAnimal();
             especieAnimal = animal.getEspecieAnimal();
             racaAnimal = animal.getRacaAnimal();
             porteAnimal = animal.getPorteAnimal();
             observacaoAnimal = animal.getObservacaoAnimal();
             fotoAnimalUrl = animal.getFotoAnimalUrl();
-
         }
     }
 

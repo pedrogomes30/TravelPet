@@ -11,7 +11,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
 
     public DonoAnimal() {}
 
-    @Exclude // Com isso não será salvo o fluxo dados no banco de dados
+    @Exclude // Exclude: o fluxo dados não será salvo no banco de dados
     public String getFluxoDados() {
         return fluxoDados;
     }
@@ -23,7 +23,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
     // Métodos Necessarios para usar a Interface Parcelable
     public DonoAnimal(Parcel in) {
 
-        // Dados Classe Usuario
+        // Dados herdados da classe Usuario
         idUsuario     = in.readString();
         tipoUsuario   = in.readString();
         nome          = in.readString();
@@ -33,6 +33,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
         email         = in.readString();
         fotoPerfil    = in.createByteArray();
         fotoPerfilUrl = in.readString();
+        statusConta   = in.readString();
 
         // Dados Classe DonoAnimal
         fluxoDados = in.readString();
@@ -52,6 +53,7 @@ public class DonoAnimal extends Usuario implements Parcelable {
         dest.writeString(email);
         dest.writeByteArray(fotoPerfil);
         dest.writeString(fotoPerfilUrl);
+        dest.writeString(statusConta);
 
         // Dados Classe DonoAnimal
         dest.writeString(fluxoDados);

@@ -20,20 +20,16 @@ public class TipoAnimalDAO {
         listaEspecie.add(new ItemSpinnerEspecie("espécie", null));
 
         DatabaseReference especieRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("racaAnimal");
-        especieRef.addChildEventListener(new ChildEventListener() {
+                .child(ConfiguracaoFirebase.tipoAnimal);
+        especieRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                listaEspecie.add(new ItemSpinnerEspecie(dataSnapshot.getKey(), dataSnapshot.child("iconeUrl").getValue(String.class)));
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot data: dataSnapshot.getChildren()) {
+                    listaEspecie.add(new ItemSpinnerEspecie(data.getKey(), data
+                            .child(ConfiguracaoFirebase.iconeUrl)
+                            .getValue(String.class)));
+                }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
@@ -44,19 +40,19 @@ public class TipoAnimalDAO {
 
         final ArrayList<String> listaRacaAnimal = new ArrayList<>();
         DatabaseReference racaAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("racaAnimal").child(especieAnimal);
-        racaAnimalRef.addValueEventListener(new ValueEventListener() {
+                .child(ConfiguracaoFirebase.tipoAnimal).child(especieAnimal);
+        racaAnimalRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot dados : dataSnapshot.getChildren()) {
-
                     listaRacaAnimal.add(dados.getKey());
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
         return listaRacaAnimal;
     }

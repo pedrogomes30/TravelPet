@@ -23,12 +23,12 @@ public class EnderecoDAO {
         tipoUsuario = tipoUsuario.substring(0,1).toUpperCase()+tipoUsuario.substring(1);
 
         DatabaseReference enderecoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("enderecos"+tipoUsuario)
+                .child(ConfiguracaoFirebase.endereco+tipoUsuario)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-
         enderecoRef.setValue(endereco).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+
                 //tipoSave == 2 - Atualização de dados - ConfiguracaoFragment
                 if(tipoSave == 2){
                     TelaCarregamento.pararCarregamento(progressDialog);

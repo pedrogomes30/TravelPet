@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -38,7 +39,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
     private EnderecoDAO enderecoDAO;
     private AnimalDAO animalDAO;
 
-    private String fluxoDados;
+    private String fluxoDados, statusConta;
 
     private CircleImageView campoFotoAnimal;
     private byte[] fotoAnimal;
@@ -56,7 +57,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_filho_entrando, R.anim.activity_pai_saindo);
 
         iniciarComponentes();
-        getDadosTelaAnterior();//CadastroAnimalObsercacao
+        getDadosTelaAnterior(); //CadastroAnimalObsercacao
     }
 
     // Funções Botões-------------------------------------------------------------------------------
@@ -87,10 +88,9 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
                 TelaCarregamento.iniciarCarregamento(progressDialog);
 
-                setDadosCadastroUsuario();
+                setDadosCadastroDonoAnimal();
 
-                donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog, tipoSave,
-                        this);
+                donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog, tipoSave, this);
 
                 enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, donoAnimal.getTipoUsuario(), tipoSave,
                         progressDialog);
@@ -101,7 +101,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
             }else if (fluxoDados.equals("listaAnimais")) {
 
                 TelaCarregamento.iniciarCarregamento(progressDialog);
-                setDadosAdicionarAnimal();
+                setDadosAdicionarNovoAnimal();
                 animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave, this);
             }
         }
@@ -113,7 +113,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         enderecoDAO = new EnderecoDAO();
         animalDAO = new AnimalDAO();
         progressDialog = new ProgressDialog(CadastroAnimalFotoActivity.this);
-
+        statusConta = ConfiguracaoFirebase.donoAnimalAtivo;
         campoFotoAnimal = findViewById(R.id.circleImageViewFotoAnimal);
     }
 
@@ -122,14 +122,14 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         donoAnimal = intent.getParcelableExtra("donoAnimal");
         endereco = intent.getParcelableExtra("endereco");
         animal = intent.getParcelableExtra("animal");
-
         fluxoDados = donoAnimal.getFluxoDados();
     }
 
-    public void setDadosCadastroUsuario(){
+    public void setDadosCadastroDonoAnimal(){
         // Classe DonoAnimal
         donoAnimal.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         donoAnimal.setEmail(UsuarioFirebase.getEmailUsuario());
+        donoAnimal.setStatusConta(statusConta);
         donoAnimal.setFotoPerfilUrl(UsuarioFirebase.getFotoEmailUsuario());
 
         // Classe Animal
@@ -138,7 +138,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
         animal.setFotoAnimal(fotoAnimal);
     }
 
-    public void setDadosAdicionarAnimal(){
+    public void setDadosAdicionarNovoAnimal(){
         // Classe Animal
         animal.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         animal.setIdAnimal(animalDAO.gerarPushKeyIdAnimal());

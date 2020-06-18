@@ -36,11 +36,8 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
     private ImageView campoFotoUsuario ;
     private TextView  campoNomeUsuario,campoEmailUsuario ;
     private String fotoPerfilUrl, nomeUsuario, sobrenomeUsuario, emailUsuario;
+    private DatabaseReference donoAnimalRef;
 
-    private ImageButton imageButton;
-    private Button button;
-    private TextView textView;
-    private ClipData.Item item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +47,7 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View view = navigationView.inflateHeaderView(R.layout.nav_header_perfil_passageiro);
-        campoFotoUsuario  = view.findViewById(R.id.imageViewPerfil);
-        campoNomeUsuario  = view.findViewById(R.id.textNomeUsuario);
-        campoEmailUsuario = view.findViewById(R.id.textEmail);
+        iniciarComponentes(view);
         getDadosDonoAnimalDatabase();
 
         // Passing each menu ID as a set of Ids because each
@@ -79,11 +74,16 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void getDadosDonoAnimalDatabase(){
-
-        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child( "donoAnimal")
+    public void iniciarComponentes(View view){
+        donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child(ConfiguracaoFirebase.donoAnimal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        campoFotoUsuario  = view.findViewById(R.id.imageViewPerfil);
+        campoNomeUsuario  = view.findViewById(R.id.textNomeUsuario);
+        campoEmailUsuario = view.findViewById(R.id.textEmail);
+    }
+
+    public void getDadosDonoAnimalDatabase(){
         donoAnimalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

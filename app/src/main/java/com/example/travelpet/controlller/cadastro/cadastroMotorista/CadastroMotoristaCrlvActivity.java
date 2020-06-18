@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.dao.MotoristaDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
@@ -44,7 +45,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
     private TextView campoNomeFotoCrlv;
     private byte[] fotoCrvl;
     private static final int SELECAO_GALERIA = 200;
-    private String statusCadastro;
+    private String statusConta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,6 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
         if (validarDados()) {
             TelaCarregamento.iniciarCarregamento(progressDialog);
-            statusCadastro  =   "Em análise";
             int tipoSave = 1; // tipo = 1 - Cadastro de dados
             enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, motorista.getTipoUsuario(),
                                                        tipoSave, progressDialog );
@@ -81,7 +81,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
             motorista.setIdUsuario(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
             motorista.setEmail(UsuarioFirebase.getEmailUsuario());
-            motorista.setStatusCadastro(statusCadastro);
+            motorista.setStatusConta(statusConta);
             motoristaDAO.salvarImagemMotoristaStorage(motorista, this,
                                                      tipoSave, progressDialog);
         }
@@ -92,6 +92,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
         enderecoDAO  = new EnderecoDAO();
         veiculoDAO   = new VeiculoDAO();
         progressDialog = new ProgressDialog(this);
+        statusConta = ConfiguracaoFirebase.motoristaEmAnalise;
         campoNomeFotoCrlv = findViewById(R.id.textViewNomeFotoCrlv);
     }
 

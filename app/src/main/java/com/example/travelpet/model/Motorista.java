@@ -10,10 +10,8 @@ public class Motorista extends Usuario implements Parcelable {
 
     private byte[] fotoCNH;
     private String registroCnh;
-    private String statusCadastro;
-
     private String fotoCnhUrl;
-    private String fotoCrvlUrl;
+    private String fotoCrlvUrl;
 
     // Construtor
     public Motorista() {}
@@ -35,14 +33,6 @@ public class Motorista extends Usuario implements Parcelable {
         this.registroCnh = registroCnh;
     }
 
-    public String getStatusCadastro() {
-        return statusCadastro;
-    }
-
-    public void setStatusCadastro(String statusCadastro) {
-        this.statusCadastro = statusCadastro;
-    }
-
     public String getFotoCnhUrl() {
         return fotoCnhUrl;
     }
@@ -51,34 +41,34 @@ public class Motorista extends Usuario implements Parcelable {
         this.fotoCnhUrl = fotoCnhUrl;
     }
 
-    public String getFotoCrvlUrl() {
-        return fotoCrvlUrl;
+    public String getFotoCrlvUrl() {
+        return fotoCrlvUrl;
     }
 
-    public void setFotoCrvlUrl(String fotoCrvlUrl) {
-        this.fotoCrvlUrl = fotoCrvlUrl;
+    public void setFotoCrlvUrl(String fotoCrlvUrl) {
+        this.fotoCrlvUrl = fotoCrlvUrl;
     }
 
     // Métodos Necessarios para usar a Interface Parcelable
     protected Motorista(Parcel in) {
 
-        // Dados Classe Usuario
-        idUsuario     = in.readString();
-        tipoUsuario   = in.readString();
-        nome          = in.readString();
-        sobrenome     = in.readString();
-        telefone      = in.readString();
-        cpf           = in.readString();
-        email         = in.readString();
-        fotoPerfil    = in.createByteArray();
-        fotoPerfilUrl = in.readString();
+        // Dados herdados da classe Usuario
+        idUsuario      = in.readString();
+        tipoUsuario    = in.readString();
+        nome           = in.readString();
+        sobrenome      = in.readString();
+        telefone       = in.readString();
+        cpf            = in.readString();
+        email          = in.readString();
+        fotoPerfil     = in.createByteArray();
+        fotoPerfilUrl  = in.readString();
+        statusConta    = in.readString();
 
         // Dados Classe Motorista
-        fotoCNH = in.createByteArray();
-        registroCnh = in.readString();
-        statusCadastro = in.readString();
-        fotoCnhUrl = in.readString();
-        fotoCrvlUrl = in.readString();
+        fotoCNH        = in.createByteArray();
+        registroCnh    = in.readString();
+        fotoCnhUrl     = in.readString();
+        fotoCrlvUrl    = in.readString();
     }
 
     @Override
@@ -94,13 +84,13 @@ public class Motorista extends Usuario implements Parcelable {
         dest.writeString(email);
         dest.writeByteArray(fotoPerfil);
         dest.writeString(fotoPerfilUrl);
+        dest.writeString(statusConta);
 
         // Dados Classe Motorista
         dest.writeByteArray(fotoCNH);
         dest.writeString(registroCnh);
-        dest.writeString(statusCadastro);
         dest.writeString(fotoCnhUrl);
-        dest.writeString(fotoCnhUrl);
+        dest.writeString(fotoCrlvUrl);
     }
 
     @Override

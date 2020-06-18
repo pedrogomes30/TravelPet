@@ -76,7 +76,7 @@ public class ListaAnimaisFragment extends Fragment {
         recyclerViewListaAnimais = view.findViewById(R.id.recyclerViewListaAnimais);
         btAdicionarAnimal = view.findViewById(R.id.adicionarAnimal);
         animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         adapter = new AdapterListaAnimais( listaAnimais, getActivity());
         layoutManager = new LinearLayoutManager(getActivity());

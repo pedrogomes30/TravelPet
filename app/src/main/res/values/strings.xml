@@ -34,7 +34,7 @@
     <string name="motorista">Motorista</string>
 
     <!-- Spinner Estados -->
-    <string-array name="states">
+    <string-array name="estados">
         <item>"AC"</item>
         <item>"AL"</item>
         <item>"AP"</item>

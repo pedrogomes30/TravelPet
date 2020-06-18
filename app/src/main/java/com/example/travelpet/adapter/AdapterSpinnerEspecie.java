@@ -33,7 +33,6 @@ public class AdapterSpinnerEspecie extends ArrayAdapter {
         ImageView spinnerIV = convertView.findViewById(R.id.ivSpinnerLayout);
         TextView spinnerTV = convertView.findViewById(R.id.tvSpinnerLayout);
         if (item != null) {
-
             if(item.getSpinnerItemImage()== null){
                 spinnerIV.setImageResource(R.drawable.ic_spinner_especie);
             }else{
@@ -42,7 +41,6 @@ public class AdapterSpinnerEspecie extends ArrayAdapter {
                         .load( fotoEspecieSpinnerUri )
                         .into( spinnerIV);
             }
-
             spinnerTV.setText(item.getSpinnerItemName());
         }
         return convertView;
@@ -66,8 +64,6 @@ public class AdapterSpinnerEspecie extends ArrayAdapter {
                         .load( fotoEspecieSpinnerUri )
                         .into( dropDownIV);
             }
-
-
             dropDownTV.setText(item.getSpinnerItemName());
         }
         return convertView;

@@ -52,6 +52,8 @@ public class ConfiguracaoFragment extends Fragment {
     private DonoAnimalDAO donoAnimalDAO;
     private EnderecoDAO enderecoDAO;
     private ProgressDialog progressDialog;
+    private DatabaseReference donoAnimalRef;
+    DatabaseReference enderecoRef;
 
     private String nome,sobrenome, cpf, fotoPerfilUrl, telefone,
                    cep, logradouro, bairro, localidade, uf;
@@ -129,12 +131,19 @@ public class ConfiguracaoFragment extends Fragment {
         donoAnimalDAO = new DonoAnimalDAO();
         enderecoDAO = new EnderecoDAO();
         progressDialog = new ProgressDialog(getActivity());
+
+        donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child(ConfiguracaoFirebase.donoAnimal)
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        enderecoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child(ConfiguracaoFirebase.enderecoDA)
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+
         campoFotoPerfil     =   view.findViewById(R.id.imageViewCircleFotoPerfil);
         campoNome           =   view.findViewById(R.id.textViewNomeUsuario);
         campoCpf            =   view.findViewById(R.id.textViewCpfUsuario);
         campoTelefone       =   view.findViewById(R.id.editTelefone);
         campoCep            =   view.findViewById(R.id.editCep);
-        //campoCep.addTextChangedListener( new CepListener( getActivity() ) );
         campoLogradouro     =   view.findViewById(R.id.editLogradouro); // rua
         campoBairro         =   view.findViewById(R.id.editBairro);
         campoLocalidade     =   view.findViewById(R.id.editLocalidade); // cidade
@@ -145,9 +154,6 @@ public class ConfiguracaoFragment extends Fragment {
     }
 
     public void getDadosDonoAnimalDatabase(){
-        DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child( "donoAnimal" )
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         donoAnimalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -180,10 +186,6 @@ public class ConfiguracaoFragment extends Fragment {
     }
 
     public void getDadosEnderecoDatabase(){
-
-        DatabaseReference enderecoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child( "enderecosDonoAnimal" )
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         enderecoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -236,8 +238,8 @@ public class ConfiguracaoFragment extends Fragment {
                     endereco.setLocalidade(localidadeEdit);
                     endereco.setUf(ufEdit);
                     enderecoDAO.salvarEnderecoRealtimeDatabase(endereco,
-                            donoAnimal.getTipoUsuario(),
-                            tipoSave = 0, progressDialog);
+                                                               donoAnimal.getTipoUsuario(),
+                                                               tipoSave = 0, progressDialog);
 
                 }
 
@@ -260,7 +262,6 @@ public class ConfiguracaoFragment extends Fragment {
             if(validarCampos()) {
 
                 TelaCarregamento.iniciarCarregamento(progressDialog);
-
                 if (!VerificaDado.isMesmoValor(telefone, telefoneEdit)) {
 
                     donoAnimal.setTelefone(telefoneEdit);
@@ -314,7 +315,7 @@ public class ConfiguracaoFragment extends Fragment {
 
     public boolean validarUf(String uf){
         Boolean validado = false;
-        String[] estados = getResources().getStringArray(R.array.states);
+        String[] estados = getResources().getStringArray(R.array.estados);
         for( int i = 0; i < estados.length; i++ ) {
             if (uf.equals(estados[i]) ) {
                 validado = true;

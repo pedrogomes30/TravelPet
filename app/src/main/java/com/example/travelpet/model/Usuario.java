@@ -16,6 +16,7 @@ public class Usuario implements Parcelable{
     protected String email;
     protected byte[] fotoPerfil;
     protected String fotoPerfilUrl;
+    protected String statusConta;
 
     // Construtor
     public Usuario() {}
@@ -92,6 +93,14 @@ public class Usuario implements Parcelable{
 
     public void setFotoPerfilUrl(String fotoPerfilUrl) {
         this.fotoPerfilUrl = fotoPerfilUrl;
+    }
+
+    public String getStatusConta() {
+        return statusConta;
+    }
+
+    public void setStatusConta(String statusConta) {
+        this.statusConta = statusConta;
     }
 
     // Métodos Necessarios para usar a Interface Parcelable

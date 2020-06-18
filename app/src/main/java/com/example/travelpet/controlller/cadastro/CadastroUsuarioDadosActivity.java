@@ -192,7 +192,7 @@ public class CadastroUsuarioDadosActivity extends AppCompatActivity {
 
     public boolean validarUf(String uf){
         Boolean validado = false;
-        String[] estados = getResources().getStringArray(R.array.states);
+        String[] estados = getResources().getStringArray(R.array.estados);
         for( int i = 0; i < estados.length; i++ ) {
             if (uf.equals(estados[i]) ) {
                 validado = true;

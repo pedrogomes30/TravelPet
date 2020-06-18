@@ -1,4 +1,4 @@
-package com.example.travelpet.controlller.perfil.passageiro.ui.pagamento;
+package com.example.travelpet.controlller.perfil.passageiro.ui.sair;
 
 import android.content.Intent;
 import android.os.Bundle;

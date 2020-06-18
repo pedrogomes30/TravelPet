@@ -25,12 +25,11 @@ public class DonoAnimalDAO {
                                                  final int tipoSave, final Activity activity){
 
         DatabaseReference donoAnimalRefRealtime = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("donoAnimal")
+                .child(ConfiguracaoFirebase.donoAnimal)
                 .child(donoAnimal.getIdUsuario());
         donoAnimalRefRealtime.setValue(donoAnimal).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
 
                 // tipoSave == 2 - Atualizar dados DonoAnimal - ConfiguracaoFragment
                 if(tipoSave == 2){
@@ -52,10 +51,9 @@ public class DonoAnimalDAO {
                                               final int tipoLocalSave, final Activity activity){
         // Salvar imagem no firebase
         StorageReference donoAnimalRefStorage = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("donoAnimal")
+                .child(ConfiguracaoFirebase.donoAnimal)
                 .child(donoAnimal.getIdUsuario())
                 .child(donoAnimal.getIdUsuario()+".FOTO.PERFIL.JPEG");
-
 
         UploadTask uploadTask = donoAnimalRefStorage.putBytes(donoAnimal.getFotoPerfil());
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

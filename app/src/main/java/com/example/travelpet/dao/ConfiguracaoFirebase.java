@@ -9,18 +9,41 @@ import com.google.firebase.storage.StorageReference;
 public class ConfiguracaoFirebase {
 
     // Referenciando Banco de dados
-    // database = é a referência
     private static FirebaseDatabase fireDB;
     private static DatabaseReference database;
-
     // Autenticação do Firebase
     private static FirebaseAuth auth;
-
-    // Objeto de Autenticação do Storage Firebase
     private static StorageReference storage;
 
+    //Nome de cada nó principal do firebase --------------------------------------------------------
+    public static String donoAnimal = "donoAnimal",
+                         animal     = "animais",
+                         motorista  = "motorista",
+                         endereco   = "enderecos",
+                         enderecoDA = "enderecosDonoAnimal",
+                       //enderecoMO = "enderecosMotorista",
+                         tipoAnimal = "racaAnimal",
+                         veiculo    = "veiculos";
+                       //avaliacao  = "avaliacao",
+                       //viagem     = "viagem";
 
-    // Retorna a Referência do FirebaseDatabase feita no curso
+    //outras variaveis chave no firebase -----------------------------------------------------------
+    public static String iconeUrl = "iconeUrl"; // Url onde está salvo o icone da espécie
+
+    //Variaveis de status da Conta------------------------------------------------------------------
+    public static String donoAnimalAtivo      = "ativo",
+                         donoAnimalBloqueado  = "bloqueado",
+
+                         motoristaAprovado    = "Aprovado",
+                         motoristaBloqueado   = "Bloqueado",
+                         motoristaRejeitado   = "Rejeitado",
+                         motoristaEmAnalise   = "Em análise",
+
+                         veiculoAprovado      = "Aprovado",
+                         veiculoBloqueado     = "Bloqueado",
+                         veiculoReprovado     = "Reprovado";
+
+    // Retorna a referencia do database
     public static DatabaseReference getFirebaseDatabaseReferencia(){
         // se for vazio, entra ponto inicial
         if( database == null){
@@ -55,7 +78,7 @@ public class ConfiguracaoFirebase {
         }
         return auth;
     }
-    // Método para salvar a imagem no Storage do FireBase
+    // retorna referencia do storage
     public static StorageReference getFirebaseStorage(){
         // verifica se o storage já esta configurado
         if(storage == null){

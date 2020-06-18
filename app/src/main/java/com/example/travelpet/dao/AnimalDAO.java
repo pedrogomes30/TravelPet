@@ -45,7 +45,7 @@ public class AnimalDAO {
                                              final Activity activity){
 
         DatabaseReference animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(animal.getIdUsuario())
                 .child(animal.getIdAnimal());
         animalRef.setValue(animal).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -80,7 +80,7 @@ public class AnimalDAO {
                                           final Activity activity){
 
         StorageReference animalStorageRef = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(animal.getIdUsuario())
                 .child(animal.getIdAnimal())
                 .child(animal.getIdAnimal()+".FOTO.PERFIL.JPEG");
@@ -111,7 +111,7 @@ public class AnimalDAO {
     public int contarAnimais () {
 
         DatabaseReference animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         animalRef.addValueEventListener(new ValueEventListener()
         {
@@ -151,7 +151,7 @@ public class AnimalDAO {
     public void excluirAnimalRealTimeDatabase (Animal animal)
     {
         ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(animal.getIdUsuario())
                 .child(animal.getIdAnimal())
                 .removeValue()
@@ -164,7 +164,7 @@ public class AnimalDAO {
     public void excluirAnimalStorage (Animal animal, final Activity activity) {
 
         StorageReference animalStorageRef = ConfiguracaoFirebase.getFirebaseStorage()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(animal.getIdUsuario())
                 .child(animal.getIdAnimal())
                 .child(animal.getIdAnimal() + ".FOTO.PERFIL.JPEG");
@@ -182,7 +182,7 @@ public class AnimalDAO {
     public ArrayList<Animal> receberListaAnimal (final CountDownLatch contador)
     {
         DatabaseReference referenciaAnimais = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("animais")
+                .child(ConfiguracaoFirebase.animal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
 
         System.out.println("referencia =" + referenciaAnimais.toString());

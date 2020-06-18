@@ -13,6 +13,7 @@ import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivit
 import com.example.travelpet.controlller.perfil.passageiro.PerfilPassageiroActivity;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Motorista;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,78 +22,86 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ValidarLogin {
 
-    public static void  logarUsuario(final Activity activityAtual){
+    public static void  logarUsuario(final Activity activity){
 
         DatabaseReference donoAnimalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("donoAnimal")
+                .child(ConfiguracaoFirebase.donoAnimal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         donoAnimalRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // dataSnapshot.exists()= verifica se existe o usuário no database
+
                 if(dataSnapshot.exists()) {
+                    DonoAnimal donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
+                    String statusContaDonoAnimal = donoAnimal.getStatusConta();
 
-                    activityAtual.startActivity(new Intent(activityAtual, PerfilPassageiroActivity.class));
-                    activityAtual.finish();
+                    if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalAtivo)){
+                        activity.startActivity(new Intent(activity, PerfilPassageiroActivity.class));
+                        activity.finish();
 
+                    }else if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalBloqueado)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+                        builder.setTitle("Conta bloqueada");
+                        builder.setMessage("Foi detectado comportamento inadequado, entre em contato conosco para mais informações");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {}
+                        });
+                        builder.show();
+                    }
                 }else{
-
                     DatabaseReference motoristaRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                            .child("motorista")
+                            .child(ConfiguracaoFirebase.motorista)
                             .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
                     motoristaRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                             if(dataSnapshot.exists()) {
-
                                 Motorista motorista = dataSnapshot.getValue(Motorista.class);
-                                String tipoUsuario = motorista.getTipoUsuario();
-                                String statusCadastroMotorista = motorista.getStatusCadastro();
+                                String statusContaMotorista = motorista.getStatusConta();
 
-                                if (tipoUsuario.equals("motorista")) {
+                                if (statusContaMotorista.equals(ConfiguracaoFirebase.motoristaAprovado)){
+                                    activity.startActivity(new Intent(activity, PerfilMotoristaActivity.class));
+                                    activity.finish();
 
-                                    if (statusCadastroMotorista.equals("Em análise")){
+                                }else if(statusContaMotorista.equals(ConfiguracaoFirebase.motoristaEmAnalise)){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+                                    builder.setTitle("Em análise...");
+                                    builder.setMessage("Estamos avaliando seus dados, prazo máximo de 7 dias após o cadastro");
+                                    builder.setCancelable(false);
+                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {}
+                                    });
+                                    builder.show();
 
-                                        AlertDialog.Builder builder = new AlertDialog.Builder( activityAtual);
-                                        builder.setTitle("Em análise...");
-                                        builder.setMessage("Estamos avaliando seus dados, prazo máximo de 7 dias após o cadastro");
-                                        builder.setCancelable(false);
-                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
+                                }else if(statusContaMotorista.equals(ConfiguracaoFirebase.motoristaRejeitado)){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+                                    builder.setTitle("Conta rejeitada");
+                                    builder.setMessage("Seus dados não estão de acordo com a exigência da Travel Pet, entre em contato conosco para mais informações");
+                                    builder.setCancelable(false);
+                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {}
+                                    });
+                                    builder.show();
 
-                                            }
-                                        });
-
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-
-                                    } else if(statusCadastroMotorista.equals("Reprovado")){
-
-                                        AlertDialog.Builder builder = new AlertDialog.Builder( activityAtual);
-                                        builder.setTitle("Dados reprovados");
-                                        builder.setMessage("Seus dados não estão de acordo com a exigência da Travel Pet");
-                                        builder.setCancelable(false);
-                                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        });
-
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-
-                                    }else if(statusCadastroMotorista.equals("Aprovado")){
-
-                                        activityAtual.startActivity(new Intent(activityAtual, PerfilMotoristaActivity.class));
-                                        activityAtual.finish();
-                                    }
-
+                                }else if (statusContaMotorista.equals(ConfiguracaoFirebase.motoristaBloqueado)){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+                                    builder.setTitle("Conta bloqueada");
+                                    builder.setMessage("Foi detectado comportamento inadequado, entre em contato conosco para mais informações");
+                                    builder.setCancelable(false);
+                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {}
+                                    });
+                                    builder.show();
                                 }
                             }else{
-                                activityAtual.startActivity(new Intent(activityAtual, CadastroUsuarioTipoActivity.class));
-                                activityAtual.finish();
+                                activity.startActivity(new Intent(activity, CadastroUsuarioTipoActivity.class));
+                                activity.finish();
                             }
                         }
                         @Override
@@ -106,3 +115,4 @@ public class ValidarLogin {
     }
 
 }
+
