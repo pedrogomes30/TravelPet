@@ -2,6 +2,7 @@ package com.example.travelpet.dao;
 
 import android.location.Location;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Animal;
@@ -84,6 +85,14 @@ public class DisponibilidadeMotoristaDao
         {e.printStackTrace();}
     }
 
+    public DatabaseReference recebeDispobilidaReferencia (DisponibilidadeMotorista referencia)
+    {
+        DatabaseReference dbref = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("disponibilidadeMotorista")
+                .child(referencia.getIdMotorista());
+        return dbref;
+    }
+
     public DisponibilidadeMotorista receberDisponibilidade(final CountDownLatch latch)
     {
         disponibilidade = new DisponibilidadeMotorista();
@@ -119,11 +128,12 @@ public class DisponibilidadeMotoristaDao
         return disponibilidade;
     }
 
-    public ArrayList<DisponibilidadeMotorista> queryMotoristasDisponiveis
+    public DisponibilidadeMotorista queryMotoristaDisponivel
             (final Local localOrigem,
              final CountDownLatch contador,
              final float distanciaMax,
-             final ArrayList<Animal> animaisSelecionados)
+             final ArrayList<Animal> animaisSelecionados,
+             final ArrayList<String> motoristasCancelados)
     {
         disponibilidade = new DisponibilidadeMotorista();
         motoristasDisponiveis = new ArrayList<>();
@@ -138,13 +148,33 @@ public class DisponibilidadeMotoristaDao
                 for (DataSnapshot dados : dataSnapshot.getChildren())
                 {
                     disponibilidade = dados.getValue(DisponibilidadeMotorista.class);
-                    if (checarDistancia(localOrigem,distanciaMax))
+                    showInTerminal(disponibilidade.getPorteAnimalPequeno());
+                    showInTerminal(disponibilidade.getPorteAnimalMedio());
+                    showInTerminal(disponibilidade.getPorteAnimalGrande());
+
+                    if(checarPortes(animaisSelecionados, disponibilidade))
                     {
-                        if (checarPortes(animaisSelecionados))
+                        if (checarMotoristasCancelados(motoristasCancelados))
                         {
-                            motoristasDisponiveis.add(disponibilidade);
+                            if (checarDistancia(localOrigem,distanciaMax))
+                            {
+                                motoristasDisponiveis.add(disponibilidade);
+                            }
+                            else
+                            {
+                                showInTerminal("Motorista muito distante");
+                            }
+                        }
+                        else
+                        {
+                            showInTerminal("motorista Cancelado");
                         }
                     }
+                    else
+                    {
+                        showInTerminal("animais não são compativeis");
+                    }
+
                 }
                 contador.countDown();
             }
@@ -156,8 +186,69 @@ public class DisponibilidadeMotoristaDao
             }
         });
 
-        //contador.await();
-        return motoristasDisponiveis;
+        try {contador.await();}
+        catch (InterruptedException e)
+        {e.printStackTrace();}
+
+        retornaMotoristaMaisProximo(localOrigem);
+        return disponibilidade;
+    }
+
+    private void retornaMotoristaMaisProximo (Local localOrigem)
+    {
+        if(motoristasDisponiveis.size() == 1)
+        {
+            disponibilidade = motoristasDisponiveis.get(0);
+        }
+
+        else if (motoristasDisponiveis.size() > 1)
+        {
+            float menorDistancia = 0;
+            int motoristaMaisProximo = 0;
+            Location origem = new Location("Origem");
+            origem.setLongitude(localOrigem.getLongitude());
+            origem.setLatitude(localOrigem.getLatitude());
+
+            for (int i = 0; i < motoristasDisponiveis.size(); i++)
+            {
+                Location motorista = new Location("Motorista");
+                motorista.setLatitude(motoristasDisponiveis.get(i).getLatitudeMotorista());
+                motorista.setLongitude(motoristasDisponiveis.get(i).getLongitudeMotorista());
+
+                if (menorDistancia == 0)
+                {
+                    menorDistancia = origem.distanceTo(motorista);
+                    motoristaMaisProximo = i;
+                } else
+                    {
+                    float distancia = origem.distanceTo(motorista);
+                    if (menorDistancia > distancia)
+                    {
+                        menorDistancia = distancia;
+                        motoristaMaisProximo = i;
+                    }
+                }
+            }
+            disponibilidade = motoristasDisponiveis.get(motoristaMaisProximo);
+        }
+
+        else if (motoristasDisponiveis.size() <= 0)
+        {
+            // não há motorista disponível.
+        }
+    }
+
+    private boolean checarMotoristasCancelados(ArrayList<String> motoristasCancelados)
+    {
+        for (int i = 0; i< motoristasCancelados.size();i++)
+        {
+            if (disponibilidade.getIdMotorista().equals(motoristasCancelados.get(i)))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private boolean checarDistancia (Local localOrigem, float distanciaMax)
@@ -182,29 +273,43 @@ public class DisponibilidadeMotoristaDao
         return false;
     }
 
-    public boolean checarPortes (ArrayList<Animal> animaisSelecionados )
+    public boolean checarPortes (ArrayList<Animal> animaisSelecionados, DisponibilidadeMotorista disponivel)
     {
+
+        showInTerminal(disponivel.getPorteAnimalPequeno());
+        showInTerminal(disponivel.getPorteAnimalMedio());
+        showInTerminal(disponivel.getPorteAnimalGrande());
         ArrayList<String> portesSelecionados = new ArrayList<>();
-        for (int i= 0; i<animaisSelecionados.size(); i++)
+        for (int i= 0; i< animaisSelecionados.size(); i++)
         {
             portesSelecionados.add(animaisSelecionados.get(i).getPorteAnimal());
+
         }
 
         for (int i =0; i<portesSelecionados.size(); i++)
         {
-            if(disponibilidade.getPorteAnimalPequeno()=="false" && portesSelecionados.get(i) == "Pequeno - Até 35cm")
-            { return false;}
 
-            if(disponibilidade.getPorteAnimalMedio() == "false" && portesSelecionados.get(i) == "Médio - De 36 a 49cm")
+            if(disponivel.getPorteAnimalPequeno()=="false" && portesSelecionados.get(i) == "pequeno")
+            { showInTerminal("ativou");
+                return false;
+            }
+
+            if(disponivel.getPorteAnimalMedio() == "false" && portesSelecionados.get(i) == "medio")
             { return false; }
 
-            if(disponibilidade.getPorteAnimalGrande() == "false" && portesSelecionados.get(i) == "Grande - Acima de 50cm")
-            { return false; }
-
+            if(disponivel.getPorteAnimalGrande() == "false" && portesSelecionados.get(i) == "grande")
+            { showInTerminal("ativou");
+                return false; }
         }
         return true;
     }
 
+
+
+    public void showInTerminal (String mensagem)
+    {
+        System.out.println(mensagem);
+    }
 
     }
 

@@ -18,9 +18,20 @@ public class DisponibilidadeMotorista
     private double latitudeMotorista;
     private double longitudeMotorista;
 
+    public DisponibilidadeMotorista (String idMotorista)
+    {
+        setIdMotorista(idMotorista);
+        setDisponibilidade(DisponibilidadeMotorista.INDISPONIVEL);
+        setPorteAnimalPequeno("false");
+        setPorteAnimalMedio("false");
+        setPorteAnimalGrande("false");
+    }
+
+    //Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario())
+
+
     public DisponibilidadeMotorista ()
     {
-        setIdMotorista(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         setDisponibilidade(DisponibilidadeMotorista.INDISPONIVEL);
         setPorteAnimalPequeno("false");
         setPorteAnimalMedio("false");

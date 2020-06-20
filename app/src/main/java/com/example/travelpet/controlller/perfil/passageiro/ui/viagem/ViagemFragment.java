@@ -3,6 +3,7 @@ package com.example.travelpet.controlller.perfil.passageiro.ui.viagem;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,8 +11,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,11 +34,13 @@ import mva2.adapter.util.Mode;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.AnimalBinder;
 import com.example.travelpet.dao.AnimalDAO;
+import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
 import com.example.travelpet.dao.LocalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.ViagemDAO;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Animal;
+import com.example.travelpet.model.DisponibilidadeMotorista;
 import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Viagem;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,6 +52,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,14 +77,18 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private ListSection<Animal> listSection;
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
     private ArrayList<Animal> listaAnimaisSelecionados;
+    private ArrayList<String> motoristaCancelados = new ArrayList<>();
     private Dialog dialogOrigemDestino;
     private Dialog dialogBuscarMotorista;
     private CountDownLatch contador;
     private AnimalDAO animalDAO;
     private LocalDAO localDAO;
     private ViagemDAO viagemDAO;
+    private DisponibilidadeMotoristaDao disponibilidadeMotoristaDao;
+    private DisponibilidadeMotorista motoristaDisponivel;
     private Viagem viagem;
     private LinearLayout linearOrigemDestino;
+
 
     // Variáveis para recuperar localização de um usuário
     private LocationManager locationManager;
@@ -83,8 +96,14 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Location localizacaoAtual;
     private Address addressDestino;
 
+    private ChildEventListener listenerAguardandoMotorista;
+    private DatabaseReference motoristaDisponivelReferencia;
+
     private EditText editDestino, editOrigem;
     private Button buttonChamarMotorista,btSelecionarAnimais;
+
+    private Thread threadMotoristasDisponiveis;
+    private Thread threadAguardarConfirmacao;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +119,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         animalDAO = new AnimalDAO();
         localDAO = new LocalDAO();
         viagemDAO = new ViagemDAO();
+        disponibilidadeMotoristaDao = new DisponibilidadeMotoristaDao();
 
         // Criando mapa
         mapView = (MapView) view.findViewById(R.id.MapView);
@@ -317,6 +337,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        dialogOrigemDestino.setCanceledOnTouchOutside(false);
         dialogOrigemDestino.show();
     }
 
@@ -333,6 +354,15 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             public void onClick(View view)
             {
                 dialogBuscarMotorista.dismiss();
+                configTela(1);
+            }
+        });
+
+        dialogBuscarMotorista.setOnDismissListener(new DialogInterface.OnDismissListener()
+        {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface)
+            {
                 configTela(1);
             }
         });
@@ -494,7 +524,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         {
             if (distancia == 0)
             {
-                //inicio = enderecos.get(i);
                 distancia = contarDistanciadoUsuario(listaenderecos.get(i));
                 selecionado = i;
                 System.out.println("Tamanho da lista = " + listaenderecos.size());
@@ -572,7 +601,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (1 Animal)");
-                        threadSalvarViagem();
+                        threadPrepararViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -588,7 +617,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (2 Animais)");
-                        threadSalvarViagem();
+                        threadPrepararViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -605,7 +634,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (3 Animais)");
-                        threadSalvarViagem();
+                        threadPrepararViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -621,7 +650,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         bsDialog.setContentView(bsView);
     }
 
-    public void threadSalvarViagem()
+    public void threadPrepararViagem()
     {
         Thread prepViagem = new Thread(new Runnable()
         {
@@ -658,13 +687,125 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     {
                         configTela(3);
                         exibirDialogBuscarMotorista();
-
+                        threadMotoristasDisponiveis();
                     }
                 });
             }
         });
         prepViagem.start();
     }
+
+    public void threadMotoristasDisponiveis ()
+    {
+        threadMotoristasDisponiveis = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                motoristaDisponivel = new DisponibilidadeMotorista();
+                motoristaDisponivel = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador, 5000, listaAnimaisSelecionados,motoristaCancelados);
+
+                try { contador.await(); }
+                catch (InterruptedException e) { e.printStackTrace();}
+
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        TextView tvBuscarMotorista = dialogBuscarMotorista.findViewById(R.id.tv_dialog_buscarMotorista);
+                        tvBuscarMotorista.setText("Aguardando Confirmação...");
+                        threadAguardarConfirmacao();
+                    }
+                });
+            }
+        });
+        threadMotoristasDisponiveis.start();
+    }
+
+    public void threadAguardarConfirmacao()
+    {
+        threadAguardarConfirmacao = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                viagem.setIdMotorista(motoristaDisponivel.getIdMotorista());
+                viagemDAO.salvarViagem(viagem,contador);
+
+                try { contador.await();}
+                catch (InterruptedException e) { e.printStackTrace(); }
+
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        ListenerAguardarMotorista();
+                    }
+                });
+            }
+        });
+
+        threadAguardarConfirmacao.start();
+    }
+
+    public void ListenerAguardarMotorista()
+    {
+        motoristaDisponivelReferencia = disponibilidadeMotoristaDao.recebeDispobilidaReferencia(motoristaDisponivel);
+        motoristaDisponivelReferencia.addChildEventListener( listenerAguardandoMotorista = new ChildEventListener()
+        {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                    {
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                    {
+                        if(dataSnapshot.getKey().equals("disponibilidade"))
+                        {
+                            String disponibilidade = dataSnapshot.getValue(String.class);
+                            if (disponibilidade.equals(DisponibilidadeMotorista.EM_VIAGEM))
+                            {
+                                dialogBuscarMotorista.dismiss();
+                                configTela(3);
+                                toastThis("Viagem Aceita");
+
+                            }
+
+                            else if (disponibilidade.equals(DisponibilidadeMotorista.DISPONIVEL))
+                            {
+                                dialogBuscarMotorista.dismiss();
+                                toastThis("viagem Recusada");
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot)
+                    {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                    {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError)
+                    {
+
+                    }
+                });
+    }
+
 
     public void configTela (int config)
     {
@@ -708,6 +849,3 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
 }//fim do fragment
-
-
-

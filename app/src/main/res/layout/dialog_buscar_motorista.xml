@@ -6,6 +6,7 @@
     android:background="@color/colorApp">
 
     <TextView
+        android:id="@+id/tv_dialog_buscarMotorista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Procurando Motorista"
