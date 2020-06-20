@@ -734,6 +734,10 @@ color colorAppDark
 color colorButoonAzulPadrao
 color colorButoonAzulPressionado
 color colorButoonBrancoPressionado
+color colorButtonVerdePadrao
+color colorButtonVerdePressionado
+color colorButtonVermelhoPadrao
+color colorButtonVermelhoPressionado
 color colorGradientePerfil
 color colorGradientePerfilDark
 color colorPrimary
@@ -1214,6 +1218,9 @@ drawable button_branco_seletor
 drawable button_laranja_escuro_pressionado
 drawable button_laranja_padrao
 drawable button_laranja_seletor
+drawable button_verde_escuro_pressionado
+drawable button_verde_padrao
+drawable button_verde_seletor
 drawable button_vermelho_escuro_pressionado
 drawable button_vermelho_padrao
 drawable button_vermelho_seletor
@@ -1430,6 +1437,8 @@ id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
 id bt_bs_donoanimal
 id bt_bs_motorista
+id bt_bs_motorista2
+id bt_cancelDialog_buscarMotorista
 id bt_cancelDialog_origemDestino
 id bt_confirmDialog_origemDestino
 id bt_excluirVeiculo
@@ -1454,6 +1463,9 @@ id center_vertical
 id chains
 id checkBoxTermos
 id checkbox
+id checkbox_grd
+id checkbox_med
+id checkbox_peq
 id checked
 id chronometer
 id ci_animal1
@@ -1972,6 +1984,7 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout dialog_buscar_motorista
 layout dialog_origem_destino
 layout dialog_viagem_solicitada
 layout fragment_add_veiculo

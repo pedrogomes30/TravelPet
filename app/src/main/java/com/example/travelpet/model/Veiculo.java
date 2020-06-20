@@ -13,6 +13,10 @@ public class Veiculo implements Parcelable {
     //disponibilidade
     //
 
+    public static final String BLOQUEADO = "bloqueado";
+    public static final String LIBERADO = "liberado";
+    public static final String EM_ANALISE ="em_analise";
+
     private byte [] fotoCrvl;
     private String marcaVeiculo;
     private String modeloVeiculo;
@@ -27,7 +31,7 @@ public class Veiculo implements Parcelable {
 
     public Veiculo ()
     {
-        setStatus("Bloqueado");
+        setStatus(Veiculo.EM_ANALISE);
     }
 
     public String getIdUsuario(){ return idUsuario; }

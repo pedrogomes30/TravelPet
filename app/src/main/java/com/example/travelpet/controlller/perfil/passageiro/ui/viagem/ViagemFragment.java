@@ -1,7 +1,6 @@
 package com.example.travelpet.controlller.perfil.passageiro.ui.viagem;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,8 +10,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.print.PrintJob;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,7 +32,6 @@ import mva2.adapter.util.Mode;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.AnimalBinder;
 import com.example.travelpet.dao.AnimalDAO;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.LocalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.ViagemDAO;
@@ -53,7 +51,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
@@ -72,6 +69,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
     private ArrayList<Animal> listaAnimaisSelecionados;
     private Dialog dialogOrigemDestino;
+    private Dialog dialogBuscarMotorista;
     private CountDownLatch contador;
     private AnimalDAO animalDAO;
     private LocalDAO localDAO;
@@ -113,7 +111,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
-    public void iniciarMapa() {
+    public void iniciarMapa()
+    {
         try
         {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -126,16 +125,21 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         mapView.getMapAsync(this);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap)
+    {
+        gMap = googleMap;
+
+        // Recuperar Localização do usuário - Aula 494
+        recuperarLocalizacaoUsuario();
+
+    }
+
     public void exibirBottomSheet() {
         configuraBottomSheet();
         popularAdapter();
 
         bsDialog.show();
-    }
-
-    public void toastThis (String mensagem)
-    {
-        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
     }
 
     public void popularAdapter()
@@ -185,16 +189,22 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 if (enderecoOrigem.equals("") || enderecoOrigem == null)
                 {
                     Address addressOrigem = null;
-                    try
-                    {
-                        addressOrigem = recuperaEnderecoViaLocation(localizacaoAtual);
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    localOrigem = new Local();
-                    localOrigem = addressToLocal(addressOrigem,Local.ORIGEM);
+
+                        if(localizacaoAtual != null)
+                        {
+                            try
+                            { addressOrigem = recuperaEnderecoViaLocation(localizacaoAtual); }
+                            catch (IOException e)
+                            { e.printStackTrace();}
+
+                            localOrigem = new Local();
+                            localOrigem = addressToLocal(addressOrigem,Local.ORIGEM);
+                        }
+                        else
+                        {
+                            toastThis(" Aguarde o aplicativo recuperar a sua Localização");
+                        }
+
                 }
                 else
                 {
@@ -224,16 +234,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
-        gMap = googleMap;
-
-        // Recuperar Localização do usuário - Aula 494
-        recuperarLocalizacaoUsuario();
-
     }
 
     public void exibirDialogOrigemDestino()
@@ -318,7 +318,26 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         });
 
         dialogOrigemDestino.show();
+    }
 
+    public void exibirDialogBuscarMotorista ()
+    {
+        dialogBuscarMotorista = new Dialog(getActivity());
+        dialogBuscarMotorista.setContentView(R.layout.dialog_buscar_motorista);
+
+        Button btCancelarViagem = dialogBuscarMotorista.findViewById(R.id.bt_cancelDialog_buscarMotorista);
+
+        btCancelarViagem.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialogBuscarMotorista.dismiss();
+                configTela(1);
+            }
+        });
+        dialogBuscarMotorista.setCanceledOnTouchOutside(false);
+        dialogBuscarMotorista.show();
     }
 
     public Address recuperaEnderecoViaString(String endereco)
@@ -553,7 +572,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (1 Animal)");
-                        preparaViagem();
+                        threadSalvarViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -569,7 +588,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (2 Animais)");
-                        preparaViagem();
+                        threadSalvarViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -586,7 +605,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (3 Animais)");
-                        preparaViagem();
+                        threadSalvarViagem();
                         bsDialog.dismiss();
                     }break;
 
@@ -602,7 +621,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         bsDialog.setContentView(bsView);
     }
 
-    public void preparaViagem ()
+    public void threadSalvarViagem()
     {
         Thread prepViagem = new Thread(new Runnable()
         {
@@ -637,7 +656,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void run()
                     {
-                        configTela();
+                        configTela(3);
+                        exibirDialogBuscarMotorista();
+
                     }
                 });
             }
@@ -645,24 +666,45 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         prepViagem.start();
     }
 
-    public void configTela ()
+    public void configTela (int config)
     {
         //1 - Tela Inicial (pesquisa de endereço + botao chamar Motorista)
-        //2 - Tela esperando motorista ()
+        //2 - Tela esperando motorista
         //3 - Tela em viagem
         //4 - Tela Avaliação
 
-        buttonChamarMotorista.setBackgroundColor(R.drawable.button_vermelho_seletor);
-        buttonChamarMotorista.setText(" Cancelar Solicitação de Viagem");
-        buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
+        switch (config)
         {
-            @Override
-            public void onClick(View view)
-            {
-                toastThis("novo on click");
-            }
-        });
-        linearOrigemDestino.setVisibility(View.GONE);
+            case 1 :
+                {
+                    buttonChamarMotorista.setVisibility(View.VISIBLE);
+                    linearOrigemDestino.setVisibility(View.VISIBLE);
+                }break;
+
+            case 2 :
+                {
+
+                }break;
+            case 3 :
+                {
+                    buttonChamarMotorista.setVisibility(View.GONE);
+                    linearOrigemDestino.setVisibility(View.GONE);
+                }break;
+            case 4 :
+                {
+                    buttonChamarMotorista.setVisibility(View.GONE);
+                    linearOrigemDestino.setVisibility(View.GONE);
+                }break;
+            default:
+                {
+
+                }break;
+        }
+    }
+
+    public void toastThis (String mensagem)
+    {
+        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
     }
 
 }//fim do fragment

@@ -1,8 +1,12 @@
 package com.example.travelpet.model;
 
+import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.helper.Base64Custom;
+
 public class DisponibilidadeMotorista
 {
     public static String DISPONIVEL ="disponivel";
+    public static String INDISPONIVEL = "indisponivel";
     public static String EM_VIAGEM ="em_viagem";
 
     private String idVeiculo;
@@ -14,10 +18,17 @@ public class DisponibilidadeMotorista
     private double latitudeMotorista;
     private double longitudeMotorista;
 
-    public DisponibilidadeMotorista () {}
+    public DisponibilidadeMotorista ()
+    {
+        setIdMotorista(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        setDisponibilidade(DisponibilidadeMotorista.INDISPONIVEL);
+        setPorteAnimalPequeno("false");
+        setPorteAnimalMedio("false");
+        setPorteAnimalGrande("false");
+    }
 
-
-    public String getIdVeiculo() {
+    public String getIdVeiculo()
+    {
         return idVeiculo;
     }
 

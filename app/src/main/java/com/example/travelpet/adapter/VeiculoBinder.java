@@ -29,9 +29,10 @@ public class VeiculoBinder extends ItemBinder<Veiculo, VeiculoBinder.VeiculoView
         holder.modelo.setText(item.getModeloVeiculo());
         holder.marca.setText(item.getMarcaVeiculo());
         holder.placa.setText(item.getPlacaVeiculo());
-        int bgColor = ContextCompat.getColor(holder.modelo.getContext(), R.color.about_youtube_color);
 
-        int bgpadrao = ContextCompat.getColor(holder.modelo.getContext(), R.color.about_facebook_color);
+        int bgColor = ContextCompat.getColor(holder.modelo.getContext(), R.color.colorButoonAzulPadrao);
+        int bgpadrao = ContextCompat.getColor(holder.modelo.getContext(), R.color.white);
+
         if (holder.isItemSelected()== true)
         {
             holder.cardview.setCardBackgroundColor(bgColor);

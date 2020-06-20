@@ -9,11 +9,12 @@
     <color name="green">#388e3c</color>
 
 
-
-    
     <color name="colorButoonBrancoPressionado">#dedfe3</color>
     <color name="colorButoonAzulPadrao">#4375d9</color>
     <color name="colorButoonAzulPressionado">#6699ff</color>
-
+    <color name="colorButtonVermelhoPressionado">#c62828</color>
+    <color name="colorButtonVermelhoPadrao">#d32f2f</color>
+    <color name="colorButtonVerdePadrao">#388e3c</color>
+    <color name="colorButtonVerdePressionado">#00600f</color>
 
 </resources>

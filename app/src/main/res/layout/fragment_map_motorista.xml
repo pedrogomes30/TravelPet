@@ -21,8 +21,19 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_close"
-        app:backgroundTint="#FF0000">
+        android:visibility="gone"
+        >
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="32dp"
+        android:background="@drawable/button_vermelho_seletor"
+        android:text="O passageiro entrou no veículo"
+        android:visibility="gone"
+        android:textColor="@color/white"/>
 
 </FrameLayout>

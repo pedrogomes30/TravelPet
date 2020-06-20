@@ -5,11 +5,26 @@
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/colorApp">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Solicitação de Viagem"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:layout_margin="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/fredoka_one_regular"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,29 +39,33 @@
                 android:text="Endereço de Origem "
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/tv_ruaOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Rua Origem"
+                android:text="Rua Origem"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/tv_numeroOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número Origem"
+                android:text="Número Origem"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/tv_bairroOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bairro Origem"
+                android:text="Bairro Origem"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -54,7 +73,8 @@
                 android:id="@+id/tv_cidadeOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade Origem"
+                android:text="Cidade Origem"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -62,16 +82,18 @@
                 android:id="@+id/tv_estadoOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado Origem"
+                android:text="Estado Origem"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/tv_cepOrigem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cep Origem"
+                android:text="Cep Origem"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>
@@ -88,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="Endereço de Destino "
                 android:textSize="24sp"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"/>
 
@@ -95,7 +118,8 @@
                 android:id="@+id/tv_ruaDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Rua Destino"
+                android:text="Rua Destino"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -103,7 +127,8 @@
                 android:id="@+id/tv_numeroDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número Destino"
+                android:text="Número Destino"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -111,15 +136,17 @@
                 android:id="@+id/tv_bairroDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bairro Destino"
+                android:text="Bairro Destino"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"/>
 
             <TextView
                 android:id="@+id/tv_cidadeDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade Destino"
+                android:text="Cidade Destino"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -127,7 +154,8 @@
                 android:id="@+id/tv_estadoDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estado Destino"
+                android:text="Estado Destino"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -135,7 +163,8 @@
                 android:id="@+id/tv_cepDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cep Destino"
+                android:text="Cep Destino"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:gravity="center_horizontal"/>
 
@@ -152,18 +181,24 @@
                 android:id="@+id/bt_confirmDialog_origemDestino"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="Confirmar"
+                android:text="Confirmar"
                 android:layout_margin="4dp"
-                android:background="@drawable/button_laranja_seletor"
+                android:background="@drawable/button_verde_seletor"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/bt_cancelDialog_origemDestino"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:hint="Cancelar"
+                android:text="Cancelar"
                 android:layout_margin="4dp"
-                android:background="@drawable/button_azul_seletor"
+                android:background="@drawable/button_vermelho_seletor"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:layout_weight="1"/>
 
         </LinearLayout>

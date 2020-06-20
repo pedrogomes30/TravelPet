@@ -12,10 +12,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,10 +26,15 @@ import mva2.adapter.util.Mode;
 
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.VeiculoBinder;
-import com.example.travelpet.helper.Base64Custom;
-import com.example.travelpet.dao.ConfiguracaoFirebase;
-import com.example.travelpet.dao.UsuarioFirebase;
+import com.example.travelpet.dao.AnimalDAO;
+import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
+import com.example.travelpet.dao.LocalDAO;
+import com.example.travelpet.dao.VeiculoDAO;
+import com.example.travelpet.dao.ViagemDAO;
+import com.example.travelpet.model.DisponibilidadeMotorista;
+import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Veiculo;
+import com.example.travelpet.model.Viagem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -40,33 +45,49 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 
 public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback {
-
-
+    
     private GoogleMap gMap;
     private MapView mapView;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private FloatingActionButton fab;
+
+    //Threads
+    private Thread threadAttDisponibilidade;
+    private Thread checarDisponibilidade;
+    private Thread threadPopulaAdapter;
+    private CountDownLatch contador;
+
+    //Daos
+    private DisponibilidadeMotoristaDao disponibilidadeDAO;
+    private VeiculoDAO veiculoDAO;
+    private ViagemDAO viagemDAO;
+    private LocalDAO localDAO;
+    private AnimalDAO animalDAO;
+
+    //BottomSheet
     private BottomSheetDialog bsDialog;
     private View bsView;
-    private LinearLayout linearLayout;
     private MultiViewAdapter adapter;
-    private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
-    private List<Veiculo> veiculos= new ArrayList<Veiculo>();
-    private ValueEventListener valueEventListenerListaVeiculos;
+    private ListSection<Veiculo> veiculoListSection;
     private RecyclerView recyclerBS;
     private RecyclerView.LayoutManager layoutManager;
-    private DatabaseReference referenciaVeiculos;
+
+    //Outros
+    private Local localPassageiro,localDestino;
+    private Viagem viagemAtual;
+    private Veiculo veiculoSelecionado;
+    private DisponibilidadeMotorista disponibilidade;
+    private CheckBox pq,med,grd;
+    private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
+    private FloatingActionButton fab;
+    private LatLng localMotorista;
 
     public MapMotoristaFragment() {}
 
@@ -77,89 +98,335 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_map_motorista, container, false);
 
-        //Referencia dos veiculos
-        referenciaVeiculos = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
-                .child("veiculos")
-                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+        //iniciandoDAOS
+        disponibilidadeDAO =  new DisponibilidadeMotoristaDao();
+        veiculoDAO = new VeiculoDAO();
+        localDAO = new LocalDAO();
+        animalDAO = new AnimalDAO();
+        viagemDAO = new ViagemDAO();
 
-        //Setar Fab
+        //Setar FindViews
         fab = view.findViewById(R.id.fab_disponibilidade);
-        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.about_youtube_color))); //Funciona!!!
-        fabOnClick();
+        mapView =  view.findViewById(R.id.mapMotorista);
 
-        //Setando o BottomSheet
+        //Criando Mapa
+
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+
+        iniciarMapa();
+        threadChecarDisponibilidade();
+
+        return view;
+    }
+    //CONFIG TELA
+    public void configTela (String disponibilidade)
+    {
+        // 1- Indisponível
+        // 2- Disponível
+        // 3- Em Viagem
+
+        switch (disponibilidade)
+        {
+            case "indisponivel":
+                {
+                    configFab(disponibilidade);
+                    configBs(disponibilidade);
+                }break;
+
+            case "disponivel":
+                {
+                    configFab(disponibilidade);
+                    configBs(disponibilidade);
+                }break;
+            case "em_viagem":
+                {
+                    configFab(disponibilidade);
+                }break;
+
+            default:{}break;
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void configFab(String disponibilidade)
+    {
+        // 1- Indisponível
+        // 2- Disponível
+        // 3- Em Viagem
+
+        switch (disponibilidade)
+        {
+            case "indisponivel":
+                {
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.about_youtube_color)));
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_close));
+                }break;
+
+            case "disponivel":
+                {
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
+
+                }break;
+
+            case "em_viagem":
+                {
+                    fab.setVisibility(View.GONE);
+
+                }break;
+
+            default:{}break;
+
+        }
+
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                bsDialog.show();
+                threadPopularAdapter();
+            }
+        });
+    }
+    
+    private void configBs(final String dispConfig)
+    {
         bsDialog = new BottomSheetDialog(getActivity(),R.style.BottomSheetDialogTheme);
         bsView = getActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_motorista,null);
         bsDialog.setContentView(bsView);
 
-        //Setando RecyclerView do BottomSheet
+        //findViews
         recyclerBS = (RecyclerView) bsView.findViewById(R.id.recycler_bs_motorista);
-        //adapter = new ListaVeiculosAdapter(getActivity(),listaVeiculos);
+        Button btbs1 = bsView.findViewById(R.id.bt_bs_motorista);
+        Button btbs2 = bsView.findViewById(R.id.bt_bs_motorista2);
+        pq = bsView.findViewById(R.id.checkbox_peq);
+        med = bsView.findViewById(R.id.checkbox_med);
+        grd = bsView.findViewById(R.id.checkbox_grd);
 
-        // MultiviewAdapter
-        adapter = new MultiViewAdapter();
-        adapter.registerItemBinders(new VeiculoBinder());
-        ListSection<Veiculo> listSection = new ListSection<>();
-        listSection.add(testeVeiculo("1","1","Fusca","Volkswagem","KNF-9812","1990","1"));
-        listSection.add(testeVeiculo("1","1","Astra","Volkswagem","GFC-1597","2010","1"));
-        listSection.add(testeVeiculo("1","1","Onix","Chevrolet","PLW-7927","2020","1"));
-        //listSection.addAll(veiculos);
-        listSection.setSelectionMode(Mode.SINGLE);
-        adapter.addSection(listSection);
-        adapter.setSelectionMode(Mode.SINGLE);
-        //toastThis(String.valueOf(adapter.getItemCount()));
+        pq.setChecked(false);
+        med.setChecked(false);
+        grd.setChecked(false);
 
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerBS.setLayoutManager(layoutManager);
         recyclerBS.setHasFixedSize(true);
-        recyclerBS.setAdapter(adapter);
 
+        switch (dispConfig)
+        {
+            case "indisponivel":
+            {
+                btbs2.setVisibility(View.GONE);
+                btbs1.setText("CONFIRMAR DISPONIBILIDADE");
+                onClickBtConfirmar(btbs1);
 
-        //linearLayout = new LinearLayout(getActivity().getApplicationContext());
-        //linearLayout.findViewById(R.id.bottom_sheet_motorista_container);
-        //bsView = inflater.inflate(R.layout.layout_bottom_sheet_motorista,linearLayout);
+            }break;
 
+            case "disponivel":
+            {
+                btbs2.setVisibility(View.VISIBLE);
+                btbs1.setText("ATUALIZAR");
+                onClickBtConfirmar(btbs1);
+                onClickBtCancelar(btbs2);
 
-        //Criando Mapa
-        mapView =  view.findViewById(R.id.mapMotorista);
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();
-        iniciarMapa();
+            }break;
 
-        return view;
+            default: {}break;
+        }
     }
 
-    private void fabOnClick()
+    public void onClickBtCancelar (Button bt)
     {
-        fab.setOnClickListener(new View.OnClickListener() {
+        bt.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
-                mostrarBottomSheet();
+            public void onClick(View view)
+            {
+                disponibilidade.setDisponibilidade(DisponibilidadeMotorista.INDISPONIVEL);
+                threadSalvarDisponibilidade();
+                bsDialog.dismiss();
             }
         });
     }
 
-    private void mostrarBottomSheet()
+    public void onClickBtConfirmar(Button bt)
     {
-        bsView.findViewById(R.id.bt_bs_motorista).setOnClickListener
-                (new View.OnClickListener()
+        bt.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(localMotorista != null)
                 {
-                    @SuppressLint("NewApi")
-                    @Override
-                    public void onClick(View view)
+                    disponibilidade.setLatitudeMotorista(localMotorista.latitude);
+                    disponibilidade.setLongitudeMotorista(localMotorista.longitude);
+
+                    if ( pq.isChecked() || med.isChecked() || grd.isChecked())
                     {
-                        Toast.makeText(getActivity().getApplicationContext(),"Clicando", Toast.LENGTH_SHORT).show();
-                        bsDialog.dismiss();
-                        fab.setBackgroundColor(getResources().getColor(R.color.green));
-                        //fab.setImageResource(getResources().getDrawable(R.drawable.ic_exit));
-                        //fab.setImageIcon(getResources().getDrawable(R.drawable.ic_exit));
+                        disponibilidade.setPorteAnimalPequeno(String.valueOf(pq.isChecked()));
+                        disponibilidade.setPorteAnimalMedio(String.valueOf(med.isChecked()));
+                        disponibilidade.setPorteAnimalGrande(String.valueOf(grd.isChecked()));
+
+                        if(veiculoListSection.getSelectedItems().size() > 0)
+                        {
+                            veiculoSelecionado  = veiculoListSection.getSelectedItems().get(0);
+
+                            disponibilidade.setIdVeiculo(veiculoSelecionado.getIdVeiculo());
+                            disponibilidade.setDisponibilidade(DisponibilidadeMotorista.DISPONIVEL);
+
+                            threadSalvarDisponibilidade();
+                            bsDialog.dismiss();
+                        }
+                        else
+                        {
+                            toastThis("Selecione ao menos um Veículo");
+                        }
+
+                    }
+                    else
+                    {
+                        toastThis(" Selecione ao menos um porte de animal !!! ");
                     }
                 }
-                );
-        bsDialog.show();
+                else
+                {
+                    toastThis("Aguarde o aplicativo recuperar a sua Localização");
+                }
+            }
+        });
     }
 
+    public void configuraMultiViewAdapter()
+    {
+        //cria adapter
+        adapter = new MultiViewAdapter();
+        adapter.registerItemBinders(new VeiculoBinder());
 
+        //Instancia o listSection
+        veiculoListSection = new ListSection<>();
+        veiculoListSection.setSelectionMode(Mode.SINGLE);
+        veiculoListSection.addAll(listaVeiculos);
+
+        //add o listSection ao adapter
+        adapter.addSection(veiculoListSection);
+        adapter.setSelectionMode(Mode.SINGLE);
+
+        recyclerBS.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    //Threads
+    public void threadPopularAdapter()
+    {
+        threadPopulaAdapter = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                listaVeiculos.clear();
+                listaVeiculos = veiculoDAO.receberVeiculosLiberados(contador);
+
+                try
+                {contador.await();}
+                catch (InterruptedException e)
+                { e.printStackTrace();}
+
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        configuraMultiViewAdapter();
+                    }
+                });
+            }
+        });
+        threadPopulaAdapter.start();
+    }
+
+    private void threadSalvarDisponibilidade()
+    {
+        threadAttDisponibilidade = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                disponibilidadeDAO.salvarDisponibilidade(disponibilidade, contador);
+
+                try
+                {contador.await();}
+                catch (InterruptedException e)
+                {e.printStackTrace();}
+
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        configTela(disponibilidade.getDisponibilidade());
+                    }
+                });
+            }
+        });
+
+        threadAttDisponibilidade.start();
+
+    }
+
+    private void threadChecarDisponibilidade()
+    {
+        checarDisponibilidade = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                disponibilidade = new DisponibilidadeMotorista();
+                disponibilidade = disponibilidadeDAO.receberDisponibilidade(contador);
+
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                getActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        switch (disponibilidade.getDisponibilidade())
+                        {
+                            case "indisponivel":
+                            {
+                                configTela(disponibilidade.getDisponibilidade());
+                            }break;
+
+                            case "disponivel":
+                            {
+                                configTela(disponibilidade.getDisponibilidade());
+                            }break;
+
+                            case "em_viagem":
+                            {
+                                configTela(disponibilidade.getDisponibilidade());
+                            }break;
+
+                            default:{}break;
+                        }
+                    }
+                });
+            }
+        });
+        checarDisponibilidade.start();
+    }
+
+    //MAPA
     public void iniciarMapa ()
     {
         try
@@ -182,22 +449,17 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         recuperarLocalizacaoUsuario();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        recuperarVeiculos();
-    }
-
     public void recuperarLocalizacaoUsuario ()
     {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-
+        locationListener = new LocationListener()
+        {
             @Override
-            public void onLocationChanged(Location location) {
+            public void onLocationChanged(Location location)
+            {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-                LatLng localMotorista = new LatLng(latitude, longitude);
+                localMotorista = new LatLng(latitude, longitude);
 
                 gMap.clear();
                 gMap.addMarker
@@ -213,17 +475,20 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             }
 
             @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
+            public void onStatusChanged(String s, int i, Bundle bundle)
+            {
 
             }
 
             @Override
-            public void onProviderEnabled(String s) {
+            public void onProviderEnabled(String s)
+            {
 
             }
 
             @Override
-            public void onProviderDisabled(String s) {
+            public void onProviderDisabled(String s)
+            {
 
             }
         };
@@ -233,49 +498,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             locationManager.requestLocationUpdates
                     (
                             LocationManager.GPS_PROVIDER,
-                            5000, //tempo mínimo para atualização de localização (milisegundos)
+                            2000, //tempo mínimo para atualização de localização (milisegundos)
                             10, //distância mínima para atualização de localização (metros)
                             locationListener
                     );
         }
-    }
-
-    public void recuperarVeiculos()
-    {
-        {
-
-           valueEventListenerListaVeiculos = referenciaVeiculos.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot dados : dataSnapshot.getChildren()) {
-                        Veiculo veiculo = dados.getValue(Veiculo.class);
-                        veiculos.add(veiculo);
-
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-    }
-
-    public Veiculo testeVeiculo(String idUsuario, String idVeiculo, String modelo, String marca, String placa, String ano, String Crvl)
-    {
-        Veiculo veiculo = new Veiculo();
-        veiculo.setIdUsuario(idUsuario);
-        veiculo.setIdVeiculo(idVeiculo);
-        veiculo.setModeloVeiculo(modelo);
-        veiculo.setMarcaVeiculo(marca);
-        veiculo.setPlacaVeiculo(placa);
-        veiculo.setAnoVeiculo(ano);
-        veiculo.setCrlvVeiculo(Crvl);
-
-        return veiculo;
     }
 
     public void toastThis(String mensagem)

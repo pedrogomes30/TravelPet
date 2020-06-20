@@ -16,6 +16,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
 
@@ -25,7 +26,7 @@ public class VeiculoDAO
     private Veiculo veiculo;
     int tipo,quantidade;
     String resultado,fotoURL;
-    private ArrayList<Veiculo> veiculos;
+    private ArrayList<Veiculo> veiculos = new ArrayList<>();
 
     public VeiculoDAO (){}
 
@@ -121,31 +122,65 @@ public class VeiculoDAO
         return fotoURL;
     }
 
-    public ArrayList<Veiculo> receberVeiculos ()
+    public ArrayList<Veiculo> receberVeiculos (final CountDownLatch latch)
     {
         DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("veiculos")
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-        referencia.addValueEventListener(new ValueEventListener()
+
+        referencia.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-
                 for (DataSnapshot dados : dataSnapshot.getChildren())
                 {
                     veiculo = dados.getValue(Veiculo.class);
                     veiculos.add(veiculo);
                 }
-
+                latch.countDown();
             }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError)
                 {
-
+                    latch.countDown();
                 }
         });
+
+        return veiculos;
+    }
+
+    public ArrayList<Veiculo> receberVeiculosLiberados (final CountDownLatch latch)
+    {
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child("veiculos")
+                .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+
+        referencia.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot dados : dataSnapshot.getChildren())
+                {
+                    veiculo = dados.getValue(Veiculo.class);
+                    if (veiculo.getStatus().equals(Veiculo.LIBERADO))
+                    {
+                        veiculos.add(veiculo);
+                    }
+                }
+                latch.countDown();
+                System.out.println("lista veiculos apos o for =" + veiculos.size()+" ///////////////////////////////////////");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+                latch.countDown();
+            }
+        });
+
         return veiculos;
     }
 

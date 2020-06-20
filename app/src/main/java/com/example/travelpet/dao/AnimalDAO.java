@@ -3,6 +3,7 @@ package com.example.travelpet.dao;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,9 @@ import java.util.concurrent.CountDownLatch;
 
 public class AnimalDAO {
 
-    int quantidadeAnimais; // contar animais
-    ArrayList<Animal> listaAnimal = new ArrayList<>();
+    private int quantidadeAnimais; // contar animais
+    private ArrayList<Animal> listaAnimal = new ArrayList<>();
+    private Animal animal;
 
     public AnimalDAO() {}
 
@@ -42,32 +44,38 @@ public class AnimalDAO {
     //      Método para salvar os dados do animal no firebase
     public void salvarAnimalRealtimeDatabase(Animal animal, final ProgressDialog progressDialog,
                                              final int tipoSave,
-                                             final Activity activity){
+                                             final Activity activity)
+    {
 
         DatabaseReference animalRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child(ConfiguracaoFirebase.animal)
                 .child(animal.getIdUsuario())
                 .child(animal.getIdAnimal());
-        animalRef.setValue(animal).addOnSuccessListener(new OnSuccessListener<Void>() {
+        animalRef.setValue(animal).addOnSuccessListener(new OnSuccessListener<Void>()
+        {
             @Override
             public void onSuccess(Void aVoid) {
 
                 TelaCarregamento.pararCarregamento(progressDialog);
 
                 // tipoSave == 1 - (cadastrarUsuario/Animal) - CadastroAnimalFotoActivity ou ListaAnimaisFragment
-                if(tipoSave == 1){
+                if(tipoSave == 1)
+                {
                     Mensagem.mensagemCadastrarDados(activity);
                 }
 
                 // tipoSave == 2 - atualizar os dados do animal -  EditarAnimalActivity
-                if(tipoSave == 2){
+                if(tipoSave == 2)
+                {
                     Mensagem.mensagemAtualizarAnimal(activity);
                 }
 
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener()
+        {
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onFailure(@NonNull Exception e)
+            {
 
             }
         });
@@ -179,13 +187,43 @@ public class AnimalDAO {
         });
     }
 
+    public Animal receberAnimalPorId (String idAnimal, String idDonoAnimal , final CountDownLatch contador)
+    {
+        animal = new Animal();
+        DatabaseReference referenciaAnimal = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
+                .child(ConfiguracaoFirebase.animal)
+                .child(idDonoAnimal)
+                .child(idAnimal);
+
+        referenciaAnimal.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                animal = dataSnapshot.getValue(Animal.class);
+                contador.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+
+        try {contador.await();}
+        catch (InterruptedException e)
+        { e.printStackTrace();}
+
+        return animal;
+    }
+
+
     public ArrayList<Animal> receberListaAnimal (final CountDownLatch contador)
     {
         DatabaseReference referenciaAnimais = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child(ConfiguracaoFirebase.animal)
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-
-        System.out.println("referencia =" + referenciaAnimais.toString());
 
         referenciaAnimais.addListenerForSingleValueEvent(new ValueEventListener()
         {

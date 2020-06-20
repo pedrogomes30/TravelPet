@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:background="@color/colorApp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Procurando Motorista"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/fredoka_one_regular"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:indeterminateTint="@color/colorButtonVerdePadrao"
+        />
+
+    <Button
+        android:id="@+id/bt_cancelDialog_buscarMotorista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar Viagem"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_vermelho_seletor"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>

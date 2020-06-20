@@ -71,11 +71,11 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (checkedId == R.id.radioButtonPequeno) {
-                    porteAnimal = "Pequeno - Até 35cm";
+                    porteAnimal = "pequeno";
                 } else if (checkedId == R.id.radioButtonMedio) {
-                    porteAnimal = "Médio - De 36 a 49cm";
+                    porteAnimal = "medio";
                 } else if (checkedId == R.id.radioButtonGrande) {
-                    porteAnimal = "Grande - Acima de 50cm";
+                    porteAnimal = "grande";
                 }else {
                     porteAnimal = null;
                 }
@@ -87,8 +87,8 @@ public class CadastroAnimalPorteActivity extends AppCompatActivity {
 
         Boolean validado = false;
 
-        if (porteAnimal == "Pequeno - Até 35cm" || porteAnimal == "Médio - De 36 a 49cm"
-                || porteAnimal == "Grande - Acima de 50cm") {
+        if (porteAnimal == "pequeno" || porteAnimal == "medio"
+                || porteAnimal == "grande") {
 
             validado = true;
 
