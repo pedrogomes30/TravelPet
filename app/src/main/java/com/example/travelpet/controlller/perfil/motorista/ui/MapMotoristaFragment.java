@@ -279,6 +279,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
                             threadSalvarDisponibilidade();
                             bsDialog.dismiss();
+                            addListenerViagem();
                         }
                         else
                         {
@@ -424,6 +425,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             }
         });
         checarDisponibilidade.start();
+    }
+
+    public void addListenerViagem()
+    {
+
     }
 
     //MAPA

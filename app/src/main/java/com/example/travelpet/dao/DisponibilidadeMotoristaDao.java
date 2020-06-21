@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.concurrent.CountDownLatch;
@@ -85,7 +86,7 @@ public class DisponibilidadeMotoristaDao
         {e.printStackTrace();}
     }
 
-    public DatabaseReference recebeDispobilidaReferencia (DisponibilidadeMotorista referencia)
+    public DatabaseReference receberDisponibilidaReferencia(DisponibilidadeMotorista referencia)
     {
         DatabaseReference dbref = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("disponibilidadeMotorista")
@@ -148,16 +149,16 @@ public class DisponibilidadeMotoristaDao
                 for (DataSnapshot dados : dataSnapshot.getChildren())
                 {
                     disponibilidade = dados.getValue(DisponibilidadeMotorista.class);
-                    showInTerminal(disponibilidade.getPorteAnimalPequeno());
-                    showInTerminal(disponibilidade.getPorteAnimalMedio());
-                    showInTerminal(disponibilidade.getPorteAnimalGrande());
 
                     if(checarPortes(animaisSelecionados, disponibilidade))
                     {
+                        showInTerminal("checarPortes : OK");
                         if (checarMotoristasCancelados(motoristasCancelados))
                         {
+                            showInTerminal("checarMotoristasCancelados : OK");
                             if (checarDistancia(localOrigem,distanciaMax))
                             {
+                                showInTerminal("checarDistancia : OK");
                                 motoristasDisponiveis.add(disponibilidade);
                             }
                             else
@@ -174,7 +175,6 @@ public class DisponibilidadeMotoristaDao
                     {
                         showInTerminal("animais não são compativeis");
                     }
-
                 }
                 contador.countDown();
             }
@@ -182,7 +182,8 @@ public class DisponibilidadeMotoristaDao
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
+                showInTerminal("nenhum motorista disponível");
+                contador.countDown();
             }
         });
 
@@ -190,8 +191,16 @@ public class DisponibilidadeMotoristaDao
         catch (InterruptedException e)
         {e.printStackTrace();}
 
-        retornaMotoristaMaisProximo(localOrigem);
-        return disponibilidade;
+        if (motoristasDisponiveis.size() > 0 )
+        {
+            retornaMotoristaMaisProximo(localOrigem);
+            showInTerminal("Devolvendo "+disponibilidade.getIdMotorista());
+            return disponibilidade;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void retornaMotoristaMaisProximo (Local localOrigem)
@@ -199,6 +208,7 @@ public class DisponibilidadeMotoristaDao
         if(motoristasDisponiveis.size() == 1)
         {
             disponibilidade = motoristasDisponiveis.get(0);
+            showInTerminal("apenas 1 motorista");
         }
 
         else if (motoristasDisponiveis.size() > 1)
@@ -214,16 +224,19 @@ public class DisponibilidadeMotoristaDao
                 Location motorista = new Location("Motorista");
                 motorista.setLatitude(motoristasDisponiveis.get(i).getLatitudeMotorista());
                 motorista.setLongitude(motoristasDisponiveis.get(i).getLongitudeMotorista());
+                float distancia = origem.distanceTo(motorista);
+                showInTerminal("Distancia do Motorista ["+i+"]= " + distancia);
 
-                if (menorDistancia == 0)
-                {
+                if (menorDistancia == 0) {
                     menorDistancia = origem.distanceTo(motorista);
                     motoristaMaisProximo = i;
-                } else
-                    {
-                    float distancia = origem.distanceTo(motorista);
+                }
+
+                else
+                {
                     if (menorDistancia > distancia)
                     {
+                        showInTerminal("menor distancia = " + Math.round(distancia));
                         menorDistancia = distancia;
                         motoristaMaisProximo = i;
                     }
@@ -232,9 +245,9 @@ public class DisponibilidadeMotoristaDao
             disponibilidade = motoristasDisponiveis.get(motoristaMaisProximo);
         }
 
-        else if (motoristasDisponiveis.size() <= 0)
+        else
         {
-            // não há motorista disponível.
+            showInTerminal("nã há motorists próximos");
         }
     }
 
@@ -255,15 +268,34 @@ public class DisponibilidadeMotoristaDao
     {
         Location donoAnimal = new Location("donoAnimal");
         Location motorista  = new Location("motorista");
+
         float distancia = 0;
 
         donoAnimal.setLatitude(localOrigem.getLatitude());
-        donoAnimal.setLongitude(localOrigem.getLatitude());
+        donoAnimal.setLongitude(localOrigem.getLongitude());
+        showInTerminal("latitude donoAnimal = " + String.valueOf(donoAnimal.getLatitude()));
+        showInTerminal("longitude donoAnimal = " + String.valueOf(donoAnimal.getLongitude()));
 
         motorista.setLatitude(disponibilidade.getLatitudeMotorista());
         motorista.setLongitude(disponibilidade.getLongitudeMotorista());
+        showInTerminal("latitude motorista = " + String.valueOf(motorista.getLatitude()));
+        showInTerminal("latitude motorista = " + String.valueOf(motorista.getLongitude()));
 
         distancia = donoAnimal.distanceTo(motorista);
+        //distanceTo retorna em metros, pra obter em kilometros precisa dividir por 1000
+
+        int teste = (int) distancia;
+        int teste2 = (int) distanciaMax;
+
+        //DecimalFormat df = new DecimalFormat("0.0"); para km
+
+
+        showInTerminal("distancia em int =" + teste);
+        showInTerminal("distanciaMAX em int =" + teste2);
+
+        showInTerminal("distancia em Float =" + distancia);
+        showInTerminal("distanciaMAX em Float=" + distanciaMax);
+
 
         if(distancia < distanciaMax)
         {
@@ -275,35 +307,34 @@ public class DisponibilidadeMotoristaDao
 
     public boolean checarPortes (ArrayList<Animal> animaisSelecionados, DisponibilidadeMotorista disponivel)
     {
+        DisponibilidadeMotorista dispPortes = disponivel;
 
-        showInTerminal(disponivel.getPorteAnimalPequeno());
-        showInTerminal(disponivel.getPorteAnimalMedio());
-        showInTerminal(disponivel.getPorteAnimalGrande());
         ArrayList<String> portesSelecionados = new ArrayList<>();
         for (int i= 0; i< animaisSelecionados.size(); i++)
         {
             portesSelecionados.add(animaisSelecionados.get(i).getPorteAnimal());
-
         }
 
         for (int i =0; i<portesSelecionados.size(); i++)
         {
-
-            if(disponivel.getPorteAnimalPequeno()=="false" && portesSelecionados.get(i) == "pequeno")
-            { showInTerminal("ativou");
+            if(dispPortes.getPorteAnimalPequeno().equals("false") && portesSelecionados.get(i).equals("pequeno"))
+            { showInTerminal("porte Pequeno Imcompatível");
                 return false;
             }
 
-            if(disponivel.getPorteAnimalMedio() == "false" && portesSelecionados.get(i) == "medio")
-            { return false; }
+            if(dispPortes.getPorteAnimalMedio().equals("false") && portesSelecionados.get(i).equals("medio"))
+            {
+                showInTerminal("porte Medio Imcompatível");
+                return false;
+            }
 
-            if(disponivel.getPorteAnimalGrande() == "false" && portesSelecionados.get(i) == "grande")
-            { showInTerminal("ativou");
-                return false; }
+            if(dispPortes.getPorteAnimalGrande().equals("false") && portesSelecionados.get(i).equals("grande"))
+            { showInTerminal("porte Grande Imcompatível");
+                return false;
+            }
         }
         return true;
     }
-
 
 
     public void showInTerminal (String mensagem)

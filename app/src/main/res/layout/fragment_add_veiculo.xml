@@ -43,6 +43,9 @@
                 android:id="@+id/et_addVeiculo_modelo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
+                android:lines="1"
+                android:nextFocusDown="@id/et_addVeiculo_marca"
                 android:hint="@string/modelo_do_veiculo" />
 
         </com.google.android.material.textfield.TextInputLayout>
