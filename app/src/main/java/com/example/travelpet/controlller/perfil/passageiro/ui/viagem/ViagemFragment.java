@@ -194,6 +194,15 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     public void btNovaViagemOnClick()
     {
 
+        buttonChamarMotorista.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                //
+                return false;
+            }
+        });
+
         // Envento de clique do botão "Chamar Motorista"
         buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
         {
@@ -396,19 +405,19 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public Address recuperaEnderecoViaStringDebug (String qualquerString)
-        {
+    {
 
-            Address newAddres = new Address(Locale.getDefault());
-            newAddres.setThoroughfare("Rua Almirante Barroso");
-            newAddres.setSubLocality("Passagem");
-            newAddres.setSubAdminArea("Cabo Frio");
-            newAddres.setPostalCode("28905020");
-            newAddres.setFeatureName("360");
-            newAddres.setLatitude(-22.876962);
-            newAddres.setLongitude(-42.008073);
+        Address newAddres = new Address(Locale.getDefault());
+        newAddres.setThoroughfare("Rua Almirante Barroso");
+        newAddres.setSubLocality("Passagem");
+        newAddres.setSubAdminArea("Cabo Frio");
+        newAddres.setPostalCode("28905020");
+        newAddres.setFeatureName("360");
+        newAddres.setLatitude(-22.876962);
+        newAddres.setLongitude(-42.008073);
 
             return newAddres;
-        }
+    }
 
 
     public Address recuperaEnderecoViaLocation(Location location) throws IOException

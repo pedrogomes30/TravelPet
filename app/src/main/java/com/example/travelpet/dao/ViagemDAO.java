@@ -25,6 +25,12 @@ public class ViagemDAO
         return key;
     }
 
+    public static DatabaseReference getRootViagens ()
+    {
+        DatabaseReference rootViagem = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem");
+        return rootViagem;
+    }
+
     public void salvarViagem (Viagem viagem, final CountDownLatch latch)
     {
         DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());

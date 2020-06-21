@@ -1433,6 +1433,7 @@ id browser_actions_menu_items
 id browser_actions_menu_view
 id btProximo
 id btProximoVeiculo
+id bt_aceitarViagem
 id bt_addVeiculo_cadastrar
 id bt_addVeiculo_fotocrvl
 id bt_bs_donoanimal
@@ -1442,9 +1443,8 @@ id bt_cancelDialog_buscarMotorista
 id bt_cancelDialog_origemDestino
 id bt_confirmDialog_origemDestino
 id bt_excluirVeiculo
+id bt_recusarViagem
 id btn_holder
-id button3
-id button4
 id buttonChamarMotorista
 id buttonEnviarCNH
 id buttonPanel
@@ -1472,7 +1472,7 @@ id ci_animal1
 id ci_animal2
 id ci_animal3
 id ci_animal_bs
-id circleImageView
+id ci_donoanimal
 id circleImageViewFotoAnimal
 id circular
 id clip_horizontal
@@ -1480,7 +1480,6 @@ id clip_vertical
 id collapseActionView
 id confirmation_code
 id confirmation_code_layout
-id constraintLayout
 id container
 id content
 id contentPanel
@@ -1565,12 +1564,6 @@ id groups
 id guideline
 id guideline2
 id guideline3
-id guideline4
-id guideline5
-id guideline6
-id guideline7
-id guideline8
-id guideline9
 id header
 id header_text
 id heading
@@ -1601,6 +1594,9 @@ id ivDropDownLayout
 id ivSpinnerLayout
 id labeled
 id largeLabel
+id layout_cianimal1
+id layout_cianimal2
+id layout_cianimal3
 id left
 id light
 id line1
@@ -1775,7 +1771,6 @@ id textRacaAnimal
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
-id textView2
 id textView6
 id textViewBoasVindas
 id textViewBoasVindas3
@@ -1842,11 +1837,12 @@ id tv_bairroDestino
 id tv_bairroOrigem
 id tv_cepDestino
 id tv_cepOrigem
-id tv_ci_animal1
-id tv_ci_animal2
-id tv_ci_animal3
+id tv_cianimal1
+id tv_cianimal2
+id tv_cianimal3
 id tv_cidadeDestino
 id tv_cidadeOrigem
+id tv_descricaoanimal
 id tv_dialog_buscarMotorista
 id tv_estadoDestino
 id tv_estadoOrigem

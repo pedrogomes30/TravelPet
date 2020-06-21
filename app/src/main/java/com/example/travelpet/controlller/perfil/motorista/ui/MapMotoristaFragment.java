@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,8 +31,10 @@ import com.example.travelpet.adapter.VeiculoBinder;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
 import com.example.travelpet.dao.LocalDAO;
+import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.dao.ViagemDAO;
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.DisponibilidadeMotorista;
 import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Veiculo;
@@ -45,7 +49,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -63,6 +71,8 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     private Thread checarDisponibilidade;
     private Thread threadPopulaAdapter;
     private CountDownLatch contador;
+
+    private ChildEventListener listenerViagem;
 
     //Daos
     private DisponibilidadeMotoristaDao disponibilidadeDAO;
@@ -429,7 +439,47 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     public void addListenerViagem()
     {
+        DatabaseReference referenciaViagem = ViagemDAO.getRootViagens();
+        //Escutando nó viagem;
+        //Query queryViagem = referenciaViagem
+        referenciaViagem.addChildEventListener( listenerViagem = new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+                if (dataSnapshot.getKey().equals("idMotorista"));
+                {
+                    //String idEncontrado = dataSnapshot.getValue(String.class);
+                    //System.out.println("<<<<<<<<<"+idEncontrado+">>>>>>>");
 
+                    //if(idEncontrado.equals(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario())))
+                    //{
+                        //toastThis(idEncontrado);
+                    //}
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     //MAPA
