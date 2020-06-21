@@ -134,7 +134,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
                 if ( imagem != null){
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    imagem.compress(Bitmap.CompressFormat.WEBP, 50, baos);
 
                     fotoCrvl = baos.toByteArray();
 
