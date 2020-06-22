@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/carregando"
             android:textSize="20sp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="12dp"/>
 
     </LinearLayout>
 
