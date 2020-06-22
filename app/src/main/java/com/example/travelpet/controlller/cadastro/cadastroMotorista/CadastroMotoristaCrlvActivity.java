@@ -23,6 +23,7 @@ import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Motorista;
@@ -60,12 +61,7 @@ public class CadastroMotoristaCrlvActivity extends AppCompatActivity {
 
     public void botaoEnviarFotoCrvl (View view) {
 
-        // Seleciona a foto da galeria
-        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if(i.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(i, SELECAO_GALERIA);
-        }
+        RecuperaFoto.getGaleria(this, SELECAO_GALERIA);
     }
 
     public void botaoFinalizar(View view) {

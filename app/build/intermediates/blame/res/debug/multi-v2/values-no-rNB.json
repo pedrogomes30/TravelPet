@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\thati\\StudioProjects\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-no-rNB\\values-no-rNB.xml",
+            "outputFile": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-no-rNB\\values-no-rNB.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\thati\\.gradle\\caches\\transforms-2\\files-2.1\\a97e990bf571b1451283fd10292311f7\\jetified-android-about-page-1.2.5\\res\\values-no-rNB\\values-no-rNB.xml",
+                    "source": "C:\\Users\\rodrigo\\.gradle\\caches\\transforms-2\\files-2.1\\d9c36d21114b3c4db577380769557ed4\\jetified-android-about-page-1.2.5\\res\\values-no-rNB\\values-no-rNB.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

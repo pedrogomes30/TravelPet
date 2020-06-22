@@ -22,7 +22,9 @@
      Permissão para que o usuário vizualize a galeria, ler o armazenamento exe
      de fotos, ler o armazenamento externo
     -->
+    <!--READ_EXTERNAL_STORAGE- permissão pra utilizar galeria de fotos -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--CAMERA - permissão para utilizar a camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application

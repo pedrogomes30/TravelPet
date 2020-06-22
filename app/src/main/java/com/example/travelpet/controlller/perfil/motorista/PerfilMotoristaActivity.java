@@ -97,8 +97,8 @@ public class PerfilMotoristaActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 Motorista motorista = dataSnapshot.getValue(Motorista.class);
-
                 String fotoPerfilUrl = motorista.getFotoPerfilUrl();
+
                 nomeHeader.setText(motorista.getNome()+" "+motorista.getSobrenome());
                 emailHeader.setText(motorista.getEmail());
 
@@ -106,7 +106,7 @@ public class PerfilMotoristaActivity extends AppCompatActivity {
                 {
                     Uri fotoUsuarioUri = Uri.parse(fotoPerfilUrl);
                     Glide.with(PerfilMotoristaActivity.this)
-                            .load(fotoPerfilUrl)
+                            .load(fotoUsuarioUri)
                             .into(imgvHeader);
                 }
                 else{ imgvHeader.setImageResource(R.drawable.imagem_usuario); }

@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nome"
-                android:maxLength="100"
+                android:inputType="text"
+                android:lines="1"
                 android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/sobrenome"
-                android:maxLength="100"
+                android:inputType="text"
+                android:lines="1"
+                android:nextFocusDown="@id/editTelefone"
                 android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/telefone"
-                android:inputType="text|phone" />
+                android:inputType="text|phone"
+                android:lines="1"
+                android:nextFocusDown="@id/editCpf"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +123,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cpf"
                 android:inputType="number"
-                android:maxLength="14"/>
+                android:maxLength="14"
+                android:lines="1"
+                android:nextFocusDown="@id/editCep"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -141,7 +148,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cep"
                 android:inputType="number"
-                android:maxLength="9" />
+                android:maxLength="9"
+                android:lines="1"
+                android:nextFocusDown="@id/editLogradouro"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -162,7 +171,10 @@
                 style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/logradouro" />
+                android:hint="@string/logradouro"
+                android:inputType="text"
+                android:lines="1"
+                android:nextFocusDown="@id/editBairro"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -184,6 +196,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/bairro"
+                android:inputType="text"
+                android:lines="1"
+                android:nextFocusDown="@id/editLocalidade"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -209,8 +224,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/cidade"
+                android:inputType="text"
+                android:lines="1"
                 android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
-                />
+                android:nextFocusDown="@id/editUf"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -228,9 +245,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/uf"
+                android:inputType="text"
+                android:lines="1"
                 android:maxLength="2"
-                android:digits="abcdefghijklmnopqrstuvxwyzç ABCDEFGHIJKLMNOPQRSTUVXWYZÇ"
-                />
+                android:nextFocusDown="@id/botaoProximo"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

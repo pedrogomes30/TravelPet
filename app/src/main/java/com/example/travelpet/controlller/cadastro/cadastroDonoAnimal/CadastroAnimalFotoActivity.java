@@ -20,6 +20,7 @@ import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DonoAnimal;
@@ -62,22 +63,11 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
 
     // Funções Botões-------------------------------------------------------------------------------
     public void botaoCamera(View view){
-
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        if (i.resolveActivity(getPackageManager()) != null) {
-
-            startActivityForResult(i,SELECAO_CAMERA);
-        }
+        RecuperaFoto.getCamera(this,SELECAO_CAMERA);
     }
 
     public void botaoGaleria(View view){
-
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if (i.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(i,SELECAO_GALERIA);
-        }
+        RecuperaFoto.getGaleria(this, SELECAO_GALERIA);
     }
 
     public void botaoFinalizar(View view) {

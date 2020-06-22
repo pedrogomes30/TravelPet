@@ -48,16 +48,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Validar Permissões
+        iniciarComponentes();
         Permissao.validarPermissoes(permissoesNecessarias, this,1);
+        setButtons();
 
+    }
+
+    public void iniciarComponentes(){
         fbAuth = FirebaseAuth.getInstance();
         fbDB = FirebaseDatabase.getInstance();
         BTSignIn = findViewById(R.id.sign_in_button);
         BTSignOut = findViewById(R.id.sign_out_button);
         imgv = findViewById(R.id.logoAppTravelPet); //atalho tela motorista
-        setButtons();
-
     }
 
     public void setButtons()

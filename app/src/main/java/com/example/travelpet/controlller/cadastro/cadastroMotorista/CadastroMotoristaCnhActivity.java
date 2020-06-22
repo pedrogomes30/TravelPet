@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.travelpet.R;
 import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Endereco;
 import com.example.travelpet.model.Motorista;
@@ -48,11 +49,7 @@ public class CadastroMotoristaCnhActivity extends AppCompatActivity {
 
     public void botaoEnviarFotoCnh (View view) {
 
-        Intent i  = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        if(i.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(i, SELECAO_GALERIA);
-        }
+        RecuperaFoto.getGaleria(this, SELECAO_GALERIA);
     }
 
     public void botaoProximo(View view){

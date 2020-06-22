@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.helper.Mensagem;
+import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
@@ -73,17 +74,11 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
     public void botaoCamera(View view){
 
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (i.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(i,SELECAO_CAMERA);
-        }
+        RecuperaFoto.getCamera(this,SELECAO_CAMERA);
     }
 
     public void botaoGaleria(View view) {
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        if (i.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(i,SELECAO_GALERIA);
-        }
+        RecuperaFoto.getGaleria(this,SELECAO_GALERIA);
     }
 
     public void botaoSalvar(View view){

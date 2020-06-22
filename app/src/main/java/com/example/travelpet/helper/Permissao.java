@@ -39,11 +39,14 @@ public class Permissao {
                 // == PackageManager.PERMISSION_GRANTED = Verifica se a permissão ja foi concedida
                 Boolean temPermissao = ContextCompat.checkSelfPermission(activity,permissao) == PackageManager.PERMISSION_GRANTED;
                 // Caso não tenha permissão
-                if(!temPermissao) listaPermissoes.add(permissao);
+                if(!temPermissao) {
+                    listaPermissoes.add(permissao);
+                }
             }
             // Caso a lista estreja vazia, não é necessário solicitar permissão
-            if( listaPermissoes.isEmpty()) return true;
-
+            if( listaPermissoes.isEmpty()) {
+                return true;
+            }
             //  Convertendo uma Lista em Array para poder usar como parâmetro no requestPermissions
             // listaPermissoes.size() = Ver o tamanho da lista
             String[] novasPermissoes = new String[listaPermissoes.size()];
@@ -65,19 +68,14 @@ public class Permissao {
         builder.setTitle("Permissão negada");
         builder.setMessage("Para utilizar o app é necessário aceitar todas as permissões");
         builder.setCancelable(false);
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 activity.finish();
             }
         });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.show();
 
     }
-
-
-
 
 }

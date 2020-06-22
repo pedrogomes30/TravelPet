@@ -1,5 +1,6 @@
 package com.example.travelpet.controlller.perfil.passageiro.ui.configuracao;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.EnderecoDAO;
+import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.model.Endereco;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
@@ -92,7 +94,6 @@ public class ConfiguracaoFragment extends Fragment {
         btCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (i.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(i,SELECAO_CAMERA);
@@ -105,7 +106,6 @@ public class ConfiguracaoFragment extends Fragment {
         btGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if (i.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivityForResult(i,SELECAO_GALERIA);
@@ -162,7 +162,6 @@ public class ConfiguracaoFragment extends Fragment {
                 sobrenome       =   donoAnimal.getSobrenome();
                 cpf             =   donoAnimal.getCpf();
                 telefone        =   donoAnimal.getTelefone();
-
 
                 //          Enviando os dados para o layout XML
                 if(!fotoPerfilUrl.equals("")){
