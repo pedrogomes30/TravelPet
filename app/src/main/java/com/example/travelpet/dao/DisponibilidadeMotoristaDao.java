@@ -161,12 +161,15 @@ public class DisponibilidadeMotoristaDao
                     if(checarPortes(animaisSelecionados, disponibilidade))
                     {
                         showInTerminal("checarPortes : OK");
+
                         if (checarMotoristasCancelados(motoristasCancelados))
                         {
                             showInTerminal("checarMotoristasCancelados : OK");
+
                             if (checarDistancia(localOrigem,distanciaMax))
                             {
                                 showInTerminal("checarDistancia : OK");
+
                                 motoristasDisponiveis.add(disponibilidade);
                             }
                             else

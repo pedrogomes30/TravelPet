@@ -78,7 +78,7 @@ public class ListaVeiculosFragment extends Fragment {
         return view;
     }
 
-    public void OnclickAddVeiculo() {
+    private void OnclickAddVeiculo() {
         floatAddVeiculo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,14 +88,16 @@ public class ListaVeiculosFragment extends Fragment {
         });
     }
 
-    public void recuperarVeiculos()
+    private void recuperarVeiculos()
     {
         {
             valueEventListenerListaVeiculos = referenciaVeiculos.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange( DataSnapshot dataSnapshot) {
-
-                    for( DataSnapshot dados: dataSnapshot.getChildren() ){
+                public void onDataChange( DataSnapshot dataSnapshot)
+                {
+                    listaVeiculos.clear();
+                    for( DataSnapshot dados: dataSnapshot.getChildren() )
+                    {
                         Veiculo veiculo = dados.getValue(Veiculo.class);
                         listaVeiculos.add ( veiculo );
 
@@ -103,9 +105,7 @@ public class ListaVeiculosFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 }
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
         }
     }
@@ -122,7 +122,7 @@ public class ListaVeiculosFragment extends Fragment {
         listaVeiculos.clear();
     }
 
-    public void setaRecyclerOnClick ()
+    private void setaRecyclerOnClick ()
     {
         recyclerViewVeiculos.addOnItemTouchListener( new RecyclerItemClickListener(getActivity(), recyclerViewVeiculos, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -144,19 +144,4 @@ public class ListaVeiculosFragment extends Fragment {
             }
         }));
     }
-
-    public Veiculo testeVeiculo(String idUsuario, String idVeiculo, String modelo, String marca, String placa, String ano, String Crvl)
-    {
-        Veiculo veiculo = new Veiculo();
-        veiculo.setIdUsuario(idUsuario);
-        veiculo.setIdVeiculo(idVeiculo);
-        veiculo.setModeloVeiculo(modelo);
-        veiculo.setMarcaVeiculo(marca);
-        veiculo.setPlacaVeiculo(placa);
-        veiculo.setAnoVeiculo(ano);
-        veiculo.setCrlvVeiculo(Crvl);
-
-        return veiculo;
-    }
-
 }

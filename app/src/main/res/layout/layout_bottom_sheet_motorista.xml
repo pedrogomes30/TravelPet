@@ -86,7 +86,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="8dp">
 
         <Button
@@ -104,6 +104,7 @@
 
         <Button
             android:id="@+id/bt_bs_motorista2"
+            style="@style/Fonte_botao_azul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -113,7 +114,7 @@
             android:textStyle="bold"
             android:background="@drawable/button_vermelho_seletor"
             android:visibility="gone"
-            android:text="@string/cancelar"/>
+            android:text="Tornar Indisponível"/>
 
     </LinearLayout>
 

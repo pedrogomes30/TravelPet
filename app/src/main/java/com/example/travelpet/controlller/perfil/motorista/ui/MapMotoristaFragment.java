@@ -9,12 +9,15 @@ import android.content.res.ColorStateList;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import mva2.adapter.ListSection;
 import mva2.adapter.MultiViewAdapter;
 import mva2.adapter.util.Mode;
 
+import com.bumptech.glide.Glide;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.VeiculoBinder;
 import com.example.travelpet.dao.AnimalDAO;
@@ -254,7 +258,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             case "disponivel":
             {
                 btbs2.setVisibility(View.VISIBLE);
-                btbs1.setText("ATUALIZAR");
+                btbs1.setText("ATUALIZAR DISPONIBILIDADE");
                 onClickBtConfirmar(btbs1);
                 onClickBtCancelar(btbs2);
 
@@ -481,7 +485,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     threadSalvarDisponibilidade();
                     preparaDialogSolicitacaoViagem();
 
-
                     System.out.println("dentro do if== "+dataSnapshot.toString());
                     System.out.println("Key = "+ dataSnapshot.getKey());
                     System.out.println(dataSnapshot.child("idMotorista").toString());
@@ -591,17 +594,56 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     {
         dialogSolicitacaoViagem = new Dialog(getActivity());
         dialogSolicitacaoViagem.setContentView(R.layout.dialog_viagem_solicitada);
+        dialogSolicitacaoViagem.setCanceledOnTouchOutside(false);
 
         Button btconfirmar, btCancelar;
         TextView tvDonoAnimal, animal1, animal2, animal3, descricao;
-        CircleImageView ciDonoAnimal, ciAnimal, ciAnimal2,ciAnimal3;
+        CircleImageView ciDonoAnimal, ciAnimal1, ciAnimal2,ciAnimal3;
+        LinearLayout layoutAnimal2, layoutAnimal3;
 
-        //
+        tvDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.tv_donoanimal);
+        animal1 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal1);
+        animal2 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal2);
+        animal3 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal3);
+        descricao = dialogSolicitacaoViagem.findViewById(R.id.tv_descricaoanimal);
+        ciDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.ci_donoanimal);
+        ciAnimal1 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal1);
+        ciAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal2);
+        ciAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal3);
+        layoutAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal2);
+        layoutAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal3);
+        btconfirmar = dialogSolicitacaoViagem.findViewById(R.id.bt_aceitarViagem);
+        btCancelar = dialogSolicitacaoViagem.findViewById(R.id.bt_recusarViagem);
 
+        tvDonoAnimal.setText(viagemAtual.getNomeDonoAnimal());
+        setaGlide(viagemAtual.getFotoDonoAnimalUrl(),ciDonoAnimal);
 
+        animal1.setText(viagemAtual.getNomeAnimal1());
+        setaGlide(viagemAtual.getFotoAnimalUrl1(), ciAnimal1);
 
+        if(viagemAtual.getIdAnimal2() != null)
+        {
+            animal2.setText(viagemAtual.getNomeAnimal2());
+            setaGlide(viagemAtual.getFotoAnimalUrl2(), ciAnimal2);
+            layoutAnimal2.setVisibility(View.VISIBLE);
+        }
+        if(viagemAtual.getIdAnimal3() != null)
+        {
+            animal3.setText(viagemAtual.getNomeAnimal3());
+            setaGlide(viagemAtual.getFotoAnimalUrl3(), ciAnimal3);
+            layoutAnimal3.setVisibility(View.VISIBLE);
+        }
+
+        descricao.setText(viagemAtual.getObservacaoAnimal1());
+
+        dialogSolicitacaoViagem.show();
     }
 
+    private void setaGlide (String url, CircleImageView view)
+    {
+        Uri uri = Uri.parse(url);
+        Glide.with(getActivity()).load(uri).into(view);
+    }
 
     public void toastThis(String mensagem)
     {

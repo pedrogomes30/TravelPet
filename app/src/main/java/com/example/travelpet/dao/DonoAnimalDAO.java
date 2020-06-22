@@ -31,8 +31,6 @@ public class DonoAnimalDAO {
     public DonoAnimalDAO() {}
 
 
-
-
     // Método para salvar os dados do usuário no firebase
     public void salvarDonoAnimalRealtimeDatabase(DonoAnimal donoAnimal, final ProgressDialog progressDialog,
                                                  final int tipoSave, final Activity activity){
@@ -93,22 +91,29 @@ public class DonoAnimalDAO {
     }
     //----------------------------------------------------------------------------------------------
 
-    public DonoAnimal receberPerfil(String id, CountDownLatch contador)
+    public DonoAnimal receberPerfil(String id, final CountDownLatch contador)
     {
-        donoAnimal = new DonoAnimal();
-        DatabaseReference dbrefence = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("donoAnimal");
-        Query query = dbrefence.orderByChild("idUsuario").equalTo(id);
-        query.addListenerForSingleValueEvent(new ValueEventListener()
+        donoAnimal = null;
+        DatabaseReference dbrefence = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("donoAnimal").child(id);
+        dbrefence.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
+                DonoAnimal dAnimal = dataSnapshot.getValue(DonoAnimal.class);
+                donoAnimal = dAnimal;
 
+                contador.countDown();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) { contador.countDown();}
         });
+
+        try {contador.await();}
+        catch (InterruptedException e)
+        {e.printStackTrace();}
+
 
         return donoAnimal;
     }

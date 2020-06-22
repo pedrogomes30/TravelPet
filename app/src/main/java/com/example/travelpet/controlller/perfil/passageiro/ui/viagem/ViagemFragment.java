@@ -134,6 +134,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 
+        IniciarPerfil();
         iniciarMapa();
         btNovaViagemOnClick();
         return view;
@@ -549,34 +550,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return distancia;
     }
 
-    public Address DestinoMaisProximo(List<Address> listaenderecos)
-    {
-
-        float distancia = 0;
-        int selecionado = 0;
-
-        for (int i = 0; i < listaenderecos.size(); i++)
-        {
-            if (distancia == 0)
-            {
-                distancia = contarDistanciadoUsuario(listaenderecos.get(i));
-                selecionado = i;
-                System.out.println("Tamanho da lista = " + listaenderecos.size());
-            }
-            else
-            {
-                float distanciaDestino = contarDistanciadoUsuario(listaenderecos.get(i));
-                if (distanciaDestino < distancia)
-                {
-                    System.out.println(String.valueOf(distancia) +" ou " + String.valueOf(distanciaDestino));
-                    distancia = distanciaDestino;
-                    selecionado = i;
-                    System.out.println("selecionado =" + distancia);
-                }
-            }
-        }
-        return listaenderecos.get(selecionado);
-    }
 
     public void configuraMultiViewAdapter()
     {
@@ -617,6 +590,12 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             {
                 listaAnimaisSelecionados = new ArrayList<>();
                 listaAnimaisSelecionados = (ArrayList<Animal>) listSection.getSelectedItems();
+
+                viagem = new Viagem();
+                viagem.setIdDonoAnimal(meuPerfil.getIdUsuario());
+                viagem.setFotoDonoAnimalUrl(meuPerfil.getFotoPerfilUrl());
+                viagem.setNomeDonoAnimal(meuPerfil.getNome());
+
                 switch (listaAnimaisSelecionados.size())
                 {
                     case 0 :
@@ -627,9 +606,11 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 1 :
                     {
-                        viagem = new Viagem();
-                        viagem.setIdDonoAnimal(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
                         viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+
                         viagem.setCusto(10.50);
                         viagem.setData("14/06/2020");
                         viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
@@ -642,10 +623,16 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 2 :
                     {
-                        viagem = new Viagem();
-                        viagem.setIdDonoAnimal(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
                         viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+
                         viagem.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
+                        viagem.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
+                        viagem.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
+                        viagem.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
+
                         viagem.setCusto(10.50);
                         viagem.setData("14/06/2020");
                         viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
@@ -658,11 +645,21 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 3 :
                     {
-                        viagem = new Viagem();
-                        viagem.setIdDonoAnimal(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
                         viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+
                         viagem.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
+                        viagem.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
+                        viagem.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
+                        viagem.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
+
                         viagem.setIdAnimal3(listaAnimais.get(2).getIdAnimal());
+                        viagem.setFotoAnimalUrl3(listaAnimais.get(2).getFotoAnimalUrl());
+                        viagem.setNomeAnimal3(listaAnimais.get(2).getNomeAnimal());
+                        viagem.setObservacaoAnimal3(listaAnimais.get(2).getObservacaoAnimal());
+
                         viagem.setCusto(10.50);
                         viagem.setData("14/06/2020");
                         viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
@@ -685,7 +682,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         bsDialog.setContentView(bsView);
     }
 
-    public void threadIniciarPerfil ()
+    public void IniciarPerfil ()
         {
             threadIniciarPerfil = new Thread(new Runnable()
             {
@@ -703,11 +700,12 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         @Override
                         public void run()
                         {
-
+                            showInTerminal("donoAnimal Recebido :" + meuPerfil.getNome());
                         }
                     });
                 }
             });
+            threadIniciarPerfil.start();
         }
 
     public void threadPrepararViagem()
@@ -755,6 +753,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         prepViagem.start();
     }
 
+
     public void threadMotoristasDisponiveis ()
     {
         threadMotoristasDisponiveis = new Thread(new Runnable()
@@ -770,10 +769,17 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 try { contador.await(); }
                 catch (InterruptedException e) { e.printStackTrace();}
 
-                contador = new CountDownLatch(1);
-                viagem.setIdMotorista(motorista.getIdMotorista());
-                showInTerminal("adicionando motorista à viagem ");
-                viagemDAO.salvarViagem(viagem,contador);
+                if (motorista != null)
+                {
+                    contador = new CountDownLatch(1);
+                    viagem.setIdMotorista(motorista.getIdMotorista());
+                    showInTerminal("adicionando motorista à viagem ");
+                    viagemDAO.salvarViagem(viagem,contador);
+                }
+                else
+                {
+                    showInTerminal("nenhum motorista encontrado");
+                 }
 
                 try { contador.await(); }
                 catch (InterruptedException e) { e.printStackTrace();}
@@ -803,7 +809,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    public void addListenerAguardarMotorista(DisponibilidadeMotorista motorista)
+    private void addListenerAguardarMotorista(DisponibilidadeMotorista motorista)
     {
         motoristaDisponivelReferencia = disponibilidadeMotoristaDao.receberDisponibilidaReferencia(motorista);
         motoristaDisponivelReferencia.addChildEventListener( listenerAguardandoMotorista = new ChildEventListener()
@@ -836,15 +842,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                                         toastThis("viagem Recusada");
                                     }break;
 
-                                case "indisponivel":
-                                    {
+                                case "indisponivel": {}break;
 
-                                    }break;
-
-                                default:
-                                    {
-
-                                    }break;
+                                default: {}break;
                             }
 
                         }
@@ -852,22 +852,13 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     }
 
                     @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot)
-                    {
-
-                    }
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
                     @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-                    {
-
-                    }
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError)
-                    {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
     }
 
@@ -908,12 +899,12 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void toastThis (String mensagem)
+    private void toastThis (String mensagem)
     {
         Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
     }
 
-    public void showInTerminal (String mensagem)
+    private void showInTerminal (String mensagem)
     {
         System.out.println(mensagem);
     }
