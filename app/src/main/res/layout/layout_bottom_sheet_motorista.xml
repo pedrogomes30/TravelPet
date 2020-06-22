@@ -11,12 +11,11 @@
 
 <TextView
     android:layout_width="match_parent"
+    style="@style/Fonte_botao_azul"
+    android:textSize="20sp"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:text="Selecione os portes dos animais que deseja transportar "
-    android:textColor="@color/colorText"
-    android:textStyle="bold"
-    android:textSize="20sp"
+    android:text="@string/selecione_os_portes_dos_animais_que_deseja_transportar"
     android:layout_marginBottom="8dp"/>
 
     <LinearLayout
@@ -35,7 +34,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:buttonTint="@color/colorButtonVerdePadrao"
-            android:text="Pequeno"
+            android:text="@string/pequeno"
             />
 
         <CheckBox
@@ -44,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="4dp"
-            android:text="Médio"
+            android:text="@string/medio"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -57,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="4dp"
-            android:text="Grande"
+            android:text="@string/grande"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -68,17 +67,17 @@
 
     <TextView
         android:layout_width="match_parent"
+        style="@style/Fonte_botao_azul"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:text="Selecione o veículo que irá utilizar"
+        android:text="@string/selecione_o_veiculo_que_ira_utilizar"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/colorText"
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_bs_motorista"
+        style="@style/Fonte_memor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -92,6 +91,7 @@
 
         <Button
             android:id="@+id/bt_bs_motorista"
+            style="@style/Fonte_botao_azul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_verde_seletor"
@@ -100,7 +100,7 @@
             android:textStyle="bold"
             android:layout_margin="4dp"
             android:layout_weight="1"
-            android:text="CONFIRMAR DISPONIBILIDADE"/>
+            android:text="@string/confirmar_disponibilidade"/>
 
         <Button
             android:id="@+id/bt_bs_motorista2"
@@ -113,7 +113,7 @@
             android:textStyle="bold"
             android:background="@drawable/button_vermelho_seletor"
             android:visibility="gone"
-            android:text="Cancelar"/>
+            android:text="@string/cancelar"/>
 
     </LinearLayout>
 

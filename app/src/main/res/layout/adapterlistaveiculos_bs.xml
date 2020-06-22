@@ -28,7 +28,7 @@
             android:layout_margin="4dp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:layout_weight="1"
-            android:text="PLACAVEICULO"/>
+            android:text="@string/placaveiculo"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_margin="2dp"
-            android:text="MODELOVEICULO"/>
+            android:text="@string/modeloveiculo"/>
 
         <TextView
             android:id="@+id/tv_marcaveiculo_bs"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:layout_margin="2dp"
-            android:text="MARCAVEICULO"/>
+            android:text="@string/marcaveiculo"/>
 
     </LinearLayout>
 

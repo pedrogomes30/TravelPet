@@ -9,22 +9,20 @@
 
     <TextView
         android:id="@+id/tvBoasVindasVeiculo"
+        style="@style/Fontetitulo"
         android:layout_width="366dp"
         android:layout_height="171dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:gravity="center"
-        android:text="Qual tipo de usuario você pretende ser ?"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:text="@string/qual_tipo_de_usuario_voc_pretende_ser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botaoPassageiro"
+        style="@style/Fonte_botao_azul"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,15 +30,14 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoPassageiro"
-        android:text="Passageiro"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:text="@string/passageiro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBoasVindasVeiculo" />
 
     <Button
         android:id="@+id/botaoMotorista"
+        style="@style/Fonte_botao_azul"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -48,9 +45,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoMotorista"
-        android:text="Motorista"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:text="@string/motorista"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botaoPassageiro" />

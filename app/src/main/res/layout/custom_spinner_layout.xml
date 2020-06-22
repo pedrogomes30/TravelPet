@@ -19,11 +19,11 @@
 
         <TextView
             android:id="@+id/tvSpinnerLayout"
+            style="@style/Fonte_memor_preta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Androchunk"
-            android:textColor="@color/colorText"
+            android:text="@string/androchunk"
             android:textSize="25sp" />
 
     </LinearLayout>

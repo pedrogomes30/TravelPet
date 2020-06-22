@@ -15,14 +15,11 @@
 
         <TextView
             android:id="@+id/tv_fragAddVeiculo"
+            style="@style/Fontetitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/fredoka_one_regular"
-            android:gravity="center"
-            android:text="Cadastrando Novo Veículo"
-            android:textColor="#FFFFFF"
-            android:textSize="26sp"
+            android:layout_marginTop="24dp"
+            android:text="@string/cadastrando_novo_veiculo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +38,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_addVeiculo_modelo"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/modelo_do_veiculo" />
@@ -61,6 +59,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_addVeiculo_marca"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/marca_do_ve_culo" />
@@ -81,6 +80,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_addVeiculo_crvl"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/crlv_do_ve_culo" />
@@ -101,6 +101,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_addVeiculo_ano"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ano_ve_culo" />
@@ -121,6 +122,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_addVeiculo_placa"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/placa_do_ve_culo" />
@@ -129,30 +131,27 @@
 
         <Button
             android:id="@+id/bt_addVeiculo_fotocrvl"
+            style="@style/Fonte_laranja"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Enviar foto CRVL"
+            android:text="@string/enviar_foto_crvl"
             android:background="@drawable/button_branco_seletor"
-            android:textColor="@color/colorApp"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
             app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
         <Button
             android:id="@+id/bt_addVeiculo_cadastrar"
+            style="@style/Fonte_botao_azul"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp"
             android:layout_weight="1"
             android:background="@drawable/button_azul_seletor"
-            android:text="Cadastrar Veículo"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:text="@string/cadastrar_veiculo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/bt_addVeiculo_fotocrvl"
             app:layout_constraintStart_toStartOf="@+id/bt_addVeiculo_fotocrvl"

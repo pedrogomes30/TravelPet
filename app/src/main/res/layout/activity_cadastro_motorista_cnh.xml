@@ -12,36 +12,38 @@
         android:layout_width="372dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/fredoka_one_regular"
         android:gravity="center"
-        android:text="Envie uma foto da sua carteira de habilitação"
+        android:text="@string/envie_uma_foto_da_sua_carteira_de_habilitacao"
         android:textColor="#FFFFFF"
         android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTextoCNH"
+        style="@style/Fonte_media_branca_"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="24dp"
         android:fontFamily="@font/comfortaa_regular"
-        android:gravity="center"
-        android:text="Lembre-se, é preciso que o documento:  \n1.Esteja aberto; \n2.Tenha todos os campos visíveis; \n3.Tenha a observação Exerce Atividade Remunerada (EAR). Obs: a Permissão para Dirigir não é válida. "
+        android:gravity="left"
+        android:text="@string/texto_activity_cadastro_motorista"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/buttonEnviarCNH"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCNH"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.247" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputNumeroRegistroCnh"
@@ -53,14 +55,17 @@
         android:background="@drawable/edit_text_branco_seletor"
         app:layout_constraintBottom_toTopOf="@+id/textViewNomeFotoCnh"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTextoCNH">
+        app:layout_constraintTop_toBottomOf="@+id/textViewTextoCNH"
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNumeroRegistroCnh"
+            style="@style/Fonte_memor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nº de registro CNH"
+            android:hint="@string/n_de_registro_cnh"
             android:inputType="number"
             android:maxLength="11" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +77,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:text="Nenhum arquivo selecionado"
+        android:text="@string/nenhum_arquivo_selecionado"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -82,6 +87,7 @@
 
     <Button
         android:id="@+id/buttonEnviarCNH"
+        style="@style/Fonte_laranja"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -89,16 +95,15 @@
         android:layout_marginBottom="77dp"
         android:background="@drawable/button_branco_seletor"
         android:onClick="botaoEnviarFotoCnh"
-        android:text="Enviar foto"
-        android:textColor="@color/colorApp"
+        android:text="@string/enviar_foto"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/botaoProximo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/botaoProximo"
+        style="@style/Fonte_botao_azul"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -107,10 +112,7 @@
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoProximo"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/proximo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

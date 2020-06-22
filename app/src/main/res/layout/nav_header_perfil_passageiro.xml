@@ -24,7 +24,9 @@
 
     <TextView
         android:id="@+id/textNomeUsuario"
-        android:layout_width="match_parent"
+        style="@style/Fontetitulo"
+        android:gravity="center_vertical"
+        android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
@@ -32,6 +34,8 @@
 
     <TextView
         android:id="@+id/textEmail"
+        style="@style/Fonte_memor"
+        android:textSize="13sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nav_header_subtitle" />

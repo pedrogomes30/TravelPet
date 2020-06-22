@@ -12,22 +12,26 @@
 
     <TextView
         android:layout_width="match_parent"
+        style="@style/Fonte_laranja_maior"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:text="Selecione até 3 animais para a viagem"
+        android:text="@string/selecione_at_3_animais_para_a_viagem"
         android:gravity="center_horizontal"
         android:layout_marginBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_bs_donoanimal"
+        style="@style/Fonte_memor_preta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/bt_bs_donoanimal"
+            style="@style/Fonte_botao_azul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selecionar"
+            android:text="@string/selecionar"
             android:background="@drawable/button_azul_seletor"/>
 
 

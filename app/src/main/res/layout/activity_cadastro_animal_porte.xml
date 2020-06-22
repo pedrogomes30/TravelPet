@@ -23,54 +23,44 @@
 
         <RadioButton
             android:id="@+id/radioButtonPequeno"
+            style="@style/Fonte_media_branca_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#FFFFFF"
-            android:fontFamily="@font/comfortaa_regular"
-            android:text="Pequeno - Até 35cm"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="@string/pequeno_at_35cm"
+            />
 
         <RadioButton
             android:id="@+id/radioButtonMedio"
+            style="@style/Fonte_media_branca_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#FFFFFF"
-            android:fontFamily="@font/comfortaa_bold"
-            android:text="Médio - De 36 a 49cm"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="@string/medio_de_36_a_49cm"
+            />
 
         <RadioButton
             android:id="@+id/radioButtonGrande"
+            style="@style/Fonte_media_branca_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:buttonTint="#FFFFFF"
-            android:fontFamily="@font/comfortaa_bold"
-            android:text="Grande - Acima de 50cm"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:buttonTint="@color/white"
+            android:text="@string/grande_acima_de_50cm"
+            />
     </RadioGroup>
 
     <TextView
         android:id="@+id/textViewPorte"
+        style="@style/Fontetitulo"
         android:layout_width="359dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:gravity="center"
-        android:text="Por favor selecione a porte do seu animal:"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:text="@string/selecione_porte_animal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +68,7 @@
 
     <Button
         android:id="@+id/botaoProximo"
+        style="@style/Fonte_botao_azul"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -86,9 +77,7 @@
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoProximo"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:text="@string/proximo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -51,25 +51,25 @@
 
         <TextView
             android:id="@+id/textViewNome"
+            style="@style/FonteTituloCinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/fredoka_one_regular"
-            android:text="Nome:"
-            android:textSize="24sp"
+            android:text="@string/nome_"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewCircleFotoPerfil" />
 
         <TextView
             android:id="@+id/textViewNomeUsuario"
+            style="@style/Fonte_memor_preta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="nome do Usuario"
+            android:text="@string/nome_do_usuario"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewNome"
@@ -79,25 +79,25 @@
 
         <TextView
             android:id="@+id/textViewCPF"
+            style="@style/FonteTituloCinza"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/fredoka_one_regular"
-            android:text="CPF:"
-            android:textSize="24sp"
+            android:text="@string/cpf_"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
 
         <TextView
             android:id="@+id/textViewCpfUsuario"
+            style="@style/Fonte_memor_preta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="cpf do Usuario"
+            android:text="@string/cpf_do_usuario"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/textViewCPF"
@@ -119,9 +119,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTelefone"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Telefone"
+                android:hint="@string/telefone"
                 android:inputType="text|phone"
                 android:maxLength="15" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -139,9 +140,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editCep"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CEP"
+                android:hint="@string/cep"
                 android:inputType="number"
                 android:maxLength="9" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -159,13 +161,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editLogradouro"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Logradouro" />
+                android:hint="@string/logradouro" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputBairro"
+            style="@style/Fonte_memor"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginStart="32dp"
@@ -178,9 +182,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editBairro"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bairro" />
+                android:hint="@string/bairro" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -200,9 +205,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editLocalidade"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cidade"
+                android:hint="@string/cidade"
                 android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -218,9 +224,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editUf"
+                style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="UF"
+                android:hint="@string/uf"
                 android:maxLength="2"
                 android:digits="abcdefghijklmnopqrstuvxwyzçABCDEFGHIJKLMNOPQRSTUVXWYZÇ"/>
 
@@ -228,6 +235,7 @@
 
         <Button
             android:id="@+id/botaoSalvar"
+            style="@style/Fonte_botao_azul"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
@@ -235,7 +243,7 @@
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
             android:background="@drawable/button_laranja_seletor"
-            android:text="Salvar"
+            android:text="@string/salvar"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"

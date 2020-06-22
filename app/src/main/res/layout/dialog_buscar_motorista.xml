@@ -9,7 +9,7 @@
         android:id="@+id/tv_dialog_buscarMotorista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Procurando Motorista"
+        android:text="@string/procurando_motorista"
         android:gravity="center_horizontal"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -27,14 +27,13 @@
 
     <Button
         android:id="@+id/bt_cancelDialog_buscarMotorista"
+        style="@style/Fonte_botao_azul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancelar Viagem"
+        android:text="@string/cancelar_viagem"
         android:layout_margin="8dp"
         android:background="@drawable/button_vermelho_seletor"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+
         />
 
 </LinearLayout>

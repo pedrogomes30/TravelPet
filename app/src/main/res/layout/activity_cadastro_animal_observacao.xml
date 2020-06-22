@@ -9,16 +9,13 @@
 
     <TextView
         android:id="@+id/textViewObervacao"
+        style="@style/Fontetitulo"
         android:layout_width="359dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:gravity="center"
-        android:text="Conte-nos mais sobre seu animal, necessidade especial ou comportamento:"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:text="@string/conte_mais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,22 +34,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewObervacao">
+        app:layout_constraintTop_toBottomOf="@+id/textViewObervacao"
+        app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editObservacaoAnimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="347dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
             android:background="@android:color/transparent"
-            android:hint="Observações..."
+            android:hint="@string/observacoes"
             android:maxLength="450" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btProximo"
+        style="@style/Fonte_botao_azul"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -61,10 +60,7 @@
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoProximo"
-        android:text="Próximo"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:text="@string/proximo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -31,23 +31,20 @@
 
     <TextView
         android:id="@+id/tv_exibir_modelo"
+        style="@style/Fonte_laranja_maior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/modelo_do_veiculo"
-        android:textColor="@color/colorApp"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/FonteTituloCinza"
         android:layout_height="wrap_content"
-        android:text="Modelo:"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:textSize="24sp"
+        android:text="@string/modelo"
         app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_modelo"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,23 +52,20 @@
 
     <TextView
         android:id="@+id/tv_exibir_marca"
+        style="@style/Fonte_laranja_maior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/marca_do_ve_culo"
-        android:textColor="@color/colorApp"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_exibir_modelo"
         app:layout_constraintStart_toStartOf="@+id/tv_exibir_modelo"
         app:layout_constraintTop_toBottomOf="@+id/tv_exibir_modelo" />
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/FonteTituloCinza"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:text="Marca:"
-        android:textSize="24sp"
+        android:text="@string/marca"
         app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_marca"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,23 +73,20 @@
 
     <TextView
         android:id="@+id/tv_exibir_ano"
+        style="@style/Fonte_laranja_maior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/ano_ve_culo"
-        android:textColor="@color/colorApp"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_exibir_marca"
         app:layout_constraintStart_toStartOf="@+id/tv_exibir_marca"
         app:layout_constraintTop_toBottomOf="@+id/tv_exibir_marca" />
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/FonteTituloCinza"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:text="Ano:"
-        android:textSize="24sp"
+        android:text="@string/ano"
         app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_ano"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,24 +94,21 @@
 
     <TextView
         android:id="@+id/tv_exibir_crvl"
+        style="@style/Fonte_laranja_maior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/crlv_do_ve_culo"
-        android:textColor="@color/colorApp"
-        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tv_exibir_ano"
         app:layout_constraintStart_toStartOf="@+id/tv_exibir_ano"
         app:layout_constraintTop_toBottomOf="@+id/tv_exibir_ano" />
 
     <TextView
         android:id="@+id/textView6"
+        style="@style/FonteTituloCinza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:text="CRVL:"
-        android:textSize="24sp"
+        android:text="@string/crvl"
         app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_crvl"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,9 +116,9 @@
 
     <TextView
         android:id="@+id/tv_exibir_placa"
+        style="@style/FonteTituloCinza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/placa_do_ve_culo"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
@@ -141,10 +129,9 @@
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/FonteTituloCinza"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:text="Status:"
-        android:textSize="24sp"
+        android:text="@string/status_"
         app:layout_constraintBottom_toBottomOf="@+id/tv_exibir_status"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,14 +139,12 @@
 
     <TextView
         android:id="@+id/tv_exibir_status"
+        style="@style/Fonte_laranja_maior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:fontFamily="@font/fredoka_one_regular"
-        android:text="Status"
-        android:textColor="@color/colorApp"
-        android:textSize="24sp"
+        android:text="@string/status"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="@+id/tv_exibir_crvl"
         app:layout_constraintStart_toStartOf="@+id/tv_exibir_crvl"
@@ -188,6 +173,7 @@
 
     <Button
         android:id="@+id/bt_excluirVeiculo"
+        style="@style/Fonte_botao_azul"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -196,9 +182,7 @@
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
-        android:text="Excluir"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:text="@string/excluir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

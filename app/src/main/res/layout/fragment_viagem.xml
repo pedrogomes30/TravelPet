@@ -21,13 +21,15 @@
 
         <EditText
             android:id="@+id/editOrigem"
+            style="@style/Fonte_memor"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
             android:drawableLeft="@drawable/circulo_verde_local_viagem"
             android:drawablePadding="6dp"
             android:ems="10"
-            android:hint="Seu local atual, ou digite um local de origem"
+            android:hint="@string/seu_local_atual_ou_digite_um_local_de_origem"
             android:inputType="textPersonName"
             android:textColor="@color/colorApp"
             android:textColorHint="@android:color/darker_gray"
@@ -35,14 +37,16 @@
 
         <EditText
             android:id="@+id/editDestino"
+            style="@style/Fonte_memor"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:drawableLeft="@drawable/circulo_verde_local_viagem"
             android:drawablePadding="6dp"
             android:drawableTint="@android:color/darker_gray"
             android:ems="10"
-            android:hint="Digite o local de local"
+            android:hint="@string/digite_o_local_de_destino"
             android:inputType="textPersonName"
             android:textColor="@color/colorApp"
             android:textColorHint="@android:color/darker_gray"
@@ -52,6 +56,7 @@
 
     <Button
         android:id="@+id/buttonChamarMotorista"
+        style="@style/Fonte_botao_azul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -59,9 +64,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_laranja_seletor"
-        android:text="Nova Viagem"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:text="@string/nova_viagem"
         android:textStyle="bold" />
 
 

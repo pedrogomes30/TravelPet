@@ -53,13 +53,12 @@
 
         <TextView
             android:id="@+id/tv_ci_animal1"
+            style="@style/Fontetitulo"
+            android:textSize="14sp"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/fredoka_one_regular"
-            android:text="ANIMAL 1"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:text="@string/animal_1"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="@+id/ci_animal1"
             app:layout_constraintStart_toStartOf="@+id/ci_animal1"
@@ -82,13 +81,12 @@
 
         <TextView
             android:id="@+id/tv_ci_animal2"
+            style="@style/Fontetitulo"
+            android:textSize="14sp"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/fredoka_one_regular"
-            android:text="ANIMAL 2"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:text="@string/animal_2"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="@+id/ci_animal2"
             app:layout_constraintStart_toStartOf="@+id/ci_animal2"
@@ -110,19 +108,19 @@
 
         <TextView
             android:id="@+id/tv_ci_animal3"
+            style="@style/Fontetitulo"
+            android:textSize="14sp"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/fredoka_one_regular"
-            android:text="ANIMAL 3"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:text="@string/animal_3"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="@+id/ci_animal3"
             app:layout_constraintStart_toStartOf="@+id/ci_animal3"
             app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
         <TextView
+            style="@style/Fonte_memor"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -134,7 +132,7 @@
             android:autoSizeTextType="uniform"
             android:breakStrategy="simple"
             android:gravity="left"
-            android:text=" If set, the text view will include its current complete text inside of its frozen icicle in addition to meta-data such as the current cursor position."
+            android:text="@string/if_set_the_text_view_will_include_its_current_complete_text_inside_of_its_frozen_icicle_in_addition_to_meta_data_such_as_the_current_cursor_position"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
@@ -144,12 +142,11 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/Fontetitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:fontFamily="@font/fredoka_one_regular"
-            android:text="TextView"
-            android:textColor="#FFFFFF"
+            android:text="@string/textview"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintEnd_toEndOf="@+id/circleImageView"
@@ -158,6 +155,7 @@
 
         <Button
             android:id="@+id/button4"
+            style="@style/Fonte_botao_azul"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -165,10 +163,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_azul_seletor"
-            android:text="Aceitar"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:text="@string/aceitar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button3"
             app:layout_constraintStart_toStartOf="parent"
@@ -176,6 +171,8 @@
 
         <Button
             android:id="@+id/button3"
+            style="@style/Fonte_laranja"
+            android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -183,10 +180,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_branco_seletor"
-            android:text="Recusar"
-            android:textColor="@color/colorApp"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:text="@string/recusar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

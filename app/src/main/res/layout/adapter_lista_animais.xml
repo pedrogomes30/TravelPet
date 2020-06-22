@@ -30,27 +30,35 @@
 
             <TextView
                 android:id="@+id/textNomeAnimal"
+                style="@style/Fonte_memor_preta"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nome" />
+                android:text="@string/nome_" />
 
             <TextView
                 android:id="@+id/textEspecieAnimal"
+                style="@style/Fonte_memor_preta"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Especie" />
+                android:text="@string/especie_" />
 
             <TextView
                 android:id="@+id/textRacaAnimal"
+                style="@style/Fonte_memor_preta"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Raca" />
+                android:text="@string/raca_" />
 
             <TextView
                 android:id="@+id/textPorteAnimal"
+                style="@style/Fonte_memor_preta"
+                android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Porte" />
+                android:text="@string/porte_" />
 
         </LinearLayout>
 
