@@ -30,8 +30,8 @@ public class InfoFragment extends Fragment {
         mehdi.sakout.aboutpage.Element versaoPrincipal = new mehdi.sakout.aboutpage.Element();
         mehdi.sakout.aboutpage.Element versaoAdm =new mehdi.sakout.aboutpage.Element();
 
-        versaoPrincipal.setTitle("aplicação principal versao 41.0");
-        versaoAdm.setTitle("aplicação administrativa versao 1.0");
+        versaoPrincipal.setTitle("aplicação principal versao 61.0");
+        versaoAdm.setTitle("aplicação administrativa versao 16.0");
 
         return new AboutPage(getActivity())
                 .setImage(R.drawable.logo_travel_pet_laranja)

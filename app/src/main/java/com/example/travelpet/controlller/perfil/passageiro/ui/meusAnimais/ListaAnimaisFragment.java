@@ -137,6 +137,7 @@ public class ListaAnimaisFragment extends Fragment {
                     Animal animal = dados.getValue(Animal.class);
                     listaAnimais.add ( animal );
                 }
+
                 adapter.notifyDataSetChanged();
             }
             @Override

@@ -125,7 +125,7 @@ public class DisponibilidadeMotoristaDao
             e.printStackTrace();
         }
 
-        System.out.println( "<<<<<<<<<<<<<<<<<<<<< return:" + disponibilidade.getDisponibilidade()+" >>>>>>>>>>>>>>>>>");
+        //System.out.println( "<<<<<<<<<<<<<<<<<<<<< return:" + disponibilidade.getDisponibilidade()+" >>>>>>>>>>>>>>>>>");
         return disponibilidade;
     }
 

@@ -165,25 +165,19 @@ public class EditarAnimalActivity extends AppCompatActivity{
         int tipoSave = 2;
 
         if(fotoAnimal != null){
-
             TelaCarregamento.iniciarCarregamento(progressDialog);
-
             if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit)){
                 animal.setPorteAnimal(porteAnimalEdit);
             }
             if(!VerificaDado.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
                 animal.setObservacaoAnimal(observacaoAnimalEdit);
             }
-
             animal.setFotoAnimal(fotoAnimal);
             animalDAO.salvarAnimalStorage(animal, progressDialog, tipoSave,
                     EditarAnimalActivity.this);
-
         }else if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit) ||
                 !VerificaDado.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
-
             TelaCarregamento.iniciarCarregamento(progressDialog);
-
             if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit)){
                 animal.setPorteAnimal(porteAnimalEdit);
             }

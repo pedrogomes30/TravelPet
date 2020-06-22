@@ -97,15 +97,14 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
                 campoNomeUsuario.setText(nomeUsuario+" "+sobrenomeUsuario);
                 campoEmailUsuario.setText(emailUsuario);
 
-                if(!fotoPerfilUrl.equals("")){
+                if(fotoPerfilUrl!= null){
                     Uri fotoUsuarioUri = Uri.parse(fotoPerfilUrl);
                     Glide.with(PerfilPassageiroActivity.this)
                             .load( fotoUsuarioUri)
                             .into( campoFotoUsuario);
-                }else{
+                }else {
                     campoFotoUsuario.setImageResource(R.drawable.imagem_usuario);
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
