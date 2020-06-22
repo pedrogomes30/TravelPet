@@ -25,6 +25,7 @@
     <TextView
         android:id="@+id/textNomeMotorista"
         style="@style/Fontetitulo"
+        android:textSize="15sp"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
