@@ -11,7 +11,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,12 +87,12 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Viagem viagem;
     private LinearLayout linearOrigemDestino;
 
-
     // Variáveis para recuperar localização de um usuário
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Location localizacaoAtual;
     private Address addressDestino;
+    private Geocoder geocoder;
 
     private ChildEventListener listenerAguardandoMotorista;
     private DatabaseReference motoristaDisponivelReferencia;
@@ -103,7 +101,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Button buttonChamarMotorista,btSelecionarAnimais;
 
     private Thread threadMotoristasDisponiveis;
-    private Thread threadAguardarConfirmacao;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -122,6 +120,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         disponibilidadeMotoristaDao = new DisponibilidadeMotoristaDao();
 
         // Criando mapa
+        geocoder = new Geocoder(getActivity(), Locale.getDefault());
         mapView = (MapView) view.findViewById(R.id.MapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -194,6 +193,16 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     public void btNovaViagemOnClick()
     {
+
+        buttonChamarMotorista.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                //
+                return false;
+            }
+        });
+
         // Envento de clique do botão "Chamar Motorista"
         buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
         {
@@ -228,7 +237,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 }
                 else
                 {
-                    Address addressOrigem = recuperaEnderecoViaString(enderecoOrigem);
+                    //Address addressOrigem = recuperaEnderecoViaString(enderecoOrigem);
+                    Address addressOrigem = recuperaEnderecoViaStringDebug(enderecoOrigem);
                     localOrigem = new Local();
                     localOrigem = addressToLocal(addressOrigem,Local.ORIGEM);
                 }
@@ -236,7 +246,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 //pegando as coordenadas do destino
                 if (!enderecoDestino.equals("") || enderecoDestino != null)
                 {
-                    Address addressDestino = recuperaEnderecoViaString(enderecoDestino);
+                    //Address addressDestino = recuperaEnderecoViaString(enderecoDestino);
+                    Address addressDestino = recuperaEnderecoViaStringDebug(enderecoDestino);
 
                     if (addressDestino != null)
                     {
@@ -372,27 +383,42 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     public Address recuperaEnderecoViaString(String endereco)
     {
-
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        //Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
         // Recuperando dados baseado no endereço do usuário
         try {
             // Cria lista endereço
-            //List<Address> listaEnderecos = geocoder.getFromLocationName(endereco, 10);
-                List<Address> listaEnderecos = geocoder.getFromLocationName(endereco,5,-23.047354,-42.233379,-22.727898,-41.855037);
-            // Verificando se a lista não está vazia
-                if (listaEnderecos != null && ((List) listaEnderecos).size() > 0)
-                {
-                    // pega o primeiro endereço
-                    //Address address = listaEnderecos.get(0);
-                    Address address = DestinoMaisProximo(listaEnderecos);
-                    return address;
-                }
+            List<Address> listaEnderecos = geocoder.getFromLocationName(endereco, 10);
+            //List<Address> listaEnderecos = geocoder.getFromLocationName(endereco,5,-23.047354,-42.233379,-22.727898,-41.855037);
+            //Verificando se a lista não está vazia
+            if (listaEnderecos != null && ((List) listaEnderecos).size() > 0)
+            {
+                // pega o primeiro endereço
+                Address address = listaEnderecos.get(0);
+                //Address address = DestinoMaisProximo(listaEnderecos);
+                return address;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    public Address recuperaEnderecoViaStringDebug (String qualquerString)
+    {
+
+        Address newAddres = new Address(Locale.getDefault());
+        newAddres.setThoroughfare("Rua Almirante Barroso");
+        newAddres.setSubLocality("Passagem");
+        newAddres.setSubAdminArea("Cabo Frio");
+        newAddres.setPostalCode("28905020");
+        newAddres.setFeatureName("360");
+        newAddres.setLatitude(-22.876962);
+        newAddres.setLongitude(-42.008073);
+
+            return newAddres;
+    }
+
 
     public Address recuperaEnderecoViaLocation(Location location) throws IOException
     {
@@ -702,9 +728,18 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void run()
             {
+                final DisponibilidadeMotorista motorista ;
                 contador = new CountDownLatch(1);
-                motoristaDisponivel = new DisponibilidadeMotorista();
-                motoristaDisponivel = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador, 5000, listaAnimaisSelecionados,motoristaCancelados);
+                showInTerminal("executando queryMotorista");
+                motorista = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador,5000 , listaAnimaisSelecionados,motoristaCancelados);
+
+                try { contador.await(); }
+                catch (InterruptedException e) { e.printStackTrace();}
+
+                contador = new CountDownLatch(1);
+                viagem.setIdMotorista(motorista.getIdMotorista());
+                showInTerminal("adicionando motorista à viagem ");
+                viagemDAO.salvarViagem(viagem,contador);
 
                 try { contador.await(); }
                 catch (InterruptedException e) { e.printStackTrace();}
@@ -714,9 +749,18 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void run()
                     {
-                        TextView tvBuscarMotorista = dialogBuscarMotorista.findViewById(R.id.tv_dialog_buscarMotorista);
-                        tvBuscarMotorista.setText("Aguardando Confirmação...");
-                        threadAguardarConfirmacao();
+
+                        if (motorista != null)
+                        {
+                            TextView tvBuscarMotorista = dialogBuscarMotorista.findViewById(R.id.tv_dialog_buscarMotorista);
+                            tvBuscarMotorista.setText("Aguardando Confirmação...");
+                            addListenerAguardarMotorista(motorista);
+                        }
+                        else
+                        {
+                            toastThis("Motorista Não encontrado");
+                        }
+
                     }
                 });
             }
@@ -724,37 +768,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         threadMotoristasDisponiveis.start();
     }
 
-    public void threadAguardarConfirmacao()
+
+    public void addListenerAguardarMotorista(DisponibilidadeMotorista motorista)
     {
-        threadAguardarConfirmacao = new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                contador = new CountDownLatch(1);
-                viagem.setIdMotorista(motoristaDisponivel.getIdMotorista());
-                viagemDAO.salvarViagem(viagem,contador);
-
-                try { contador.await();}
-                catch (InterruptedException e) { e.printStackTrace(); }
-
-                getActivity().runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        ListenerAguardarMotorista();
-                    }
-                });
-            }
-        });
-
-        threadAguardarConfirmacao.start();
-    }
-
-    public void ListenerAguardarMotorista()
-    {
-        motoristaDisponivelReferencia = disponibilidadeMotoristaDao.recebeDispobilidaReferencia(motoristaDisponivel);
+        motoristaDisponivelReferencia = disponibilidadeMotoristaDao.receberDisponibilidaReferencia(motorista);
         motoristaDisponivelReferencia.addChildEventListener( listenerAguardandoMotorista = new ChildEventListener()
         {
                     @Override
@@ -769,19 +786,33 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         if(dataSnapshot.getKey().equals("disponibilidade"))
                         {
                             String disponibilidade = dataSnapshot.getValue(String.class);
-                            if (disponibilidade.equals(DisponibilidadeMotorista.EM_VIAGEM))
-                            {
-                                dialogBuscarMotorista.dismiss();
-                                configTela(3);
-                                toastThis("Viagem Aceita");
 
+                            switch (disponibilidade)
+                            {
+                                case "em_viagem" :
+                                    {
+                                        dialogBuscarMotorista.dismiss();
+                                        configTela(3);
+                                        toastThis("Viagem Aceita");
+                                    }break;
+
+                                case "disponivel" :
+                                    {
+                                        dialogBuscarMotorista.dismiss();
+                                        toastThis("viagem Recusada");
+                                    }break;
+
+                                case "indisponivel":
+                                    {
+
+                                    }break;
+
+                                default:
+                                    {
+
+                                    }break;
                             }
 
-                            else if (disponibilidade.equals(DisponibilidadeMotorista.DISPONIVEL))
-                            {
-                                dialogBuscarMotorista.dismiss();
-                                toastThis("viagem Recusada");
-                            }
                         }
 
                     }
@@ -846,6 +877,11 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     public void toastThis (String mensagem)
     {
         Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
+    }
+
+    public void showInTerminal (String mensagem)
+    {
+        System.out.println(mensagem);
     }
 
 }//fim do fragment

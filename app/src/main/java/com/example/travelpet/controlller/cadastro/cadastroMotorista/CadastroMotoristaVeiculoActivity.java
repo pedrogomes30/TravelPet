@@ -95,7 +95,7 @@ public class CadastroMotoristaVeiculoActivity extends AppCompatActivity {
             {
                 if (!VerificaDado.isVazio(anoV) && anoV.length() == 4)
                 {
-                    if (!VerificaDado.isVazio(placaV) && anoV.length() == 7)
+                    if (!VerificaDado.isVazio(placaV) && placaV.length() == 7)
                     {
                         if (!VerificaDado.isVazio(crlvV))
                         {

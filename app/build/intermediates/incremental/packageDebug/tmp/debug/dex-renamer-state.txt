@@ -1,7 +1,7 @@
-#Sun Jun 21 22:42:13 BRT 2020
-base.0=C\:\\Users\\thati\\StudioProjects\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
+#Sun Jun 21 20:45:59 BRT 2020
+base.0=C\:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=C\:\\Users\\thati\\StudioProjects\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
+base.1=C\:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
