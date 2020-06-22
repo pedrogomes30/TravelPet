@@ -8,6 +8,7 @@ public class DisponibilidadeMotorista
     public static String DISPONIVEL ="disponivel";
     public static String INDISPONIVEL = "indisponivel";
     public static String EM_VIAGEM ="em_viagem";
+    public static String PREPARANDO_VIAGEM = "preparando_viagem";
 
     private String idVeiculo;
     private String idMotorista;

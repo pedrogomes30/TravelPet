@@ -94,13 +94,12 @@ public class DisponibilidadeMotoristaDao
         return dbref;
     }
 
-    public DisponibilidadeMotorista receberDisponibilidade(final CountDownLatch latch)
+    public DisponibilidadeMotorista receberDisponibilidade(final CountDownLatch contador)
     {
-        disponibilidade = new DisponibilidadeMotorista();
+        disponibilidade = null;
         DatabaseReference referenciaDisponibilidade = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("disponibilidadeMotorista")
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
-
         referenciaDisponibilidade.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
@@ -109,23 +108,32 @@ public class DisponibilidadeMotoristaDao
                     DisponibilidadeMotorista disp = dataSnapshot.getValue(DisponibilidadeMotorista.class);
                     disponibilidade = disp;
 
-                latch.countDown();
+                contador.countDown();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-                latch.countDown();
+                contador.countDown();
             }
         });
 
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        try {contador.await();}
+        catch (InterruptedException e)
+        {e.printStackTrace();}
+
+        if (disponibilidade == null)
+        {
+           disponibilidade = new DisponibilidadeMotorista(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
+           CountDownLatch contador2 = new CountDownLatch(1);
+           salvarDisponibilidade(disponibilidade,contador2);
         }
 
-        //System.out.println( "<<<<<<<<<<<<<<<<<<<<< return:" + disponibilidade.getDisponibilidade()+" >>>>>>>>>>>>>>>>>");
+        else
+            {
+                showInTerminal("==== Disponibilidade já existe =====");
+            }
+
         return disponibilidade;
     }
 

@@ -2,6 +2,7 @@ package com.example.travelpet.controlller.perfil.motorista.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import mva2.adapter.ListSection;
 import mva2.adapter.MultiViewAdapter;
 import mva2.adapter.util.Mode;
@@ -30,6 +33,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.adapter.VeiculoBinder;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
+import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.LocalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
@@ -53,7 +57,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -88,6 +91,8 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     private ListSection<Veiculo> veiculoListSection;
     private RecyclerView recyclerBS;
     private RecyclerView.LayoutManager layoutManager;
+
+    private Dialog dialogSolicitacaoViagem;
 
     //Outros
     private Local localPassageiro,localDestino;
@@ -153,6 +158,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 {
                     configFab(disponibilidade);
                 }break;
+            case "preparando_viagem":
+                {
+                    configFab(disponibilidade);
+
+                }break;
 
             default:{}break;
         }
@@ -187,6 +197,12 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     fab.setVisibility(View.GONE);
 
                 }break;
+
+            case "preparando_viagem":
+            {
+                fab.setVisibility(View.GONE);
+            }break;
+
 
             default:{}break;
 
@@ -397,39 +413,44 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             public void run()
             {
                 contador = new CountDownLatch(1);
-                disponibilidade = new DisponibilidadeMotorista();
                 disponibilidade = disponibilidadeDAO.receberDisponibilidade(contador);
 
-                try {
-                    contador.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                try { contador.await();}
+                catch (InterruptedException e)
+                {e.printStackTrace();}
 
                 getActivity().runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
                     {
-                        switch (disponibilidade.getDisponibilidade())
+                        if(disponibilidade != null)
                         {
-                            case "indisponivel":
+                            switch (disponibilidade.getDisponibilidade())
                             {
-                                configTela(disponibilidade.getDisponibilidade());
-                            }break;
+                                case "indisponivel":
+                                {
+                                    configTela(disponibilidade.getDisponibilidade());
+                                }break;
 
-                            case "disponivel":
-                            {
-                                configTela(disponibilidade.getDisponibilidade());
-                            }break;
+                                case "disponivel":
+                                {
+                                    configTela(disponibilidade.getDisponibilidade());
+                                }break;
 
-                            case "em_viagem":
-                            {
-                                configTela(disponibilidade.getDisponibilidade());
-                            }break;
+                                case "em_viagem":
+                                {
+                                    configTela(disponibilidade.getDisponibilidade());
+                                }break;
 
-                            default:{}break;
+                                default:{}break;
+                            }
                         }
+                        else
+                        {
+                            //teste
+                        }
+
                     }
                 });
             }
@@ -445,23 +466,28 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         referenciaViagem.addChildEventListener( listenerViagem = new ChildEventListener()
         {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-            {
-                if (dataSnapshot.getKey().equals("idMotorista"));
-                {
-                    //String idEncontrado = dataSnapshot.getValue(String.class);
-                    //System.out.println("<<<<<<<<<"+idEncontrado+">>>>>>>");
-
-                    //if(idEncontrado.equals(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario())))
-                    //{
-                        //toastThis(idEncontrado);
-                    //}
-                }
-            }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
             {
+                String seuid = Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario());
+                System.out.println("seu id = " + seuid);
+
+                if (dataSnapshot.getKey().equals("idMotorista") && dataSnapshot.getValue().equals(seuid));
+                {
+                    viagemAtual = dataSnapshot.getValue(Viagem.class);
+                    disponibilidade.setDisponibilidade(DisponibilidadeMotorista.PREPARANDO_VIAGEM);
+                    threadSalvarDisponibilidade();
+                    preparaDialogSolicitacaoViagem();
+
+
+                    System.out.println("dentro do if== "+dataSnapshot.toString());
+                    System.out.println("Key = "+ dataSnapshot.getKey());
+                    System.out.println(dataSnapshot.child("idMotorista").toString());
+
+
+                }
 
             }
 
@@ -561,8 +587,25 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         }
     }
 
+    public void preparaDialogSolicitacaoViagem ()
+    {
+        dialogSolicitacaoViagem = new Dialog(getActivity());
+        dialogSolicitacaoViagem.setContentView(R.layout.dialog_viagem_solicitada);
+
+        Button btconfirmar, btCancelar;
+        TextView tvDonoAnimal, animal1, animal2, animal3, descricao;
+        CircleImageView ciDonoAnimal, ciAnimal, ciAnimal2,ciAnimal3;
+
+        //
+
+
+
+    }
+
+
     public void toastThis(String mensagem)
     {
         Toast.makeText(getActivity().getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
     }
+
 }

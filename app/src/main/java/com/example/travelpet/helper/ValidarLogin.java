@@ -31,19 +31,24 @@ public class ValidarLogin {
             @Override
             public void onDataChange(@NonNull DataSnapshot donoAnimal_DS) {
 
-                if(donoAnimal_DS.exists()) {
+                if(donoAnimal_DS.exists())
+                {
                     DonoAnimal donoAnimal = donoAnimal_DS.getValue(DonoAnimal.class);
                     String statusContaDonoAnimal = donoAnimal.getStatusConta();
 
-                    if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalAtivo)){
+                    if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalAtivo))
+                    {
                         activity.startActivity(new Intent(activity, PerfilPassageiroActivity.class));
                         activity.finish();
-
-                    }else if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalBloqueado)){
+                    }
+                    else if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalBloqueado))
+                    {
                         Mensagem.mensagemContaBloqueada(activity);
                     }
 
-                }else{
+                }
+                else
+                    {
                     DatabaseReference motoristaRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                             .child(ConfiguracaoFirebase.motorista)
                             .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));

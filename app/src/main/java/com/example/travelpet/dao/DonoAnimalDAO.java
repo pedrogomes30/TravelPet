@@ -3,6 +3,7 @@ package com.example.travelpet.dao;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 
@@ -12,13 +13,25 @@ import com.example.travelpet.model.DonoAnimal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.EventListener;
+import java.util.concurrent.CountDownLatch;
+
 public class DonoAnimalDAO {
 
+    private DonoAnimal donoAnimal;
+
     public DonoAnimalDAO() {}
+
+
+
 
     // Método para salvar os dados do usuário no firebase
     public void salvarDonoAnimalRealtimeDatabase(DonoAnimal donoAnimal, final ProgressDialog progressDialog,
@@ -78,5 +91,27 @@ public class DonoAnimalDAO {
             }
         });
     }
+    //----------------------------------------------------------------------------------------------
+
+    public DonoAnimal receberPerfil(String id, CountDownLatch contador)
+    {
+        donoAnimal = new DonoAnimal();
+        DatabaseReference dbrefence = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("donoAnimal");
+        Query query = dbrefence.orderByChild("idUsuario").equalTo(id);
+        query.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+
+        return donoAnimal;
+    }
+
 
 }

@@ -10,11 +10,24 @@ public class Viagem
 
     private String idViagem;
     private String idDonoAnimal;
+    private String nomeDonoAnimal;
+    private String fotoDonoAnimalUrl;
     private String idMotorista;
+    private String nomeMotorista;
+    private String fotoMotoristaUrl;
     private String idAnimal1;
+    private String nomeAnimal1;
+    private String fotoAnimal1Url;
     private String idAnimal2;
+    private String nomeAnimal2;
+    private String fotoAnimal2Url;
     private String idAnimal3;
+    private String nomeAnimal3;
+    private String fotoAnimal3Url;
     private String idVeiculo;
+    private String modeloVeiculo;
+    private String marcaVeiculo;
+    private String placaVeiculo;
     private String idOrigem;
     private String idDestino;
     private Double custo;
@@ -144,5 +157,109 @@ public class Viagem
 
     public void setStatusViagem(String statusViagem) {
         StatusViagem = statusViagem;
+    }
+
+    public String getNomeDonoAnimal() {
+        return nomeDonoAnimal;
+    }
+
+    public void setNomeDonoAnimal(String nomeDonoAnimal) {
+        this.nomeDonoAnimal = nomeDonoAnimal;
+    }
+
+    public String getFotoDonoAnimalUrl() {
+        return fotoDonoAnimalUrl;
+    }
+
+    public void setFotoDonoAnimalUrl(String fotoDonoAnimalUrl) {
+        this.fotoDonoAnimalUrl = fotoDonoAnimalUrl;
+    }
+
+    public String getNomeMotorista() {
+        return nomeMotorista;
+    }
+
+    public void setNomeMotorista(String nomeMotorista) {
+        this.nomeMotorista = nomeMotorista;
+    }
+
+    public String getFotoMotoristaUrl() {
+        return fotoMotoristaUrl;
+    }
+
+    public void setFotoMotoristaUrl(String fotoMotoristaUrl) {
+        this.fotoMotoristaUrl = fotoMotoristaUrl;
+    }
+
+    public String getNomeAnimal1() {
+        return nomeAnimal1;
+    }
+
+    public void setNomeAnimal1(String nomeAnimal1) {
+        this.nomeAnimal1 = nomeAnimal1;
+    }
+
+    public String getFotoAnimal1Url() {
+        return fotoAnimal1Url;
+    }
+
+    public void setFotoAnimal1Url(String fotoAnimal1Url) {
+        this.fotoAnimal1Url = fotoAnimal1Url;
+    }
+
+    public String getNomeAnimal2() {
+        return nomeAnimal2;
+    }
+
+    public void setNomeAnimal2(String nomeAnimal2) {
+        this.nomeAnimal2 = nomeAnimal2;
+    }
+
+    public String getFotoAnimal2Url() {
+        return fotoAnimal2Url;
+    }
+
+    public void setFotoAnimal2Url(String fotoAnimal2Url) {
+        this.fotoAnimal2Url = fotoAnimal2Url;
+    }
+
+    public String getNomeAnimal3() {
+        return nomeAnimal3;
+    }
+
+    public void setNomeAnimal3(String nomeAnimal3) {
+        this.nomeAnimal3 = nomeAnimal3;
+    }
+
+    public String getFotoAnimal3Url() {
+        return fotoAnimal3Url;
+    }
+
+    public void setFotoAnimal3Url(String fotoAnimal3Url) {
+        this.fotoAnimal3Url = fotoAnimal3Url;
+    }
+
+    public String getModeloVeiculo() {
+        return modeloVeiculo;
+    }
+
+    public void setModeloVeiculo(String modeloVeiculo) {
+        this.modeloVeiculo = modeloVeiculo;
+    }
+
+    public String getMarcaVeiculo() {
+        return marcaVeiculo;
+    }
+
+    public void setMarcaVeiculo(String marcaVeiculo) {
+        this.marcaVeiculo = marcaVeiculo;
+    }
+
+    public String getPlacaVeiculo() {
+        return placaVeiculo;
+    }
+
+    public void setPlacaVeiculo(String placaVeiculo) {
+        this.placaVeiculo = placaVeiculo;
     }
 }

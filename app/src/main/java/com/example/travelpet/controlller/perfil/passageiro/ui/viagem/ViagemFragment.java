@@ -34,12 +34,14 @@ import com.example.travelpet.R;
 import com.example.travelpet.adapter.AnimalBinder;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
+import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.LocalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.ViagemDAO;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.Animal;
 import com.example.travelpet.model.DisponibilidadeMotorista;
+import com.example.travelpet.model.DonoAnimal;
 import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Viagem;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -87,6 +89,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Viagem viagem;
     private LinearLayout linearOrigemDestino;
 
+    private DonoAnimal meuPerfil;
+    private DonoAnimalDAO donoAnimalDAO;
+
     // Variáveis para recuperar localização de um usuário
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -101,6 +106,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Button buttonChamarMotorista,btSelecionarAnimais;
 
     private Thread threadMotoristasDisponiveis;
+    private Thread threadIniciarPerfil;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -117,7 +123,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         animalDAO = new AnimalDAO();
         localDAO = new LocalDAO();
         viagemDAO = new ViagemDAO();
+        donoAnimalDAO = new DonoAnimalDAO();
         disponibilidadeMotoristaDao = new DisponibilidadeMotoristaDao();
+
+        //meuPerfil = donoAnimalDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()),);
 
         // Criando mapa
         geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -675,6 +684,31 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
         bsDialog.setContentView(bsView);
     }
+
+    public void threadIniciarPerfil ()
+        {
+            threadIniciarPerfil = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    contador = new CountDownLatch(1);
+                    meuPerfil = donoAnimalDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()),contador);
+
+                    try { contador.await();}
+                    catch (InterruptedException e) { e.printStackTrace(); }
+
+                    getActivity().runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+
+                        }
+                    });
+                }
+            });
+        }
 
     public void threadPrepararViagem()
     {
