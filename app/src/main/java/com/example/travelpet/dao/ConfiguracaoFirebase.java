@@ -33,15 +33,13 @@ public class ConfiguracaoFirebase {
     //Variaveis de status da Conta------------------------------------------------------------------
     public static String donoAnimalAtivo      = "ativo",
                          donoAnimalBloqueado  = "bloqueado",
-
-                         motoristaAprovado    = "Aprovado",
-                         motoristaBloqueado   = "Bloqueado",
-                         motoristaRejeitado   = "Rejeitado",
-                         motoristaEmAnalise   = "Em análise",
-
-                         veiculoAprovado      = "Aprovado",
-                         veiculoBloqueado     = "Bloqueado",
-                         veiculoReprovado     = "Reprovado";
+                         motoristaAprovado    = "aprovado",
+                         motoristaBloqueado   = "bloqueado",
+                         motoristaRejeitado   = "rejeitado",
+                         motoristaEmAnalise   = "em_analise",
+                         veiculoAprovado      = "aprovado",
+                         veiculoBloqueado     = "bloqueado",
+                         veiculoReprovado     = "reprovado";
 
     // Retorna a referencia do database
     public static DatabaseReference getFirebaseDatabaseReferencia(){

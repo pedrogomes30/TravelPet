@@ -39,7 +39,7 @@ public class EditarAnimalActivity extends AppCompatActivity{
     private ProgressDialog progressDialog;
 
     private String nomeAnimal, especieAnimal, racaAnimal,
-                   porteAnimal, observacaoAnimal, fotoAnimalUrl;
+            porteAnimal, observacaoAnimal, fotoAnimalUrl;
 
     private String porteAnimalEdit, observacaoAnimalEdit;
 
@@ -107,8 +107,8 @@ public class EditarAnimalActivity extends AppCompatActivity{
     }
 
     public void getDadosAnimalSelecionado(){
-    // Recuperar dados do animalDestinatario / escolhido
-    Bundle bundle = getIntent().getExtras();
+        // Recuperar dados do animalDestinatario / escolhido
+        Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
             animal = bundle.getParcelable("animalSelecionado");
             nomeAnimal = animal.getNomeAnimal();
@@ -138,17 +138,17 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
 
         // Inserindo dados ao array do Spinner no XML, baseado no porte recebido do database
-        if (porteAnimal.equals("Pequeno - Até 35cm")) {
+        if (porteAnimal.equals("pequeno")) {
             listaPorteAnimal.add("Pequeno - Até 35cm");
             listaPorteAnimal.add("Médio - De 36 a 49cm");
             listaPorteAnimal.add("Grande - Acima de 50cm");
 
-        } else if (porteAnimal.equals("Médio - De 36 a 49cm")) {
+        } else if (porteAnimal.equals("medio")) {
             listaPorteAnimal.add("Médio - De 36 a 49cm");
             listaPorteAnimal.add("Pequeno - Até 35cm");
             listaPorteAnimal.add("Grande - Acima de 50cm");
 
-        } else if (porteAnimal.equals("Grande - Acima de 50cm")) {
+        } else if (porteAnimal.equals("grande")) {
             listaPorteAnimal.add("Grande - Acima de 50cm");
             listaPorteAnimal.add("Pequeno - Até 35cm");
             listaPorteAnimal.add("Médio - De 36 a 49cm");
@@ -160,7 +160,8 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
     public void getDadosEditados(){
 
-        porteAnimalEdit      = campoSpinnerPorteAnimal.getSelectedItem().toString();
+        porteAnimalEdit = campoSpinnerPorteAnimal.getSelectedItem().toString();
+        porteAnimalEdit = configPorteAnimal(porteAnimalEdit);
         observacaoAnimalEdit = campotObservacaoAnimal.getText().toString();
     }
 
@@ -188,14 +189,31 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
             TelaCarregamento.iniciarCarregamento(progressDialog);
 
-            animal.setPorteAnimal(porteAnimalEdit);
-            animal.setObservacaoAnimal(observacaoAnimalEdit);
+            if(!VerificaDado.isMesmoValor(porteAnimal, porteAnimalEdit)){
+                animal.setPorteAnimal(porteAnimalEdit);
+            }
+            if(!VerificaDado.isMesmoValor(observacaoAnimal, observacaoAnimalEdit)){
+                animal.setObservacaoAnimal(observacaoAnimalEdit);
+            }
+
             animalDAO.salvarAnimalRealtimeDatabase(animal,progressDialog, tipoSave,
                     EditarAnimalActivity.this);
 
         }
     }
 
+    public String configPorteAnimal(String porteAnimalEdit){
+        if(porteAnimalEdit.equals("Pequeno - Até 35cm")){
+            porteAnimalEdit = "pequeno";
+        }
+        if(porteAnimalEdit.equals("Médio - De 36 a 49cm")){
+            porteAnimalEdit = "medio";
+        }
+        if(porteAnimalEdit.equals("Grande - Acima de 50cm")){
+            porteAnimalEdit= "grande";
+        }
+        return porteAnimalEdit;
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

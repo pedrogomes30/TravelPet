@@ -106,6 +106,49 @@ public class Mensagem {
         dialog.show();
     }
 
+    // Mensagem de validarLogin---------------------------------------------------------------------
+
+    //Usado para conta bloqueada do donoAnimal e no motorista
+    public static  void mensagemContaBloqueada(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+        builder.setTitle("Conta bloqueada");
+        builder.setMessage("Foi detectado comportamento inadequado, entre em contato conosco para mais informações");
+        builder.setCancelable(false);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        builder.show();
+    }
+
+    // Usado para motorista
+    public static void mensagemContaEmAnalise(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+        builder.setTitle("Em análise...");
+        builder.setMessage("Estamos avaliando seus dados, prazo máximo de 7 dias após o cadastro");
+        builder.setCancelable(false);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        builder.show();
+    }
+
+    // Usado para motorista
+    public static void mensagemContaReprovada(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder( activity);
+        builder.setTitle("Conta reprovada");
+        builder.setMessage("Seus dados não estão de acordo com a exigência da Travel Pet, entre em contato conosco para mais informações");
+        builder.setCancelable(false);
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+        builder.show();
+
+    }
+
+    //----------------------------------------------------------------------------------------------
     public static void toastIt (String mensagem, Activity activity) {
         Toast.makeText(activity,mensagem,Toast.LENGTH_SHORT).show();
     }

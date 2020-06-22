@@ -189,7 +189,7 @@ public class CadastroAnimalFotoActivity extends AppCompatActivity {
                     campoFotoAnimal.setImageBitmap( imagem );
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imagem.compress( Bitmap.CompressFormat.JPEG, 100, baos );
+                    imagem.compress(Bitmap.CompressFormat.WEBP, 50, baos);
                     fotoAnimal = baos.toByteArray();
 
                     Toast.makeText(CadastroAnimalFotoActivity.this,

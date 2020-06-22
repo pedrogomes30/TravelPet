@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import com.example.travelpet.R;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.EnderecoDAO;
 import com.example.travelpet.model.Endereco;
-import com.example.travelpet.domain.Util;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.helper.MascaraCampos;
@@ -352,7 +350,7 @@ public class ConfiguracaoFragment extends Fragment {
                     // Envia a imagem para o XML
                     campoFotoPerfil.setImageBitmap(imagem);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    imagem.compress(Bitmap.CompressFormat.WEBP, 50, baos);
                     // Converte a imagem para um array de bytes
                     fotoPerfil = baos.toByteArray();
                 }

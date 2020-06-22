@@ -29,10 +29,10 @@ public class ValidarLogin {
                 .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
         donoAnimalRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot donoAnimal_DS) {
 
-                if(dataSnapshot.exists()) {
-                    DonoAnimal donoAnimal = dataSnapshot.getValue(DonoAnimal.class);
+                if(donoAnimal_DS.exists()) {
+                    DonoAnimal donoAnimal = donoAnimal_DS.getValue(DonoAnimal.class);
                     String statusContaDonoAnimal = donoAnimal.getStatusConta();
 
                     if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalAtivo)){
@@ -40,26 +40,19 @@ public class ValidarLogin {
                         activity.finish();
 
                     }else if(statusContaDonoAnimal.equals(ConfiguracaoFirebase.donoAnimalBloqueado)){
-                        AlertDialog.Builder builder = new AlertDialog.Builder( activity);
-                        builder.setTitle("Conta bloqueada");
-                        builder.setMessage("Foi detectado comportamento inadequado, entre em contato conosco para mais informações");
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {}
-                        });
-                        builder.show();
+                        Mensagem.mensagemContaBloqueada(activity);
                     }
+
                 }else{
                     DatabaseReference motoristaRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                             .child(ConfiguracaoFirebase.motorista)
                             .child(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()));
                     motoristaRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull DataSnapshot motorista_DS) {
 
-                            if(dataSnapshot.exists()) {
-                                Motorista motorista = dataSnapshot.getValue(Motorista.class);
+                            if(motorista_DS.exists()) {
+                                Motorista motorista = motorista_DS.getValue(Motorista.class);
                                 String statusContaMotorista = motorista.getStatusConta();
 
                                 if (statusContaMotorista.equals(ConfiguracaoFirebase.motoristaAprovado)){
@@ -67,37 +60,13 @@ public class ValidarLogin {
                                     activity.finish();
 
                                 }else if(statusContaMotorista.equals(ConfiguracaoFirebase.motoristaEmAnalise)){
-                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
-                                    builder.setTitle("Em análise...");
-                                    builder.setMessage("Estamos avaliando seus dados, prazo máximo de 7 dias após o cadastro");
-                                    builder.setCancelable(false);
-                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {}
-                                    });
-                                    builder.show();
+                                    Mensagem.mensagemContaEmAnalise(activity);
 
                                 }else if(statusContaMotorista.equals(ConfiguracaoFirebase.motoristaRejeitado)){
-                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
-                                    builder.setTitle("Conta rejeitada");
-                                    builder.setMessage("Seus dados não estão de acordo com a exigência da Travel Pet, entre em contato conosco para mais informações");
-                                    builder.setCancelable(false);
-                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {}
-                                    });
-                                    builder.show();
+                                    Mensagem.mensagemContaReprovada(activity);
 
                                 }else if (statusContaMotorista.equals(ConfiguracaoFirebase.motoristaBloqueado)){
-                                    AlertDialog.Builder builder = new AlertDialog.Builder( activity);
-                                    builder.setTitle("Conta bloqueada");
-                                    builder.setMessage("Foi detectado comportamento inadequado, entre em contato conosco para mais informações");
-                                    builder.setCancelable(false);
-                                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {}
-                                    });
-                                    builder.show();
+                                    Mensagem.mensagemContaBloqueada(activity);
                                 }
                             }else{
                                 activity.startActivity(new Intent(activity, CadastroUsuarioTipoActivity.class));
@@ -105,12 +74,12 @@ public class ValidarLogin {
                             }
                         }
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        public void onCancelled(@NonNull DatabaseError motorista_DE) {}
                     });
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError donoAnimal_DE) {}
         });
     }
 
