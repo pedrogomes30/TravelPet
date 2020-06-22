@@ -1,98 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/colorApp"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorApp"
-        tools:context=".controlller.LoginActivity">
+    <ImageView
+        android:id="@+id/sign_out_button"
+        android:layout_width="309dp"
+        android:layout_height="245dp"
+        android:layout_marginStart="94dp"
+        android:layout_marginEnd="94dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/logo_travel_pet" />
 
-
-        <ImageView
-            android:id="@+id/logoAppTravelPet"
-            android:layout_width="223dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="577dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo_travel_pet" />
-
-        <ImageView
-            android:id="@+id/painelBranco"
-            android:layout_width="352dp"
-            android:layout_height="422dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoAppTravelPet"
-            app:srcCompat="@drawable/tela_branca_login" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="376dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="94dp"
+        android:layout_marginEnd="94dp"
+        android:background="@drawable/bg_round"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_out_button">
 
         <TextView
             android:id="@+id/textViewLogin"
             style="@style/Fonte_laranja"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:text="@string/login"
             android:textSize="40sp"
-            android:textStyle="normal"
-            app:layout_constraintEnd_toEndOf="@+id/painelBranco"
-            app:layout_constraintStart_toStartOf="@+id/painelBranco"
-            app:layout_constraintTop_toTopOf="@+id/painelBranco" />
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/texto_login"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/gray" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="219dp"
             android:layout_height="68dp"
-            android:layout_marginTop="55dp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewLogin"
-            app:layout_constraintStart_toStartOf="@+id/textViewLogin"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLogin"
-            tools:ignore="MissingConstraints" />
-
-        <Button
-            android:id="@+id/sign_out_button"
-            style="@style/Fonte_botao_azul"
-            android:layout_width="174dp"
-            android:layout_height="42dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/button_azul_seletor"
-            android:text="@string/sair"
-            app:layout_constraintBottom_toBottomOf="@+id/painelBranco"
-            app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-            app:layout_constraintVertical_bias="0.022" />
+            android:background="@drawable/bg_round"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
-        <!-- Gif dos animais
-    <com.cunoraz.gifview.library.GifView
-        android:id="@+id/gifview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:gif="@drawable/giphy"
-        app:layout_constraintBottom_toTopOf="@+id/textEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" /> -->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

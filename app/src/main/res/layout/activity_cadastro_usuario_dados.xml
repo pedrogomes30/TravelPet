@@ -20,9 +20,10 @@
             android:layout_width="359dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:text="@string/por_favor_preencha_os_campos_com_seus_dados"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,9 +33,9 @@
             android:id="@+id/textInputNomeUsuario"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -46,20 +47,20 @@
                 style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 android:hint="@string/nome"
                 android:inputType="text"
                 android:lines="1"
-                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
-                />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputSobrenome"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -71,21 +72,21 @@
                 style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 android:hint="@string/sobrenome"
                 android:inputType="text"
                 android:lines="1"
                 android:nextFocusDown="@id/editTelefone"
-                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
-                />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputTelefone"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
             app:layout_constraintHorizontal_bias="0.0"
@@ -100,16 +101,17 @@
                 android:hint="@string/telefone"
                 android:inputType="text|phone"
                 android:lines="1"
-                android:nextFocusDown="@id/editCpf"/>
+                android:nextFocusDown="@id/editCpf"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputCpf"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
             app:layout_constraintHorizontal_bias="0.0"
@@ -123,18 +125,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cpf"
                 android:inputType="number"
-                android:maxLength="14"
                 android:lines="1"
-                android:nextFocusDown="@id/editCep"/>
+                android:maxLength="14"
+                android:nextFocusDown="@id/editCep"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputCep"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
             app:layout_constraintHorizontal_bias="0.0"
@@ -148,18 +151,19 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/cep"
                 android:inputType="number"
-                android:maxLength="9"
                 android:lines="1"
-                android:nextFocusDown="@id/editLogradouro"/>
+                android:maxLength="9"
+                android:nextFocusDown="@id/editLogradouro"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLogradouro"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
             app:layout_constraintHorizontal_bias="0.0"
@@ -174,16 +178,17 @@
                 android:hint="@string/logradouro"
                 android:inputType="text"
                 android:lines="1"
-                android:nextFocusDown="@id/editBairro"/>
+                android:nextFocusDown="@id/editBairro"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputBairro"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="@+id/textInputSobrenome"
             app:layout_constraintHorizontal_bias="0.593"
@@ -199,17 +204,16 @@
                 android:inputType="text"
                 android:lines="1"
                 android:nextFocusDown="@id/editLocalidade"
-                />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLocalidade"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintBottom_toTopOf="@+id/botaoProximo"
             app:layout_constraintEnd_toStartOf="@+id/textInputUf"
@@ -223,11 +227,12 @@
                 style="@style/Fonte_memor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
                 android:hint="@string/cidade"
                 android:inputType="text"
                 android:lines="1"
-                android:digits="abcdefghijklmnopqrstuvxwyzçáãéêèíîìóôòõúûùüçñý ABCDEFGHIJKLMNOPQRSTUVXWYZÇÁÃÉÊÈÍÎÌÓÔÒÕÚÛÙÜÇÑÝ"
-                android:nextFocusDown="@id/editUf"/>
+                android:nextFocusDown="@id/editUf"
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -235,7 +240,7 @@
             android:layout_width="50dp"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputBairro">
@@ -248,7 +253,8 @@
                 android:inputType="text"
                 android:lines="1"
                 android:maxLength="2"
-                android:nextFocusDown="@id/botaoProximo"/>
+                android:nextFocusDown="@id/botaoProximo"
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -257,16 +263,16 @@
             style="@style/Fonte_botao_azul"
             android:layout_width="300dp"
             android:layout_height="48dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="64dp"
             android:layout_weight="1"
             android:background="@drawable/button_azul_seletor"
             android:onClick="botaoProximo"
             android:text="@string/proximo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

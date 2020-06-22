@@ -8,42 +8,58 @@
     tools:context=".controlller.cadastro.cadastroMotorista.CadastroMotoristaFotoActivity">
 
     <TextView
+        android:id="@+id/textView3"
+        style="@style/Fonte_memor_branca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/comfortaa_regular"
+        android:text="@string/requisitos_da_foto"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFotoPefil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTituloFotoMotorista" />
+
+    <TextView
         android:id="@+id/textViewFotoPefil"
         style="@style/Fonte_memor_branca"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/comfortaa_regular"
         android:text="@string/requisitos_da_foto_perfil_motorista"
-        app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoPerfil"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNomeFotoMotorista"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTituloFotoMotorista"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textViewTituloFotoMotorista"
         style="@style/Fontetitulo"
-        android:layout_width="372dp"
-        android:layout_height="85dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="@string/envie_uma_foto_sua_de_perfil"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/textViewNomeFotoMotorista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@font/fredoka_one_regular"
         android:text="@string/nenhum_arquivo_selecionado"
         android:textColor="@color/white"
@@ -51,25 +67,24 @@
         app:layout_constraintBottom_toTopOf="@+id/botaoEnviarFotoPerfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFotoPefil"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFotoPefil" />
 
     <Button
         android:id="@+id/botaoEnviarFotoPerfil"
         style="@style/Fonte_laranja"
-        android:layout_width="0dp"
+        android:layout_width="347dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/button_branco_seletor"
         android:onClick="botaoEnviarFotoPerfil"
         android:text="@string/enviar_foto"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/botaoProximo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeFotoMotorista" />
 
     <Button
         android:id="@+id/botaoProximo"
@@ -78,7 +93,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoProximo"

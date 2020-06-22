@@ -1,74 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:fillViewport="true">
-
-<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/scrollView2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorApp"
-    tools:context=".controlller.cadastro.cadastroMotorista.CadastroMotoristaTermoActivity">
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/painelBrancoTermo"
-        android:layout_width="339dp"
-        android:layout_height="430dp"
+    <LinearLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/botaoProximo"
+        android:background="@drawable/tela_branca_login"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23000002"
-        app:srcCompat="@drawable/tela_branca_login" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textViewTiruloTermo"
-        style="@style/FonteTituloPreta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/consentimento_legal"
-        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
-        app:layout_constraintTop_toTopOf="@+id/painelBrancoTermo" />
+        <TextView
+            android:id="@+id/textViewTiruloTermo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consentimento_legal"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewTextoTermo"
-        style="@style/Fonte_memor_preta"
-        android:layout_width="0dp"
-        android:layout_height="301dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/declaracao_de_checagem"
-        app:layout_constraintEnd_toEndOf="@+id/painelBrancoTermo"
-        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTiruloTermo" />
+        <TextView
+            android:id="@+id/textViewTextoTermo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/declaracao_de_checagem"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
-    <CheckBox
-        android:id="@+id/checkBoxTermos"
-        style="@style/Fonte_memor_preta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/comfortaa_regular"
-        android:text="@string/eu_aceito_os_termos"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/painelBrancoTermo"
-        app:layout_constraintEnd_toEndOf="@+id/painelBrancoTermo"
-        app:layout_constraintHorizontal_bias="0.088"
-        app:layout_constraintStart_toStartOf="@+id/painelBrancoTermo"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTextoTermo" />
+        <CheckBox
+            android:id="@+id/checkBoxTermos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/comfortaa_regular"
+            android:text="@string/eu_aceito_os_termos"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/botaoProximo"
@@ -77,7 +59,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:layout_weight="1"
         android:background="@drawable/button_azul_seletor"
         android:onClick="botaoProximo"
@@ -86,4 +68,3 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>

@@ -52,9 +52,9 @@
     <string name="nenhum_arquivo_selecionado">Nenhum arquivo selecionado</string>
     <string name="enviar_foto">Enviar foto</string>
     <string name="texto_activity_cadastro_motorista">Lembre-se, é preciso que o documento: \n\n1. Esteja aberto; \n2. Tenha todos os campos visíveis; \n3. Tenha a observação Exerce Atividade Remunerada (EAR).\n\nObs: a Permissão para Dirigir não é válida.</string>
-    <string name="texto_activity_cadastro_motorista_2">Requisitos da foto: \n1) A foto mostre o documento inteiro. \n 2) Todos os campos estejam legíveis. \n 3) A categoria do veículo conste como Particular.</string>
+    <string name="texto_activity_cadastro_motorista_2">1) A foto mostre o documento inteiro. \n2) Todos os campos estejam legíveis. \n3) A categoria do veículo conste como Particular.</string>
     <string name="envie_uma_foto_do_registro_do_seu_veiculo_crlv">Envie uma foto do registro do seu veículo (CRLV)</string>
-    <string name="requisitos_da_foto_perfil_motorista">Requisitos da foto: \n 1. Mostre o rosto todo e a parte de cima dos ombros \n 2. Não use óculos escuros nem chapéu \n 3. Tire a foto em um local bem iluminado</string>
+    <string name="requisitos_da_foto_perfil_motorista">1. Mostre o rosto todo e a parte de cima dos ombros \n2. Não use óculos escuros nem chapéu \n3. Tire a foto em um local bem iluminado</string>
     <string name="envie_uma_foto_sua_de_perfil">Envie uma foto sua de perfil</string>
     <string name="consentimento_legal">Consentimento legal</string>
     <string name="declaracao_de_checagem">Declaração de checagem de antecedentes Ao clicar aqui e submeter o formulário de cadastro, eu concordo com a coleta e processamento dos meus dados pessoais pela Travel Pet ou por seus prestadores de serviço, incluindo dados sensíveis, com o objetivo de avaliar minha elegibilidade para usar ou continuar usando a plataforma da Travel Pet e para outros fins descritos na Declaração de Privacidade do Motorista. Declaro, ainda, a veracidade e a autenticidade de todas as informações e documentos submetidos à Travel Pet para fins de cadastro.</string>
@@ -139,6 +139,8 @@
     <string name="selecione_o_veiculo_que_ira_utilizar">Selecione o veículo que irá utilizar</string>
     <string name="confirmar_disponibilidade">CONFIRMAR DISPONIBILIDADE</string>
     <string name="carregando">Carregando...</string>
+    <string name="texto_login">Por favor, entre com a sua conta Google.</string>
+    <string name="requisitos_da_foto">Requisitos da foto:</string>
 
     <!-- Spinner Estados -->
     <string-array name="estados">

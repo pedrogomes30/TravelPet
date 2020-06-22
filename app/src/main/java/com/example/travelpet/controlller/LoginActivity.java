@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth fbAuth;
     FirebaseDatabase fbDB;
     SignInButton BTSignIn;
-    Button BTSignOut;
+    ImageView BTSignOut;
     ImageView imgv ; //teste para tela motorista
 
     // Array de String para solicitar permissões
@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         fbDB = FirebaseDatabase.getInstance();
         BTSignIn = findViewById(R.id.sign_in_button);
         BTSignOut = findViewById(R.id.sign_out_button);
-        imgv = findViewById(R.id.logoAppTravelPet); //atalho tela motorista
     }
 
     public void setButtons()
@@ -78,15 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        imgv.setOnLongClickListener(new View.OnLongClickListener()
-        {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent it = new Intent(getApplicationContext(), PerfilMotoristaActivity.class);
-                startActivity(it);
-                return false;
-            }
-        }); //atalho tela motorista
     }
 
     public void ToastThis (String mensagem)

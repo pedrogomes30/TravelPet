@@ -1305,6 +1305,7 @@ drawable imagem_animal
 drawable imagem_usuario
 drawable logo_travel_pet
 drawable logo_travel_pet_laranja
+drawable logo_travelpet_launcher
 drawable marcador_carro
 drawable marcador_usuario
 drawable marcador_usuario_passageiro
@@ -1483,6 +1484,7 @@ id clip_vertical
 id collapseActionView
 id confirmation_code
 id confirmation_code_layout
+id constraintLayout
 id container
 id content
 id contentPanel
@@ -1604,12 +1606,12 @@ id left
 id light
 id line1
 id line3
+id linearLayout2
 id linear_origem_destino
 id listMode
 id list_item
 id listaVeiculosFragment
 id logo
-id logoAppTravelPet
 id logoTravelPet
 id logoutMotoristaFragment
 id main_tos_and_pp
@@ -1650,8 +1652,6 @@ id off
 id on
 id outline
 id packed
-id painelBranco
-id painelBrancoTermo
 id parallax
 id parent
 id parentPanel
@@ -1689,6 +1689,7 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
+id scrollView2
 id scrollable
 id search_badge
 id search_bar
@@ -1774,6 +1775,9 @@ id textRacaAnimal
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView
+id textView2
+id textView3
 id textView6
 id textViewBoasVindas
 id textViewBoasVindas3
@@ -2333,6 +2337,7 @@ string qual_tipo_de_usuario_voc_pretende_ser
 string raca_
 string raca_do_animal
 string recusar
+string requisitos_da_foto
 string requisitos_da_foto_perfil_motorista
 string rkl_2890
 string rua_destino
@@ -2355,6 +2360,7 @@ string status_bar_notification_info_overflow
 string telefone
 string texto_activity_cadastro_motorista
 string texto_activity_cadastro_motorista_2
+string texto_login
 string textview
 string title_activity_maps
 string title_activity_viagem
