@@ -7,7 +7,6 @@ import com.example.travelpet.R;
 import com.example.travelpet.model.Veiculo;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import mva2.adapter.ItemBinder;
 import mva2.adapter.ItemViewHolder;
 
@@ -30,7 +29,7 @@ public class VeiculoBinder extends ItemBinder<Veiculo, VeiculoBinder.VeiculoView
         holder.marca.setText(item.getMarcaVeiculo());
         holder.placa.setText(item.getPlacaVeiculo());
 
-        int bgColor = ContextCompat.getColor(holder.modelo.getContext(), R.color.colorButoonAzulPadrao);
+        int bgColor = ContextCompat.getColor(holder.modelo.getContext(), R.color.colorButtonAzulPadrao);
         int bgpadrao = ContextCompat.getColor(holder.modelo.getContext(), R.color.white);
 
         if (holder.isItemSelected()== true)

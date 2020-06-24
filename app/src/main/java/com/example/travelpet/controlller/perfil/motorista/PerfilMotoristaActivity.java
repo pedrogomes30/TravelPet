@@ -1,6 +1,7 @@
 package com.example.travelpet.controlller.perfil.motorista;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.model.Motorista;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -70,6 +73,31 @@ public class PerfilMotoristaActivity extends AppCompatActivity {
 
         configuraHeader();
         setOnclickTeste();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int errorCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getApplicationContext());
+        switch (errorCode)
+        {
+            case ConnectionResult.SERVICE_MISSING:
+            case ConnectionResult.SERVICE_DISABLED:
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                System.out.println("mostrar caixa para att services");
+                GoogleApiAvailability.getInstance().getErrorDialog(this, errorCode, 0, new DialogInterface.OnCancelListener()
+                {
+                    @Override
+                    public void onCancel(DialogInterface dialog)
+                    {
+                        finish();
+                    }
+                }).show();
+                break;
+            case ConnectionResult.SUCCESS:
+                System.out.println("Google Play Services Atualizado !!!");
+                break;
+        }
     }
 
     public void setOnclickTeste()

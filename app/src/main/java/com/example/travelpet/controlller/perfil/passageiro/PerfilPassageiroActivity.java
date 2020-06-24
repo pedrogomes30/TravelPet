@@ -1,8 +1,10 @@
 package com.example.travelpet.controlller.perfil.passageiro;
 
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,6 +26,8 @@ import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.DonoAnimal;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,6 +87,31 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
         campoEmailUsuario = view.findViewById(R.id.textEmail);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int errorCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getApplicationContext());
+        switch (errorCode)
+        {
+            case ConnectionResult.SERVICE_MISSING:
+            case ConnectionResult.SERVICE_DISABLED:
+            case ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED:
+                System.out.println("mostrar caixa para att services");
+                GoogleApiAvailability.getInstance().getErrorDialog(this, errorCode, 0, new DialogInterface.OnCancelListener()
+                {
+                    @Override
+                    public void onCancel(DialogInterface dialog)
+                    {
+                        finish();
+                    }
+                }).show();
+                break;
+            case ConnectionResult.SUCCESS:
+                System.out.println("Google Play Services Atualizado !!!");
+                break;
+        }
+    }
+
     public void getDadosDonoAnimalDatabase(){
         donoAnimalRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,6 +140,8 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
 
             }
         });
+
+
 
     }
 

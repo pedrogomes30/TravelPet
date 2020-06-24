@@ -5,10 +5,10 @@ import com.example.travelpet.helper.Base64Custom;
 
 public class DisponibilidadeMotorista
 {
-    public static String DISPONIVEL ="disponivel";
-    public static String INDISPONIVEL = "indisponivel";
-    public static String EM_VIAGEM ="em_viagem";
-    public static String PREPARANDO_VIAGEM = "preparando_viagem";
+    public static final String DISPONIVEL ="disponivel";
+    public static final String INDISPONIVEL = "indisponivel";
+    public static final String EM_VIAGEM ="em_viagem";
+    public static final String PREPARANDO_VIAGEM = "preparando_viagem";
 
     private String idVeiculo;
     private String idMotorista;

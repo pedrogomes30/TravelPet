@@ -3,7 +3,7 @@ package com.example.travelpet.controlller.perfil.motorista.ui;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +36,6 @@ import com.example.travelpet.R;
 import com.example.travelpet.adapter.VeiculoBinder;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
-import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.LocalDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
@@ -47,6 +45,16 @@ import com.example.travelpet.model.DisponibilidadeMotorista;
 import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Veiculo;
 import com.example.travelpet.model.Viagem;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -55,6 +63,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -70,8 +80,10 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     
     private GoogleMap gMap;
     private MapView mapView;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
+    private FusedLocationProviderClient client;
+    private LocationRequest locationRequest;
+    private LocationSettingsRequest.Builder builderlocationsSettingsRequest;
+    private SettingsClient settingsClient;
 
     //Threads
     private Thread threadAttDisponibilidade;
@@ -129,40 +141,189 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         mapView =  view.findViewById(R.id.mapMotorista);
 
         //Criando Mapa
-
+        client = LocationServices.getFusedLocationProviderClient(requireActivity());
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 
-        iniciarMapa();
         threadChecarDisponibilidade();
-
         return view;
     }
-    //CONFIG TELA
-    public void configTela (String disponibilidade)
-    {
-        // 1- Indisponível
-        // 2- Disponível
-        // 3- Em Viagem
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        iniciarMapa();
+    }
+
+    private void addListenerViagem()
+    {
+        DatabaseReference referenciaViagem = ViagemDAO.getRootViagens();
+        //Escutando nó viagem;
+        //Query queryViagem = referenciaViagem
+        referenciaViagem.addChildEventListener( listenerViagem = new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+                String seuid = Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario());
+                System.out.println("seu id = " + seuid);
+
+                if ("idMotorista".equals(dataSnapshot.getKey()) && seuid.equals(dataSnapshot.getValue()))
+                {
+                    viagemAtual = dataSnapshot.getValue(Viagem.class);
+                    disponibilidade.setDisponibilidade(DisponibilidadeMotorista.PREPARANDO_VIAGEM);
+                    threadSalvarDisponibilidade();
+                    preparaDialogSolicitacaoViagem();
+
+                    System.out.println("dentro do if== "+dataSnapshot.toString());
+                    System.out.println("Key = "+ dataSnapshot.getKey());
+                    System.out.println(dataSnapshot.child("idMotorista").toString());
+                }
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //MAPA
+    private void iniciarMapa()
+    {
+        try
+        { MapsInitializer.initialize(requireActivity().getApplicationContext()); }
+        catch (Exception e)
+        { e.printStackTrace(); }
+        mapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap)
+    {
+        gMap = googleMap;
+        recuperarLocalizacaoUsuario();
+    }
+
+    private void recuperarLocalizacaoUsuario()
+    {
+
+        if (ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireActivity(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            return;
+        }
+
+        client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>()
+        {
+            @Override
+            public void onSuccess(Location location)
+            {
+                if (location != null)
+                {
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    localMotorista = new LatLng(latitude, longitude);
+
+                    gMap.clear();
+                    gMap.addMarker
+                            (
+                                    new MarkerOptions()
+                                            .position(localMotorista)
+                                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro))
+                            );
+                    gMap.moveCamera
+                            (
+                                    CameraUpdateFactory.newLatLngZoom(localMotorista,19)
+                            );
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener()
+        {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                System.out.println("falha ao recuperar localização");
+            }
+        });
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(5 * 1000);// intervalo de tempo para buscar localizacao em milisegundos;
+        locationRequest.setFastestInterval(2 * 1000);// intervalo de tempo para receber localização de outros apps que estejam utilizando o mesmo recurso
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        builderlocationsSettingsRequest = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+        settingsClient = LocationServices.getSettingsClient(requireActivity());
+        settingsClient.checkLocationSettings(builderlocationsSettingsRequest.build()).addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>()
+        {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {}
+
+        }).addOnFailureListener(new OnFailureListener()
+        {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+
+            }
+        });
+
+        LocationCallback locationCallback = new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult)
+            {
+                showInTerminal("<< onLocationResult : ok >>");
+
+                Location location = locationResult.getLastLocation();
+
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                localMotorista = new LatLng(latitude, longitude);
+
+                gMap.clear();
+                gMap.addMarker(new MarkerOptions().position(localMotorista).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,19));
+            }
+
+            @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability) {}
+        };
+
+        client.requestLocationUpdates(locationRequest, locationCallback, null);
+    }
+
+    //CONFIG TELA
+    private void configTela(String disponibilidade)
+    {
+        showInTerminal("<< Configurando a tela para"+disponibilidade+" >>");
         switch (disponibilidade)
         {
-            case "indisponivel":
+            case DisponibilidadeMotorista.INDISPONIVEL:
+            case DisponibilidadeMotorista.DISPONIVEL:
                 {
                     configFab(disponibilidade);
                     configBs(disponibilidade);
                 }break;
 
-            case "disponivel":
-                {
-                    configFab(disponibilidade);
-                    configBs(disponibilidade);
-                }break;
-            case "em_viagem":
-                {
-                    configFab(disponibilidade);
-                }break;
-            case "preparando_viagem":
+            case DisponibilidadeMotorista.EM_VIAGEM:
+            case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
                 {
                     configFab(disponibilidade);
 
@@ -175,38 +336,28 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     @SuppressLint("RestrictedApi")
     private void configFab(String disponibilidade)
     {
-        // 1- Indisponível
-        // 2- Disponível
-        // 3- Em Viagem
-
         switch (disponibilidade)
         {
-            case "indisponivel":
+            case DisponibilidadeMotorista.INDISPONIVEL:
                 {
                     fab.setVisibility(View.VISIBLE);
-                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.about_youtube_color)));
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorButtonVermelhoPadrao)));
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_close));
                 }break;
 
-            case "disponivel":
+            case DisponibilidadeMotorista.DISPONIVEL:
                 {
                     fab.setVisibility(View.VISIBLE);
-                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+                    fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorButtonVerdePadrao)));
                     fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_done));
 
                 }break;
 
-            case "em_viagem":
+            case DisponibilidadeMotorista.EM_VIAGEM:
+            case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
                 {
                     fab.setVisibility(View.GONE);
-
                 }break;
-
-            case "preparando_viagem":
-            {
-                fab.setVisibility(View.GONE);
-            }break;
-
 
             default:{}break;
 
@@ -223,14 +374,15 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         });
     }
     
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     private void configBs(final String dispConfig)
     {
-        bsDialog = new BottomSheetDialog(getActivity(),R.style.BottomSheetDialogTheme);
-        bsView = getActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_motorista,null);
+        bsDialog = new BottomSheetDialog(requireActivity(),R.style.BottomSheetDialogTheme);
+        bsView = requireActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_motorista,null);
         bsDialog.setContentView(bsView);
 
         //findViews
-        recyclerBS = (RecyclerView) bsView.findViewById(R.id.recycler_bs_motorista);
+        recyclerBS = bsView.findViewById(R.id.recycler_bs_motorista);
         Button btbs1 = bsView.findViewById(R.id.bt_bs_motorista);
         Button btbs2 = bsView.findViewById(R.id.bt_bs_motorista2);
         pq = bsView.findViewById(R.id.checkbox_peq);
@@ -247,7 +399,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
         switch (dispConfig)
         {
-            case "indisponivel":
+            case DisponibilidadeMotorista.INDISPONIVEL:
             {
                 btbs2.setVisibility(View.GONE);
                 btbs1.setText("CONFIRMAR DISPONIBILIDADE");
@@ -255,7 +407,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
             }break;
 
-            case "disponivel":
+            case DisponibilidadeMotorista.DISPONIVEL:
             {
                 btbs2.setVisibility(View.VISIBLE);
                 btbs1.setText("ATUALIZAR DISPONIBILIDADE");
@@ -268,7 +420,26 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         }
     }
 
-    public void onClickBtCancelar (Button bt)
+    private void configuraMultiViewAdapter()
+    {
+        //cria adapter
+        adapter = new MultiViewAdapter();
+        adapter.registerItemBinders(new VeiculoBinder());
+
+        //Instancia o listSection
+        veiculoListSection = new ListSection<>();
+        veiculoListSection.setSelectionMode(Mode.SINGLE);
+        veiculoListSection.addAll(listaVeiculos);
+
+        //add o listSection ao adapter
+        adapter.addSection(veiculoListSection);
+        adapter.setSelectionMode(Mode.SINGLE);
+
+        recyclerBS.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void onClickBtCancelar(Button bt)
     {
         bt.setOnClickListener(new View.OnClickListener()
         {
@@ -282,7 +453,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         });
     }
 
-    public void onClickBtConfirmar(Button bt)
+    private void onClickBtConfirmar(Button bt)
     {
         bt.setOnClickListener(new View.OnClickListener()
         {
@@ -330,27 +501,8 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         });
     }
 
-    public void configuraMultiViewAdapter()
-    {
-        //cria adapter
-        adapter = new MultiViewAdapter();
-        adapter.registerItemBinders(new VeiculoBinder());
-
-        //Instancia o listSection
-        veiculoListSection = new ListSection<>();
-        veiculoListSection.setSelectionMode(Mode.SINGLE);
-        veiculoListSection.addAll(listaVeiculos);
-
-        //add o listSection ao adapter
-        adapter.addSection(veiculoListSection);
-        adapter.setSelectionMode(Mode.SINGLE);
-
-        recyclerBS.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
     //Threads
-    public void threadPopularAdapter()
+    private void threadPopularAdapter()
     {
         threadPopulaAdapter = new Thread(new Runnable()
         {
@@ -366,7 +518,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 catch (InterruptedException e)
                 { e.printStackTrace();}
 
-                getActivity().runOnUiThread(new Runnable()
+                requireActivity().runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
@@ -394,7 +546,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 catch (InterruptedException e)
                 {e.printStackTrace();}
 
-                getActivity().runOnUiThread(new Runnable()
+                requireActivity().runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
@@ -423,38 +575,16 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 catch (InterruptedException e)
                 {e.printStackTrace();}
 
-                getActivity().runOnUiThread(new Runnable()
+                requireActivity().runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
                     {
                         if(disponibilidade != null)
                         {
-                            switch (disponibilidade.getDisponibilidade())
-                            {
-                                case "indisponivel":
-                                {
-                                    configTela(disponibilidade.getDisponibilidade());
-                                }break;
-
-                                case "disponivel":
-                                {
-                                    configTela(disponibilidade.getDisponibilidade());
-                                }break;
-
-                                case "em_viagem":
-                                {
-                                    configTela(disponibilidade.getDisponibilidade());
-                                }break;
-
-                                default:{}break;
-                            }
+                            //Atualiza a tela
+                            configTela(disponibilidade.getDisponibilidade());
                         }
-                        else
-                        {
-                            //teste
-                        }
-
                     }
                 });
             }
@@ -462,137 +592,13 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         checarDisponibilidade.start();
     }
 
-    public void addListenerViagem()
+
+
+
+
+    private void preparaDialogSolicitacaoViagem()
     {
-        DatabaseReference referenciaViagem = ViagemDAO.getRootViagens();
-        //Escutando nó viagem;
-        //Query queryViagem = referenciaViagem
-        referenciaViagem.addChildEventListener( listenerViagem = new ChildEventListener()
-        {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-            {
-                String seuid = Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario());
-                System.out.println("seu id = " + seuid);
-
-                if (dataSnapshot.getKey().equals("idMotorista") && dataSnapshot.getValue().equals(seuid));
-                {
-                    viagemAtual = dataSnapshot.getValue(Viagem.class);
-                    disponibilidade.setDisponibilidade(DisponibilidadeMotorista.PREPARANDO_VIAGEM);
-                    threadSalvarDisponibilidade();
-                    preparaDialogSolicitacaoViagem();
-
-                    System.out.println("dentro do if== "+dataSnapshot.toString());
-                    System.out.println("Key = "+ dataSnapshot.getKey());
-                    System.out.println(dataSnapshot.child("idMotorista").toString());
-
-
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    //MAPA
-    public void iniciarMapa ()
-    {
-        try
-        {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        mapView.getMapAsync(this);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
-        gMap = googleMap;
-
-        recuperarLocalizacaoUsuario();
-    }
-
-    public void recuperarLocalizacaoUsuario ()
-    {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener()
-        {
-            @Override
-            public void onLocationChanged(Location location)
-            {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                localMotorista = new LatLng(latitude, longitude);
-
-                gMap.clear();
-                gMap.addMarker
-                        (
-                            new MarkerOptions()
-                            .position(localMotorista)
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro))
-                        );
-                gMap.moveCamera
-                        (
-                            CameraUpdateFactory.newLatLngZoom(localMotorista,16)
-                        );
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle)
-            {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s)
-            {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s)
-            {
-
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            locationManager.requestLocationUpdates
-                    (
-                            LocationManager.GPS_PROVIDER,
-                            2000, //tempo mínimo para atualização de localização (milisegundos)
-                            10, //distância mínima para atualização de localização (metros)
-                            locationListener
-                    );
-        }
-    }
-
-    public void preparaDialogSolicitacaoViagem ()
-    {
-        dialogSolicitacaoViagem = new Dialog(getActivity());
+        dialogSolicitacaoViagem = new Dialog(requireActivity());
         dialogSolicitacaoViagem.setContentView(R.layout.dialog_viagem_solicitada);
         dialogSolicitacaoViagem.setCanceledOnTouchOutside(false);
 
@@ -616,21 +622,21 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         btCancelar = dialogSolicitacaoViagem.findViewById(R.id.bt_recusarViagem);
 
         tvDonoAnimal.setText(viagemAtual.getNomeDonoAnimal());
-        setaGlide(viagemAtual.getFotoDonoAnimalUrl(),ciDonoAnimal);
+        setGlide(viagemAtual.getFotoDonoAnimalUrl(),ciDonoAnimal);
 
         animal1.setText(viagemAtual.getNomeAnimal1());
-        setaGlide(viagemAtual.getFotoAnimalUrl1(), ciAnimal1);
+        setGlide(viagemAtual.getFotoAnimalUrl1(), ciAnimal1);
 
         if(viagemAtual.getIdAnimal2() != null)
         {
             animal2.setText(viagemAtual.getNomeAnimal2());
-            setaGlide(viagemAtual.getFotoAnimalUrl2(), ciAnimal2);
+            setGlide(viagemAtual.getFotoAnimalUrl2(), ciAnimal2);
             layoutAnimal2.setVisibility(View.VISIBLE);
         }
         if(viagemAtual.getIdAnimal3() != null)
         {
             animal3.setText(viagemAtual.getNomeAnimal3());
-            setaGlide(viagemAtual.getFotoAnimalUrl3(), ciAnimal3);
+            setGlide(viagemAtual.getFotoAnimalUrl3(), ciAnimal3);
             layoutAnimal3.setVisibility(View.VISIBLE);
         }
 
@@ -639,15 +645,19 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         dialogSolicitacaoViagem.show();
     }
 
-    private void setaGlide (String url, CircleImageView view)
+    private void setGlide(String url, CircleImageView view)
     {
         Uri uri = Uri.parse(url);
-        Glide.with(getActivity()).load(uri).into(view);
+        Glide.with(requireActivity()).load(uri).into(view);
     }
 
-    public void toastThis(String mensagem)
+    private void toastThis(String mensagem)
     {
-        Toast.makeText(getActivity().getApplicationContext(),mensagem,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
     }
 
+    private void showInTerminal(String message)
+    {
+        System.out.println(message);
+    }
 }
