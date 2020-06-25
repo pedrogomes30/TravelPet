@@ -37,6 +37,7 @@ import com.example.travelpet.adapter.VeiculoBinder;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
 import com.example.travelpet.dao.LocalDAO;
+import com.example.travelpet.dao.MotoristaDAO;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.dao.VeiculoDAO;
 import com.example.travelpet.dao.ViagemDAO;
@@ -95,6 +96,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     //Daos
     private DisponibilidadeMotoristaDao disponibilidadeDAO;
+    private MotoristaDAO motoristaDAO;
     private VeiculoDAO veiculoDAO;
     private ViagemDAO viagemDAO;
     private LocalDAO localDAO;
@@ -160,7 +162,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         DatabaseReference referenciaViagem = ViagemDAO.getRootViagens();
         //Escutando nó viagem;
         //Query queryViagem = referenciaViagem
-        referenciaViagem.addChildEventListener( listenerViagem = new ChildEventListener()
+        listenerViagem = new ChildEventListener()
         {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
@@ -182,24 +184,19 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     System.out.println("Key = "+ dataSnapshot.getKey());
                     System.out.println(dataSnapshot.child("idMotorista").toString());
                 }
-
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        };
 
-            }
-        });
+        referenciaViagem.addChildEventListener(listenerViagem);
     }
 
     //MAPA
@@ -227,16 +224,23 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 ActivityCompat.checkSelfPermission(requireActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
+            showInTerminal("<<recuperarLocalização: If >>");
             return;
         }
+        else
+            {
+                showInTerminal("<<recuperarLocalização: else" + ">>");
+            }
 
         client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>()
         {
             @Override
             public void onSuccess(Location location)
             {
+                showInTerminal("onSucess");
                 if (location != null)
                 {
+                    showInTerminal("location != null" );
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     localMotorista = new LatLng(latitude, longitude);
@@ -591,10 +595,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         });
         checarDisponibilidade.start();
     }
-
-
-
-
 
     private void preparaDialogSolicitacaoViagem()
     {

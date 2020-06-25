@@ -141,8 +141,6 @@ public class PerfilPassageiroActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 }

@@ -80,9 +80,9 @@ import java.util.concurrent.CountDownLatch;
 
 public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
-    private BottomSheetDialog bsDialog;
-    private Local localOrigem, localDestino;
     private View bsView;
+    private BottomSheetDialog bsDialog;
+    private Dialog dialogBuscarMotorista;
     private MultiViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerBs;
@@ -91,12 +91,14 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<Animal> listaAnimaisSelecionados;
     private ArrayList<String> motoristaCancelados = new ArrayList<>();
     private Dialog dialogOrigemDestino;
-    private Dialog dialogBuscarMotorista;
+
     private CountDownLatch contador;
+
     private AnimalDAO animalDAO;
     private LocalDAO localDAO;
     private ViagemDAO viagemDAO;
     private DisponibilidadeMotoristaDao disponibilidadeMotoristaDao;
+
     private DisponibilidadeMotorista motoristaDisponivel;
     private Viagem viagem;
     private LinearLayout linearOrigemDestino;
@@ -105,6 +107,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private DonoAnimalDAO donoAnimalDAO;
 
     // Variáveis para recuperar localização de um usuário
+    private Local localOrigem, localDestino;
     private Location localizacaoAtual;
     private Address addressDestino;
     private Geocoder geocoder;
@@ -201,7 +204,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     localPassageiro = new LatLng(latitude, longitude);
 
                     gMap.clear();
-                    gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                    gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
                     gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
                 }
             }
@@ -259,7 +262,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 localPassageiro = new LatLng(latitude, longitude);
 
                 gMap.clear();
-                gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
                 gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
             }
 
@@ -844,7 +847,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         {
                             toastThis("Motorista Não encontrado");
                         }
-
                     }
                 });
             }
@@ -852,56 +854,61 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         threadMotoristasDisponiveis.start();
     }
 
-
     private void addListenerAguardarMotorista(DisponibilidadeMotorista motorista)
     {
         motoristaDisponivelReferencia = disponibilidadeMotoristaDao.receberDisponibilidaReferencia(motorista);
-        motoristaDisponivelReferencia.addChildEventListener( listenerAguardandoMotorista = new ChildEventListener()
+        listenerAguardandoMotorista = new ChildEventListener()
         {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+                if("disponibilidade".equals(dataSnapshot.getKey()))
+                {
+                    String disponibilidade = dataSnapshot.getValue(String.class);
+
+                    if (disponibilidade != null)
                     {
-                        if("disponibilidade".equals(dataSnapshot.getKey()))
+                        switch (disponibilidade)
                         {
-                            String disponibilidade = dataSnapshot.getValue(String.class);
-
-                            if (disponibilidade != null)
-                            {
-                                switch (disponibilidade)
+                            case DisponibilidadeMotorista.EM_VIAGEM:
                                 {
-                                    case DisponibilidadeMotorista.EM_VIAGEM:
-                                    {
-                                        dialogBuscarMotorista.dismiss();
-                                        configTela(3);
-                                        toastThis("Viagem Aceita");
-                                    }break;
+                                    dialogBuscarMotorista.dismiss();
+                                    configTela(3);
+                                    toastThis("Viagem Aceita");
+                                    //funçao
+                                }break;
 
-                                    case DisponibilidadeMotorista.DISPONIVEL:
-                                    {
+                            case DisponibilidadeMotorista.DISPONIVEL:
+                                {
                                         dialogBuscarMotorista.dismiss();
                                         toastThis("viagem Recusada");
-                                    }break;
+                                }break;
 
-                                    case DisponibilidadeMotorista.INDISPONIVEL: {}break;
+                            case DisponibilidadeMotorista.INDISPONIVEL: {}break;
 
-                                    default: {}break;
-                                }
-                            }
+                            case DisponibilidadeMotorista.PREPARANDO_VIAGEM: {}break;
+
+                            default: {}break;
                         }
                     }
+                }
+            }
 
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
 
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {}
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        };
+
+        motoristaDisponivelReferencia.addChildEventListener(listenerAguardandoMotorista);
+
     }
 
 

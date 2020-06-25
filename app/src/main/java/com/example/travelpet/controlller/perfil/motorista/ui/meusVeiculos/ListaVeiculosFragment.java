@@ -39,7 +39,6 @@ public class ListaVeiculosFragment extends Fragment {
     private DatabaseReference usuariosRef;
     private FloatingActionButton floatAddVeiculo;
     private VeiculoDAO veiculodao;
-    private ListaVeiculosViewModel veiculosViewModel;
     private ValueEventListener valueEventListenerListaVeiculos;
     DatabaseReference referenciaVeiculos;
 
@@ -53,8 +52,6 @@ public class ListaVeiculosFragment extends Fragment {
 
         floatAddVeiculo = view.findViewById(R.id.floatAddVeiculo);
         recyclerViewVeiculos = view.findViewById(R.id.recyclerViewListaVeiculos);
-
-
 
         //listaVeiculos.add(testeVeiculo("123456","652314","Fusca","Volkswagem","PNK-9645","1980","123456789"));
         //listaVeiculos.add(testeVeiculo("123456","789521","Gol","Volkswagem","PXF-6541","1994","78945613"));
