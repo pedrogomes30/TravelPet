@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/ivSpinnerLayout"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
             android:padding="10dp"
             android:src="@drawable/ic_spinner_especie" />
 
@@ -24,13 +24,13 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/androchunk"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/customSpinnerIcon"
-        android:layout_width="55dp"
+        android:layout_width="54dp"
         android:layout_height="55dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

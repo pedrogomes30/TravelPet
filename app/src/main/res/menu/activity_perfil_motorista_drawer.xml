@@ -2,7 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
+        <item android:title="Principal">
+                <menu>
+                        <group android:checkableBehavior="single">
         <item
             android:id="@+id/mapMotoristaFragment"
             android:icon="@drawable/ic_stat_name"
@@ -12,7 +14,12 @@
             android:id="@+id/listaVeiculosFragment"
             android:icon="@drawable/ic_menu_viagem"
             android:title="Meus Veículos" />
-
+                        </group>
+                </menu>
+        </item>
+        <item android:title="Outras ações">
+                <menu>
+                        <group>
         <item
             android:id="@+id/nav_info"
             android:icon="@drawable/ic_menu_info"
@@ -23,5 +30,7 @@
             android:icon="@drawable/ic_menu_sair"
             android:title="Logout"
             />
-
+                        </group>
+                </menu>
+        </item>
 </menu>

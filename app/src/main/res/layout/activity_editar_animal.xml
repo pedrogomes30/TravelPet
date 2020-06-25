@@ -33,9 +33,12 @@
             android:src="@drawable/imagem_animal"
             app:civ_border_color="@color/colorApp"
             app:civ_border_width="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <ImageButton
             android:id="@+id/botaoCamera"
@@ -64,127 +67,124 @@
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_galeria" />
 
-        <TextView
-            android:id="@+id/textViewNome"
-            style="@style/FonteTituloCinza"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@string/nome_"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewFotoAnimal" />
-
-        <TextView
-            android:id="@+id/textViewNomeAnimal"
-            style="@style/Fonte_memor_preta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/nome_do_animal"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewNome"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_round"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/textInputObservacaoAnimal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewNome" />
-
-        <TextView
-            android:id="@+id/textViewEspecie"
-            style="@style/FonteTituloCinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Espécie:"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFotoAnimal">
 
-        <TextView
-            android:id="@+id/textViewEspecieAnimal"
-            style="@style/Fonte_memor_preta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Especie do Animal"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewEspecie"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewEspecie" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewRaca"
-            style="@style/FonteTituloCinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Raça:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewEspecie" />
+                <TextView
+                    android:id="@+id/textViewNome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/nome_"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textViewRacaAnimal"
-            style="@style/Fonte_memor_preta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Raça do Animal"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewRaca"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textViewRaca" />
+                <TextView
+                    android:id="@+id/textViewEspecie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Espécie:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textViewPorte"
-            style="@style/FonteTituloCinza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
-            android:text="@string/porte_"
-            app:layout_constraintBottom_toTopOf="@+id/botaoSalvar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRaca"
-            app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/textViewRaca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Raça:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="24sp" />
 
-        <Spinner
-            android:id="@+id/spinnerPorteAnimal"
-            android:layout_width="240dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="55dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewPorte"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewEspecie"
-            app:layout_constraintTop_toTopOf="@+id/textViewPorte"
-            app:layout_constraintVertical_bias="0.51" />
+                <TextView
+                    android:id="@+id/textViewPorte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/porte_"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewNomeAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nome_do_animal"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/gray"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textViewEspecieAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Especie do Animal"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/gray"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/textViewRacaAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Raça do Animal"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/gray"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerPorteAnimal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="textEnd"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputObservacaoAnimal"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/edit_text_branco_seletor"
             app:layout_constraintBottom_toTopOf="@+id/botaoSalvar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerPorteAnimal">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <EditText
                 android:id="@+id/editTextObservacaoAnimal"
@@ -213,7 +213,9 @@
             android:text="@string/salvar"
             app:layout_constraintBottom_toTopOf="@+id/botaoExcluir"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputObservacaoAnimal" />
 
         <Button
             android:id="@+id/botaoExcluir"
@@ -222,14 +224,16 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="64dp"
             android:layout_weight="1"
             android:background="@drawable/button_azul_seletor"
             android:onClick="botaoExcluir"
             android:text="@string/excluir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/botaoSalvar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -92,15 +92,16 @@
         <Button
             android:id="@+id/bt_bs_motorista"
             style="@style/Fonte_botao_azul"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_verde_seletor"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_gravity="center"
             android:layout_margin="4dp"
             android:layout_weight="1"
-            android:text="@string/confirmar_disponibilidade"/>
+            android:background="@drawable/button_verde_seletor"
+            android:text="@string/confirmar_disponibilidade"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/bt_bs_motorista2"

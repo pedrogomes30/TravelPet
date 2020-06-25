@@ -1950,6 +1950,7 @@ id left
 id light
 id line1
 id line3
+id linearLayout
 id linearLayout2
 id linear_origem_destino
 id listMode
@@ -2035,6 +2036,7 @@ id phone_button
 id phone_layout
 id phone_number
 id pin
+id progressBar
 id progress_circular
 id progress_horizontal
 id radio

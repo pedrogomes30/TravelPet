@@ -26,13 +26,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/bt_bs_donoanimal"
-            style="@style/Fonte_botao_azul"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/selecionar"
-            android:background="@drawable/button_azul_seletor"/>
+    <Button
+        android:id="@+id/bt_bs_donoanimal"
+        style="@style/Fonte_botao_azul"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_azul_seletor"
+        android:text="@string/selecionar" />
 
 
 </LinearLayout>

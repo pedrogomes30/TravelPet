@@ -51,4 +51,9 @@
         android:name="com.example.travelpet.controlller.perfil.motorista.ui.meusVeiculos.LogoutMotoristaFragment"
         android:label="fragment_logout_motorista"
         tools:layout="@layout/fragment_logout_motorista" />
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.example.travelpet.controlller.perfil.passageiro.ui.info.InfoFragment"
+        android:label="@string/menu_info"
+        />
 </navigation>

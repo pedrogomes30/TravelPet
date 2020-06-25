@@ -120,6 +120,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="info">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-81" />
+                            <option name="y" value="211" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="listaVeiculosFragment">
                     <value>
                       <LayoutPositions>
@@ -169,12 +181,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mapMotoristaFragment_to_listaVeiculosFragment">
+                            <entry key="action_logoutMotorista">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mapMotoristaFragment_to_logoutMotoristaFragment">
+                            <entry key="action_mapMotoristaFragment_to_listaVeiculosFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

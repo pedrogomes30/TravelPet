@@ -57,7 +57,7 @@ public class PerfilMotoristaActivity extends AppCompatActivity {
         //navigationView.setNavigationItemSelectedListener(this);
         dialog = new Dialog(this);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.mapMotoristaFragment, R.id.listaVeiculosFragment, R.id.logoutMotoristaFragment)
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.mapMotoristaFragment, R.id.listaVeiculosFragment, R.id.nav_info, R.id.logoutMotoristaFragment)
                 .setDrawerLayout(drawer)
                 .build();
 
