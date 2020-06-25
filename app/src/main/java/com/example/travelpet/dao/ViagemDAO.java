@@ -6,6 +6,8 @@ import com.example.travelpet.model.Viagem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.core.DatabaseConfig;
+
 import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
@@ -50,6 +52,18 @@ public class ViagemDAO
                         latch.countDown();
                     }
         });
+    }
+
+    public void deletarViagemRecusada(Viagem viagem)
+    {
+        DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());
+        viagemRef.removeValue();
+    }
+
+    public void recusarViagem(Viagem viagem)
+    {
+        DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem()).child("idMotorista");
+        viagemRef.setValue(null);
     }
 
     public void receberViagem ()

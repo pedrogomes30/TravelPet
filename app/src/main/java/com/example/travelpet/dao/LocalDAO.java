@@ -3,7 +3,10 @@ package com.example.travelpet.dao;
 import com.example.travelpet.model.Local;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -11,6 +14,7 @@ import androidx.annotation.NonNull;
 
 public class LocalDAO
 {
+    private Local local;
     public LocalDAO(){}
 
     public static String gerarPushKeyIdLocal()
@@ -40,6 +44,32 @@ public class LocalDAO
                 latch.countDown();
             }
         });
+    }
+
+    public Local getLocal (String id, final CountDownLatch contador)
+    {
+        DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("local").child(id);
+        referencia.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                local = snapshot.getValue(Local.class);
+                contador.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+                contador.countDown();
+            }
+        });
+
+        try {contador.await();}
+        catch (InterruptedException e)
+        {e.printStackTrace();}
+
+        return local;
     }
 
 

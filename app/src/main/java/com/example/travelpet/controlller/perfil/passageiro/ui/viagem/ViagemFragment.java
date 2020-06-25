@@ -3,15 +3,12 @@ package com.example.travelpet.controlller.perfil.passageiro.ui.viagem;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,7 +97,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private DisponibilidadeMotoristaDao disponibilidadeMotoristaDao;
 
     private DisponibilidadeMotorista motoristaDisponivel;
-    private Viagem viagem;
+    private Viagem viagemAtual;
     private LinearLayout linearOrigemDestino;
 
     private DonoAnimal meuPerfil;
@@ -540,7 +537,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         newAddres.setLatitude(-22.876962);
         newAddres.setLongitude(-42.008073);
 
-            return newAddres;
+        return newAddres;
     }
 
     private Address recuperaEnderecoViaLocation(Location location) throws IOException
@@ -637,10 +634,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 listaAnimaisSelecionados = new ArrayList<>();
                 listaAnimaisSelecionados = (ArrayList<Animal>) listSection.getSelectedItems();
 
-                viagem = new Viagem();
-                viagem.setIdDonoAnimal(meuPerfil.getIdUsuario());
-                viagem.setFotoDonoAnimalUrl(meuPerfil.getFotoPerfilUrl());
-                viagem.setNomeDonoAnimal(meuPerfil.getNome());
+                viagemAtual = new Viagem();
+                viagemAtual.setIdDonoAnimal(meuPerfil.getIdUsuario());
+                viagemAtual.setFotoDonoAnimalUrl(meuPerfil.getFotoPerfilUrl());
+                viagemAtual.setNomeDonoAnimal(meuPerfil.getNome());
 
                 switch (listaAnimaisSelecionados.size())
                 {
@@ -652,15 +649,15 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 1 :
                     {
-                        viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
-                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
-                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
-                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
 
-                        viagem.setCusto(10.50);
-                        viagem.setData("14/06/2020");
-                        viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
-                        viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
+                        viagemAtual.setCusto(10.50);
+                        viagemAtual.setData("14/06/2020");
+                        viagemAtual.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
+                        viagemAtual.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (1 Animal)");
                         threadPrepararViagem();
@@ -669,20 +666,20 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 2 :
                     {
-                        viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
-                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
-                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
-                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
 
-                        viagem.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
-                        viagem.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
-                        viagem.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
-                        viagem.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
 
-                        viagem.setCusto(10.50);
-                        viagem.setData("14/06/2020");
-                        viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
-                        viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
+                        viagemAtual.setCusto(10.50);
+                        viagemAtual.setData("14/06/2020");
+                        viagemAtual.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
+                        viagemAtual.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (2 Animais)");
                         threadPrepararViagem();
@@ -691,25 +688,25 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
                     case 3 :
                     {
-                        viagem.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
-                        viagem.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
-                        viagem.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
-                        viagem.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal1(listaAnimais.get(0).getObservacaoAnimal());
 
-                        viagem.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
-                        viagem.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
-                        viagem.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
-                        viagem.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal2(listaAnimais.get(1).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl2(listaAnimais.get(1).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal2(listaAnimais.get(1).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal2(listaAnimais.get(1).getObservacaoAnimal());
 
-                        viagem.setIdAnimal3(listaAnimais.get(2).getIdAnimal());
-                        viagem.setFotoAnimalUrl3(listaAnimais.get(2).getFotoAnimalUrl());
-                        viagem.setNomeAnimal3(listaAnimais.get(2).getNomeAnimal());
-                        viagem.setObservacaoAnimal3(listaAnimais.get(2).getObservacaoAnimal());
+                        viagemAtual.setIdAnimal3(listaAnimais.get(2).getIdAnimal());
+                        viagemAtual.setFotoAnimalUrl3(listaAnimais.get(2).getFotoAnimalUrl());
+                        viagemAtual.setNomeAnimal3(listaAnimais.get(2).getNomeAnimal());
+                        viagemAtual.setObservacaoAnimal3(listaAnimais.get(2).getObservacaoAnimal());
 
-                        viagem.setCusto(10.50);
-                        viagem.setData("14/06/2020");
-                        viagem.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
-                        viagem.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
+                        viagemAtual.setCusto(10.50);
+                        viagemAtual.setData("14/06/2020");
+                        viagemAtual.setDistancia(calcularDistancia(localOrigem.getLocation(), localDestino.getLocation()));
+                        viagemAtual.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
 
                         toastThis("continuando a viagem (3 Animais)");
                         threadPrepararViagem();
@@ -776,10 +773,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 catch (InterruptedException e) { e.printStackTrace(); }
 
                 contador = new CountDownLatch(1);
-                viagem.setIdViagem(ViagemDAO.gerarPushKeyIdViagem());
-                viagem.setIdOrigem(localOrigem.getIdLocal());
-                viagem.setIdDestino(localDestino.getIdLocal());
-                viagemDAO.salvarViagem(viagem,contador);
+                viagemAtual.setIdViagem(ViagemDAO.gerarPushKeyIdViagem());
+                viagemAtual.setIdOrigem(localOrigem.getIdLocal());
+                viagemAtual.setIdDestino(localDestino.getIdLocal());
+                viagemDAO.salvarViagem(viagemAtual,contador);
 
                 try { contador.await();}
                 catch (InterruptedException e) { e.printStackTrace(); }
@@ -818,9 +815,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 if (motorista != null)
                 {
                     contador = new CountDownLatch(1);
-                    viagem.setIdMotorista(motorista.getIdMotorista());
+                    viagemAtual.setIdMotorista(motorista.getIdMotorista());
                     showInTerminal("adicionando motorista à viagem ");
-                    viagemDAO.salvarViagem(viagem,contador);
+                    viagemDAO.salvarViagem(viagemAtual,contador);
                 }
                 else
                 {

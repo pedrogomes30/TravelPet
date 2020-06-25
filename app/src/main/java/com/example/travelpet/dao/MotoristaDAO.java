@@ -12,13 +12,18 @@ import com.example.travelpet.model.Motorista;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class MotoristaDAO {
-    //private Motorista motorista;
+import java.util.concurrent.CountDownLatch;
 
+public class MotoristaDAO {
+
+    private Motorista motorista;
 
     public MotoristaDAO() {}
 
@@ -96,5 +101,32 @@ public class MotoristaDAO {
                 });
             }
         });
+    }
+
+    public Motorista receberPerfil(String id, final CountDownLatch contador)
+    {
+        motorista = null;
+        DatabaseReference dbrefence = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("motorista").child(id);
+        dbrefence.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                Motorista moto = dataSnapshot.getValue(Motorista.class);
+                motorista = moto;
+
+                contador.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            { contador.countDown();}
+        });
+
+        try { contador.await();}
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return  motorista;
+
     }
 }

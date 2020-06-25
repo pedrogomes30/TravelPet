@@ -3,12 +3,10 @@ package com.example.travelpet.controlller.perfil.motorista.ui;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.IntentSender;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,9 +42,9 @@ import com.example.travelpet.dao.ViagemDAO;
 import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.model.DisponibilidadeMotorista;
 import com.example.travelpet.model.Local;
+import com.example.travelpet.model.Motorista;
 import com.example.travelpet.model.Veiculo;
 import com.example.travelpet.model.Viagem;
-import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
@@ -113,6 +111,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     private Dialog dialogSolicitacaoViagem;
 
     //Outros
+    private Motorista meuPerfil;
     private Local localPassageiro,localDestino;
     private Viagem viagemAtual;
     private Veiculo veiculoSelecionado;
@@ -132,6 +131,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         View view = inflater.inflate(R.layout.fragment_map_motorista, container, false);
 
         //iniciandoDAOS
+        motoristaDAO = new MotoristaDAO();
         disponibilidadeDAO =  new DisponibilidadeMotoristaDao();
         veiculoDAO = new VeiculoDAO();
         localDAO = new LocalDAO();
@@ -147,8 +147,35 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 
+        iniciarPerfil();
         threadChecarDisponibilidade();
         return view;
+    }
+
+    private void iniciarPerfil()
+    {
+        Thread threadIniciarPerfil = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                meuPerfil = motoristaDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()),contador);
+
+                try { contador.await();}
+                catch (InterruptedException e) { e.printStackTrace(); }
+
+                requireActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        showInTerminal("Motorista Recebido :" + meuPerfil.getNome());
+                    }
+                });
+            }
+        });
+        threadIniciarPerfil.start();
     }
 
     @Override
@@ -316,7 +343,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     //CONFIG TELA
     private void configTela(String disponibilidade)
     {
-        showInTerminal("<< Configurando a tela para"+disponibilidade+" >>");
+        showInTerminal("<< Configurando a tela para"+ disponibilidade +" >>");
         switch (disponibilidade)
         {
             case DisponibilidadeMotorista.INDISPONIVEL:
@@ -327,6 +354,10 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 }break;
 
             case DisponibilidadeMotorista.EM_VIAGEM:
+                {
+                       //pegar o passageiro
+                }
+
             case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
                 {
                     configFab(disponibilidade);
@@ -422,6 +453,180 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
             default: {}break;
         }
+    }
+
+    private void preparaDialogSolicitacaoViagem()
+    {
+        dialogSolicitacaoViagem = new Dialog(requireActivity());
+        dialogSolicitacaoViagem.setContentView(R.layout.dialog_viagem_solicitada);
+        dialogSolicitacaoViagem.setCanceledOnTouchOutside(false);
+
+        Button btAceitar, btCancelar;
+        final TextView tvDonoAnimal, animal1, animal2, animal3, descricao;
+        final CircleImageView ciDonoAnimal, ciAnimal1, ciAnimal2,ciAnimal3;
+        LinearLayout layoutAnimal2, layoutAnimal3;
+
+        tvDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.tv_donoanimal);
+        animal1 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal1);
+        animal2 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal2);
+        animal3 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal3);
+        descricao = dialogSolicitacaoViagem.findViewById(R.id.tv_descricaoanimal);
+        ciDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.ci_donoanimal);
+        ciAnimal1 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal1);
+        ciAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal2);
+        ciAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal3);
+        layoutAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal2);
+        layoutAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal3);
+        btAceitar = dialogSolicitacaoViagem.findViewById(R.id.bt_aceitarViagem);
+        btCancelar = dialogSolicitacaoViagem.findViewById(R.id.bt_recusarViagem);
+
+        tvDonoAnimal.setText(viagemAtual.getNomeDonoAnimal());
+        setGlide(viagemAtual.getFotoDonoAnimalUrl(),ciDonoAnimal);
+
+        animal1.setText(viagemAtual.getNomeAnimal1());
+        setGlide(viagemAtual.getFotoAnimalUrl1(), ciAnimal1);
+        ciAnimal1.setBorderColor(getResources().getColor(R.color.colorButtonVerdePadrao));
+        ciAnimal1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                ciAnimal1.setBorderColor(getResources().getColor(R.color.colorButtonVerdePadrao));
+                ciAnimal2.setBorderColor(getResources().getColor(R.color.white));
+                ciAnimal3.setBorderColor(getResources().getColor(R.color.white));
+                descricao.setText(viagemAtual.getObservacaoAnimal1());
+            }
+        });
+
+        if(viagemAtual.getIdAnimal2() != null)
+        {
+            animal2.setText(viagemAtual.getNomeAnimal2());
+            setGlide(viagemAtual.getFotoAnimalUrl2(), ciAnimal2);
+            layoutAnimal2.setVisibility(View.VISIBLE);
+            ciAnimal2.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    ciAnimal1.setBorderColor(getResources().getColor(R.color.white));
+                    ciAnimal2.setBorderColor(getResources().getColor(R.color.colorButtonVerdePadrao));
+                    ciAnimal3.setBorderColor(getResources().getColor(R.color.white));
+                    descricao.setText(viagemAtual.getObservacaoAnimal2());
+                }
+            });
+        }
+        if(viagemAtual.getIdAnimal3() != null)
+        {
+            animal3.setText(viagemAtual.getNomeAnimal3());
+            setGlide(viagemAtual.getFotoAnimalUrl3(), ciAnimal3);
+            layoutAnimal3.setVisibility(View.VISIBLE);
+            ciAnimal3.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    ciAnimal1.setBorderColor(getResources().getColor(R.color.white));
+                    ciAnimal2.setBorderColor(getResources().getColor(R.color.white));
+                    ciAnimal3.setBorderColor(getResources().getColor(R.color.colorButtonVerdePadrao));
+                    descricao.setText(viagemAtual.getObservacaoAnimal3());
+                }
+            });
+        }
+
+        descricao.setText(viagemAtual.getObservacaoAnimal1());
+        OnClickDialogSolicitarViagem(btAceitar, btCancelar);
+
+        dialogSolicitacaoViagem.show();
+    }
+
+    private void OnClickDialogSolicitarViagem (Button btAceitar, Button btRecusar)
+    {
+        btAceitar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                aceitarViagem();
+            }
+        });
+
+        btRecusar.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                recusarViagem();
+            }
+        });
+
+        dialogSolicitacaoViagem.setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+                recusarViagem();
+            }
+        });
+    }
+
+    private void aceitarViagem()
+    {
+        viagemAtual.setNomeMotorista(meuPerfil.getNome());
+        viagemAtual.setFotoMotoristaUrl(meuPerfil.getFotoPerfilUrl());
+        viagemAtual.setIdVeiculo(veiculoSelecionado.getIdVeiculo());
+        viagemAtual.setMarcaVeiculo(veiculoSelecionado.getMarcaVeiculo());
+        viagemAtual.setModeloVeiculo(veiculoSelecionado.getModeloVeiculo());
+        viagemAtual.setPlacaVeiculo(veiculoSelecionado.getPlacaVeiculo());
+        viagemAtual.setStatusViagem(Viagem.AGUARDANDO_MOTORISTA);
+
+        Thread threadAceitarViagem = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                contador = new CountDownLatch(1);
+                localPassageiro = localDAO.getLocal(viagemAtual.getIdOrigem(), contador);
+
+                try {contador.await();}
+                catch (InterruptedException e)
+                {e.printStackTrace();}
+
+                contador = new CountDownLatch(1);
+                localDestino = localDAO.getLocal(viagemAtual.getIdDestino(),contador);
+
+                try {contador.await();}
+                catch (InterruptedException e)
+                {e.printStackTrace();}
+
+                contador = new CountDownLatch(1);
+                //setar itens da viagem
+                viagemDAO.salvarViagem(viagemAtual, contador);
+
+                try {contador.await();}
+                catch (InterruptedException e)
+                {e.printStackTrace();}
+
+                requireActivity().runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        disponibilidade.setDisponibilidade(DisponibilidadeMotorista.EM_VIAGEM);
+                        threadSalvarDisponibilidade();
+                    }
+                });
+            }
+        });
+        threadAceitarViagem.start();
+    }
+
+    private void recusarViagem()
+    {
+        viagemDAO.recusarViagem(viagemAtual);
+        disponibilidade.setDisponibilidade(DisponibilidadeMotorista.DISPONIVEL);
+        threadSalvarDisponibilidade();
+        viagemAtual = null;
+        dialogSolicitacaoViagem.dismiss();
     }
 
     private void configuraMultiViewAdapter()
@@ -594,55 +799,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             }
         });
         checarDisponibilidade.start();
-    }
-
-    private void preparaDialogSolicitacaoViagem()
-    {
-        dialogSolicitacaoViagem = new Dialog(requireActivity());
-        dialogSolicitacaoViagem.setContentView(R.layout.dialog_viagem_solicitada);
-        dialogSolicitacaoViagem.setCanceledOnTouchOutside(false);
-
-        Button btconfirmar, btCancelar;
-        TextView tvDonoAnimal, animal1, animal2, animal3, descricao;
-        CircleImageView ciDonoAnimal, ciAnimal1, ciAnimal2,ciAnimal3;
-        LinearLayout layoutAnimal2, layoutAnimal3;
-
-        tvDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.tv_donoanimal);
-        animal1 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal1);
-        animal2 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal2);
-        animal3 = dialogSolicitacaoViagem.findViewById(R.id.tv_cianimal3);
-        descricao = dialogSolicitacaoViagem.findViewById(R.id.tv_descricaoanimal);
-        ciDonoAnimal = dialogSolicitacaoViagem.findViewById(R.id.ci_donoanimal);
-        ciAnimal1 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal1);
-        ciAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal2);
-        ciAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.ci_animal3);
-        layoutAnimal2 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal2);
-        layoutAnimal3 = dialogSolicitacaoViagem.findViewById(R.id.layout_cianimal3);
-        btconfirmar = dialogSolicitacaoViagem.findViewById(R.id.bt_aceitarViagem);
-        btCancelar = dialogSolicitacaoViagem.findViewById(R.id.bt_recusarViagem);
-
-        tvDonoAnimal.setText(viagemAtual.getNomeDonoAnimal());
-        setGlide(viagemAtual.getFotoDonoAnimalUrl(),ciDonoAnimal);
-
-        animal1.setText(viagemAtual.getNomeAnimal1());
-        setGlide(viagemAtual.getFotoAnimalUrl1(), ciAnimal1);
-
-        if(viagemAtual.getIdAnimal2() != null)
-        {
-            animal2.setText(viagemAtual.getNomeAnimal2());
-            setGlide(viagemAtual.getFotoAnimalUrl2(), ciAnimal2);
-            layoutAnimal2.setVisibility(View.VISIBLE);
-        }
-        if(viagemAtual.getIdAnimal3() != null)
-        {
-            animal3.setText(viagemAtual.getNomeAnimal3());
-            setGlide(viagemAtual.getFotoAnimalUrl3(), ciAnimal3);
-            layoutAnimal3.setVisibility(View.VISIBLE);
-        }
-
-        descricao.setText(viagemAtual.getObservacaoAnimal1());
-
-        dialogSolicitacaoViagem.show();
     }
 
     private void setGlide(String url, CircleImageView view)
