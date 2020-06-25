@@ -39,28 +39,29 @@
 
         <ImageButton
             android:id="@+id/botaoCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:onClick="botaoCamera"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewFotoAnimal"
             app:layout_constraintEnd_toStartOf="@+id/botaoGaleria"
+            app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_camera" />
 
         <ImageButton
             android:id="@+id/botaoGaleria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:onClick="botaoGaleria"
             app:layout_constraintBottom_toBottomOf="@+id/imageViewFotoAnimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/botaoCamera"
             app:layout_constraintTop_toTopOf="@+id/imageViewFotoAnimal"
-            app:layout_constraintVertical_bias="0.897"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_galeria" />
 
         <TextView
