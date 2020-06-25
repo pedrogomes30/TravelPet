@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorApp">
+
+    <TextView
+        android:id="@+id/textViewAvaliacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Avaliação"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewCircleFotoUsuario"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/imagem_usuario"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAvaliacao" />
+
+    <TextView
+        android:id="@+id/textViewNomeUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Nome Usuário"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCircleFotoUsuario" />
+
+    <TextView
+        android:id="@+id/textViewAvaliacaoTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="Escolha uma nota"
+        android:textColor="@color/white"
+        android:textSize="27sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNomeUsuario" />
+
+    <ImageView
+        android:id="@+id/imageViewIconeNota1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewIconeNota2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAvaliacaoTipo"
+        app:srcCompat="@drawable/ic_nota_avaliacao_24dp" />
+
+    <TextView
+        android:id="@+id/textViewNota1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota1"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewIconeNota1"
+        app:layout_constraintStart_toStartOf="@+id/imageViewIconeNota1"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota1" />
+
+    <ImageView
+        android:id="@+id/imageViewIconeNota2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota1"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewIconeNota3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIconeNota1"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota1"
+        app:srcCompat="@drawable/ic_nota_avaliacao_24dp" />
+
+    <TextView
+        android:id="@+id/textViewNota2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="2"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota2"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewIconeNota2"
+        app:layout_constraintStart_toStartOf="@+id/imageViewIconeNota2"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota2" />
+
+    <ImageView
+        android:id="@+id/imageViewIconeNota3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota2"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewIconeNota4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIconeNota2"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota2"
+        app:srcCompat="@drawable/ic_nota_avaliacao_24dp" />
+
+    <TextView
+        android:id="@+id/textViewNota3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="3"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota3"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewIconeNota3"
+        app:layout_constraintStart_toStartOf="@+id/imageViewIconeNota3"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota3" />
+
+    <ImageView
+        android:id="@+id/imageViewIconeNota4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota3"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewIconeNota5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIconeNota3"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota3"
+        app:srcCompat="@drawable/ic_nota_avaliacao_24dp" />
+
+    <TextView
+        android:id="@+id/textViewNota4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="4"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota4"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewIconeNota4"
+        app:layout_constraintStart_toStartOf="@+id/imageViewIconeNota4"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota4" />
+
+    <ImageView
+        android:id="@+id/imageViewIconeNota5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIconeNota4"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota4"
+        app:srcCompat="@drawable/ic_nota_avaliacao_24dp" />
+
+    <TextView
+        android:id="@+id/textViewNota5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="5"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewIconeNota5"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewIconeNota5"
+        app:layout_constraintStart_toStartOf="@+id/imageViewIconeNota5"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIconeNota5" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputObservacao"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/edit_text_branco_seletor"
+        app:layout_constraintBottom_toTopOf="@+id/botaoConfirmar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewIconeNota3"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/editTextObservacao"
+            style="@style/Fonte_memor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/fredoka_one_regular"
+            android:hint="@string/observacoes_"
+            android:maxLength="450" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/botaoConfirmar"
+        style="@style/Fonte_botao_azul"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_verde_seletor"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:onClick="botaoSalvar"
+        android:text="Confirmar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

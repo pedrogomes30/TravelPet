@@ -23,6 +23,7 @@ import com.example.travelpet.R;
 import com.example.travelpet.dao.AnimalDAO;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.RecuperaFoto;
+import com.example.travelpet.helper.TelaAvaliacao;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
@@ -70,6 +71,17 @@ public class EditarAnimalActivity extends AppCompatActivity{
         iniciarComponentes();
         getDadosAnimalSelecionado();
         setDadosAnimalSelecionado();
+
+        TextView nome = findViewById(R.id.textViewNome);
+        final TelaAvaliacao telaAvaliacao = new TelaAvaliacao(EditarAnimalActivity.this);
+        nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                telaAvaliacao.iniciarAvaliacao();
+            }
+        });
+
     }
 
     public void botaoCamera(View view){

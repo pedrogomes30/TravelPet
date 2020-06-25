@@ -846,6 +846,9 @@ color about_twitter_color
 color about_youtube_color
 color accent_material_dark
 color accent_material_light
+color amarelo_avalicao_muito_ruim
+color amarelo_avalicao_ruim
+color azul_avalicao_regular
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -1054,6 +1057,8 @@ color test_mtrl_calendar_day
 color test_mtrl_calendar_day_selected
 color tooltip_background_dark
 color tooltip_background_light
+color verde_avalicao_bom
+color verde_avalicao_muito_bom
 color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
@@ -1608,6 +1613,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_nota_avaliacao_24dp
 drawable ic_seta_proximo
 drawable ic_seta_voltar
 drawable ic_spinner_ave
@@ -1748,6 +1754,7 @@ id barrier
 id beginning
 id blocking
 id botaoCamera
+id botaoConfirmar
 id botaoEnviarFotoCrlv
 id botaoEnviarFotoPerfil
 id botaoExcluir
@@ -1861,6 +1868,7 @@ id editObservacaoAnimal
 id editOrigem
 id editSobrenomeUsuario
 id editTelefone
+id editTextObservacao
 id editTextObservacaoAnimal
 id editUf
 id edit_phone_number
@@ -1931,7 +1939,13 @@ id imageFotoAnimalLista
 id imageView
 id imageView2
 id imageViewCircleFotoPerfil
+id imageViewCircleFotoUsuario
 id imageViewFotoAnimal
+id imageViewIconeNota1
+id imageViewIconeNota2
+id imageViewIconeNota3
+id imageViewIconeNota4
+id imageViewIconeNota5
 id imageViewPerfil
 id imageViewPerfilMotorista
 id info
@@ -2159,6 +2173,8 @@ id textView
 id textView2
 id textView3
 id textView6
+id textViewAvaliacao
+id textViewAvaliacaoTipo
 id textViewBoasVindas
 id textViewBoasVindas3
 id textViewCNH
@@ -2175,6 +2191,11 @@ id textViewNomeFotoCnh
 id textViewNomeFotoCrlv
 id textViewNomeFotoMotorista
 id textViewNomeUsuario
+id textViewNota1
+id textViewNota2
+id textViewNota3
+id textViewNota4
+id textViewNota5
 id textViewObervacao
 id textViewPorte
 id textViewRaca
@@ -2378,6 +2399,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_avaliacao
 layout dialog_buscar_motorista
 layout dialog_origem_destino
 layout dialog_viagem_solicitada
@@ -2535,6 +2557,7 @@ string appbar_scrolling_view_behavior
 string bairro
 string bairro_destino
 string bairro_origem
+string bom
 string bottom_sheet_behavior
 string cadastrando_novo_veiculo
 string cadastrar_veiculo
@@ -2766,6 +2789,8 @@ string mtrl_picker_toggle_to_calendar_input_mode
 string mtrl_picker_toggle_to_day_selection
 string mtrl_picker_toggle_to_text_input_mode
 string mtrl_picker_toggle_to_year_selection
+string muito_bom
+string muito_ruim
 string n_de_registro_cnh
 string nav_app_bar_navigate_up_description
 string nav_app_bar_open_drawer_description
@@ -2805,11 +2830,13 @@ string qual_tipo_de_usuario_voc_pretende_ser
 string raca_
 string raca_do_animal
 string recusar
+string regular
 string requisitos_da_foto
 string requisitos_da_foto_perfil_motorista
 string rkl_2890
 string rua_destino
 string rua_origem
+string ruim
 string sair
 string salvar
 string sao_bernardo

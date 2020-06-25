@@ -173,5 +173,11 @@
         <item>"SO"</item>
     </string-array>
 
+    <!-- Texto das notas Avaliação -->
+    <string name="muito_ruim">Muito Ruim</string>
+    <string name="ruim">Ruim</string>
+    <string name="regular">Regular</string>
+    <string name="bom">Bom</string>
+    <string name="muito_bom">Muito Bom</string>
 
 </resources>

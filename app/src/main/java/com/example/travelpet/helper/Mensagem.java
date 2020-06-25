@@ -148,6 +148,11 @@ public class Mensagem {
 
     }
 
+    // Mensagem de Avaliação------------------------------------------------------------------------
+    public static void mensagemConclusaoAvaliacao(Activity activity){
+        toastIt("Avaliação concluída com sucesso", activity);
+    }
+
     //----------------------------------------------------------------------------------------------
     public static void toastIt (String mensagem, Activity activity) {
         Toast.makeText(activity,mensagem,Toast.LENGTH_SHORT).show();

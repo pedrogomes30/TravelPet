@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.example.travelpet.R;
 import com.example.travelpet.controlller.perfil.motorista.PerfilMotoristaActivity;
 import com.example.travelpet.dao.UsuarioFirebase;
 import com.example.travelpet.helper.Permissao;
+import com.example.travelpet.helper.TelaAvaliacao;
+import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.helper.ValidarLogin;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
