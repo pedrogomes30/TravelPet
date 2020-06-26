@@ -27,12 +27,14 @@
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <Button
+        android:id="@+id/btInteragirViagem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="32dp"
+        style="@style/Fonte_botao_vermelho"
+        android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/button_vermelho_seletor"
-        android:text="O passageiro entrou no veículo"
+        android:text="Cancelar a Viagem "
         android:visibility="gone"
         android:textColor="@color/white"/>
 

@@ -48,6 +48,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Fonte_botao_vermelho" parent="Fontetitulo">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Fonte_botao_verde" parent="Fontetitulo">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Fonte_laranja" parent = "Fontetitulo">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
@@ -76,7 +86,6 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">19sp</item>
-        <item name="android:textSize">15.4sp</item>
         <item name="android:gravity">left</item>
 
     </style>

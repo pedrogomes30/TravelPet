@@ -1772,6 +1772,7 @@ id browser_actions_menu_item_icon
 id browser_actions_menu_item_text
 id browser_actions_menu_items
 id browser_actions_menu_view
+id btInteragirViagem
 id btProximo
 id btProximoVeiculo
 id bt_aceitarViagem
@@ -3137,6 +3138,8 @@ style FirebaseUI_WrapperStyle
 style FonteTituloCinza
 style FonteTituloPreta
 style Fonte_botao_azul
+style Fonte_botao_verde
+style Fonte_botao_vermelho
 style Fonte_laranja
 style Fonte_laranja_maior
 style Fonte_media_branca_

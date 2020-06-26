@@ -61,6 +61,9 @@ dependencies {
     // Dependência do MultiViewAdapter
     implementation 'dev.ahamed.mva2:adapter:2.0.0-alpha01'
 
+    //Geofire
+    implementation 'com.firebase:geofire-android:2.3.1'
+
     // Dependência do google, pra facilitar o passe do gson para um objeto java
     implementation 'com.google.code.gson:gson:2.8.5'
 }

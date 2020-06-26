@@ -131,7 +131,7 @@ public class DisponibilidadeMotoristaDao
 
         else
             {
-                showInTerminal("==== Disponibilidade já existe =====");
+                showInTerminal("DisponibilidadeMotoristaDao","receberDisponibilidade","Disponibilidade já existe");
             }
 
         return disponibilidade;
@@ -160,31 +160,31 @@ public class DisponibilidadeMotoristaDao
 
                     if(checarPortes(animaisSelecionados, disponibilidade))
                     {
-                        showInTerminal("checarPortes : OK");
+                        showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","checarPortes : OK");
 
                         if (checarMotoristasCancelados(motoristasCancelados))
                         {
-                            showInTerminal("checarMotoristasCancelados : OK");
+                            showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","checarMotoristasCancelados : OK");
 
                             if (checarDistancia(localOrigem,distanciaMax))
                             {
-                                showInTerminal("checarDistancia : OK");
+                                showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","checarDistancia : OK");
 
                                 motoristasDisponiveis.add(disponibilidade);
                             }
                             else
                             {
-                                showInTerminal("Motorista muito distante");
+                                showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","Motorista muito distante");
                             }
                         }
                         else
                         {
-                            showInTerminal("motorista Cancelado");
+                            showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","motorista Cancelado");
                         }
                     }
                     else
                     {
-                        showInTerminal("animais não são compativeis");
+                        showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","animais não são compativeis");
                     }
                 }
                 contador.countDown();
@@ -193,7 +193,7 @@ public class DisponibilidadeMotoristaDao
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-                showInTerminal("nenhum motorista disponível");
+                showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","nenhum motorista disponível");
                 contador.countDown();
             }
         });
@@ -205,7 +205,7 @@ public class DisponibilidadeMotoristaDao
         if (motoristasDisponiveis.size() > 0 )
         {
             retornaMotoristaMaisProximo(localOrigem);
-            showInTerminal("Devolvendo "+disponibilidade.getIdMotorista());
+            showInTerminal("DisponibilidadeMotoristaDao","queryMotoristaDisponivel","Devolvendo "+disponibilidade.getIdMotorista());
             return disponibilidade;
         }
         else
@@ -219,7 +219,7 @@ public class DisponibilidadeMotoristaDao
         if(motoristasDisponiveis.size() == 1)
         {
             disponibilidade = motoristasDisponiveis.get(0);
-            showInTerminal("apenas 1 motorista");
+            showInTerminal("DisponibilidadeMotoristaDao","retornaMotoristaMaisProximo","apenas 1 motorista");
         }
 
         else if (motoristasDisponiveis.size() > 1)
@@ -236,7 +236,7 @@ public class DisponibilidadeMotoristaDao
                 motorista.setLatitude(motoristasDisponiveis.get(i).getLatitudeMotorista());
                 motorista.setLongitude(motoristasDisponiveis.get(i).getLongitudeMotorista());
                 float distancia = origem.distanceTo(motorista);
-                showInTerminal("Distancia do Motorista ["+i+"]= " + distancia);
+                showInTerminal("DisponibilidadeMotoristaDao","retornaMotoristaMaisProximo","Distancia do Motorista ["+i+"]= " + distancia);
 
                 if (menorDistancia == 0) {
                     menorDistancia = origem.distanceTo(motorista);
@@ -247,7 +247,7 @@ public class DisponibilidadeMotoristaDao
                 {
                     if (menorDistancia > distancia)
                     {
-                        showInTerminal("menor distancia = " + Math.round(distancia));
+                        showInTerminal("DisponibilidadeMotoristaDao","retornaMotoristaMaisProximo","menor distancia = " + Math.round(distancia));
                         menorDistancia = distancia;
                         motoristaMaisProximo = i;
                     }
@@ -258,7 +258,7 @@ public class DisponibilidadeMotoristaDao
 
         else
         {
-            showInTerminal("nã há motorists próximos");
+            showInTerminal("DisponibilidadeMotoristaDao","retornaMotoristaMaisProximo","nã há motorists próximos");
         }
     }
 
@@ -284,13 +284,13 @@ public class DisponibilidadeMotoristaDao
 
         donoAnimal.setLatitude(localOrigem.getLatitude());
         donoAnimal.setLongitude(localOrigem.getLongitude());
-        showInTerminal("latitude donoAnimal = " + String.valueOf(donoAnimal.getLatitude()));
-        showInTerminal("longitude donoAnimal = " + String.valueOf(donoAnimal.getLongitude()));
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","latitude donoAnimal = " + String.valueOf(donoAnimal.getLatitude()));
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","longitude donoAnimal = " + String.valueOf(donoAnimal.getLongitude()));
 
         motorista.setLatitude(disponibilidade.getLatitudeMotorista());
         motorista.setLongitude(disponibilidade.getLongitudeMotorista());
-        showInTerminal("latitude motorista = " + String.valueOf(motorista.getLatitude()));
-        showInTerminal("latitude motorista = " + String.valueOf(motorista.getLongitude()));
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","latitude motorista = " + String.valueOf(motorista.getLatitude()));
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","latitude motorista = " + String.valueOf(motorista.getLongitude()));
 
         distancia = donoAnimal.distanceTo(motorista);
         //distanceTo retorna em metros, pra obter em kilometros precisa dividir por 1000
@@ -301,11 +301,11 @@ public class DisponibilidadeMotoristaDao
         //DecimalFormat df = new DecimalFormat("0.0"); para km
 
 
-        showInTerminal("distancia em int =" + teste);
-        showInTerminal("distanciaMAX em int =" + teste2);
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","distancia em int =" + teste);
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","distanciaMAX em int =" + teste2);
 
-        showInTerminal("distancia em Float =" + distancia);
-        showInTerminal("distanciaMAX em Float=" + distanciaMax);
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","distancia em Float =" + distancia);
+        showInTerminal("DisponibilidadeMotoristaDao","checarDistancia","distanciaMAX em Float=" + distanciaMax);
 
 
         if(distancia < distanciaMax)
@@ -329,18 +329,18 @@ public class DisponibilidadeMotoristaDao
         for (int i =0; i<portesSelecionados.size(); i++)
         {
             if(dispPortes.getPorteAnimalPequeno().equals("false") && portesSelecionados.get(i).equals("pequeno"))
-            { showInTerminal("porte Pequeno Imcompatível");
+            { showInTerminal("DisponibilidadeMotoristaDao","checarPortes","porte Pequeno Imcompatível");
                 return false;
             }
 
             if(dispPortes.getPorteAnimalMedio().equals("false") && portesSelecionados.get(i).equals("medio"))
             {
-                showInTerminal("porte Medio Imcompatível");
+                showInTerminal("DisponibilidadeMotoristaDao","checarPortes","porte Medio Imcompatível");
                 return false;
             }
 
             if(dispPortes.getPorteAnimalGrande().equals("false") && portesSelecionados.get(i).equals("grande"))
-            { showInTerminal("porte Grande Imcompatível");
+            { showInTerminal("DisponibilidadeMotoristaDao","checarPortes","porte Grande Imcompatível");
                 return false;
             }
         }
@@ -348,11 +348,38 @@ public class DisponibilidadeMotoristaDao
     }
 
 
-    public void showInTerminal (String mensagem)
+
+    public void atualizarLatLong(LatLng localMotorista, DisponibilidadeMotorista disponibilidade)
     {
-        System.out.println(mensagem);
+        disponibilidade.setLongitudeMotorista(localMotorista.longitude);
+        disponibilidade.setLatitudeMotorista(localMotorista.latitude);
+
+        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference disponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
+
+        disponibilidadeRef.setValue(disponibilidade)
+                .addOnSuccessListener(new OnSuccessListener<Void>()
+                {
+                    @Override
+                    public void onSuccess(Void aVoid)
+                    {
+                        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong", "localização Atualizada com sucesso");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener()
+                {
+                    @Override
+                    public void onFailure(@NonNull Exception e)
+                    {
+                        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong", "erro: "+ e.toString());
+                    }
+                });
     }
 
+    public void showInTerminal (String classe, String metodo, String mensagem)
+    {
+        System.out.println("< " + classe + " > ( " + metodo + " ) " + " = "+ mensagem);
     }
+}
 
 
