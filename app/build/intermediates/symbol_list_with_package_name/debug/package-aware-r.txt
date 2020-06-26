@@ -854,6 +854,7 @@ color background_floating_material_light
 color background_material_dark
 color background_material_light
 color black
+color black_semi_transparent
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -1057,6 +1058,7 @@ color test_mtrl_calendar_day
 color test_mtrl_calendar_day_selected
 color tooltip_background_dark
 color tooltip_background_light
+color transparent
 color verde_avalicao_bom
 color verde_avalicao_muito_bom
 color white
@@ -1568,6 +1570,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable edit_text_branco
 drawable edit_text_branco_seletor
+drawable fab_label_background
 drawable fui_ic_anonymous_white_24dp
 drawable fui_ic_check_circle_black_128dp
 drawable fui_ic_facebook_white_22dp
@@ -1588,6 +1591,8 @@ drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_adicionar
 drawable ic_atencao_
+drawable ic_botao_disponivel
+drawable ic_botao_indisponivel
 drawable ic_calendar_black_24dp
 drawable ic_camera
 drawable ic_clear_black_24dp

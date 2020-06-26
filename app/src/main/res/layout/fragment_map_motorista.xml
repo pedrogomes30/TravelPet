@@ -17,25 +17,26 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_disponibilidade"
         android:layout_width="wrap_content"
+        android:text="Cancelar a Viagem "
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_close"
-        android:visibility="gone"
-        >
+        android:visibility="visible"
+        app:maxImageSize="32dp">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <Button
         android:id="@+id/btInteragirViagem"
+        style="@style/Fonte_botao_vermelho"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        style="@style/Fonte_botao_vermelho"
         android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/button_vermelho_seletor"
         android:text="Cancelar a Viagem "
-        android:visibility="gone"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -9,7 +9,8 @@
     <color name="green">#388e3c</color>
     <color name="gray">#4C4E4C</color>
     <color name="black">#000000</color>
-
+    <color name="transparent">#00FFFFFF</color>
+    <color name="black_semi_transparent">#46959595</color>
     <color name="colorButtonBrancoPressionado">#dedfe3</color>
     <color name="colorButtonAzulPadrao">#4375d9</color>
     <color name="colorButtonAzulPressionado">#6699ff</color>
