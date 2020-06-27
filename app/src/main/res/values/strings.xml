@@ -180,4 +180,9 @@
     <string name="bom">Bom</string>
     <string name="muito_bom">Muito Bom</string>
 
+    <!-- Texto de como Transportar Animais-->
+    <string name="porte_pequeno_medio">Para maior segurança, animais de porte pequeno e médio devem ser transportados em caixas de transporte colocadas atrás do banco do motorista na parte inferior.</string>
+    <string name="porte_grande">Para maior segurança, animais de porte grande devem ser transportados em carros adaptados com grades de segurança bem fixadas.</string>
+
+
 </resources>

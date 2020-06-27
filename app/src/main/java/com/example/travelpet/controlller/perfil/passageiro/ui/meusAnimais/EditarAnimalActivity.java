@@ -25,6 +25,7 @@ import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.RecuperaFoto;
 import com.example.travelpet.helper.TelaAvaliacao;
 import com.example.travelpet.helper.TelaCarregamento;
+import com.example.travelpet.helper.TelaTransportePet;
 import com.example.travelpet.helper.VerificaDado;
 import com.example.travelpet.model.Animal;
 
@@ -73,12 +74,21 @@ public class EditarAnimalActivity extends AppCompatActivity{
         setDadosAnimalSelecionado();
 
         TextView nome = findViewById(R.id.textViewNome);
+        TextView raca = findViewById(R.id.textViewRaca);
         final TelaAvaliacao telaAvaliacao = new TelaAvaliacao(EditarAnimalActivity.this);
+        final TelaTransportePet telaTransportePet= new TelaTransportePet(EditarAnimalActivity.this);
+
         nome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 telaAvaliacao.iniciarAvaliacao();
+            }
+        });
+
+        raca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                telaTransportePet.iniciarTelaTransporte();
             }
         });
 

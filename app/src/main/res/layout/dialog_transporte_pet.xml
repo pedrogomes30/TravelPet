@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgraund_dialog">
+
+    <TextView
+        android:id="@+id/tv_verificar_caixa"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:gravity="center"
+        android:text="VERIFIQUE A CAIXA DE TRANSPORTE"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_icone_caixa"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_caixa_transporte"
+        app:civ_border_color="@color/colorApp"
+        app:civ_border_width="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_verificar_caixa" />
+
+    <ImageView
+        android:id="@+id/iv_seta_esquerda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewDescricao"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_seta_esquerda" />
+
+    <ImageView
+        android:id="@+id/iv_seta_direita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/botao_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/botao_ok"
+        app:srcCompat="@drawable/ic_seta_direita" />
+
+    <Button
+        android:id="@+id/botao_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_verde_seletor"
+        android:fontFamily="@font/fredoka_one_regular"
+        android:text="OK"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_seta_esquerda"
+        app:layout_constraintEnd_toStartOf="@+id/iv_seta_direita"
+        app:layout_constraintStart_toEndOf="@+id/iv_seta_esquerda"
+        app:layout_constraintTop_toTopOf="@+id/iv_seta_esquerda" />
+
+    <ScrollView
+        android:id="@+id/scrollViewDescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_icone_caixa">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_descricao"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/fredoka_one_regular"
+                android:gravity="center"
+                android:text="@string/porte_pequeno_medio"
+                android:textColor="@color/white"
+                android:textSize="21sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/iv_icone_circulo_cheio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_icone_circulo_vazio"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botao_ok"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_circulo_cheio" />
+
+    <ImageView
+        android:id="@+id/iv_icone_circulo_vazio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_icone_circulo_cheio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/iv_icone_circulo_cheio"
+        app:layout_constraintTop_toTopOf="@+id/iv_icone_circulo_cheio"
+        app:srcCompat="@drawable/ic_circulo_vazio" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

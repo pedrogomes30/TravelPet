@@ -1515,6 +1515,7 @@ drawable about_icon_twitter
 drawable about_icon_youtube
 drawable avd_hide_password
 drawable avd_show_password
+drawable backgraund_dialog
 drawable background_perfil_gradiente
 drawable baseline_map_black_24dp
 drawable bg_round
@@ -1593,14 +1594,18 @@ drawable ic_adicionar
 drawable ic_atencao_
 drawable ic_botao_disponivel
 drawable ic_botao_indisponivel
+drawable ic_caixa_transporte
 drawable ic_calendar_black_24dp
 drawable ic_camera
+drawable ic_circulo_cheio
+drawable ic_circulo_vazio
 drawable ic_clear_black_24dp
 drawable ic_close
 drawable ic_done
 drawable ic_edit_black_24dp
 drawable ic_exit
 drawable ic_galeria
+drawable ic_grades
 drawable ic_keyboard_arrow_left_black_24dp
 drawable ic_keyboard_arrow_right_black_24dp
 drawable ic_launcher_background
@@ -1619,6 +1624,8 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_nota_avaliacao_24dp
+drawable ic_seta_direita
+drawable ic_seta_esquerda
 drawable ic_seta_proximo
 drawable ic_seta_voltar
 drawable ic_spinner_ave
@@ -1769,6 +1776,7 @@ id botaoMotorista
 id botaoPassageiro
 id botaoProximo
 id botaoSalvar
+id botao_ok
 id bottom
 id bottom_sheet_donoanimal_container
 id bottom_sheet_motorista_container
@@ -1961,6 +1969,11 @@ id italic
 id item_touch_helper_previous_elevation
 id ivDropDownLayout
 id ivSpinnerLayout
+id iv_icone_caixa
+id iv_icone_circulo_cheio
+id iv_icone_circulo_vazio
+id iv_seta_direita
+id iv_seta_esquerda
 id labeled
 id largeLabel
 id layout_cianimal1
@@ -2085,6 +2098,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollView2
+id scrollViewDescricao
 id scrollable
 id search_badge
 id search_bar
@@ -2257,6 +2271,7 @@ id tv_cianimal2
 id tv_cianimal3
 id tv_cidadeDestino
 id tv_cidadeOrigem
+id tv_descricao
 id tv_descricaoanimal
 id tv_dialog_buscarMotorista
 id tv_donoanimal
@@ -2277,6 +2292,7 @@ id tv_numeroOrigem
 id tv_placaveiculo_bs
 id tv_ruaDestino
 id tv_ruaOrigem
+id tv_verificar_caixa
 id unchecked
 id uniform
 id unlabeled
@@ -2408,6 +2424,7 @@ layout design_text_input_start_icon
 layout dialog_avaliacao
 layout dialog_buscar_motorista
 layout dialog_origem_destino
+layout dialog_transporte_pet
 layout dialog_viagem_solicitada
 layout fragment_add_veiculo
 layout fragment_configuracao
@@ -2829,6 +2846,8 @@ string por_favor_preencha_os_campos_com_os_dados_de_seu_veiculo
 string por_favor_preencha_os_campos_com_seus_dados
 string por_favor_selecione
 string porte_
+string porte_grande
+string porte_pequeno_medio
 string procurando_motorista
 string project_id
 string proximo

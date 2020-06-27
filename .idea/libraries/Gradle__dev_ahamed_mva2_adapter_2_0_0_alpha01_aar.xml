@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: dev.ahamed.mva2:adapter:2.0.0-alpha01@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ce9871c96259f1d2ebd06cebbf57574f/jetified-adapter-2.0.0-alpha01/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/12a45fc9f6f71aecf04797733bbafed4/jetified-adapter-2.0.0-alpha01/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ce9871c96259f1d2ebd06cebbf57574f/jetified-adapter-2.0.0-alpha01/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ce9871c96259f1d2ebd06cebbf57574f/jetified-adapter-2.0.0-alpha01/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/12a45fc9f6f71aecf04797733bbafed4/jetified-adapter-2.0.0-alpha01/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/12a45fc9f6f71aecf04797733bbafed4/jetified-adapter-2.0.0-alpha01/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/dev.ahamed.mva2/adapter/2.0.0-alpha01/fa636c859e98479157f1b66169adb1caa6c4406b/adapter-2.0.0-alpha01-javadoc.jar!/" />
