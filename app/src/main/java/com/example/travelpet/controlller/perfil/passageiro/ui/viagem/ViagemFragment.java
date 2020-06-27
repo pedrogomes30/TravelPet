@@ -81,7 +81,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private BottomSheetDialog bsDialog;
     private Dialog dialogBuscarMotorista;
     private MultiViewAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerBs;
     private ListSection<Animal> listSection;
     private ArrayList<Animal> listaAnimais = new ArrayList<>();
@@ -105,7 +104,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     // Variáveis para recuperar localização de um usuário
     private Local localOrigem, localDestino;
-    private Location localizacaoAtual;
+    private Location locationAtual;
     private Address addressDestino;
     private Geocoder geocoder;
     private GoogleMap gMap;
@@ -116,14 +115,11 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private SettingsClient settingsClient;
     private LatLng localPassageiro;
 
-    private ChildEventListener listenerAguardandoMotorista;
-    private DatabaseReference motoristaDisponivelReferencia;
+    private ChildEventListener listenerAguardandoMotorista, listenerAguardandoConfirmacaoViagem;
+    private DatabaseReference motoristaDisponivelReferencia, confirmacaoViagemReferencia;
 
     private EditText editDestino, editOrigem;
-    private Button buttonChamarMotorista,btSelecionarAnimais;
-
-    private Thread threadMotoristasDisponiveis;
-    private Thread threadIniciarPerfil;
+    private Button buttonChamarMotorista, btSelecionarAnimais;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -148,7 +144,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         // Criando mapa
         client = LocationServices.getFusedLocationProviderClient(requireActivity());
         geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        mapView = (MapView) view.findViewById(R.id.MapView);
+        mapView = view.findViewById(R.id.MapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
 
@@ -158,14 +154,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
-    private void iniciarMapa()
-    {
-        try
-        {
+    private void iniciarMapa() {
+        try {
             MapsInitializer.initialize(requireActivity().getApplicationContext());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -173,43 +165,36 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap)
-    {
+    public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
         recuperarLocalizacaoUsuario();
     }
 
-    private void recuperarLocalizacaoUsuario()
-    {
+    private void recuperarLocalizacaoUsuario() {
         if (ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireActivity(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
-        client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>()
-        {
+        client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(Location location)
-            {
-                if (location != null)
-                {
+            public void onSuccess(Location location) {
+                if (location != null) {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     localPassageiro = new LatLng(latitude, longitude);
+                    locationAtual = location;
 
                     gMap.clear();
                     gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
-                    gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
+                    gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro, 19));
                 }
             }
-        }).addOnFailureListener(new OnFailureListener()
-        {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
+            public void onFailure(@NonNull Exception e) {
                 showInTerminal("<< Falha ao receber a Localização >>");
             }
         });
@@ -221,35 +206,30 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
         builderlocationsSettingsRequest = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
         settingsClient = LocationServices.getSettingsClient(requireActivity());
-        settingsClient.checkLocationSettings(builderlocationsSettingsRequest.build()).addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>()
-        {
+        settingsClient.checkLocationSettings(builderlocationsSettingsRequest.build()).addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
             @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {}
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+
+            }
 
 
-        }).addOnFailureListener(new OnFailureListener()
-        {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception e)
-            {
-                if( e instanceof ResolvableApiException)
-                {
-                    try
-                    {
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof ResolvableApiException) {
+                    try {
                         ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(requireActivity(),10);
+                        resolvable.startResolutionForResult(requireActivity(), 10);
+                    } catch (IntentSender.SendIntentException ex) {
+                        ex.printStackTrace();
                     }
-                    catch (IntentSender.SendIntentException ex)
-                    { ex.printStackTrace();}
                 }
             }
         });
 
-        LocationCallback locationCallback = new LocationCallback()
-        {
+        LocationCallback locationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult)
-            {
+            public void onLocationResult(LocationResult locationResult) {
                 showInTerminal("<< onLocationResult : ok >>");
 
                 Location location = locationResult.getLastLocation();
@@ -257,142 +237,135 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 localPassageiro = new LatLng(latitude, longitude);
+                locationAtual = location;
 
                 gMap.clear();
                 gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro, 19));
             }
 
             @Override
-            public void onLocationAvailability(LocationAvailability locationAvailability) {}
+            public void onLocationAvailability(LocationAvailability locationAvailability) {
+            }
         };
 
-        client.requestLocationUpdates(locationRequest,locationCallback,null);
+        client.requestLocationUpdates(locationRequest, locationCallback, null);
 
     }
 
     private void exibirBottomSheet() {
         configuraBottomSheet();
-        popularAdapter();
-
+        threadPopularAdapter();
         bsDialog.show();
     }
 
-    private void popularAdapter()
-    {
-       final Thread thread1 =  new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                contador = new CountDownLatch(1);
-                listaAnimais.clear();
-                listaAnimais = animalDAO.receberListaAnimal(contador);
-
-                try
-                {contador.await();}
-                catch (InterruptedException e)
-                { e.printStackTrace(); }
-
-                requireActivity().runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        configuraMultiViewAdapter();
-                    }
-                });
-            }
-        });
-
-       thread1.start();
-    }
-
-    private void btNovaViagemOnClick()
-    {
-
-        buttonChamarMotorista.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                //
-                return false;
-            }
-        });
-
+    private void btNovaViagemOnClick() {
         // Envento de clique do botão "Chamar Motorista"
-        buttonChamarMotorista.setOnClickListener(new View.OnClickListener()
-        {
+        buttonChamarMotorista.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
 
                 // Pegando as String de Origem e destino
                 String enderecoOrigem = editOrigem.getText().toString();
                 String enderecoDestino = editDestino.getText().toString();
 
                 //pegando as coordenadas de origem
-                if (enderecoOrigem.equals("") || enderecoOrigem == null)
-                {
+                if (enderecoOrigem.equals("")) {
                     Address addressOrigem = null;
 
-                        if(localizacaoAtual != null)
-                        {
-                            try
-                            { addressOrigem = recuperaEnderecoViaLocation(localizacaoAtual); }
-                            catch (IOException e)
-                            { e.printStackTrace();}
-
-                            if(addressOrigem != null)
-                            {
-                                localOrigem = new Local();
-                                localOrigem = addressToLocal(addressOrigem,Local.ORIGEM);
-                            }
-
+                    if (locationAtual != null) {
+                        try {
+                            addressOrigem = recuperaEnderecoViaLocation(locationAtual);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        else
-                        {
-                            toastThis(" Aguarde o aplicativo recuperar a sua Localização");
+
+                        if (addressOrigem != null) {
+                            localOrigem = new Local();
+                            localOrigem = addressToLocal(addressOrigem, Local.ORIGEM);
                         }
-                }
-                else
-                {
+
+                    } else {
+                        toastThis(" Aguarde o aplicativo recuperar a sua Localização");
+                    }
+
+                } else {
                     //Address addressOrigem = recuperaEnderecoViaString(enderecoOrigem);
                     Address addressOrigem = recuperaEnderecoViaStringDebug(enderecoOrigem);
                     localOrigem = new Local();
-                    localOrigem = addressToLocal(addressOrigem,Local.ORIGEM);
+                    localOrigem = addressToLocal(addressOrigem, Local.ORIGEM);
                 }
 
                 //pegando as coordenadas do destino
-                if (!enderecoDestino.equals("") || enderecoDestino != null)
-                {
+                if (!enderecoDestino.equals("")) {
                     //Address addressDestino = recuperaEnderecoViaString(enderecoDestino);
                     Address addressDestino = recuperaEnderecoViaStringDebug(enderecoDestino);
 
-                    if (addressDestino != null)
-                    {
+                    if (addressDestino != null) {
                         localDestino = new Local();
                         localDestino = addressToLocal(addressDestino, Local.DESTINO);
 
                         exibirDialogOrigemDestino();
                     }
 
-                }
-                else
-                {
+                } else {
                     // não esta aparecendo a mensagem
-                    Toast.makeText(getActivity(),"Informe o endereço de destino!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Informe o endereço de destino!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    private void threadPopularAdapter() {
+        final Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                contador = new CountDownLatch(1);
+                listaAnimais.clear();
+                listaAnimais = animalDAO.receberListaAnimal(contador);
+
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        configuraMultiViewAdapter();
+                    }
+                });
+            }
+        });
+
+        thread1.start();
+    }
+
+    private void configuraMultiViewAdapter() {
+        //cria Adapter
+        adapter = new MultiViewAdapter();
+        adapter.registerItemBinders(new AnimalBinder(getActivity()));
+
+        //Instancia o ListSection para incluir listaAnimais
+        listSection = new ListSection<>();
+        listSection.setSelectionMode(Mode.MULTIPLE);
+        listSection.addAll(listaAnimais);
+
+        //adiciona o ListSection
+        adapter.addSection(listSection);
+        adapter.setSelectionMode(Mode.MULTIPLE);
+
+        recyclerBs.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+
     @SuppressLint("SetTextI18n")
-    private void exibirDialogOrigemDestino()
-    {
-        TextView ruaOrigem,numOrigem,bairroOrigem,cidadeOrigem,estadoOrigem,cepOrigem;
-        TextView ruaDestino,numDestino,bairroDestino,cidadeDestino,estadoDestino,cepDestino;
-        Button btConfirmar,btCancelar;
+    private void exibirDialogOrigemDestino() {
+        TextView ruaOrigem, numOrigem, bairroOrigem, cidadeOrigem, estadoOrigem, cepOrigem;
+        TextView ruaDestino, numDestino, bairroDestino, cidadeDestino, estadoDestino, cepDestino;
+        Button btConfirmar, btCancelar;
 
         dialogOrigemDestino = new Dialog(requireActivity());
         dialogOrigemDestino.setContentView(R.layout.dialog_origem_destino);
@@ -421,49 +394,57 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         cidadeOrigem.setText("Cidade: " + localOrigem.getCidade());
         estadoOrigem.setVisibility(View.GONE);
 
-        if(localOrigem.getNumero() ==  null || localOrigem.getNumero().equals(localOrigem.getRua()))
-        {numOrigem.setVisibility(View.GONE);}
-        else {numOrigem.setText("Número: " + localOrigem.getNumero());}
+        if (localOrigem.getNumero() == null || localOrigem.getNumero().equals(localOrigem.getRua())) {
+            numOrigem.setVisibility(View.GONE);
+        } else {
+            numOrigem.setText("Número: " + localOrigem.getNumero());
+        }
 
-        if(localOrigem.getBairro() ==  null)
-        {bairroOrigem.setVisibility(View.GONE);}
-        else {bairroOrigem.setText("Bairro: " + localOrigem.getBairro());}
+        if (localOrigem.getBairro() == null) {
+            bairroOrigem.setVisibility(View.GONE);
+        } else {
+            bairroOrigem.setText("Bairro: " + localOrigem.getBairro());
+        }
 
-        if(localOrigem.getCep() ==  null)
-        {cepOrigem.setVisibility(View.GONE);}
-        else {cepOrigem.setText("Cep: " + localOrigem.getCep());}
+        if (localOrigem.getCep() == null) {
+            cepOrigem.setVisibility(View.GONE);
+        } else {
+            cepOrigem.setText("Cep: " + localOrigem.getCep());
+        }
 
         //SetText Destino
         ruaDestino.setText(localDestino.getRua());
         cidadeDestino.setText("Cidade: " + localDestino.getCidade());
         estadoDestino.setVisibility(View.GONE);
 
-        if(localDestino.getNumero() ==  null || localDestino.getNumero().equals(localDestino.getRua()))
-        {numDestino.setVisibility(View.GONE);}
-        else {numDestino.setText("Número: " + localDestino.getNumero());}
+        if (localDestino.getNumero() == null || localDestino.getNumero().equals(localDestino.getRua())) {
+            numDestino.setVisibility(View.GONE);
+        } else {
+            numDestino.setText("Número: " + localDestino.getNumero());
+        }
 
-        if(localDestino.getBairro() ==  null)
-        {bairroDestino.setVisibility(View.GONE);}
-        else {bairroDestino.setText("Bairro: " + localDestino.getBairro());}
+        if (localDestino.getBairro() == null) {
+            bairroDestino.setVisibility(View.GONE);
+        } else {
+            bairroDestino.setText("Bairro: " + localDestino.getBairro());
+        }
 
-        if(localDestino.getCep() ==  null)
-        {cepDestino.setVisibility(View.GONE);}
-        else {cepDestino.setText("Cep: " + localDestino.getCep());}
+        if (localDestino.getCep() == null) {
+            cepDestino.setVisibility(View.GONE);
+        } else {
+            cepDestino.setText("Cep: " + localDestino.getCep());
+        }
 
-        btCancelar.setOnClickListener(new View.OnClickListener()
-        {
+        btCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 dialogOrigemDestino.dismiss();
             }
         });
 
-        btConfirmar.setOnClickListener(new View.OnClickListener()
-        {
+        btConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 dialogOrigemDestino.dismiss();
                 exibirBottomSheet();
             }
@@ -473,28 +454,24 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         dialogOrigemDestino.show();
     }
 
-    private void exibirDialogBuscarMotorista()
-    {
+    private void exibirDialogBuscarMotorista() {
         dialogBuscarMotorista = new Dialog(requireActivity());
         dialogBuscarMotorista.setContentView(R.layout.dialog_buscar_motorista);
 
         Button btCancelarViagem = dialogBuscarMotorista.findViewById(R.id.bt_cancelDialog_buscarMotorista);
 
-        btCancelarViagem.setOnClickListener(new View.OnClickListener()
-        {
+        btCancelarViagem.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 dialogBuscarMotorista.dismiss();
-                configTela(1);
+                motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
+                threadCancelarViagem();
             }
         });
 
-        dialogBuscarMotorista.setOnDismissListener(new DialogInterface.OnDismissListener()
-        {
+        dialogBuscarMotorista.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onDismiss(DialogInterface dialogInterface)
-            {
+            public void onDismiss(DialogInterface dialogInterface) {
                 configTela(1);
             }
         });
@@ -502,8 +479,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         dialogBuscarMotorista.show();
     }
 
-    public Address recuperaEnderecoViaString(String endereco)
-    {
+    public Address recuperaEnderecoViaString(String endereco) {
         //Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
         // Recuperando dados baseado no endereço do usuário
@@ -512,8 +488,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             List<Address> listaEnderecos = geocoder.getFromLocationName(endereco, 10);
             //List<Address> listaEnderecos = geocoder.getFromLocationName(endereco,5,-23.047354,-42.233379,-22.727898,-41.855037);
             //Verificando se a lista não está vazia
-            if (listaEnderecos != null && ((List) listaEnderecos).size() > 0)
-            {
+            if (listaEnderecos != null && listaEnderecos.size() > 0) {
                 // pega o primeiro endereço
                 Address address = listaEnderecos.get(0);
                 //Address address = DestinoMaisProximo(listaEnderecos);
@@ -525,9 +500,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return null;
     }
 
-    private Address recuperaEnderecoViaStringDebug(String qualquerString)
-    {
-
+    private Address recuperaEnderecoViaStringDebug(String qualquerString) {
         Address newAddres = new Address(Locale.getDefault());
         newAddres.setThoroughfare("Rua Almirante Barroso");
         newAddres.setSubLocality("Passagem");
@@ -540,8 +513,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return newAddres;
     }
 
-    private Address recuperaEnderecoViaLocation(Location location) throws IOException
-    {
+    private Address recuperaEnderecoViaLocation(Location location) throws IOException {
         Geocoder geocoder;
         Address address = null;
         List<Address> addresses;
@@ -549,15 +521,13 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         geocoder = new Geocoder(getActivity());
         addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-        if (addresses.size() > 0)
-        {
+        if (addresses.size() > 0) {
             address = addresses.get(0);
         }
         return address;
     }
 
-    private Local addressToLocal(Address address, String tipo)
-    {
+    private Local addressToLocal(Address address, String tipo) {
         Local local = new Local();
         local.setRua(address.getThoroughfare());
         local.setBairro(address.getSubLocality());
@@ -571,66 +541,42 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return local;
     }
 
-    private double calcularDistancia(Location origem, Location destino)
-    {
-        double distancia =0;
+    private double calcularDistancia(Location origem, Location destino) {
+        double distancia = 0;
         distancia = origem.distanceTo(destino);
 
         return distancia;
     }
 
-    public float contarDistanciadoUsuario (Address destino)
-    {
-        float distancia = 0;
+    public float contarDistanciadoUsuario(Address destino) {
+        float distancia;
         Location pontoA;
 
         pontoA = new Location("Local Inicial");
         pontoA.setLatitude(destino.getLatitude());
         pontoA.setLongitude(destino.getLongitude());
 
-        distancia = localizacaoAtual.distanceTo(pontoA);
+        distancia = locationAtual.distanceTo(pontoA);
 
         return distancia;
     }
 
-    private void configuraMultiViewAdapter()
-    {
-        //cria Adapter
-        adapter = new MultiViewAdapter();
-        adapter.registerItemBinders(new AnimalBinder(getActivity()));
-
-        //Instancia o ListSection para incluir listaAnimais
-        listSection = new ListSection<>();
-        listSection.setSelectionMode(Mode.MULTIPLE);
-        listSection.addAll(listaAnimais);
-
-        //adiciona o ListSection
-        adapter.addSection(listSection);
-        adapter.setSelectionMode(Mode.MULTIPLE);
-
-        recyclerBs.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
     @SuppressLint("InflateParams")
-    private void configuraBottomSheet()
-    {
+    private void configuraBottomSheet() {
         bsDialog = new BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme);
         bsView = requireActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_donoanimal, null);
         btSelecionarAnimais = bsView.findViewById(R.id.bt_bs_donoanimal);
         recyclerBs = bsView.findViewById(R.id.recycler_bs_donoanimal);
 
         //configura o Recycler da bottomSheet
-        layoutManager = new GridLayoutManager(getActivity(), 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerBs.setLayoutManager(layoutManager);
         recyclerBs.setHasFixedSize(true);
 
         //configura o Botao Selecionar
-        btSelecionarAnimais.setOnClickListener(new View.OnClickListener()
-        {
+        btSelecionarAnimais.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 listaAnimaisSelecionados = new ArrayList<>();
                 listaAnimaisSelecionados = (ArrayList<Animal>) listSection.getSelectedItems();
 
@@ -639,16 +585,14 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 viagemAtual.setFotoDonoAnimalUrl(meuPerfil.getFotoPerfilUrl());
                 viagemAtual.setNomeDonoAnimal(meuPerfil.getNome());
 
-                switch (listaAnimaisSelecionados.size())
-                {
-                    case 0 :
-                    {
+                switch (listaAnimaisSelecionados.size()) {
+                    case 0: {
                         System.out.println("Selecione ao menos um animal para a viagem ");
                         toastThis("Selecione ao menos um animal para a viagem ");
-                    }break;
+                    }
+                    break;
 
-                    case 1 :
-                    {
+                    case 1: {
                         viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
                         viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
                         viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
@@ -662,10 +606,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         toastThis("continuando a viagem (1 Animal)");
                         threadPrepararViagem();
                         bsDialog.dismiss();
-                    }break;
+                    }
+                    break;
 
-                    case 2 :
-                    {
+                    case 2: {
                         viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
                         viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
                         viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
@@ -684,10 +628,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         toastThis("continuando a viagem (2 Animais)");
                         threadPrepararViagem();
                         bsDialog.dismiss();
-                    }break;
+                    }
+                    break;
 
-                    case 3 :
-                    {
+                    case 3: {
                         viagemAtual.setIdAnimal1(listaAnimais.get(0).getIdAnimal());
                         viagemAtual.setFotoAnimalUrl1(listaAnimais.get(0).getFotoAnimalUrl());
                         viagemAtual.setNomeAnimal1(listaAnimais.get(0).getNomeAnimal());
@@ -711,13 +655,14 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                         toastThis("continuando a viagem (3 Animais)");
                         threadPrepararViagem();
                         bsDialog.dismiss();
-                    }break;
+                    }
+                    break;
 
-                    default:
-                    {
+                    default: {
                         System.out.println("Você deve selecionar no máximo 3 Animais");
                         toastThis("Você deve selecionar no máximo 3 Animais");
-                    }break;
+                    }
+                    break;
                 }
             }
         });
@@ -725,67 +670,69 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         bsDialog.setContentView(bsView);
     }
 
-    private void IniciarPerfil()
-        {
-            threadIniciarPerfil = new Thread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    contador = new CountDownLatch(1);
-                    meuPerfil = donoAnimalDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()),contador);
-
-                    try { contador.await();}
-                    catch (InterruptedException e) { e.printStackTrace(); }
-
-                    requireActivity().runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            showInTerminal("donoAnimal Recebido :" + meuPerfil.getNome());
-                        }
-                    });
-                }
-            });
-            threadIniciarPerfil.start();
-        }
-
-    private void threadPrepararViagem()
-    {
-        Thread prepViagem = new Thread(new Runnable()
-        {
+    private void IniciarPerfil() {
+        Thread threadIniciarPerfil = new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
+                contador = new CountDownLatch(1);
+                meuPerfil = donoAnimalDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()), contador);
+
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showInTerminal("donoAnimal Recebido :" + meuPerfil.getNome());
+                    }
+                });
+            }
+        });
+        threadIniciarPerfil.start();
+    }
+
+    private void threadPrepararViagem() {
+        Thread prepViagem = new Thread(new Runnable() {
+            @Override
+            public void run() {
                 contador = new CountDownLatch(1);
                 localOrigem.setIdLocal(LocalDAO.gerarPushKeyIdLocal());
-                localDAO.salvarLocal(localOrigem,contador);
+                localDAO.salvarLocal(localOrigem, contador);
 
-                try { contador.await();}
-                catch (InterruptedException e) { e.printStackTrace(); }
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 contador = new CountDownLatch(1);
                 localDestino.setIdLocal(LocalDAO.gerarPushKeyIdLocal());
-                localDAO.salvarLocal(localDestino,contador);
+                localDAO.salvarLocal(localDestino, contador);
 
-                try { contador.await();}
-                catch (InterruptedException e) { e.printStackTrace(); }
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 contador = new CountDownLatch(1);
                 viagemAtual.setIdViagem(ViagemDAO.gerarPushKeyIdViagem());
                 viagemAtual.setIdOrigem(localOrigem.getIdLocal());
                 viagemAtual.setIdDestino(localDestino.getIdLocal());
-                viagemDAO.salvarViagem(viagemAtual,contador);
+                viagemDAO.salvarViagem(viagemAtual, contador);
 
-                try { contador.await();}
-                catch (InterruptedException e) { e.printStackTrace(); }
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                requireActivity().runOnUiThread(new Runnable()
-                {
+                requireActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         configTela(3);
                         exibirDialogBuscarMotorista();
                         threadMotoristasDisponiveis();
@@ -796,52 +743,67 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         prepViagem.start();
     }
 
-
-    private void threadMotoristasDisponiveis ()
-    {
-        threadMotoristasDisponiveis = new Thread(new Runnable()
-        {
+    private void threadCancelarViagem() {
+        Thread threadCancelarViagem = new Thread(new Runnable() {
             @Override
             public void run()
             {
-                final DisponibilidadeMotorista motorista ;
+                localDAO.excluirLocal(localOrigem);
+                localDAO.excluirLocal(localDestino);
+                viagemDAO.excluirViagem(viagemAtual);
+
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toastThis("Viagem Cancelada");
+                    }
+                });
+            }
+        });
+        threadCancelarViagem.start();
+    }
+
+    private void threadMotoristasDisponiveis() {
+        Thread threadMotoristasDisponiveis = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final DisponibilidadeMotorista motorista;
                 contador = new CountDownLatch(1);
                 showInTerminal("executando queryMotorista");
-                motorista = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador,5000 , listaAnimaisSelecionados,motoristaCancelados);
+                motorista = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador, 5000, listaAnimaisSelecionados, motoristaCancelados);
 
-                try { contador.await(); }
-                catch (InterruptedException e) { e.printStackTrace();}
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                if (motorista != null)
-                {
+                if (motorista != null) {
                     contador = new CountDownLatch(1);
                     viagemAtual.setIdMotorista(motorista.getIdMotorista());
                     showInTerminal("adicionando motorista à viagem ");
-                    viagemDAO.salvarViagem(viagemAtual,contador);
-                }
-                else
-                {
+                    viagemDAO.salvarViagem(viagemAtual, contador);
+                } else {
                     showInTerminal("nenhum motorista encontrado");
-                 }
+                }
 
-                try { contador.await(); }
-                catch (InterruptedException e) { e.printStackTrace();}
+                try {
+                    contador.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-                requireActivity().runOnUiThread(new Runnable()
-                {
+                requireActivity().runOnUiThread(new Runnable() {
                     @SuppressLint("SetTextI18n")
                     @Override
-                    public void run()
-                    {
+                    public void run() {
 
-                        if (motorista != null)
-                        {
+                        if (motorista != null) {
                             TextView tvBuscarMotorista = dialogBuscarMotorista.findViewById(R.id.tv_dialog_buscarMotorista);
                             tvBuscarMotorista.setText("Aguardando Confirmação...");
-                            addListenerAguardarMotorista(motorista);
-                        }
-                        else
-                        {
+                            //addListenerAguardarMotorista(motorista);
+                            addListenerConfirmacaoViagem();
+                        } else {
                             toastThis("Motorista Não encontrado");
                         }
                     }
@@ -851,18 +813,17 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         threadMotoristasDisponiveis.start();
     }
 
-    private void addListenerAguardarMotorista(DisponibilidadeMotorista motorista)
-    {
+    private void addListenerAguardarMotorista(final DisponibilidadeMotorista motorista) {
         motoristaDisponivelReferencia = disponibilidadeMotoristaDao.receberDisponibilidaReferencia(motorista);
-        listenerAguardandoMotorista = new ChildEventListener()
-        {
+        listenerAguardandoMotorista = new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
             {
-                if("disponibilidade".equals(dataSnapshot.getKey()))
+                if ("disponibilidade".equals(dataSnapshot.getKey()))
                 {
                     String disponibilidade = dataSnapshot.getValue(String.class);
 
@@ -870,79 +831,113 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     {
                         switch (disponibilidade)
                         {
-                            case DisponibilidadeMotorista.EM_VIAGEM:
+                            case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
                                 {
                                     dialogBuscarMotorista.dismiss();
                                     configTela(3);
                                     toastThis("Viagem Aceita");
+                                    motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
+                                    addListenerConfirmacaoViagem();
                                     //funçao
-                                }break;
+                                }
+                            break;
 
                             case DisponibilidadeMotorista.DISPONIVEL:
-                                {
-                                        dialogBuscarMotorista.dismiss();
-                                        toastThis("viagem Recusada");
-                                }break;
+                            case DisponibilidadeMotorista.INDISPONIVEL: {
+                                    dialogBuscarMotorista.dismiss();
+                                    toastThis("viagem Recusada");
+                                    motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
+                                }
+                                break;
 
-                            case DisponibilidadeMotorista.INDISPONIVEL: {}break;
 
-                            case DisponibilidadeMotorista.PREPARANDO_VIAGEM: {}break;
-
-                            default: {}break;
+                            default: {
+                            }
+                            break;
                         }
                     }
                 }
             }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {}
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        motoristaDisponivelReferencia.addChildEventListener(listenerAguardandoMotorista);
+    }
+
+    private void addListenerConfirmacaoViagem ()
+    {
+        confirmacaoViagemReferencia = ViagemDAO.getRootViagens().child(viagemAtual.getIdViagem());
+        listenerAguardandoMotorista = new ChildEventListener()
+        {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
+            {
+                showInTerminal("ListenerConfirmar Motorista =" + snapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
         };
 
-        motoristaDisponivelReferencia.addChildEventListener(listenerAguardandoMotorista);
+
 
     }
 
 
-    private void configTela(int config)
-    {
+    private void configTela(int config) {
         //1 - Tela Inicial (pesquisa de endereço + botao chamar Motorista)
         //2 - Tela esperando motorista
         //3 - Tela em viagem
         //4 - Tela Avaliação
 
-        switch (config)
-        {
-            case 1 :
-                {
-                    buttonChamarMotorista.setVisibility(View.VISIBLE);
-                    linearOrigemDestino.setVisibility(View.VISIBLE);
-                }break;
+        switch (config) {
+            case 1: {
+                buttonChamarMotorista.setVisibility(View.VISIBLE);
+                linearOrigemDestino.setVisibility(View.VISIBLE);
+            }
+            break;
 
-            case 2 : {}break;
-            case 3 :
-            case 4 :
-                {
-                    buttonChamarMotorista.setVisibility(View.GONE);
-                    linearOrigemDestino.setVisibility(View.GONE);
-                }break;
-            default: {}break;
+            case 2: {
+            }
+            break;
+            case 3:
+            case 4: {
+                buttonChamarMotorista.setVisibility(View.GONE);
+                linearOrigemDestino.setVisibility(View.GONE);
+            }
+            break;
+            default: {
+            }
+            break;
         }
     }
 
-    private void toastThis (String mensagem)
-    {
-        Toast.makeText(getActivity(),mensagem,Toast.LENGTH_SHORT).show();
+    private void toastThis(String mensagem) {
+        Toast.makeText(getActivity(), mensagem, Toast.LENGTH_SHORT).show();
     }
 
-    private void showInTerminal (String mensagem)
-    {
+    private void showInTerminal(String mensagem) {
         System.out.println(mensagem);
     }
 
-}//fim do fragment
+}

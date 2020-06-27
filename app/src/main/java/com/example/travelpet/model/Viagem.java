@@ -44,7 +44,15 @@ public class Viagem
     private String horaFim;
     private String StatusViagem;
 
-    public Viagem () {}
+    public Viagem ()
+    {
+        setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
+        setIdMotorista("");
+        setIdVeiculo("");
+
+        setData("");
+
+    }
 
     public String getIdViagem() {
         return idViagem;

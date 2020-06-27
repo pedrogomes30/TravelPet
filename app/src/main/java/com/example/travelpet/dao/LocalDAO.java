@@ -72,7 +72,9 @@ public class LocalDAO
         return local;
     }
 
-
-
-
+    public void excluirLocal(Local localDestino)
+    {
+        DatabaseReference referenciaLocal = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("local").child(localDestino.getIdLocal());
+        referenciaLocal.removeValue();
+    }
 }

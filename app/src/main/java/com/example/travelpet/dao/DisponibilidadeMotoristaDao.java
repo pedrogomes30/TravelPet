@@ -11,8 +11,10 @@ import com.example.travelpet.model.Local;
 import com.example.travelpet.model.Usuario;
 import com.example.travelpet.model.Viagem;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import androidx.annotation.NonNull;
@@ -347,23 +351,52 @@ public class DisponibilidadeMotoristaDao
         return true;
     }
 
-
-
     public void atualizarLatLong(LatLng localMotorista, DisponibilidadeMotorista disponibilidade)
     {
-        disponibilidade.setLongitudeMotorista(localMotorista.longitude);
-        disponibilidade.setLatitudeMotorista(localMotorista.latitude);
-
+        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong","Executando");
         FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-        DatabaseReference disponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
+        DatabaseReference minhaDisponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
 
-        disponibilidadeRef.setValue(disponibilidade)
+        Map<String, Object> minhaDisponibilidadeUpdates = new HashMap<>();
+        minhaDisponibilidadeUpdates.put("latitudeMotorista",disponibilidade.getLatitudeMotorista());
+        minhaDisponibilidadeUpdates.put("longitudeMotorista",disponibilidade.getLongitudeMotorista());
+
+        minhaDisponibilidadeRef.updateChildren(minhaDisponibilidadeUpdates);
+    }
+
+    public void atualizarDisponibilidade (DisponibilidadeMotorista disponibilidade, final CountDownLatch contador)
+    {
+        showInTerminal("DisponibilidadeMotoristaDao","atualizarDisponibilidade","Executando");
+        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference minhaDisponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
+
+        Map<String, Object> minhaDisponibilidadeUpdates = new HashMap<>();
+
+        minhaDisponibilidadeUpdates.put("disponibilidade",disponibilidade.getDisponibilidade());
+        minhaDisponibilidadeUpdates.put("idVeiculo",disponibilidade.getIdVeiculo());
+        minhaDisponibilidadeUpdates.put("latitudeMotorista",disponibilidade.getLatitudeMotorista());
+        minhaDisponibilidadeUpdates.put("longitudeMotorista",disponibilidade.getLongitudeMotorista());
+        minhaDisponibilidadeUpdates.put("porteAnimalPequeno",disponibilidade.getPorteAnimalPequeno());
+        minhaDisponibilidadeUpdates.put("porteAnimalMedio",disponibilidade.getPorteAnimalMedio());
+        minhaDisponibilidadeUpdates.put("porteAnimalGrande",disponibilidade.getPorteAnimalGrande());
+
+        minhaDisponibilidadeRef.updateChildren(minhaDisponibilidadeUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        showInTerminal("DisponibilidadeMotoristaDao","OnComplete",task.toString());
+                        contador.countDown();
+                    }
+                })
                 .addOnSuccessListener(new OnSuccessListener<Void>()
                 {
                     @Override
                     public void onSuccess(Void aVoid)
                     {
-                        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong", "localização Atualizada com sucesso");
+                        showInTerminal("DisponibilidadeMotoristaDao","OnSuccess", "Sucess");
+                        contador.countDown();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener()
@@ -371,12 +404,15 @@ public class DisponibilidadeMotoristaDao
                     @Override
                     public void onFailure(@NonNull Exception e)
                     {
-                        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong", "erro: "+ e.toString());
+                        showInTerminal("DisponibilidadeMotoristaDao","onFailure",e.toString());
+                        contador.countDown();
                     }
                 });
+
+
     }
 
-    public void showInTerminal (String classe, String metodo, String mensagem)
+    private void showInTerminal (String classe, String metodo, String mensagem)
     {
         System.out.println("< " + classe + " > ( " + metodo + " ) " + " = "+ mensagem);
     }

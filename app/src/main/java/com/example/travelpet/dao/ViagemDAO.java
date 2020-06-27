@@ -54,7 +54,7 @@ public class ViagemDAO
         });
     }
 
-    public void deletarViagemRecusada(Viagem viagem)
+    public void excluirViagem(Viagem viagem)
     {
         DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());
         viagemRef.removeValue();
