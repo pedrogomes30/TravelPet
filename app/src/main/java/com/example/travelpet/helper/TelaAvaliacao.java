@@ -141,21 +141,21 @@ public class TelaAvaliacao {
     private void setCoresNotas(String avalicao){
         switch (avalicao){
             case"1":
-                campoNota1.setColorFilter(activity.getResources().getColor(R.color.amarelo_avalicao_ruim), PorterDuff.Mode.MULTIPLY );
+                campoNota1.setColorFilter(activity.getResources().getColor(R.color.vermelho_avalicao_ruim), PorterDuff.Mode.MULTIPLY );
                 campoNota2.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota3.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota4.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota5.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 break;
             case"2":
-                campoNota2.setColorFilter(activity.getResources().getColor(R.color.amarelo_avalicao_ruim), PorterDuff.Mode.MULTIPLY );
+                campoNota2.setColorFilter(activity.getResources().getColor(R.color.vermelho_avalicao_ruim), PorterDuff.Mode.MULTIPLY );
                 campoNota1.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota3.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota4.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota5.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 break;
             case"3":
-                campoNota3.setColorFilter(activity.getResources().getColor(R.color.azul_avalicao_regular), PorterDuff.Mode.MULTIPLY );
+                campoNota3.setColorFilter(activity.getResources().getColor(R.color.amarelo_avalicao_regular), PorterDuff.Mode.MULTIPLY );
                 campoNota1.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota2.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota4.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
@@ -182,15 +182,15 @@ public class TelaAvaliacao {
         switch (avalicao){
             case"1":
                 campoAvaliacao.setText(R.string.muito_ruim);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.amarelo_avalicao_ruim));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.vermelho_avalicao_ruim));
                 break;
             case"2":
                 campoAvaliacao.setText(R.string.ruim);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.amarelo_avalicao_ruim));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.vermelho_avalicao_ruim));
                 break;
             case"3":
                 campoAvaliacao.setText(R.string.regular);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.azul_avalicao_regular));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.amarelo_avalicao_regular));
                 break;
             case"4":
                 campoAvaliacao.setText(R.string.bom);

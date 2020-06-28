@@ -19,8 +19,9 @@
     <color name="colorButtonVerdePadrao">#388e3c</color>
     <color name="colorButtonVerdePressionado">#00600f</color>
 
-    <color name="amarelo_avalicao_ruim">#FF0000</color>
-    <color name="azul_avalicao_regular">#FFE600</color>
+
+    <color name="vermelho_avalicao_ruim">#FF0000</color>
+    <color name="amarelo_avalicao_regular">#FFE600</color>
     <color name="verde_avalicao_boa">#04FF00</color>
 
 </resources>
