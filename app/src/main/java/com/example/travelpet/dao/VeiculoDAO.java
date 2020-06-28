@@ -207,6 +207,33 @@ public class VeiculoDAO
         return quantidade;
     }
 
+    public Veiculo getVeiculo (String idVeiculo, String idMotorista, final CountDownLatch contador)
+    {
+
+        DatabaseReference veiculoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("veiculos").child(idMotorista).child(idVeiculo);
+        veiculoRef.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
+                veiculo = snapshot.getValue(Veiculo.class);
+                contador.countDown();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error)
+            {
+                contador.countDown();
+            }
+        });
+
+        try {contador.await();}
+        catch (InterruptedException e)
+        {e.printStackTrace();}
+
+        return veiculo;
+    }
+
     public String excluirVeiculo(final Veiculo veiculo)
     {
 

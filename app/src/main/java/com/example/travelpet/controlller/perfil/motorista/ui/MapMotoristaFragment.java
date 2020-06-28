@@ -3,7 +3,6 @@ package com.example.travelpet.controlller.perfil.motorista.ui;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -79,7 +78,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     
     private GoogleMap gMap;
     private MapView mapView;
-    private Marker marcadorPassageiro, marcadorDestino;
+    private Marker marcadorPassageiro, marcadorDestino, marcadorMotorista;
     private FusedLocationProviderClient client;
     private LocationRequest locationRequest;
     private SettingsClient settingsClient;
@@ -112,7 +111,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     private Viagem viagemAtual;
     private LatLng localMotorista;
     private Button btInteragirViagem;
-
 
     //Outros
     private int contadorViagem;
@@ -203,6 +201,16 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 catch (InterruptedException e)
                 {e.printStackTrace();}
 
+                if(veiculoSelecionado == null)
+                {
+                    contadorDisponibilidade = new CountDownLatch(1);
+                    veiculoSelecionado = veiculoDAO.getVeiculo(disponibilidade.getIdVeiculo(),disponibilidade.getIdMotorista(),contadorDisponibilidade);
+
+                    try {contadorDisponibilidade.await();}
+                    catch (InterruptedException e)
+                    {e.printStackTrace();}
+                }
+
                 requireActivity().runOnUiThread(new Runnable()
                 {
                     @Override
@@ -236,9 +244,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     e.printStackTrace();
                 }
 
-                requireActivity().runOnUiThread(new Runnable() {
+                requireActivity().runOnUiThread(new Runnable()
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         configTela(disponibilidade.getDisponibilidade());
                         configListeners(disponibilidade.getDisponibilidade());
                         if (disponibilidade.getDisponibilidade().equals(DisponibilidadeMotorista.PREPARANDO_VIAGEM)) {
@@ -387,58 +397,53 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     @SuppressLint({"SetTextI18n", "InflateParams"})
     private void configBs(final String disponibilidade)
     {
-
-        bsDialog = new BottomSheetDialog(requireActivity(),R.style.BottomSheetDialogTheme);
-        bsView = requireActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_motorista,null);
-        bsDialog.setContentView(bsView);
-
-        pq = bsView.findViewById(R.id.checkbox_peq);
-        med = bsView.findViewById(R.id.checkbox_med);
-        grd = bsView.findViewById(R.id.checkbox_grd);
-        recyclerBS = bsView.findViewById(R.id.recycler_bs_motorista);
-
-        pq.setChecked(false);
-        med.setChecked(false);
-        grd.setChecked(false);
-
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerBS.setLayoutManager(layoutManager);
-        recyclerBS.setHasFixedSize(true);
-
-        //findViews
-
-        Button btbs1 = bsView.findViewById(R.id.bt_bs_motorista);
-        Button btbs2 = bsView.findViewById(R.id.bt_bs_motorista2);
-
-        showInTerminal("configBS","para disponibilidade = "+disponibilidade);
-        switch (disponibilidade)
+        Button btbs1, btbs2;
+        if (disponibilidade.equals(DisponibilidadeMotorista.INDISPONIVEL ) || disponibilidade.equals(DisponibilidadeMotorista.DISPONIVEL ))
         {
-            case DisponibilidadeMotorista.INDISPONIVEL:
+            bsDialog = new BottomSheetDialog(requireActivity(),R.style.BottomSheetDialogTheme);
+            bsView = requireActivity().getLayoutInflater().inflate(R.layout.layout_bottom_sheet_motorista,null);
+            bsDialog.setContentView(bsView);
+
+            pq = bsView.findViewById(R.id.checkbox_peq);
+            med = bsView.findViewById(R.id.checkbox_med);
+            grd = bsView.findViewById(R.id.checkbox_grd);
+            recyclerBS = bsView.findViewById(R.id.recycler_bs_motorista);
+
+            pq.setChecked(false);
+            med.setChecked(false);
+            grd.setChecked(false);
+
+            layoutManager = new LinearLayoutManager(getActivity());
+            recyclerBS.setLayoutManager(layoutManager);
+            recyclerBS.setHasFixedSize(true);
+
+            btbs1 = bsView.findViewById(R.id.bt_bs_motorista);
+            btbs2 = bsView.findViewById(R.id.bt_bs_motorista2);
+
+            showInTerminal("configBS","para disponibilidade = "+disponibilidade);
+            switch (disponibilidade)
             {
-                btbs2.setVisibility(View.GONE);
-                btbs1.setText("CONFIRMAR DISPONIBILIDADE");
-                onClickBtConfirmarBS(btbs1);
-                showInTerminal("configBS","BsRemovido!!");
+                case DisponibilidadeMotorista.INDISPONIVEL:
+                {
+                    btbs2.setVisibility(View.GONE);
+                    btbs1.setText("CONFIRMAR DISPONIBILIDADE");
+                    onClickBtConfirmarBS(btbs1);
+                    showInTerminal("configBS","BsRemovido!!");
 
-            }break;
+                }break;
 
-            case DisponibilidadeMotorista.DISPONIVEL:
-            {
-                btbs2.setVisibility(View.VISIBLE);
-                btbs1.setText("ATUALIZAR DISPONIBILIDADE");
-                onClickBtConfirmarBS(btbs1);
-                onClickBtCancelarBs(btbs2);
-                showInTerminal("configBS","BsAdicionado!!");
+                case DisponibilidadeMotorista.DISPONIVEL:
+                {
+                    btbs2.setVisibility(View.VISIBLE);
+                    btbs1.setText("ATUALIZAR DISPONIBILIDADE");
+                    onClickBtConfirmarBS(btbs1);
+                    onClickBtCancelarBs(btbs2);
+                    showInTerminal("configBS","BsAdicionado!!");
 
-            }break;
+                }break;
 
-            case DisponibilidadeMotorista.EM_VIAGEM:
-            case DisponibilidadeMotorista.A_CAMINHO:
-            case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
-            {
-                showInTerminal("configBS","Bs sem alterações!!!");
-            }break;
-            default: {}break;
+                default: {}break;
+            }
         }
     }
 
@@ -552,7 +557,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     @SuppressLint("SetTextI18n")
     private void configBtInteragirViagem(String disponibilidade)
-    { showInTerminal("configBtInteragirViagem","configurando para disponibilidade: "+disponibilidade);
+    { showInTerminal("configBtInteragirViagem","configurando para disponibilidade: "+ disponibilidade);
         switch (disponibilidade)
         {
             case DisponibilidadeMotorista.DISPONIVEL:
@@ -586,14 +591,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             {
                 btInteragirViagem.setBackground(getResources().getDrawable(R.drawable.button_verde_seletor));
                 btInteragirViagem.setText("Finalizar Viagem");
-                btInteragirViagem.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        //Finaliza a viagem
-                    }
-                });
                 showInTerminal("configBtInteragirViagem","Botão Alterado");
             }break;
 
@@ -621,8 +618,9 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
             case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
                 {
-                    setCallbackLocalizacaoMotorista();
                     removeListenerViagem();
+                    setCallbackLocalizacaoMotorista();
+
                 }break;
 
             case DisponibilidadeMotorista.A_CAMINHO:
@@ -634,7 +632,8 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
             case DisponibilidadeMotorista.EM_VIAGEM:
                 {
-                    client.removeLocationUpdates(callbackAcaminho);
+                    removeCallbacks(callbackAcaminho);
+                    setCallbackEmViagem();
                     removeListenerViagem();
 
                 }break;
@@ -650,10 +649,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         listenerViagem = new ChildEventListener()
         {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-            {
-
-            }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s){ }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
@@ -720,14 +716,16 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     private void setCallbackAcaminho ()
     {
-        locationRequest.setInterval(5 * 1000);
-        locationRequest.setFastestInterval(2 * 1000);
+        showInTerminal("callback a caminho","Executou");
+        locationRequest.setInterval(1 * 1000);
+        locationRequest.setFastestInterval(1 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         callbackAcaminho = new LocationCallback()
         {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onLocationResult(LocationResult locationResult) {
-
+            public void onLocationResult(LocationResult locationResult)
+            {
                 gMap.clear();
                 Location location = locationResult.getLastLocation();
                 localMotorista = new LatLng(location.getLatitude(),location.getLongitude());
@@ -737,26 +735,30 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
                 gMap.addMarker(new MarkerOptions().position(localMotorista).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
                 marcadorPassageiro = gMap.addMarker( new MarkerOptions().position(latlngPassageiro).title("Local de embarque").icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,25));
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,19));
 
-                if(distanciaMotorista(latlngPassageiro)<100)
+                if(distanciaMotorista(latlngPassageiro)<30)
                 {
                     btInteragirViagem.setBackground(getResources().getDrawable(R.drawable.button_verde_seletor));
-                    btInteragirViagem.setText("Passageiro no veículo");
+                    btInteragirViagem.setText("Dono de Animal a bordo");
                     btInteragirViagem.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v)
                         {
-                            //iniciar a viagem//
-                            //chama callbackEmViagem
+                            btInteragirViagem.setVisibility(View.GONE);
+                            disponibilidade.setDisponibilidade(DisponibilidadeMotorista.EM_VIAGEM);
+                            threadSalvarDisponibilidade();
+                            viagemDAO.atualizaStatusviagem(viagemAtual.getIdViagem(),Viagem.EM_ANDAMENTO);
                         }
                     });
                 }
+
                 else
-                {
-                    btInteragirViagem.setVisibility(View.GONE);
-                }
+                    {
+                        btInteragirViagem.setBackground(getResources().getDrawable(R.drawable.button_vermelho_seletor));
+                        btInteragirViagem.setText("Cancelar a viagem");
+                    }
 
             }
 
@@ -769,7 +771,53 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     private void setCallbackEmViagem()
     {
+        showInTerminal("callback e viagem","Executou");
+        locationRequest.setInterval(1 * 1000);
+        locationRequest.setFastestInterval(1 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+        callbackEmViagem = new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult)
+            {
+                LatLng minhalatLng = locationToLatLong(locationResult.getLastLocation());
+                LatLng destinoLatLng = locationToLatLong(localDestino.getLocation());
+
+                marcadorDestino = gMap.addMarker(new MarkerOptions().position(destinoLatLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario)));
+                marcadorMotorista = gMap.addMarker(new MarkerOptions().position(minhalatLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,19));
+
+                if (distanciaMotorista(destinoLatLng)<30)
+                {
+                    btInteragirViagem.setVisibility(View.VISIBLE);
+                    btInteragirViagem.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            //finaliza a viagem
+                        }
+                    });
+                }
+                else
+                {
+                    btInteragirViagem.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability){}
+        };
+
+        client.requestLocationUpdates(locationRequest, callbackAcaminho, null);
+
+    }
+
+    private LatLng locationToLatLong(Location location)
+    {
+        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        return latLng;
     }
 
     private void removeCallbacks (LocationCallback callback)
@@ -779,7 +827,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             showInTerminal("RemoveCallbacks"," removendo callback = " + callback );
             client.removeLocationUpdates(callback);
         }
-
     }
 
     private void preparaDialogSolicitacaoViagem()
@@ -947,8 +994,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     private void recusarViagem()
     {
-        viagemAtual.setStatusViagem(Viagem.BUSCANDO_MOTORISTA);
-        viagemDAO.recusarViagem(viagemAtual);
+        viagemDAO.recusarViagem(viagemAtual.getIdViagem());
         disponibilidade.setDisponibilidade(DisponibilidadeMotorista.DISPONIVEL);
         threadSalvarDisponibilidade();
         viagemAtual = null;

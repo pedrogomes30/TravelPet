@@ -351,18 +351,28 @@ public class DisponibilidadeMotoristaDao
         return true;
     }
 
-    public void atualizarLatLong(LatLng localMotorista, DisponibilidadeMotorista disponibilidade)
+    public void atualizarLatLong(final LatLng localMotorista, final DisponibilidadeMotorista disponibilidade)
     {
-        showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong","Executando");
-        FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
-        DatabaseReference minhaDisponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
+        Thread attLatLong = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                showInTerminal("DisponibilidadeMotoristaDao","atualizarLatLong","Executando");
+                FirebaseDatabase fireDB = ConfiguracaoFirebase.getFirebaseDatabase();
+                DatabaseReference minhaDisponibilidadeRef = fireDB.getReference().child("disponibilidadeMotorista").child(disponibilidade.getIdMotorista());
 
-        Map<String, Object> minhaDisponibilidadeUpdates = new HashMap<>();
-        minhaDisponibilidadeUpdates.put("latitudeMotorista",disponibilidade.getLatitudeMotorista());
-        minhaDisponibilidadeUpdates.put("longitudeMotorista",disponibilidade.getLongitudeMotorista());
+                Map<String, Object> minhaDisponibilidadeUpdates = new HashMap<>();
+                minhaDisponibilidadeUpdates.put("latitudeMotorista",localMotorista.latitude);
+                minhaDisponibilidadeUpdates.put("longitudeMotorista",localMotorista.longitude);
 
-        minhaDisponibilidadeRef.updateChildren(minhaDisponibilidadeUpdates);
+                minhaDisponibilidadeRef.updateChildren(minhaDisponibilidadeUpdates);
+            }
+        });
+        attLatLong.start();
     }
+
+
 
     public void atualizarDisponibilidade (DisponibilidadeMotorista disponibilidade, final CountDownLatch contador)
     {

@@ -1,192 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="540dp"
+    android:layout_width="308dp"
+    android:layout_height="548dp"
     android:orientation="vertical"
-    android:background="@color/colorApp"
-    >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Solicitação de Viagem "
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/fredoka_one_regular"
-        />
+    android:background="@color/transparent"
+    app:cardBackgroundColor="@color/colorApp"
+    app:cardCornerRadius="8dp"
+    android:padding="8dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:orientation="vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ci_donoanimal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/imagem_usuario"/>
-
-        <TextView
-            android:id="@+id/tv_donoanimal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome do dono Animal"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/layout_cianimal1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ci_animal1"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="4dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/imagem_usuario"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="4dp"/>
-
-            <TextView
-                android:id="@+id/tv_cianimal1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome do animal"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_cianimal2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ci_animal2"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="4dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/imagem_usuario"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="4dp"/>
-
-            <TextView
-                android:id="@+id/tv_cianimal2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome do animal"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_cianimal3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ci_animal3"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="4dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/imagem_usuario"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="4dp"/>
-
-            <TextView
-                android:id="@+id/tv_cianimal3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome do animal"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tv_descricaoanimal"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:textColor="@color/colorText"
-        android:autoSizeMinTextSize="14sp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMaxTextSize="24sp"
-        android:textSize="18sp"
-        android:padding="8dp"
-        android:layout_margin="8dp"
-        android:background="@color/white"
-
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/bt_aceitarViagem"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/button_verde_seletor"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:text="Aceitar"
+        android:layout_width="300dp"
+        android:layout_height="540dp"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Solicitação de Viagem "
+            android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/fredoka_one_regular"
+            />
 
-        <Button
-            android:id="@+id/bt_recusarViagem"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/button_vermelho_seletor"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:text="Recusar"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ci_donoanimal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/imagem_usuario"/>
+
+            <TextView
+                android:id="@+id/tv_donoanimal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Fonte_memor_branca"
+                android:text="Nome do dono Animal"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/layout_cianimal1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ci_animal1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="4dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/imagem_usuario"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_cianimal1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome do animal"
+                    style="@style/Fonte_memor_branca"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_cianimal2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ci_animal2"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="4dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/imagem_usuario"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_cianimal2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome do animal"
+                    style="@style/Fonte_memor_branca"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_cianimal3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ci_animal3"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="4dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/imagem_usuario"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_cianimal3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome do animal"
+                    android:textColor="#FFFFFF"
+                    style="@style/Fonte_memor_branca"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/edit_text_branco_seletor">
+
+            <EditText
+                android:id="@+id/tv_descricaoanimal"
+                style="@style/Fonte_memor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:clickable="false"
+                android:longClickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:background="@android:color/transparent"
+                android:hint="@string/observacoes_"
+                android:maxLength="450" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_aceitarViagem"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_verde_seletor"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="Aceitar"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/bt_recusarViagem"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_vermelho_seletor"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="Recusar"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+

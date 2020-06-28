@@ -32,6 +32,7 @@ import mva2.adapter.util.Mode;
 import com.example.travelpet.R;
 import com.example.travelpet.adapter.AnimalBinder;
 import com.example.travelpet.dao.AnimalDAO;
+import com.example.travelpet.dao.ConfiguracaoFirebase;
 import com.example.travelpet.dao.DisponibilidadeMotoristaDao;
 import com.example.travelpet.dao.DonoAnimalDAO;
 import com.example.travelpet.dao.LocalDAO;
@@ -89,33 +90,37 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private Dialog dialogOrigemDestino;
 
     private CountDownLatch contador;
-
     private AnimalDAO animalDAO;
     private LocalDAO localDAO;
     private ViagemDAO viagemDAO;
+    private DonoAnimalDAO donoAnimalDAO;
     private DisponibilidadeMotoristaDao disponibilidadeMotoristaDao;
+
+
 
     private DisponibilidadeMotorista motoristaDisponivel;
     private Viagem viagemAtual;
     private LinearLayout linearOrigemDestino;
 
     private DonoAnimal meuPerfil;
-    private DonoAnimalDAO donoAnimalDAO;
+
 
     // Variáveis para recuperar localização de um usuário
     private Local localOrigem, localDestino;
-    private Location locationAtual;
+    private Location locationAtual, locationMotorista;
+    private LocationCallback donoAnimalLocationCallback, motoristaLocationCallback;
     private Address addressDestino;
     private Geocoder geocoder;
     private GoogleMap gMap;
     private MapView mapView;
+    private MarkerOptions marcadorDonoAnimal, marcadorMotorista, marcadorLocalEmbarque;
     private FusedLocationProviderClient client;
     private LocationRequest locationRequest;
     private LocationSettingsRequest.Builder builderlocationsSettingsRequest;
     private SettingsClient settingsClient;
     private LatLng localPassageiro;
 
-    private ChildEventListener listenerAguardandoMotorista, listenerAguardandoConfirmacaoViagem;
+    private ChildEventListener listenerStatusViagem, listenerAguardandoMotorista;
     private DatabaseReference motoristaDisponivelReferencia, confirmacaoViagemReferencia;
 
     private EditText editDestino, editOrigem;
@@ -138,8 +143,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         viagemDAO = new ViagemDAO();
         donoAnimalDAO = new DonoAnimalDAO();
         disponibilidadeMotoristaDao = new DisponibilidadeMotoristaDao();
-
-        //meuPerfil = donoAnimalDAO.receberPerfil(Base64Custom.codificarBase64(UsuarioFirebase.getEmailUsuario()),);
 
         // Criando mapa
         client = LocationServices.getFusedLocationProviderClient(requireActivity());
@@ -226,31 +229,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-
-        LocationCallback locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                showInTerminal("<< onLocationResult : ok >>");
-
-                Location location = locationResult.getLastLocation();
-
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                localPassageiro = new LatLng(latitude, longitude);
-                locationAtual = location;
-
-                gMap.clear();
-                gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro, 19));
-            }
-
-            @Override
-            public void onLocationAvailability(LocationAvailability locationAvailability) {
-            }
-        };
-
-        client.requestLocationUpdates(locationRequest, locationCallback, null);
-
+        addLocationCallbackDonoAnimal();
     }
 
     private void exibirBottomSheet() {
@@ -460,21 +439,25 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
         Button btCancelarViagem = dialogBuscarMotorista.findViewById(R.id.bt_cancelDialog_buscarMotorista);
 
-        btCancelarViagem.setOnClickListener(new View.OnClickListener() {
+        btCancelarViagem.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
+                dialogBuscarMotorista.setOnDismissListener(new DialogInterface.OnDismissListener()
+                {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface)
+                    {
+                        configTela(1);
+                    }
+                });
                 dialogBuscarMotorista.dismiss();
-                motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
+                removeListenerMotoristaDisponivel(listenerStatusViagem);
                 threadCancelarViagem();
             }
         });
 
-        dialogBuscarMotorista.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                configTela(1);
-            }
-        });
         dialogBuscarMotorista.setCanceledOnTouchOutside(false);
         dialogBuscarMotorista.show();
     }
@@ -548,7 +531,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         return distancia;
     }
 
-    public float contarDistanciadoUsuario(Address destino) {
+    public float contarDistanciadoUsuario(Address destino)
+    {
         float distancia;
         Location pontoA;
 
@@ -734,7 +718,6 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void run() {
                         configTela(3);
-                        exibirDialogBuscarMotorista();
                         threadMotoristasDisponiveis();
                     }
                 });
@@ -746,16 +729,19 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private void threadCancelarViagem() {
         Thread threadCancelarViagem = new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 localDAO.excluirLocal(localOrigem);
+                localOrigem = null;
                 localDAO.excluirLocal(localDestino);
+                localDestino = null;
                 viagemDAO.excluirViagem(viagemAtual);
+                viagemAtual = null;
 
                 requireActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         toastThis("Viagem Cancelada");
+                        configTela(1);
                     }
                 });
             }
@@ -764,46 +750,54 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void threadMotoristasDisponiveis() {
-        Thread threadMotoristasDisponiveis = new Thread(new Runnable() {
+
+        final int distanciaBuscarMotorista = 5*1000; //5km
+        exibirDialogBuscarMotorista();
+
+        Thread threadMotoristasDisponiveis = new Thread(new Runnable()
+        {
             @Override
-            public void run() {
-                final DisponibilidadeMotorista motorista;
+            public void run()
+            {
+
                 contador = new CountDownLatch(1);
                 showInTerminal("executando queryMotorista");
-                motorista = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador, 5000, listaAnimaisSelecionados, motoristaCancelados);
+                motoristaDisponivel = disponibilidadeMotoristaDao.queryMotoristaDisponivel(localOrigem, contador, distanciaBuscarMotorista, listaAnimaisSelecionados, motoristaCancelados);
 
-                try {
-                    contador.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                try {contador.await();} catch (InterruptedException e) {e.printStackTrace();}
 
-                if (motorista != null) {
+                if (motoristaDisponivel != null)
+                {
                     contador = new CountDownLatch(1);
-                    viagemAtual.setIdMotorista(motorista.getIdMotorista());
+                    viagemAtual.setIdMotorista(motoristaDisponivel.getIdMotorista());
                     showInTerminal("adicionando motorista à viagem ");
-                    viagemDAO.salvarViagem(viagemAtual, contador);
-                } else {
+                    viagemDAO.salvarViagem(viagemAtual, contador); //atualizando
+                }
+                else
+                {
                     showInTerminal("nenhum motorista encontrado");
                 }
 
-                try {
-                    contador.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                try {contador.await();} catch (InterruptedException e) {e.printStackTrace();}
 
-                requireActivity().runOnUiThread(new Runnable() {
+                requireActivity().runOnUiThread(new Runnable()
+                {
                     @SuppressLint("SetTextI18n")
                     @Override
-                    public void run() {
-
-                        if (motorista != null) {
+                    public void run()
+                    {
+                        if (motoristaDisponivel != null)
+                        {
                             TextView tvBuscarMotorista = dialogBuscarMotorista.findViewById(R.id.tv_dialog_buscarMotorista);
                             tvBuscarMotorista.setText("Aguardando Confirmação...");
+                            locationMotorista = new Location("localização Motorista");
+                            locationMotorista.setLatitude(motoristaDisponivel.getLatitudeMotorista());
+                            locationMotorista.setLongitude(motoristaDisponivel.getLongitudeMotorista());
                             //addListenerAguardarMotorista(motorista);
-                            addListenerConfirmacaoViagem();
-                        } else {
+                            addListenerStatusViagem();
+                        }
+                        else
+                        {
                             toastThis("Motorista Não encontrado");
                         }
                     }
@@ -813,96 +807,204 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         threadMotoristasDisponiveis.start();
     }
 
-    private void addListenerAguardarMotorista(final DisponibilidadeMotorista motorista) {
-        motoristaDisponivelReferencia = disponibilidadeMotoristaDao.receberDisponibilidaReferencia(motorista);
-        listenerAguardandoMotorista = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
+
+    private void addListenerStatusViagem()
+    {
+        showInTerminal("AddListenerConfirmacao de viagem ");
+        confirmacaoViagemReferencia = ViagemDAO.getRootViagens().child(viagemAtual.getIdViagem());
+        listenerStatusViagem = new ChildEventListener() {
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
-            {
-                if ("disponibilidade".equals(dataSnapshot.getKey()))
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                showInTerminal("AddListenerConfirmacao de viagem /OnchildChanged");
+                showInTerminal("<<<Key = " + snapshot.getKey() + ">>>");
+                showInTerminal("<<<childKey = " + snapshot.getKey() + ">>>");
+
+                if(snapshot.getKey().equals("statusViagem"))
                 {
-                    String disponibilidade = dataSnapshot.getValue(String.class);
+                    String status = snapshot.getValue(String.class);
 
-                    if (disponibilidade != null)
+                    switch (status)
                     {
-                        switch (disponibilidade)
+                        case Viagem.CANCELADA :
+                            {
+                                Toast.makeText(requireActivity(),"Viagem Cancelada pelo Motorista",Toast.LENGTH_LONG).show();
+                                dialogBuscarMotorista.dismiss();
+                                showInTerminal("Viagem cancelada pelo Motorista");
+                                threadCancelarViagem();
+                            }break;
+
+                        case Viagem.AGUARDANDO_MOTORISTA :
                         {
-                            case DisponibilidadeMotorista.PREPARANDO_VIAGEM:
-                                {
-                                    dialogBuscarMotorista.dismiss();
-                                    configTela(3);
-                                    toastThis("Viagem Aceita");
-                                    motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
-                                    addListenerConfirmacaoViagem();
-                                    //funçao
-                                }
-                            break;
+                            showInTerminal("Aguarde o motorista no local de Embarque");
+                            dialogBuscarMotorista.dismiss();
+                            configTela(2);
+                            addListenerAguardandoMotorista();
+                            Toast.makeText(requireActivity(),"Aguarde o motorista no local de Embarque",Toast.LENGTH_LONG).show();
 
-                            case DisponibilidadeMotorista.DISPONIVEL:
-                            case DisponibilidadeMotorista.INDISPONIVEL: {
-                                    dialogBuscarMotorista.dismiss();
-                                    toastThis("viagem Recusada");
-                                    motoristaDisponivelReferencia.removeEventListener(listenerAguardandoMotorista);
-                                }
-                                break;
+                        }break;
 
+                        case Viagem.EM_ANDAMENTO :
+                            {
+                                Toast.makeText(requireActivity(),"Viagem até o destino Iniciada",Toast.LENGTH_LONG).show();
+                                showInTerminal("Viagem até o destino iniciada!!");
+                                configTela(4);
+                                //listener
+                            }break;
 
-                            default: {
-                            }
-                            break;
+                        case Viagem.FINALIZADA :
+                        {
+                            Toast.makeText(requireActivity(), "Viagem Finalizada", Toast.LENGTH_LONG).show();
+                            //mostra tela de Avaliacao
                         }
+                        default:{}break;
                     }
                 }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        motoristaDisponivelReferencia.addChildEventListener(listenerAguardandoMotorista);
-    }
-
-    private void addListenerConfirmacaoViagem ()
-    {
-        confirmacaoViagemReferencia = ViagemDAO.getRootViagens().child(viagemAtual.getIdViagem());
-        listenerAguardandoMotorista = new ChildEventListener()
-        {
-
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
-            {
-                showInTerminal("ListenerConfirmar Motorista =" + snapshot.getKey());
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
 
             @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        };
+
+        confirmacaoViagemReferencia.addChildEventListener(listenerStatusViagem);
+    }
+
+    private void addListenerAguardandoMotorista()
+    {
+        showInTerminal("addListenerAguardando Motorista " + motoristaDisponivel.getIdMotorista());
+        removeLocationCallback(donoAnimalLocationCallback);
+        addLocationCallbackMotorista();
+
+        motoristaDisponivelReferencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("disponibilidadeMotorista").child(motoristaDisponivel.getIdMotorista());
+
+        listenerAguardandoMotorista = new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
+            {
+                if(snapshot.getKey().equals("latitudeMotorista"))
+                {
+                    showInTerminal("<<<<<<<<<<<<<<<<<< EXECUTOU >>>>>>>>>>>>>>>>>>>>");
+                    if (snapshot.getValue(double.class) != null)
+                    {
+                        showInTerminal("<<<<<<<<<<<<<<<<<< LATITUDE PEGA >>>>>>>>>>>>>>>>>>>>");
+                        motoristaDisponivel.setLatitudeMotorista(snapshot.getValue(double.class));
+                    }
+                }
+
+                if(snapshot.getKey().equals("longitudeMotorista"))
+                {
+                    showInTerminal("<<<<<<<<<<<<<<<<<< EXECUTOU >>>>>>>>>>>>>>>>>>>>");
+                    if (snapshot.getValue(double.class) != null)
+                    {
+                        showInTerminal("<<<<<<<<<<<<<<<<<< LONGITUDE PEGA >>>>>>>>>>>>>>>>>>>>");
+                        motoristaDisponivel.setLongitudeMotorista(snapshot.getValue(double.class));
+                    }
+
+                }
+            }
+
+            @Override
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
 
-
-
+        motoristaDisponivelReferencia.addChildEventListener(listenerAguardandoMotorista);
     }
 
+    private void addLocationCallbackDonoAnimal ()
+    {
+       donoAnimalLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            showInTerminal("<< onLocationResult : ok >>");
+
+            Location location = locationResult.getLastLocation();
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            localPassageiro = new LatLng(latitude, longitude);
+            locationAtual = location;
+
+            gMap.clear();
+            gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
+            gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro, 19));
+        }
+
+        @Override
+        public void onLocationAvailability(LocationAvailability locationAvailability) {
+        }
+    };
+        client.requestLocationUpdates(locationRequest, donoAnimalLocationCallback, null);
+    }
+
+    private void addLocationCallbackMotorista ()
+    {
+        locationRequest.setInterval(1 * 1000);
+        locationRequest.setFastestInterval(1 * 1000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        motoristaLocationCallback = new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult)
+            {
+                Location location =  locationResult.getLastLocation();
+                gMap.clear();
+
+                localPassageiro = new LatLng(location.getLatitude(),location.getLongitude());
+                LatLng localMotorista = new LatLng(motoristaDisponivel.getLatitudeMotorista(),motoristaDisponivel.getLongitudeMotorista());
+                LatLng localEmbarque = new LatLng(localOrigem.getLatitude(), localOrigem.getLongitude());
+
+                marcadorMotorista = new MarkerOptions().position(localMotorista).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro));
+                marcadorDonoAnimal = new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro));
+                marcadorLocalEmbarque = new MarkerOptions().position(localEmbarque).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario));
+
+                gMap.addMarker(marcadorDonoAnimal);
+                gMap.addMarker(marcadorMotorista);
+                gMap.addMarker(marcadorLocalEmbarque);
+
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
+            }
+
+            @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability) {}
+        };
+        client.requestLocationUpdates(locationRequest,motoristaLocationCallback,null);
+    }
+
+    private void removeLocationCallback(LocationCallback callback)
+    {
+        if(client != null)
+        {
+            client.removeLocationUpdates(callback);
+        }
+    }
+
+    private void removeListenerMotoristaDisponivel(ChildEventListener childListener)
+    {
+        if (motoristaDisponivelReferencia != null)
+        {
+            motoristaDisponivelReferencia.removeEventListener(childListener);
+        }
+    }
 
     private void configTela(int config) {
         //1 - Tela Inicial (pesquisa de endereço + botao chamar Motorista)
@@ -911,23 +1013,30 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         //4 - Tela Avaliação
 
         switch (config) {
-            case 1: {
-                buttonChamarMotorista.setVisibility(View.VISIBLE);
-                linearOrigemDestino.setVisibility(View.VISIBLE);
-            }
+            case 1:
+                {
+                    buttonChamarMotorista.setVisibility(View.VISIBLE);
+                    linearOrigemDestino.setVisibility(View.VISIBLE);
+                }
             break;
 
-            case 2: {
-            }
+            case 2:
+                {
+                    buttonChamarMotorista.setVisibility(View.GONE);
+                    linearOrigemDestino.setVisibility(View.GONE);
+                    //mostra Textview Esperar o motorista no local combinado
+                }
             break;
             case 3:
             case 4: {
-                buttonChamarMotorista.setVisibility(View.GONE);
-                linearOrigemDestino.setVisibility(View.GONE);
-            }
+                        buttonChamarMotorista.setVisibility(View.GONE);
+                        linearOrigemDestino.setVisibility(View.GONE);
+                    }
             break;
-            default: {
-            }
+            default:
+                {
+
+                }
             break;
         }
     }
@@ -939,5 +1048,9 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     private void showInTerminal(String mensagem) {
         System.out.println(mensagem);
     }
+
+
+
+
 
 }
