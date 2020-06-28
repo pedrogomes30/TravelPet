@@ -108,12 +108,12 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_spinner_cachorro.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\ic_spinner_cachorro.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_motorista_veiculo.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_motorista_veiculo.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_spinner_cachorro.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\ic_spinner_cachorro.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_botao_disponivel.png.flat",
@@ -156,12 +156,12 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\menu\\perfil_motorista.xml"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add_veiculo.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_add_veiculo.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\anim_activity_filho_entrando.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\anim\\activity_filho_entrando.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add_veiculo.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_add_veiculo.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_stat_name.png.flat",
@@ -232,20 +232,20 @@
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_usuario_tipo.xml"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_edit_text_branco_seletor.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\edit_text_branco_seletor.xml"
-    },
-    {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_adapterlistaanimais_bs.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\adapterlistaanimais_bs.xml"
     },
     {
-        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_viagem.xml.flat",
-        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_viagem.xml"
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_edit_text_branco_seletor.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\edit_text_branco_seletor.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable_button_vermelho_padrao.xml.flat",
         "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\drawable\\button_vermelho_padrao.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_viagem.xml.flat",
+        "source": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\src\\main\\res\\layout\\fragment_viagem.xml"
     },
     {
         "merged": "C:\\Users\\rodrigo\\AndroidStudioProjects\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_exit.xml.flat",

@@ -30,8 +30,6 @@ public class DonoAnimalDAO {
 
     public DonoAnimalDAO() {}
 
-
-    // Método para salvar os dados do usuário no firebase
     public void salvarDonoAnimalRealtimeDatabase(DonoAnimal donoAnimal, final ProgressDialog progressDialog,
                                                  final int tipoSave, final Activity activity){
 
@@ -56,11 +54,8 @@ public class DonoAnimalDAO {
         });
     }
     //----------------------------------------------------------------------------------------------
-
-    // Método salva primeiro a foto do usuario no storage e depois salvar os dados no database
     public void salvarImagemDonoAnimalStorage(final DonoAnimal donoAnimal, final ProgressDialog progressDialog,
                                               final int tipoLocalSave, final Activity activity){
-        // Salvar imagem no firebase
         StorageReference donoAnimalRefStorage = ConfiguracaoFirebase.getFirebaseStorage()
                 .child(ConfiguracaoFirebase.donoAnimal)
                 .child(donoAnimal.getIdUsuario())
@@ -71,10 +66,8 @@ public class DonoAnimalDAO {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                // Configurando (atualizando) foto para pegar ela nas configurações do usuário
                 Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
                 while(!uri.isComplete());
-                // url = pega o caminho da imagem
                 Uri url = uri.getResult();
                 String fotoPerfilUrl = url.toString();
 

@@ -50,29 +50,23 @@ public class TelaAvaliacao {
     }
 
     public void iniciarAvaliacao(){
-
         View viewDialog = activity.getLayoutInflater().inflate(R.layout.dialog_avaliacao, null);
-
         iniciarComponentes(viewDialog);
         funcoesBotoes();
-
         builder.setView(viewDialog);
         dialog = builder.create();
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-
     }
 
     private void funcoesBotoes(){
         campoNota1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nota = "1";
                 setCoresNotas(nota);
                 setTextoNotas(nota);
-
             }
         });
 
@@ -89,33 +83,27 @@ public class TelaAvaliacao {
         campoNota3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nota = "3";
                 setCoresNotas(nota);
                 setTextoNotas(nota);
-
             }
         });
 
         campoNota4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nota = "4";
                 setCoresNotas(nota);
                 setTextoNotas(nota);
-
             }
         });
 
         campoNota5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nota = "5";
                 setCoresNotas(nota);
                 setTextoNotas(nota);
-
             }
         });
 
@@ -124,11 +112,9 @@ public class TelaAvaliacao {
             public void onClick(View v) {
                 observacao = campoObservação.getText().toString();
                 if(validarDados()){
-
                     TelaCarregamento.iniciarCarregamento(progressDialog);
                     setDadosAvalicao();
                     avaliacaoDAO.salvarAvaliacaoDatabase(activity, dialog, progressDialog, avaliacao);
-
                 }
             }
         });
@@ -155,7 +141,7 @@ public class TelaAvaliacao {
     private void setCoresNotas(String avalicao){
         switch (avalicao){
             case"1":
-                campoNota1.setColorFilter(activity.getResources().getColor(R.color.amarelo_avalicao_muito_ruim), PorterDuff.Mode.MULTIPLY );
+                campoNota1.setColorFilter(activity.getResources().getColor(R.color.amarelo_avalicao_ruim), PorterDuff.Mode.MULTIPLY );
                 campoNota2.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota3.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota4.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
@@ -176,14 +162,14 @@ public class TelaAvaliacao {
                 campoNota5.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 break;
             case"4":
-                campoNota4.setColorFilter(activity.getResources().getColor(R.color.verde_avalicao_bom), PorterDuff.Mode.MULTIPLY );
+                campoNota4.setColorFilter(activity.getResources().getColor(R.color.verde_avalicao_boa), PorterDuff.Mode.MULTIPLY );
                 campoNota1.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota2.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota3.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota5.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 break;
             case"5":
-                campoNota5.setColorFilter(activity.getResources().getColor(R.color.verde_avalicao_muito_bom), PorterDuff.Mode.MULTIPLY );
+                campoNota5.setColorFilter(activity.getResources().getColor(R.color.verde_avalicao_boa), PorterDuff.Mode.MULTIPLY );
                 campoNota1.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota2.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
                 campoNota3.setColorFilter(activity.getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY );
@@ -196,7 +182,7 @@ public class TelaAvaliacao {
         switch (avalicao){
             case"1":
                 campoAvaliacao.setText(R.string.muito_ruim);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.amarelo_avalicao_muito_ruim));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.amarelo_avalicao_ruim));
                 break;
             case"2":
                 campoAvaliacao.setText(R.string.ruim);
@@ -208,11 +194,11 @@ public class TelaAvaliacao {
                 break;
             case"4":
                 campoAvaliacao.setText(R.string.bom);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.verde_avalicao_bom));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.verde_avalicao_boa));
                 break;
             case"5":
                 campoAvaliacao.setText(R.string.muito_bom);
-                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.verde_avalicao_muito_bom));
+                campoAvaliacao.setTextColor(activity.getResources().getColor(R.color.verde_avalicao_boa));
                 break;
         }
     }

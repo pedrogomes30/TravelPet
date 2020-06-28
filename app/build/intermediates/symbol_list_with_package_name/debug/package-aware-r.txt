@@ -846,7 +846,6 @@ color about_twitter_color
 color about_youtube_color
 color accent_material_dark
 color accent_material_light
-color amarelo_avalicao_muito_ruim
 color amarelo_avalicao_ruim
 color azul_avalicao_regular
 color background_floating_material_dark
@@ -1059,8 +1058,7 @@ color test_mtrl_calendar_day_selected
 color tooltip_background_dark
 color tooltip_background_light
 color transparent
-color verde_avalicao_bom
-color verde_avalicao_muito_bom
+color verde_avalicao_boa
 color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav

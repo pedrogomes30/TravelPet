@@ -56,15 +56,16 @@ public class ConfiguracaoFragment extends Fragment {
     DatabaseReference enderecoRef;
 
     private String nome,sobrenome, cpf, fotoPerfilUrl, telefone,
-                   cep, logradouro, bairro, localidade, uf;
+            cep, logradouro, bairro, localidade, uf;
 
     private String telefoneEdit, cepEdit, logradouroEdit,
-                   bairroEdit, localidadeEdit, ufEdit;
+            bairroEdit, localidadeEdit, ufEdit;
 
     private CircleImageView campoFotoPerfil;
     private TextView campoNome, campoCpf;
     private TextInputEditText campoTelefone,campoCep,campoLogradouro,
                               campoBairro, campoLocalidade, campoUf;
+
     private ImageButton     btCamera, btGaleria;
     private Button          btSalvar;
 
@@ -89,7 +90,7 @@ public class ConfiguracaoFragment extends Fragment {
         return view;
     }
 
-    public void botaoCamera(){
+    private void botaoCamera(){
 
         btCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +103,7 @@ public class ConfiguracaoFragment extends Fragment {
         });
     }
 
-    public void botaoGaleria(){
+    private void botaoGaleria(){
         btGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +115,7 @@ public class ConfiguracaoFragment extends Fragment {
         });
     }
 
-    public void botaoSalvar(){
+    private void botaoSalvar(){
         btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +153,7 @@ public class ConfiguracaoFragment extends Fragment {
     }
 
     public void getDadosDonoAnimalDatabase(){
-        donoAnimalRef.addValueEventListener(new ValueEventListener() {
+        donoAnimalRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -183,7 +184,7 @@ public class ConfiguracaoFragment extends Fragment {
     }
 
     public void getDadosEnderecoDatabase(){
-        enderecoRef.addValueEventListener(new ValueEventListener() {
+        enderecoRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 endereco = dataSnapshot.getValue(Endereco.class);
@@ -215,70 +216,45 @@ public class ConfiguracaoFragment extends Fragment {
         ufEdit          =   campoUf.getText().toString().toUpperCase();
     }
 
-    public void salvarAlteracoes(){
+    private void salvarAlteracoes(){
 
         int tipoSave = 2; // tipoLocalSave = 2 - Atualizar dados DonoAnimal
-
         if(fotoPerfil != null){
+            TelaCarregamento.iniciarCarregamento(progressDialog);
             if(validarCampos()) {
-                TelaCarregamento.iniciarCarregamento(progressDialog);
-
-                if ((!VerificaDado.isMesmoValor(cep, cepEdit)) ||
-                    (!VerificaDado.isMesmoValor(logradouro, logradouroEdit)) ||
-                    (!VerificaDado.isMesmoValor(bairro, bairroEdit)) ||
-                    (!VerificaDado.isMesmoValor(localidade, localidadeEdit)) ||
-                    (!VerificaDado.isMesmoValor(uf, ufEdit))) {
-
-                    endereco.setCep(cepEdit);
-                    endereco.setLogradouro(logradouroEdit);
-                    endereco.setBairro(bairroEdit);
-                    endereco.setLocalidade(localidadeEdit);
-                    endereco.setUf(ufEdit);
+                if (verificarDadosIguaisEndereco()) {
+                    setDadosEndereco();
                     enderecoDAO.salvarEnderecoRealtimeDatabase(endereco,
-                                                               donoAnimal.getTipoUsuario(),
-                                                               tipoSave = 0, progressDialog);
-
+                            donoAnimal.getTipoUsuario(),
+                            tipoSave = 0, progressDialog);
                 }
-
                 if (!VerificaDado.isMesmoValor(telefone, telefoneEdit)) {
                     donoAnimal.setTelefone(telefoneEdit);
                 }
-
-                donoAnimal.setFotoPerfil(fotoPerfil);
-                donoAnimalDAO.salvarImagemDonoAnimalStorage(donoAnimal, progressDialog,
-                        tipoSave = 2, getActivity());
-                fotoPerfil = null;
-
             }
-        }else if((!VerificaDado.isMesmoValor(cep,cepEdit) ||
-                  !VerificaDado.isMesmoValor(logradouro,logradouroEdit) ||
-                  !VerificaDado.isMesmoValor(bairro, bairroEdit) ||
-                  !VerificaDado.isMesmoValor(localidade,localidadeEdit) ||
-                  !VerificaDado.isMesmoValor(uf,ufEdit))){
+            donoAnimal.setFotoPerfil(fotoPerfil);
+            donoAnimalDAO.salvarImagemDonoAnimalStorage(donoAnimal, progressDialog,
+                    tipoSave = 2, getActivity());
+            fotoPerfil = null;
+        }
 
+        else if(verificarDadosIguaisEndereco()){
             if(validarCampos()) {
-
                 TelaCarregamento.iniciarCarregamento(progressDialog);
                 if (!VerificaDado.isMesmoValor(telefone, telefoneEdit)) {
-
                     donoAnimal.setTelefone(telefoneEdit);
                     donoAnimalDAO.salvarDonoAnimalRealtimeDatabase(donoAnimal, progressDialog,
                             tipoSave = 0, getActivity());
                 }
-                endereco.setCep(cepEdit);
-                endereco.setLogradouro(logradouroEdit);
-                endereco.setBairro(bairroEdit);
-                endereco.setLocalidade(localidadeEdit);
-                endereco.setUf(ufEdit);
+                setDadosEndereco();
                 enderecoDAO.salvarEnderecoRealtimeDatabase(endereco, donoAnimal.getTipoUsuario(),
                         tipoSave = 2, progressDialog);
                 Mensagem.mensagemAtualizarDonoAnimal(getActivity());
             }
+        }
 
-        }else if(!VerificaDado.isMesmoValor(telefone,telefoneEdit)){
-
-            if(validarCampos()) {
-
+        else if(!VerificaDado.isMesmoValor(telefone,telefoneEdit)){
+            if(validarCampos()){
                 TelaCarregamento.iniciarCarregamento(progressDialog);
 
                 donoAnimal.setTelefone(telefoneEdit);
@@ -288,7 +264,7 @@ public class ConfiguracaoFragment extends Fragment {
         }
     }
 
-    public Boolean validarCampos() {
+    private Boolean validarCampos() {
 
         Boolean validado = false;
         if(!VerificaDado.isVazio(telefoneEdit) && telefoneEdit.length() == 15) {
@@ -310,13 +286,42 @@ public class ConfiguracaoFragment extends Fragment {
         return validado;
     }
 
-    public boolean validarUf(String uf){
+    public Boolean verificarDadosIguaisEndereco(){
+        Boolean verificado = false;
+        if(!VerificaDado.isMesmoValor(cep,cepEdit) ||
+                !VerificaDado.isMesmoValor(logradouro,logradouroEdit) ||
+                !VerificaDado.isMesmoValor(bairro, bairroEdit) ||
+                !VerificaDado.isMesmoValor(localidade,localidadeEdit) ||
+                !VerificaDado.isMesmoValor(uf,ufEdit)){
+            verificado = true;
+        }
+        return verificado;
+    }
+
+    public void setDadosEndereco(){
+        if(!VerificaDado.isMesmoValor(cep,cepEdit)){
+            endereco.setCep(cepEdit);
+        }
+        if(!VerificaDado.isMesmoValor(logradouro,logradouroEdit) ){
+            endereco.setLogradouro(logradouroEdit);
+        }
+        if(!VerificaDado.isMesmoValor(bairro, bairroEdit)){
+            endereco.setBairro(bairroEdit);
+        }
+        if(!VerificaDado.isMesmoValor(localidade,localidadeEdit)){
+            endereco.setLocalidade(localidadeEdit);
+        }
+        if(!VerificaDado.isMesmoValor(uf,ufEdit)){
+            endereco.setUf(ufEdit);
+        }
+    }
+
+    private boolean validarUf(String uf){
         Boolean validado = false;
         String[] estados = getResources().getStringArray(R.array.estados);
         for( int i = 0; i < estados.length; i++ ) {
             if (uf.equals(estados[i]) ) {
                 validado = true;
-                //break;
             }
         }
         return validado;
@@ -354,7 +359,7 @@ public class ConfiguracaoFragment extends Fragment {
                     fotoPerfil = baos.toByteArray();
                 }
 
-                }catch (Exception e){
+            }catch (Exception e){
                 e.printStackTrace();
             }
         }

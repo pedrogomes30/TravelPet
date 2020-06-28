@@ -23,7 +23,7 @@ public class TelaTransportePet {
     private AlertDialog dialog;
     private ImageView botaoSetaEsquerda, botaoSetaDireita;
     private Button botaoOK;
-    private ImageView iconeCirculoDireto, iconeCirculoEsquerdo;
+    private ImageView iconeCirculoDireito, iconeCirculoEsquerdo;
 
 
     public TelaTransportePet(Activity activity) {
@@ -50,7 +50,7 @@ public class TelaTransportePet {
                 botaoSetaEsquerda.setVisibility(View.VISIBLE);
                 botaoSetaDireita.setVisibility(View.INVISIBLE);
                 botaoOK.setVisibility(View.VISIBLE);
-                iconeCirculoDireto.setImageResource(R.drawable.ic_circulo_cheio);
+                iconeCirculoDireito.setImageResource(R.drawable.ic_circulo_cheio);
                 iconeCirculoEsquerdo.setImageResource(R.drawable.ic_circulo_vazio);
             }
         });
@@ -63,7 +63,7 @@ public class TelaTransportePet {
                 botaoSetaDireita.setVisibility(View.VISIBLE);
                 botaoOK.setVisibility(View.INVISIBLE);
                 iconeCirculoEsquerdo.setImageResource(R.drawable.ic_circulo_cheio);
-                iconeCirculoDireto.setImageResource(R.drawable.ic_circulo_vazio);
+                iconeCirculoDireito.setImageResource(R.drawable.ic_circulo_vazio);
             }
         });
         botaoOK.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class TelaTransportePet {
         botaoSetaEsquerda = viewDialog.findViewById(R.id.iv_seta_esquerda);
         botaoSetaDireita = viewDialog.findViewById(R.id.iv_seta_direita);
         botaoOK = viewDialog.findViewById(R.id.botao_ok);
-        iconeCirculoDireto = viewDialog.findViewById(R.id.iv_icone_circulo_vazio);
+        iconeCirculoDireito = viewDialog.findViewById(R.id.iv_icone_circulo_vazio);
         iconeCirculoEsquerdo = viewDialog.findViewById(R.id.iv_icone_circulo_cheio);
     }
 
