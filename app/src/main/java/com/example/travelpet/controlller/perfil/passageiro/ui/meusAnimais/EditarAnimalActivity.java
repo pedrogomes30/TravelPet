@@ -75,15 +75,15 @@ public class EditarAnimalActivity extends AppCompatActivity{
 
         TextView nome = findViewById(R.id.textViewNome);
         TextView raca = findViewById(R.id.textViewRaca);
-        final TelaAvaliacao telaAvaliacao = new TelaAvaliacao(EditarAnimalActivity.this);
+        //final TelaAvaliacao telaAvaliacao = new TelaAvaliacao(EditarAnimalActivity.this);
         final TelaTransportePet telaTransportePet= new TelaTransportePet(EditarAnimalActivity.this);
-
+        /*
         nome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 telaAvaliacao.iniciarAvaliacao();
             }
-        });
+        });*/
 
         raca.setOnClickListener(new View.OnClickListener() {
             @Override

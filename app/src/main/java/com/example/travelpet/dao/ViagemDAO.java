@@ -1,7 +1,10 @@
 package com.example.travelpet.dao;
 
+import android.app.Activity;
 import android.provider.ContactsContract;
 
+import com.example.travelpet.helper.TelaAvaliacao;
+import com.example.travelpet.model.Avaliacao;
 import com.example.travelpet.model.Viagem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,7 +38,7 @@ public class ViagemDAO
         return rootViagem;
     }
 
-    public void salvarViagem (Viagem viagem, final CountDownLatch latch)
+    public void salvarViagem (final Viagem viagem, final CountDownLatch latch, final Activity activity)
     {
         DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());
 
@@ -45,6 +48,16 @@ public class ViagemDAO
                     public void onSuccess(Void aVoid)
                     {
                         latch.countDown();
+
+                        // modificações
+                        Avaliacao avaliacao = new Avaliacao();
+                        avaliacao.setIdAvaliado(viagem.getIdDonoAnimal());
+                        avaliacao.setIdAvaliador(viagem.getIdMotorista());
+                        avaliacao.setIdViagem(viagem.getIdViagem());
+                        avaliacao.setTipoAvaliacao("donoAnimal");
+                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(activity, avaliacao);
+                        telaAvaliacao.iniciarAvaliacao();
+
                     }
         }).addOnFailureListener(new OnFailureListener()
         {

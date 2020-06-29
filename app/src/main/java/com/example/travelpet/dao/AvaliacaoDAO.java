@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.travelpet.helper.Base64Custom;
 import com.example.travelpet.helper.Mensagem;
 import com.example.travelpet.helper.TelaCarregamento;
 import com.example.travelpet.model.Avaliacao;
@@ -15,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public class AvaliacaoDAO {
 
-    private static String gerarIdViagem(){
+    public static String gerarIdViagem(){
         DatabaseReference referencia = ConfiguracaoFirebase.getFirebaseDatabaseReferencia();
         String chave = referencia.push().getKey();
         return chave;
@@ -27,8 +28,8 @@ public class AvaliacaoDAO {
 
         DatabaseReference avaliacaoRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia()
                 .child("avaliacao")
-                .child("idAvaliado") // Recuperar o id Do Avaliado
-                .child(gerarIdViagem());
+                .child(avaliacao.getIdAvaliado()) // Recuperar o id Do Avaliado
+                .child(avaliacao.getIddaavaliacao());
         avaliacaoRef.setValue(avaliacao).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

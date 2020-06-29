@@ -4,96 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Avaliacao implements Parcelable {
-    private String  avaliado,
-                    avaliador,
-                    observacao,
-                    tipoPerfil,
-                    data;
-
-    private Double notaAvaliacao;
+    String  idAvaliado,
+            idAvaliador,
+            observacao,
+            tipoAvaliacao,
+            idViagem,
+            iddaavaliacao,
+            data;
+    Double  notaAvaliacao;
 
     public Avaliacao() {}
-
-    public String getAvaliado() {
-        return avaliado;
-    }
-
-    public void setAvaliado(String avaliado) {
-        this.avaliado = avaliado;
-    }
-
-    public String getAvaliador() {
-        return avaliador;
-    }
-
-    public void setAvaliador(String avaliador) {
-        this.avaliador = avaliador;
-    }
-
-    public String getObservacao() {
-        return observacao;
-    }
-
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
-
-    public String getTipoPerfil() {
-        return tipoPerfil;
-    }
-
-    public Double getNotaAvaliacao() {
-        return notaAvaliacao;
-    }
-
-    public void setNotaAvaliacao(Double notaAvaliacao) {
-        this.notaAvaliacao = notaAvaliacao;
-    }
-
-    public void setTipoPerfil(String tipoPerfil) {
-        this.tipoPerfil = tipoPerfil;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    // Métodos Parcelable
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(avaliado);
-        dest.writeString(avaliador);
-        dest.writeString(observacao);
-        dest.writeString(tipoPerfil);
-        dest.writeString(data);
-        if (notaAvaliacao == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeDouble(notaAvaliacao);
-        }
-    }
-    protected Avaliacao(Parcel in) {
-        avaliado = in.readString();
-        avaliador = in.readString();
-        observacao = in.readString();
-        tipoPerfil = in.readString();
-        data = in.readString();
-        if (in.readByte() == 0) {
-            notaAvaliacao = null;
-        } else {
-            notaAvaliacao = in.readDouble();
-        }
-    }
 
     public static final Creator<Avaliacao> CREATOR = new Creator<Avaliacao>() {
         @Override
@@ -106,4 +26,105 @@ public class Avaliacao implements Parcelable {
             return new Avaliacao[size];
         }
     };
+
+    public String getIdAvaliado() {
+        return idAvaliado;
+    }
+
+    public void setIdAvaliado(String idAvaliado) {
+        this.idAvaliado = idAvaliado;
+    }
+
+    public String getIdAvaliador() {
+        return idAvaliador;
+    }
+
+    public void setIdAvaliador(String idAvaliador) {
+        this.idAvaliador = idAvaliador;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public String getTipoAvaliacao() {
+        return tipoAvaliacao;
+    }
+
+    public void setTipoAvaliacao(String tipoAvaliacao) {
+        this.tipoAvaliacao = tipoAvaliacao;
+    }
+
+    public String getIdViagem() {
+        return idViagem;
+    }
+
+    public void setIdViagem(String idViagem) {
+        this.idViagem = idViagem;
+    }
+
+    public String getIddaavaliacao() {
+        return iddaavaliacao;
+    }
+
+    public void setIddaavaliacao(String iddaavaliacao) {
+        this.iddaavaliacao = iddaavaliacao;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public Double getNotaAvaliacao() {
+        return notaAvaliacao;
+    }
+
+    public void setNotaAvaliacao(Double notaAvaliacao) {
+        this.notaAvaliacao = notaAvaliacao;
+    }
+
+    protected Avaliacao(Parcel in) {
+        idAvaliado = in.readString();
+        idAvaliador = in.readString();
+        observacao = in.readString();
+        tipoAvaliacao = in.readString();
+        idViagem = in.readString();
+        iddaavaliacao = in.readString();
+        data = in.readString();
+        if (in.readByte() == 0) {
+            notaAvaliacao = null;
+        } else {
+            notaAvaliacao = in.readDouble();
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(idAvaliado);
+        dest.writeString(idAvaliador);
+        dest.writeString(observacao);
+        dest.writeString(tipoAvaliacao);
+        dest.writeString(idViagem);
+        dest.writeString(iddaavaliacao);
+        dest.writeString(data);
+        if (notaAvaliacao == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(notaAvaliacao);
+        }
+    }
 }

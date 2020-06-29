@@ -45,8 +45,9 @@ public class TelaAvaliacao {
     private AvaliacaoDAO avaliacaoDAO;
 
     // constrututor
-    public TelaAvaliacao(Activity activity) {
+    public TelaAvaliacao(Activity activity, Avaliacao avaliacao) {
         this.activity = activity;
+        this.avaliacao = avaliacao;
     }
 
     public void iniciarAvaliacao(){
@@ -133,7 +134,7 @@ public class TelaAvaliacao {
         campoObservação = viewDialog.findViewById(R.id.editTextObservacao);
         botaoConfirmar = viewDialog.findViewById(R.id.botaoConfirmar);
 
-        avaliacao = new Avaliacao();
+        //avaliacao = new Avaliacao();
         avaliacaoDAO = new AvaliacaoDAO();
         progressDialog = new ProgressDialog(activity);
     }
@@ -221,9 +222,23 @@ public class TelaAvaliacao {
                 Calendar.getInstance().get(Calendar.DATE),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.YEAR));
-
+        /*
+        avaliacao.setIdAvaliado("");
+        avaliacao.setIdAvaliador("");
+        avaliacao.setIdViagem("");
+        avaliacao.setTipoAvaliacao("");*/
+        avaliacao.setIddaavaliacao(avaliacaoDAO.gerarIdViagem());
         avaliacao.setNotaAvaliacao(Double.parseDouble(nota));
         avaliacao.setObservacao(observacao);
         avaliacao.setData(data);
+        /*
+        String  idAvaliado,
+                idAvaliador,
+                observacao,
+                tipoAvaliacao,
+                idViagem,
+                iddaavaliacao,
+                data;
+        Double  notaAvaliacao;*/
     }
 }
