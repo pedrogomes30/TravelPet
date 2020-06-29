@@ -38,7 +38,7 @@ public class ViagemDAO
         return rootViagem;
     }
 
-    public void salvarViagem (final Viagem viagem, final CountDownLatch latch, final Activity activity)
+    public void salvarViagem (final Viagem viagem, final CountDownLatch latch, final Activity activity, final String tipoAvaliacao)
     {
         DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());
 
@@ -54,7 +54,7 @@ public class ViagemDAO
                         avaliacao.setIdAvaliado(viagem.getIdDonoAnimal());
                         avaliacao.setIdAvaliador(viagem.getIdMotorista());
                         avaliacao.setIdViagem(viagem.getIdViagem());
-                        avaliacao.setTipoAvaliacao("donoAnimal");
+                        avaliacao.setTipoAvaliacao(tipoAvaliacao);
                         TelaAvaliacao telaAvaliacao = new TelaAvaliacao(activity, avaliacao);
                         telaAvaliacao.iniciarAvaliacao();
 

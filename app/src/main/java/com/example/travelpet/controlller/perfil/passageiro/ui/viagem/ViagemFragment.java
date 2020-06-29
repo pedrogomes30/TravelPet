@@ -126,7 +126,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
 
     private EditText editDestino, editOrigem;
     private Button buttonChamarMotorista, btSelecionarAnimais;
-
+    public String tipoAvaliacao = "motorista";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -707,7 +707,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 viagemAtual.setIdViagem(ViagemDAO.gerarPushKeyIdViagem());
                 viagemAtual.setIdOrigem(localOrigem.getIdLocal());
                 viagemAtual.setIdDestino(localDestino.getIdLocal());
-                viagemDAO.salvarViagem(viagemAtual, contador);
+                viagemDAO.salvarViagem(viagemAtual, contador,getActivity(),tipoAvaliacao);
 
                 try {
                     contador.await();
@@ -772,7 +772,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     contador = new CountDownLatch(1);
                     viagemAtual.setIdMotorista(motoristaDisponivel.getIdMotorista());
                     showInTerminal("adicionando motorista à viagem ");
-                    viagemDAO.salvarViagem(viagemAtual, contador); //atualizando
+                    viagemDAO.salvarViagem(viagemAtual, contador, getActivity(), tipoAvaliacao); //atualizando
                 }
                 else
                 {
