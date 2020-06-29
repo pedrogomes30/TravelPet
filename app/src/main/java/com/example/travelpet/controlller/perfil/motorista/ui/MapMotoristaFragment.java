@@ -981,8 +981,10 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
                 contador = new CountDownLatch(1);
                 //setar itens da viagem
-                String tipoAvaliacao = "donoAnimal";
-                viagemDAO.salvarViagem(viagemAtual, contador, getActivity(), tipoAvaliacao);
+
+                viagemDAO.salvarViagem(viagemAtual, contador );
+
+
 
                 try {contador.await();}
                 catch (InterruptedException e)
@@ -995,6 +997,8 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     {
                         disponibilidade.setDisponibilidade(DisponibilidadeMotorista.A_CAMINHO);
                         threadAtualizarDisponibilidade();
+                        String tipoAvaliacao = "donoAnimal";
+                        viagemDAO.exibirAvaliacaoMotorista(getActivity(), tipoAvaliacao, viagemAtual);
                     }
                 });
             }

@@ -38,7 +38,7 @@ public class ViagemDAO
         return rootViagem;
     }
 
-    public void salvarViagem (final Viagem viagem, final CountDownLatch latch, final Activity activity, final String tipoAvaliacao)
+    public void salvarViagem (final Viagem viagem, final CountDownLatch latch)
     {
         DatabaseReference viagemRef = ConfiguracaoFirebase.getFirebaseDatabaseReferencia().child("viagem").child(viagem.getIdViagem());
 
@@ -48,15 +48,6 @@ public class ViagemDAO
                     public void onSuccess(Void aVoid)
                     {
                         latch.countDown();
-
-                        // modificações
-                        Avaliacao avaliacao = new Avaliacao();
-                        avaliacao.setIdAvaliado(viagem.getIdDonoAnimal());
-                        avaliacao.setIdAvaliador(viagem.getIdMotorista());
-                        avaliacao.setIdViagem(viagem.getIdViagem());
-                        avaliacao.setTipoAvaliacao(tipoAvaliacao);
-                        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(activity, avaliacao);
-                        telaAvaliacao.iniciarAvaliacao();
 
                     }
         }).addOnFailureListener(new OnFailureListener()
@@ -68,6 +59,31 @@ public class ViagemDAO
                     }
         });
     }
+
+    public void exibirAvaliacaoDonoAnimal(final Activity activity, final String tipoAvaliacao, Viagem viagem)
+    {
+        // modificações
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setIdAvaliado(viagem.getIdMotorista());
+        avaliacao.setIdAvaliador(viagem.getIdDonoAnimal());
+        avaliacao.setIdViagem(viagem.getIdViagem());
+        avaliacao.setTipoAvaliacao(tipoAvaliacao);
+        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(activity, avaliacao);
+        telaAvaliacao.iniciarAvaliacao();
+    }
+
+    public void exibirAvaliacaoMotorista(final Activity activity, final String tipoAvaliacao, Viagem viagem)
+    {
+        // modificações
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setIdAvaliado(viagem.getIdDonoAnimal());
+        avaliacao.setIdAvaliador(viagem.getIdMotorista());
+        avaliacao.setIdViagem(viagem.getIdViagem());
+        avaliacao.setTipoAvaliacao(tipoAvaliacao);
+        TelaAvaliacao telaAvaliacao = new TelaAvaliacao(activity, avaliacao);
+        telaAvaliacao.iniciarAvaliacao();
+    }
+
 
     public void excluirViagem(Viagem viagem)
     {

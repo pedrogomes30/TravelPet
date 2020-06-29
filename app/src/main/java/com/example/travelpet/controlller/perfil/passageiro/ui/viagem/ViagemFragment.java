@@ -707,7 +707,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                 viagemAtual.setIdViagem(ViagemDAO.gerarPushKeyIdViagem());
                 viagemAtual.setIdOrigem(localOrigem.getIdLocal());
                 viagemAtual.setIdDestino(localDestino.getIdLocal());
-                viagemDAO.salvarViagem(viagemAtual, contador,getActivity(),tipoAvaliacao);
+                viagemDAO.salvarViagem(viagemAtual, contador);
 
                 try {
                     contador.await();
@@ -772,7 +772,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                     contador = new CountDownLatch(1);
                     viagemAtual.setIdMotorista(motoristaDisponivel.getIdMotorista());
                     showInTerminal("adicionando motorista à viagem ");
-                    viagemDAO.salvarViagem(viagemAtual, contador, getActivity(), tipoAvaliacao); //atualizando
+                    viagemDAO.salvarViagem(viagemAtual, contador); //atualizando
                 }
                 else
                 {
@@ -843,6 +843,7 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                             showInTerminal("Aguarde o motorista no local de Embarque");
                             dialogBuscarMotorista.dismiss();
                             configTela(2);
+                            viagemDAO.exibirAvaliacaoDonoAnimal( getActivity(), tipoAvaliacao, viagemAtual);
                             addListenerAguardandoMotorista();
                             Toast.makeText(requireActivity(),"Aguarde o motorista no local de Embarque",Toast.LENGTH_LONG).show();
 
