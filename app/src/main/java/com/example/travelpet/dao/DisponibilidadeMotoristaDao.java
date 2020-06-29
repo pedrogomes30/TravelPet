@@ -320,7 +320,7 @@ public class DisponibilidadeMotoristaDao
         return false;
     }
 
-    public boolean checarPortes (ArrayList<Animal> animaisSelecionados, DisponibilidadeMotorista disponivel)
+    private boolean checarPortes(ArrayList<Animal> animaisSelecionados, DisponibilidadeMotorista disponivel)
     {
         DisponibilidadeMotorista dispPortes = disponivel;
 

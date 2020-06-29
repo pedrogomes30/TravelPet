@@ -56,12 +56,12 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\fragment_configuracao.xml"
     },
     {
-        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_foreground.png"
-    },
-    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\anim_activity_filho_saindo.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\anim\\activity_filho_saindo.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_app_bar_perfil_passageiro.xml.flat",
@@ -100,12 +100,12 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable\\spinner_background.xml"
     },
     {
-        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_circulo_cheio.xml.flat",
-        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-hdpi\\ic_circulo_cheio.xml"
-    },
-    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_circulo_cheio.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-hdpi\\ic_circulo_cheio.xml"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_logo_travel_pet.png.flat",
@@ -344,12 +344,12 @@
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\drawable-xhdpi\\ic_exit.png"
     },
     {
-        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\navigation_motorista_navigation.xml.flat",
-        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\navigation\\motorista_navigation.xml"
-    },
-    {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cadastro_animal_nome.xml.flat",
         "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\layout\\activity_cadastro_animal_nome.xml"
+    },
+    {
+        "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\navigation_motorista_navigation.xml.flat",
+        "source": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\src\\main\\res\\navigation\\motorista_navigation.xml"
     },
     {
         "merged": "C:\\Users\\rodri\\Documents\\TravelPet\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_grades.png.flat",

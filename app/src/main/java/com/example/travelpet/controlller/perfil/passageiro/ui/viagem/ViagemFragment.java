@@ -61,6 +61,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -108,12 +109,12 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
     // Variáveis para recuperar localização de um usuário
     private Local localOrigem, localDestino;
     private Location locationAtual, locationMotorista;
-    private LocationCallback donoAnimalLocationCallback, motoristaLocationCallback;
+    private LocationCallback donoAnimalLocationCallback, motoristaLocationCallback, emViagemCallback;
     private Address addressDestino;
     private Geocoder geocoder;
     private GoogleMap gMap;
     private MapView mapView;
-    private MarkerOptions marcadorDonoAnimal, marcadorMotorista, marcadorLocalEmbarque;
+    private Marker marcadorDonoAnimal, marcadorMotorista, marcadorLocalEmbarque;
     private FusedLocationProviderClient client;
     private LocationRequest locationRequest;
     private LocationSettingsRequest.Builder builderlocationsSettingsRequest;
@@ -211,10 +212,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         settingsClient = LocationServices.getSettingsClient(requireActivity());
         settingsClient.checkLocationSettings(builderlocationsSettingsRequest.build()).addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
             @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse)
+            {
 
             }
-
 
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -490,8 +491,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         newAddres.setSubAdminArea("Cabo Frio");
         newAddres.setPostalCode("28905020");
         newAddres.setFeatureName("360");
-        newAddres.setLatitude(-22.876962);
-        newAddres.setLongitude(-42.008073);
+        newAddres.setLatitude(-22.877020);
+        newAddres.setLongitude(-42.008048);
 
         return newAddres;
     }
@@ -852,7 +853,8 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
                                 Toast.makeText(requireActivity(),"Viagem até o destino Iniciada",Toast.LENGTH_LONG).show();
                                 showInTerminal("Viagem até o destino iniciada!!");
                                 configTela(4);
-                                //listener
+                                removeLocationCallback(motoristaLocationCallback);
+                                addEmViagemCallback();
                             }break;
 
                         case Viagem.FINALIZADA :
@@ -967,19 +969,21 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             public void onLocationResult(LocationResult locationResult)
             {
                 Location location =  locationResult.getLastLocation();
-                gMap.clear();
+
+                if (marcadorMotorista != null) {marcadorMotorista.remove();}
+                if (marcadorDonoAnimal != null){marcadorDonoAnimal.remove();}
 
                 localPassageiro = new LatLng(location.getLatitude(),location.getLongitude());
                 LatLng localMotorista = new LatLng(motoristaDisponivel.getLatitudeMotorista(),motoristaDisponivel.getLongitudeMotorista());
                 LatLng localEmbarque = new LatLng(localOrigem.getLatitude(), localOrigem.getLongitude());
 
-                marcadorMotorista = new MarkerOptions().position(localMotorista).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro));
-                marcadorDonoAnimal = new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro));
-                marcadorLocalEmbarque = new MarkerOptions().position(localEmbarque).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario));
+                if(marcadorLocalEmbarque != null && !marcadorLocalEmbarque.isVisible())
+                {
+                    marcadorLocalEmbarque = gMap.addMarker(new MarkerOptions().position(localEmbarque).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario)));
+                }
 
-                gMap.addMarker(marcadorDonoAnimal);
-                gMap.addMarker(marcadorMotorista);
-                gMap.addMarker(marcadorLocalEmbarque);
+                marcadorMotorista = gMap.addMarker(new MarkerOptions().position(localMotorista).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                marcadorDonoAnimal = gMap.addMarker(new MarkerOptions().position(localPassageiro).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario_passageiro)));
 
                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(localPassageiro,19));
             }
@@ -988,6 +992,28 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
             public void onLocationAvailability(LocationAvailability locationAvailability) {}
         };
         client.requestLocationUpdates(locationRequest,motoristaLocationCallback,null);
+    }
+
+    private void addEmViagemCallback ()
+    {
+        emViagemCallback = new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult)
+            {
+                if(marcadorMotorista != null){marcadorMotorista.remove();}
+
+                LatLng minhaLatLong = locationToLatLong(locationResult.getLastLocation());
+                marcadorMotorista = gMap.addMarker(new MarkerOptions().position(minhaLatLong).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(minhaLatLong,19));
+            }
+
+            @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability) {}
+        };
+
+
+        client.requestLocationUpdates(locationRequest,emViagemCallback,null);
     }
 
     private void removeLocationCallback(LocationCallback callback)
@@ -1049,8 +1075,10 @@ public class ViagemFragment extends Fragment implements OnMapReadyCallback {
         System.out.println(mensagem);
     }
 
-
-
-
+    private LatLng locationToLatLong(Location location)
+    {
+        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        return latLng;
+    }
 
 }

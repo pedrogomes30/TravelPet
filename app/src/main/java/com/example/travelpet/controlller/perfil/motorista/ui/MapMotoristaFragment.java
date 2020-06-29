@@ -151,7 +151,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         mapView.onResume();
 
         threadIniciarPerfil();
-        threadChecarDisponibilidade();
+        threadRecuperarDisponibilidade();
         return view;
     }
 
@@ -164,6 +164,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     private void threadIniciarPerfil()
     {
+        showInTerminal("threadIniciarPerfil", "Iniciando a recuperação do Perfil do Motorista");
         Thread threadIniciarPerfil = new Thread(new Runnable()
         {
             @Override
@@ -188,10 +189,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         threadIniciarPerfil.start();
     }
 
-    private void threadChecarDisponibilidade()
+    private void threadRecuperarDisponibilidade()
     {
         //Atualiza a tela
-        Thread checarDisponibilidade = new Thread(new Runnable() {
+        showInTerminal("threadRecuperarDisponibilidade","recuperando a disponibilidade do motorista ");
+        Thread threadRecuperarDisponibilidade = new Thread(new Runnable() {
             @Override
             public void run() {
                 contadorDisponibilidade = new CountDownLatch(1);
@@ -226,21 +228,26 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 });
             }
         });
-        checarDisponibilidade.start();
+        threadRecuperarDisponibilidade.start();
     }
 
-    private void threadSalvarDisponibilidade()
+    private void threadAtualizarDisponibilidade()
     {
-        //Threads
-        Thread threadAttDisponibilidade = new Thread(new Runnable() {
+        showInTerminal("threadSalvarDisponibilidade", "atualizando a disponibilidade do motorista");
+        Thread threadAtualizarDisponibilidade = new Thread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 contador = new CountDownLatch(1);
                 disponibilidadeDAO.salvarDisponibilidade(disponibilidade, contador);
 
-                try {
+                try
+                {
                     contador.await();
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e)
+                {
                     e.printStackTrace();
                 }
 
@@ -258,7 +265,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                 });
             }
         });
-        threadAttDisponibilidade.start();
+        threadAtualizarDisponibilidade.start();
     }
 
     //MAPA
@@ -474,7 +481,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             public void onClick(View view)
             {
                 disponibilidade.setDisponibilidade(DisponibilidadeMotorista.INDISPONIVEL);
-                threadSalvarDisponibilidade();
+                threadAtualizarDisponibilidade();
                 bsDialog.dismiss();
             }
         });
@@ -505,7 +512,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                             disponibilidade.setIdVeiculo(veiculoSelecionado.getIdVeiculo());
                             disponibilidade.setDisponibilidade(DisponibilidadeMotorista.DISPONIVEL);
 
-                            threadSalvarDisponibilidade();
+                            threadAtualizarDisponibilidade();
                             bsDialog.dismiss();
                             addListenerViagem();
                         }
@@ -626,16 +633,16 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             case DisponibilidadeMotorista.A_CAMINHO:
                 {
                     removeListenerViagem();
-                    removeCallbacks(callbackLocalizacaoMotorista);
+                    removeCallbacks(callbackLocalizacaoMotorista, "callbackLocalizacaoMotorista");
                     setCallbackAcaminho();
                 }break;
 
             case DisponibilidadeMotorista.EM_VIAGEM:
                 {
-                    removeCallbacks(callbackAcaminho);
+                    System.out.println("<<<<<<<<<<<<<<< EM_VIAGEM >>>>>>>>>>>>>>>>>");
+                    removeCallbacks(callbackAcaminho,"callbackAcaminho");
                     setCallbackEmViagem();
                     removeListenerViagem();
-
                 }break;
             default:{}break;
         }
@@ -663,7 +670,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     showInTerminal("ListenerViagem/onChildChanged","executou ["+contadorViagem+"] vezes");
                     viagemAtual = dataSnapshot.getValue(Viagem.class);
                     disponibilidade.setDisponibilidade(DisponibilidadeMotorista.PREPARANDO_VIAGEM);
-                    threadSalvarDisponibilidade();
+                    threadAtualizarDisponibilidade();
                 }
             }
 
@@ -748,7 +755,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                         {
                             btInteragirViagem.setVisibility(View.GONE);
                             disponibilidade.setDisponibilidade(DisponibilidadeMotorista.EM_VIAGEM);
-                            threadSalvarDisponibilidade();
+                            threadAtualizarDisponibilidade();
                             viagemDAO.atualizaStatusviagem(viagemAtual.getIdViagem(),Viagem.EM_ANDAMENTO);
                         }
                     });
@@ -783,10 +790,12 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
             {
                 LatLng minhalatLng = locationToLatLong(locationResult.getLastLocation());
                 LatLng destinoLatLng = locationToLatLong(localDestino.getLocation());
+                showInTerminal("CallbackEmViagem latLong=", destinoLatLng.toString());
+
 
                 marcadorDestino = gMap.addMarker(new MarkerOptions().position(destinoLatLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_usuario)));
                 marcadorMotorista = gMap.addMarker(new MarkerOptions().position(minhalatLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.marcador_carro)));
-                gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,19));
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(localMotorista,19));
 
                 if (distanciaMotorista(destinoLatLng)<30)
                 {
@@ -820,11 +829,11 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
         return latLng;
     }
 
-    private void removeCallbacks (LocationCallback callback)
+    private void removeCallbacks (LocationCallback callback, String nomeCallBack)
     {
         if(client != null && callback != null)
         {
-            showInTerminal("RemoveCallbacks"," removendo callback = " + callback );
+            showInTerminal("RemoveCallbacks"," removendo callback = " );
             client.removeLocationUpdates(callback);
         }
     }
@@ -984,7 +993,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
                     public void run()
                     {
                         disponibilidade.setDisponibilidade(DisponibilidadeMotorista.A_CAMINHO);
-                        threadSalvarDisponibilidade();
+                        threadAtualizarDisponibilidade();
                     }
                 });
             }
@@ -996,7 +1005,7 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
     {
         viagemDAO.recusarViagem(viagemAtual.getIdViagem());
         disponibilidade.setDisponibilidade(DisponibilidadeMotorista.DISPONIVEL);
-        threadSalvarDisponibilidade();
+        threadAtualizarDisponibilidade();
         viagemAtual = null;
     }
 
@@ -1026,6 +1035,6 @@ public class MapMotoristaFragment extends Fragment implements OnMapReadyCallback
 
     private void showInTerminal(String Local,String mensagem)
     {
-        System.out.println("<<< " + Local + ": " + mensagem +" >>>");
+        System.out.println("<<< Motorista: <" + Local + "> (" + mensagem +") >>>");
     }
 }
